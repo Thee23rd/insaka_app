@@ -51,9 +51,9 @@ with tabs[0]:
 
     # Quick links
     c1,c2,c3 = st.columns(3)
-    with c1: st.page_link("streamlit_app.py", label="Open Agenda", icon="🗓️")
-    with c2: st.page_link("streamlit_app.py", label="Speakers", icon="🎤")
-    with c3: st.page_link("streamlit_app.py", label="Venue Map", icon="🗺️")
+    with c1: st.page_link("pages/1_Agenda.py", label="Open Agenda", icon="🗓️")
+    with c2: st.page_link("pages/2_Speakers.py", label="Speakers", icon="🎤")
+    with c3: st.page_link("pages/3_Venue.py", label="Venue Map", icon="🗺️")
 
 # --- AGENDA ---
 with tabs[1]:
