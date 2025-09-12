@@ -1,0 +1,20 @@
+[
+  {
+    "day": "Sun 6 Oct",
+    "time": "09:00",
+    "title": "Opening & Keynote",
+    "room": "Main Hall"
+  },
+  {
+    "day": "Sun 6 Oct",
+    "time": "10:00 AM",
+    "title": "Mining Technologies",
+    "room": "Main Audotorium"
+  },
+  {
+    "day": "Mon 7 Oct",
+    "time": "11\":00 AM",
+    "title": "Big Data",
+    "room": null
+  }
+]
