@@ -24,6 +24,46 @@ st.markdown("""
     .stApp > div[data-testid="stSidebar"] > div {
         display: none;
     }
+    
+    /* Mobile-friendly search form */
+    .stForm {
+        background: linear-gradient(145deg, #1A1A1A 0%, #2A2A2A 100%);
+        border: 2px solid #198A00;
+        border-radius: 15px;
+        padding: 1.5rem;
+        margin: 1rem 0;
+    }
+    
+    .stForm .stButton > button {
+        background: linear-gradient(135deg, #198A00 0%, #2BA300 100%);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        padding: 0.75rem 2rem;
+        font-size: 1.1rem;
+        font-weight: 600;
+        box-shadow: 0 4px 15px rgba(25, 138, 0, 0.3);
+        transition: all 0.3s ease;
+    }
+    
+    .stForm .stButton > button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(25, 138, 0, 0.4);
+    }
+    
+    /* Mobile touch targets */
+    @media (max-width: 768px) {
+        .stForm .stButton > button {
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            min-height: 50px;
+        }
+        
+        .stForm .stTextInput > div > div > input {
+            font-size: 16px; /* Prevents zoom on iOS */
+            padding: 0.75rem;
+        }
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -39,11 +79,28 @@ st.markdown('<div class="zambia-accent"></div>', unsafe_allow_html=True)
 
 # Search for delegate
 st.subheader("🔍 Find Your Record")
-search_method = st.radio("Search by:", ["Name", "Email"], horizontal=True)
 
-search_term = st.text_input(f"Enter your {search_method.lower()}:", placeholder="Type your name or email here...")
+# Create a form for better mobile UX
+with st.form("delegate_search", clear_on_submit=False):
+    search_method = st.radio("Search by:", ["Name", "Email"], horizontal=True)
+    
+    search_term = st.text_input(f"Enter your {search_method.lower()}:", placeholder="Type your name or email here...")
+    
+    # Submit button for mobile-friendly search
+    st.markdown("---")
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col2:
+        search_submitted = st.form_submit_button("🔍 Search My Record", use_container_width=True, type="primary")
+    
+    # Mobile-friendly hint
+    st.markdown("💡 **Tip:** Enter your full name or email address to find your record")
 
-if search_term:
+# Clear search button (outside form)
+if st.button("🗑️ Clear Search", use_container_width=True, type="secondary"):
+    st.rerun()
+
+# Process search when form is submitted
+if search_submitted and search_term:
     df = load_staff_df()
     
     if search_method == "Name":
