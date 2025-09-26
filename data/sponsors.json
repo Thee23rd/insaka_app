@@ -1,0 +1,21 @@
+{
+  "Platinum": [
+    {
+      "name": "Barrick",
+      "logo": "assets/logos/barrick.png"
+    }
+  ],
+  "Gold": [
+    {
+      "name": "ZCCM-IH"
+    },
+    {
+      "name": "ZDA"
+    },
+    {
+      "name": "ZRA",
+       "logo": "assets/logos/barrick.png"
+    }
+  ],
+  "MMMD": []
+}

@@ -1,7 +1,102 @@
 # pages/0_Admin.py
 import os, json, io, pathlib
 import streamlit as st
-from lib.ui import apply_brand, top_nav
+from lib.ui import apply_brand, top_nav 
+
+import streamlit as st
+from staff_service import (
+    load_staff_df, save_staff_df, register_staff,
+    import_staff_excel, export_staff_excel, set_checked_in
+)
+from utils_assets import save_upload
+
+st.header("Complimentary Passes (Organizers / Services / VIP)")
+tab_new, tab_manage, tab_import, tab_export = st.tabs(
+    ["➕ Add", "🗂 Manage", "⬆️ Import", "⬇️ Export"]
+)
+
+# --- Add single ---
+with tab_new:
+    with st.form("comp_new", clear_on_submit=True):
+        col1, col2 = st.columns(2)
+        with col1:
+            name = st.text_input("Full Name*", "")
+            category = st.selectbox("Category*", [
+                "Organizing Committee", "Speaker", "VIP", "Media",
+                "Service Provider", "Sponsor/Exhibitor Staff", "Other"
+            ])
+            organization = st.text_input("Organization / Dept*", "")
+            role_title = st.text_input("Role / Title", "")
+        with col2:
+            email = st.text_input("Email", "")
+            phone = st.text_input("Phone", "")
+            nationality = st.text_input("Nationality", "")
+            notes = st.text_area("Notes", "")
+            photo = st.file_uploader("Badge Photo (JPG/PNG/WebP)", type=["jpg","jpeg","png","webp"])
+
+        submitted = st.form_submit_button("Save")
+    if submitted:
+        photo_path = ""
+        if photo:
+            # will become assets/uploads/badges/<slug>_timestamp.ext
+            photo_path = save_upload(photo, kind="badges", name_hint=name)
+        ok, msg = register_staff(
+            name=name,
+            category=category,
+            organization=organization,
+            role_title=role_title,
+            email=email,
+            phone=phone,
+            badge_photo_path=photo_path,
+            notes=notes,
+            nationality=nationality,
+        )
+        st.success(msg) if ok else st.warning(msg)
+
+# --- Manage list ---
+with tab_manage:
+    df = load_staff_df()
+    st.caption(f"{len(df)} complimentary records")
+    st.dataframe(df, use_container_width=True, height=420)
+
+    st.subheader("Edit selected")
+    ids = st.multiselect("Select ID(s)", options=df["ID"].tolist())
+    if ids:
+        # simple check-in toggle
+        colA, colB = st.columns(2)
+        with colA:
+            if st.button("Mark as Checked-In"):
+                upd, nf = set_checked_in(ids, True)
+                st.success(f"Updated {upd}; Not found {nf}")
+        with colB:
+            if st.button("Mark as Not Checked-In"):
+                upd, nf = set_checked_in(ids, False)
+                st.success(f"Updated {upd}; Not found {nf}")
+
+        # optional quick photo replace for one person
+        if len(ids) == 1:
+            up = st.file_uploader("Replace badge photo", type=["jpg","jpeg","png","webp"], key="rephoto")
+            if up:
+                df = load_staff_df()
+                mask = df["ID"].astype(str) == ids[0]
+                path = save_upload(up, kind="badges", name_hint=df.loc[mask, "Name"].values[0])
+                df.loc[mask, "BadgePhoto"] = path
+                save_staff_df(df)
+                st.success(f"Photo saved → {path}")
+
+# --- Import ---
+with tab_import:
+    st.caption("Excel expected columns: Name, Category, Organization, RoleTitle, Email, Phone, Notes")
+    up = st.file_uploader("Upload Excel (.xlsx)", type=["xlsx"])
+    if up:
+        added, skipped = import_staff_excel(up.read())
+        st.success(f"Added {added} • Skipped duplicates {skipped}")
+
+# --- Export ---
+with tab_export:
+    data, fname = export_staff_excel()
+    st.download_button("Download Excel", data=data, file_name=fname,
+                       mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
 
 st.set_page_config(page_title="Admin — Insaka", page_icon="🔐", layout="wide")
 apply_brand()

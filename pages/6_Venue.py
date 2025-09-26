@@ -1,8 +1,35 @@
 import streamlit as st
-from lib.ui import apply_brand, top_nav
+from lib.ui import apply_brand
 
 st.set_page_config(page_title="Venue — Insaka", page_icon="🗺️", layout="wide")
-apply_brand(); top_nav()
+
+# Hide sidebar and navigation for delegates
+st.markdown("""
+<style>
+    .stApp > header {
+        display: none;
+    }
+    .stApp > div[data-testid="stToolbar"] {
+        display: none;
+    }
+    .stSidebar {
+        display: none;
+    }
+    .stApp > div[data-testid="stSidebar"] {
+        display: none;
+    }
+    .stApp > div[data-testid="stSidebar"] > div {
+        display: none;
+    }
+</style>
+""", unsafe_allow_html=True)
+
+apply_brand()
+
+# Back button
+if st.button("← Back to Dashboard", type="secondary"):
+    st.switch_page("pages/1_Delegate_Dashboard.py")
+
 st.title("Venue & Exhibition Map")
 
 left, right = st.columns([2,1])

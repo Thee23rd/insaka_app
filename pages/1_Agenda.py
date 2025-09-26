@@ -1,9 +1,34 @@
 import json, streamlit as st
-from lib.ui import apply_brand, top_nav
+from lib.ui import apply_brand
 
 st.set_page_config(page_title="Agenda — Insaka", page_icon="🗓️", layout="wide")
+
+# Hide sidebar and navigation for delegates
+st.markdown("""
+<style>
+    .stApp > header {
+        display: none;
+    }
+    .stApp > div[data-testid="stToolbar"] {
+        display: none;
+    }
+    .stSidebar {
+        display: none;
+    }
+    .stApp > div[data-testid="stSidebar"] {
+        display: none;
+    }
+    .stApp > div[data-testid="stSidebar"] > div {
+        display: none;
+    }
+</style>
+""", unsafe_allow_html=True)
+
 apply_brand()
-top_nav()
+
+# Back button
+if st.button("← Back to Dashboard", type="secondary"):
+    st.switch_page("pages/1_Delegate_Dashboard.py")
 
 st.title("Agenda")
 # Example: load from data/agenda.json if present
