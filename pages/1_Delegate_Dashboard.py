@@ -27,18 +27,23 @@ st.markdown("""
 
 apply_brand()
 
+# Zambian-themed header
+st.markdown('<div class="zambia-accent"></div>', unsafe_allow_html=True)
+
 # Personalized greeting
 if hasattr(st.session_state, 'delegate_name') and st.session_state.delegate_name:
     st.markdown(f"""
-    <div style="background: linear-gradient(135deg, #2E8B57 0%, #3CB371 100%); color: white; padding: 2rem; border-radius: 12px; margin-bottom: 2rem; text-align: center;">
-        <h1 style="color: white; margin-bottom: 0.5rem;">👋 Hello, {st.session_state.delegate_name}!</h1>
-        <p style="color: #f0f8f0; margin-bottom: 0; font-size: 1.1rem;">Welcome to Insaka Conference 2025</p>
+    <div style="background: linear-gradient(135deg, #198A00 0%, #2BA300 50%, #D10000 100%); color: white; padding: 2rem; border-radius: 20px; margin-bottom: 2rem; text-align: center; box-shadow: 0 8px 32px rgba(25, 138, 0, 0.2);">
+        <h1 style="color: white; margin-bottom: 0.5rem; font-size: 2rem; font-weight: 700;">👋 Hello, {st.session_state.delegate_name}!</h1>
+        <p style="color: #f0f8f0; margin-bottom: 0; font-size: 1.1rem; font-weight: 500;">Welcome to Insaka Conference 2025</p>
         <p style="color: #e8f5e8; margin-bottom: 0; font-size: 0.9rem;">{st.session_state.delegate_organization} • {st.session_state.delegate_category}</p>
     </div>
     """, unsafe_allow_html=True)
 else:
-    st.title("👤 Delegate Dashboard")
+    st.markdown("# 👤 Delegate Dashboard")
     st.markdown("Welcome to your conference dashboard")
+
+st.markdown('<div class="zambia-accent"></div>', unsafe_allow_html=True)
 
 # Personal section - Check-in first
 st.subheader("👤 My Information")

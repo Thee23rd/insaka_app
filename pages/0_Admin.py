@@ -10,7 +10,14 @@ from staff_service import (
 )
 from utils_assets import save_upload
 
-st.header("Complimentary Passes (Organizers / Services / VIP)")
+# Zambian-themed header
+st.markdown('<div class="zambia-accent"></div>', unsafe_allow_html=True)
+
+st.markdown("# 🎫 Complimentary Passes")
+st.markdown("**Organizers / Services / VIP Management**")
+
+st.markdown('<div class="zambia-accent"></div>', unsafe_allow_html=True)
+
 tab_new, tab_manage, tab_import, tab_export = st.tabs(
     ["➕ Add", "🗂 Manage", "⬆️ Import", "⬇️ Export"]
 )

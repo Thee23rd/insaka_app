@@ -28,13 +28,18 @@ st.markdown("""
 
 apply_brand()
 
+# Zambian-themed header
+st.markdown('<div class="zambia-accent"></div>', unsafe_allow_html=True)
+
 # Admin access form
 st.markdown("""
 <div style="text-align: center; padding: 3rem 0;">
-    <h1 style="color: #8B4513; font-size: 2.5rem; margin-bottom: 1rem;">🔐 Admin Access</h1>
-    <p style="color: #666; font-size: 1.2rem; margin-bottom: 2rem;">Insaka Conference Management</p>
+    <h1 style="color: #198A00; font-size: 2.5rem; margin-bottom: 1rem; font-weight: 700;">🔐 Admin Access</h1>
+    <p style="color: #D10000; font-size: 1.2rem; margin-bottom: 2rem; font-weight: 500;">Insaka Conference Management</p>
 </div>
 """, unsafe_allow_html=True)
+
+st.markdown('<div class="zambia-accent"></div>', unsafe_allow_html=True)
 
 # Password form
 with st.form("admin_login", clear_on_submit=False):

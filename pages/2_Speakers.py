@@ -26,11 +26,16 @@ st.markdown("""
 
 apply_brand()
 
+# Zambian-themed header
+st.markdown('<div class="zambia-accent"></div>', unsafe_allow_html=True)
+
 # Back button
 if st.button("← Back to Dashboard", type="secondary"):
     st.switch_page("pages/1_Delegate_Dashboard.py")
 
-st.title("Speakers")
+st.markdown("# 🎤 Speakers")
+
+st.markdown('<div class="zambia-accent"></div>', unsafe_allow_html=True)
 try:
     speakers = json.load(open("data/speakers.json","r",encoding="utf-8"))
 except Exception:

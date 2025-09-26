@@ -26,11 +26,16 @@ st.markdown("""
 
 apply_brand()
 
+# Zambian-themed header
+st.markdown('<div class="zambia-accent"></div>', unsafe_allow_html=True)
+
 # Back button
 if st.button("← Back to Dashboard", type="secondary"):
     st.switch_page("pages/1_Delegate_Dashboard.py")
 
-st.title("Agenda")
+st.markdown("# 📅 Agenda")
+
+st.markdown('<div class="zambia-accent"></div>', unsafe_allow_html=True)
 # Example: load from data/agenda.json if present
 try:
     agenda = json.load(open("data/agenda.json", "r", encoding="utf-8"))

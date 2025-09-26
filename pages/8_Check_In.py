@@ -29,8 +29,13 @@ st.markdown("""
 
 apply_brand()
 
-st.title("✅ Daily Check-In")
+# Zambian-themed header
+st.markdown('<div class="zambia-accent"></div>', unsafe_allow_html=True)
+
+st.markdown("# ✅ Daily Check-In")
 st.markdown("Check in for each day of the conference")
+
+st.markdown('<div class="zambia-accent"></div>', unsafe_allow_html=True)
 
 # Check if delegate is logged in
 if not hasattr(st.session_state, 'delegate_name') or not st.session_state.delegate_name:
@@ -61,7 +66,17 @@ conference_days = {
     },
     3: {
         "date": "Tuesday, October 8, 2025",
-        "title": "Day 3 - Closing & Awards",
+        "title": "Day 3 - Industry Focus",
+        "description": "Industry-specific sessions and case studies"
+    },
+    4: {
+        "date": "Wednesday, October 9, 2025",
+        "title": "Day 4 - Innovation & Future",
+        "description": "Innovation showcases, future trends, and technology"
+    },
+    5: {
+        "date": "Thursday, October 10, 2025",
+        "title": "Day 5 - Closing & Awards",
         "description": "Final sessions, awards ceremony, and closing remarks"
     }
 }
@@ -79,13 +94,13 @@ st.markdown(f"""
 
 # Check-in status overview
 st.subheader("📊 Your Check-In Status")
-col1, col2, col3 = st.columns(3)
+col1, col2, col3, col4, col5 = st.columns(5)
 
-for day_num in [1, 2, 3]:
+for day_num in [1, 2, 3, 4, 5]:
     day_info = conference_days[day_num]
     is_checked_in = checkin_status.get(f"Day{day_num}", False)
     
-    with [col1, col2, col3][day_num-1]:
+    with [col1, col2, col3, col4, col5][day_num-1]:
         if is_checked_in:
             st.success(f"✅ {day_info['title']}")
             st.caption("Checked In")
@@ -107,13 +122,13 @@ st.info("🧪 **Testing Mode** - Check-in is available for testing purposes")
 
 # Allow testing of all days
 st.subheader("🎯 Test Check-In (All Days Available)")
-col1, col2, col3 = st.columns(3)
+col1, col2, col3, col4, col5 = st.columns(5)
 
-for day_num in [1, 2, 3]:
+for day_num in [1, 2, 3, 4, 5]:
     day_info = conference_days[day_num]
     is_checked_in = checkin_status.get(f"Day{day_num}", False)
     
-    with [col1, col2, col3][day_num-1]:
+    with [col1, col2, col3, col4, col5][day_num-1]:
         st.markdown(f"**{day_info['title']}**")
         st.caption(f"{day_info['date']}")
         st.caption(day_info['description'])

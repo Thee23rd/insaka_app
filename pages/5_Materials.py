@@ -26,11 +26,16 @@ st.markdown("""
 
 apply_brand()
 
+# Zambian-themed header
+st.markdown('<div class="zambia-accent"></div>', unsafe_allow_html=True)
+
 # Back button
 if st.button("← Back to Dashboard", type="secondary"):
     st.switch_page("pages/1_Delegate_Dashboard.py")
 
-st.title("Conference Materials")
+st.markdown("# 📄 Conference Materials")
+
+st.markdown('<div class="zambia-accent"></div>', unsafe_allow_html=True)
 
 # Read ./assets/materials
 materials_dir = "assets/materials"

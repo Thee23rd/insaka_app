@@ -29,8 +29,13 @@ st.markdown("""
 
 apply_brand()
 
-st.title("👤 Delegate Self-Service")
+# Zambian-themed header
+st.markdown('<div class="zambia-accent"></div>', unsafe_allow_html=True)
+
+st.markdown("# 👤 Delegate Self-Service")
 st.markdown("Check and update your conference details")
+
+st.markdown('<div class="zambia-accent"></div>', unsafe_allow_html=True)
 
 # Search for delegate
 st.subheader("🔍 Find Your Record")

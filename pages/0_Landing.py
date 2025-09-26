@@ -27,37 +27,39 @@ st.markdown("""
 
 apply_brand()
 
-# Clean Zambian-themed banner without logo
+# Main Conference Banner
+st.markdown('<div class="zambia-accent"></div>', unsafe_allow_html=True)
+
+# Conference title and details
+st.markdown("# ZAMBIA MINING AND INVESTMENT INSAKA CONFERENCE 2025")
+st.markdown("## Collaborate • Innovate • Thrive")
+st.markdown("### October 6th-10th, 2025")
+
+
+st.markdown('<div class="zambia-accent"></div>', unsafe_allow_html=True)
+
+# Enhanced Delegate Access Section
 st.markdown("""
-<div style="background: linear-gradient(135deg, #1B5E20 0%, #2E7D32 50%, #4CAF50 100%); color: white; padding: 3rem 2rem; border-radius: 15px; margin-bottom: 2rem; position: relative; overflow: hidden; text-align: center;">
-    <h1 style="color: white; font-size: 2.5rem; margin-bottom: 1rem; font-weight: bold; line-height: 1.2;">ZAMBIA MINING AND INVESTMENT INSAKA CONFERENCE 2025</h1>
-    <p style="color: #E8F5E8; font-size: 1.3rem; margin-bottom: 1.5rem; font-weight: 500;">Collaborate • Innovate • Thrive</p>
-    <p style="color: #C8E6C9; font-size: 1.1rem; margin-bottom: 1rem;">October 6-8, 2025</p>
-    <div style="position: absolute; top: -20px; right: -20px; width: 80px; height: 80px; background: rgba(255,107,53,0.1); border-radius: 50%;"></div>
-    <div style="position: absolute; bottom: -30px; left: -30px; width: 60px; height: 60px; background: rgba(255,107,53,0.1); border-radius: 50%;"></div>
+<div style="background: linear-gradient(145deg, #1A1A1A 0%, #2A2A2A 100%); border: 2px solid #198A00; border-radius: 20px; padding: 2rem; margin: 2rem 0; box-shadow: 0 8px 32px rgba(25, 138, 0, 0.2); text-align: center;">
+    <h3 style="color: #198A00; font-size: 1.8rem; margin-bottom: 1rem; font-weight: 700;">👤 Delegate Access</h3>
+    <p style="color: #F3F4F6; font-size: 1.1rem; margin-bottom: 1.5rem; line-height: 1.5;">Access conference information, update your details, and manage your participation in the 5-day Insaka Conference 2025</p>
 </div>
 """, unsafe_allow_html=True)
 
-# Clean Delegate Access Section
-st.markdown("### 👤 Delegate Access")
-st.markdown("Access conference information, update your details, and manage your participation in Insaka Conference 2025")
-
-# Simple centered button
+# Delegate button with enhanced styling
 col1, col2, col3 = st.columns([1, 2, 1])
 with col2:
     if st.button("🚀 Enter as Delegate", use_container_width=True, type="primary", key="delegate_btn"):
         st.switch_page("pages/7_Delegate_Self_Service.py")
 
 # Zambian-themed Footer
-st.markdown("<br><br>", unsafe_allow_html=True)
-st.markdown("""
-<div style="text-align: center; background: linear-gradient(135deg, #1B5E20 0%, #2E7D32 100%); color: white; padding: 2rem; border-radius: 15px; margin-top: 2rem;">
-    <p style="color: #E8F5E8; font-size: 1rem; margin-bottom: 0.5rem; font-weight: 500;">ZM Insaka Conference 2025</p>
-    <p style="color: #C8E6C9; font-size: 0.9rem; margin: 0;">Need help? Contact the conference organizers</p>
-    <div style="display: flex; justify-content: center; align-items: center; margin-top: 1rem;">
-        <div style="width: 8px; height: 8px; background: #FF6B35; border-radius: 50%; margin: 0 3px;"></div>
-        <div style="width: 8px; height: 8px; background: #1B5E20; border-radius: 50%; margin: 0 3px;"></div>
-        <div style="width: 8px; height: 8px; background: #FF6B35; border-radius: 50%; margin: 0 3px;"></div>
-    </div>
-</div>
-""", unsafe_allow_html=True)
+st.markdown('<div class="zambia-accent"></div>', unsafe_allow_html=True)
+
+# Footer content
+st.markdown("###### Insaka Conference 2025")
+st.markdown("**Need help?** Contact the conference organizers")
+
+# Zambian flag colors decoration
+st.markdown("🟠 🟢 🔴 🟠")  # Orange, Green, Red, Orange
+
+st.markdown('<div class="zambia-accent"></div>', unsafe_allow_html=True)

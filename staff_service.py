@@ -13,7 +13,7 @@ STAFF_CSV = DATA_DIR / "complimentary_passes.csv"
 
 COLUMNS = [
     "Nationality", "ID", "Name", "Category", "Organization", "RoleTitle",
-    "Email", "Phone", "BadgePhoto", "Notes", "CheckedIn", "Day1_CheckIn", "Day2_CheckIn", "Day3_CheckIn", "CreatedAt"
+    "Email", "Phone", "BadgePhoto", "Notes", "CheckedIn", "Day1_CheckIn", "Day2_CheckIn", "Day3_CheckIn", "Day4_CheckIn", "Day5_CheckIn", "CreatedAt"
 ]
 
 def _ensure_schema(df: pd.DataFrame) -> pd.DataFrame:
@@ -129,9 +129,9 @@ def set_checked_in(ids: List[str], checked: bool = True) -> Tuple[int, int]:
     return updated, not_found
 
 def set_daily_checkin(delegate_id: str, day: int, checked: bool = True) -> Tuple[bool, str]:
-    """Mark a delegate as checked in for a specific day. Day: 1, 2, or 3."""
-    if day not in [1, 2, 3]:
-        return False, "Invalid day. Must be 1, 2, or 3."
+    """Mark a delegate as checked in for a specific day. Day: 1, 2, 3, 4, or 5."""
+    if day not in [1, 2, 3, 4, 5]:
+        return False, "Invalid day. Must be 1, 2, 3, 4, or 5."
     
     df = load_staff_df()
     mask = df["ID"].astype(str) == str(delegate_id)
@@ -157,7 +157,9 @@ def get_daily_checkin_status(delegate_id: str) -> dict:
     return {
         "Day1": bool(delegate.get("Day1_CheckIn", False)),
         "Day2": bool(delegate.get("Day2_CheckIn", False)),
-        "Day3": bool(delegate.get("Day3_CheckIn", False))
+        "Day3": bool(delegate.get("Day3_CheckIn", False)),
+        "Day4": bool(delegate.get("Day4_CheckIn", False)),
+        "Day5": bool(delegate.get("Day5_CheckIn", False))
     }
 
 def import_staff_excel(file_bytes: bytes) -> tuple[int, int]:

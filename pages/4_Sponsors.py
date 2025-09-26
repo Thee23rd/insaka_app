@@ -2,8 +2,31 @@ import json, streamlit as st
 from lib.ui import apply_brand, top_nav
 
 st.set_page_config(page_title="Sponsors — Insaka", page_icon="🤝", layout="wide")
-apply_brand(); top_nav()
-st.title("Sponsors")
+
+# Hide sidebar and navigation
+st.markdown("""
+<style>
+    .stApp > div:first-child {
+        display: none;
+    }
+    .stApp > div:nth-child(2) {
+        display: none;
+    }
+</style>
+""", unsafe_allow_html=True)
+
+apply_brand()
+
+# Zambian-themed header
+st.markdown('<div class="zambia-accent"></div>', unsafe_allow_html=True)
+
+# Back button
+if st.button("← Back to Dashboard", type="secondary"):
+    st.switch_page("pages/1_Delegate_Dashboard.py")
+
+st.markdown("# 🤝 Sponsors")
+
+st.markdown('<div class="zambia-accent"></div>', unsafe_allow_html=True)
 
 try:
     sponsors = json.load(open("data/sponsors.json","r",encoding="utf-8"))
