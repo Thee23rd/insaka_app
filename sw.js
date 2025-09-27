@@ -1,10 +1,19 @@
 // Service Worker for Insaka Conference PWA
-const CACHE_NAME = 'insaka-conference-v1.0.0';
+const CACHE_NAME = 'insaka-conference-v1.0.2-' + Date.now();
 const urlsToCache = [
   '/',
   '/pages/1_Delegate_Dashboard.py',
   '/pages/0_Landing.py',
   '/assets/logos/insaka.jpg',
+  '/assets/pwa/icon-48x48.png',
+  '/assets/pwa/icon-72x72.png',
+  '/assets/pwa/icon-96x96.png',
+  '/assets/pwa/icon-144x144.png',
+  '/assets/pwa/icon-152x152.png',
+  '/assets/pwa/icon-167x167.png',
+  '/assets/pwa/icon-180x180.png',
+  '/assets/pwa/icon-192x192.png',
+  '/assets/pwa/icon-512x512.png',
   '/manifest.json'
 ];
 
