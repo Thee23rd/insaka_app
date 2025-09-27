@@ -1,29 +1,12 @@
 # pages/0_Landing.py
 import streamlit as st
 from lib.ui import apply_brand
+from lib.hide_streamlit_ui import apply_hide_streamlit_ui
 
 st.set_page_config(page_title="Insaka Conference", page_icon="🪘", layout="wide")
 
-# Hide the default navigation for this landing page
-st.markdown("""
-<style>
-    .stApp > header {
-        display: none;
-    }
-    .stApp > div[data-testid="stToolbar"] {
-        display: none;
-    }
-    .stSidebar {
-        display: none;
-    }
-    .stApp > div[data-testid="stSidebar"] {
-        display: none;
-    }
-    .stApp > div[data-testid="stSidebar"] > div {
-        display: none;
-    }
-</style>
-""", unsafe_allow_html=True)
+# Apply clean UI (hides Streamlit elements)
+apply_hide_streamlit_ui()
 
 apply_brand()
 

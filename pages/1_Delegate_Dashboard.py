@@ -4,32 +4,15 @@ import json
 from datetime import datetime
 from lib.ui import apply_brand
 from lib.translations import get_translation, create_language_switcher, get_text_direction, is_rtl_language
+from lib.hide_streamlit_ui import apply_hide_streamlit_ui
 
 # Initialize notification system availability
 NOTIFICATION_SYSTEM_AVAILABLE = False
 
 st.set_page_config(page_title="Delegate Dashboard — Insaka", page_icon="👤", layout="wide")
 
-# Hide sidebar and navigation for delegates
-st.markdown("""
-<style>
-    .stApp > header {
-        display: none;
-    }
-    .stApp > div[data-testid="stToolbar"] {
-        display: none;
-    }
-    .stSidebar {
-        display: none;
-    }
-    .stApp > div[data-testid="stSidebar"] {
-        display: none;
-    }
-    .stApp > div[data-testid="stSidebar"] > div {
-        display: none;
-    }
-</style>
-""", unsafe_allow_html=True)
+# Apply clean UI (hides Streamlit elements)
+apply_hide_streamlit_ui()
 
 apply_brand()
 
