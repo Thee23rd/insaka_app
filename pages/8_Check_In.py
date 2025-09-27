@@ -204,6 +204,16 @@ st.markdown("---")
 if st.button("🏠 Back to Dashboard", use_container_width=True):
     st.switch_page("pages/1_Delegate_Dashboard.py")
 
-# Footer
+# Footer with logout button
 st.markdown("---")
-st.caption("Need help? Contact the conference organizers or visit the registration desk.")
+col_footer1, col_footer2, col_footer3 = st.columns([2, 1, 2])
+with col_footer1:
+    st.caption("Need help? Contact the conference organizers or visit the registration desk.")
+with col_footer2:
+    if st.button("🚪 Logout", use_container_width=True, key="checkin_logout"):
+        # Clear all session state
+        for key in list(st.session_state.keys()):
+            if key.startswith('delegate_'):
+                del st.session_state[key]
+        st.success("✅ Logged out successfully!")
+        st.switch_page("pages/0_Landing.py")

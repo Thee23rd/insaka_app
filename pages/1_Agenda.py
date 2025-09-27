@@ -50,3 +50,18 @@ for d in days:
     st.subheader(d)
     for item in [a for a in agenda if a["day"] == d]:
         st.write(f"**{item['time']}** — {item['title']}  ·  _{item.get('room','TBA')}_")
+
+# Footer with logout button
+st.markdown("---")
+col_footer1, col_footer2, col_footer3 = st.columns([2, 1, 2])
+with col_footer1:
+    st.caption("Need help? Contact the conference organizers or visit the registration desk.")
+with col_footer2:
+    if hasattr(st.session_state, 'delegate_authenticated') and st.session_state.delegate_authenticated:
+        if st.button("🚪 Logout", use_container_width=True, key="agenda_logout"):
+            # Clear all session state
+            for key in list(st.session_state.keys()):
+                if key.startswith('delegate_'):
+                    del st.session_state[key]
+            st.success("✅ Logged out successfully!")
+            st.switch_page("pages/0_Landing.py")

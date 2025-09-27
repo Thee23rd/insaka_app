@@ -1,0 +1,341 @@
+[
+  {
+    "id": 1,
+    "from_user_id": "anonymous",
+    "to_user_id": "1",
+    "from_user_name": "Anonymous User",
+    "to_user_name": "Charles Mweshi",
+    "type": "connection_request",
+    "status": "declined",
+    "message": "Anonymous User wants to connect with you",
+    "created_at": "2025-09-27T12:42:26.007925"
+  },
+  {
+    "id": 2,
+    "from_user_id": "6",
+    "to_user_id": "1",
+    "from_user_name": "Annie Mwape",
+    "to_user_name": "Charles Mweshi",
+    "type": "connection_request",
+    "status": "accepted",
+    "message": "Annie Mwape wants to connect with you",
+    "created_at": "2025-09-27T12:43:25.487779"
+  },
+  {
+    "id": 3,
+    "from_user_id": "1",
+    "to_user_id": "3",
+    "from_user_name": "Charles Mweshi",
+    "to_user_name": "Edward M. Chanda",
+    "type": "connection_request",
+    "status": "pending",
+    "message": "Charles Mweshi wants to connect with you",
+    "created_at": "2025-09-27T12:44:21.832185"
+  },
+  {
+    "id": 4,
+    "from_user_id": "6",
+    "to_user_id": "1",
+    "from_user_name": "Annie Mwape",
+    "to_user_name": "Charles Mweshi",
+    "type": "meeting_request",
+    "status": "accepted",
+    "meeting_type": "Business Discussion",
+    "message": "Would like to schedule a business discussion",
+    "created_at": "2025-09-27T12:53:56.346082"
+  },
+  {
+    "id": 5,
+    "from_user_id": "6",
+    "to_user_id": "1",
+    "from_user_name": "Annie Mwape",
+    "to_user_name": "Charles Mweshi",
+    "type": "contact_sharing",
+    "status": "sent",
+    "message": "**My Contact Information:**\n📧 Email: annie.mwape@mmmd.gov.zm\n📱 Phone: 776527215.0",
+    "contact_info": {
+      "email": "annie.mwape@mmmd.gov.zm",
+      "phone": "776527215.0",
+      "linkedin": null,
+      "website": null
+    },
+    "created_at": "2025-09-27T13:04:38.807661"
+  },
+  {
+    "id": 6,
+    "from_user_id": "6",
+    "to_user_id": "1",
+    "from_user_name": "Annie Mwape",
+    "to_user_name": "Charles Mweshi",
+    "type": "contact_sharing",
+    "status": "sent",
+    "message": "**My Contact Information:**\n📧 Email: annie.mwape@mmmd.gov.zm\n📱 Phone: 776527215.0",
+    "contact_info": {
+      "email": "annie.mwape@mmmd.gov.zm",
+      "phone": "776527215.0",
+      "linkedin": null,
+      "website": null
+    },
+    "created_at": "2025-09-27T13:05:03.722550"
+  },
+  {
+    "id": 7,
+    "from_user_id": "6",
+    "to_user_id": "1",
+    "from_user_name": "Annie Mwape",
+    "to_user_name": "Charles Mweshi",
+    "type": "contact_sharing",
+    "status": "sent",
+    "message": "**My Contact Information:**\n📧 Email: annie.mwape@mmmd.gov.zm\n📱 Phone: 776527215.0",
+    "contact_info": {
+      "email": "annie.mwape@mmmd.gov.zm",
+      "phone": "776527215.0",
+      "linkedin": null,
+      "website": null
+    },
+    "created_at": "2025-09-27T13:05:04.953519"
+  },
+  {
+    "id": 8,
+    "from_user_id": "6",
+    "to_user_id": "1",
+    "from_user_name": "Annie Mwape",
+    "to_user_name": "Charles Mweshi",
+    "type": "contact_sharing",
+    "status": "sent",
+    "message": "**My Contact Information:**\n📧 Email: annie.mwape@mmmd.gov.zm\n📱 Phone: 776527215.0",
+    "contact_info": {
+      "email": "annie.mwape@mmmd.gov.zm",
+      "phone": "776527215.0",
+      "linkedin": null,
+      "website": null
+    },
+    "created_at": "2025-09-27T13:09:09.188233"
+  },
+  {
+    "id": 9,
+    "from_user_id": "6",
+    "to_user_id": "1",
+    "from_user_name": "Annie Mwape",
+    "to_user_name": "Charles Mweshi",
+    "type": "contact_sharing",
+    "status": "sent",
+    "message": "**My Contact Information:**\n📧 Email: annie.mwape@mmmd.gov.zm\n📱 Phone: 776527215.0",
+    "contact_info": {
+      "email": "annie.mwape@mmmd.gov.zm",
+      "phone": "776527215.0",
+      "linkedin": null,
+      "website": null
+    },
+    "created_at": "2025-09-27T13:09:10.685748"
+  },
+  {
+    "id": 10,
+    "from_user_id": "6",
+    "to_user_id": "1",
+    "from_user_name": "Annie Mwape",
+    "to_user_name": "Charles Mweshi",
+    "type": "contact_sharing",
+    "status": "sent",
+    "message": "**My Contact Information:**\n📧 Email: annie.mwape@mmmd.gov.zm\n📱 Phone: 776527215.0",
+    "contact_info": {
+      "email": "annie.mwape@mmmd.gov.zm",
+      "phone": "776527215.0",
+      "linkedin": null,
+      "website": null
+    },
+    "created_at": "2025-09-27T13:10:47.486926"
+  },
+  {
+    "id": 11,
+    "from_user_id": "6",
+    "to_user_id": "1",
+    "from_user_name": "Annie Mwape",
+    "to_user_name": "Charles Mweshi",
+    "type": "contact_sharing",
+    "status": "sent",
+    "message": "**My Contact Information:**\n📧 Email: annie.mwape@mmmd.gov.zm\n📱 Phone: 776527215.0",
+    "contact_info": {
+      "email": "annie.mwape@mmmd.gov.zm",
+      "phone": "776527215.0",
+      "linkedin": null,
+      "website": null
+    },
+    "created_at": "2025-09-27T13:10:48.745169"
+  },
+  {
+    "id": 12,
+    "from_user_id": "6",
+    "to_user_id": "1",
+    "from_user_name": "Annie Mwape",
+    "to_user_name": "Charles Mweshi",
+    "type": "contact_sharing",
+    "status": "sent",
+    "message": "**My Contact Information:**\n📧 Email: annie.mwape@mmmd.gov.zm\n📱 Phone: 776527215.0",
+    "contact_info": {
+      "email": "annie.mwape@mmmd.gov.zm",
+      "phone": "776527215.0",
+      "linkedin": null,
+      "website": null
+    },
+    "created_at": "2025-09-27T13:10:49.603255"
+  },
+  {
+    "id": 13,
+    "from_user_id": "6",
+    "to_user_id": "1",
+    "from_user_name": "Annie Mwape",
+    "to_user_name": "Charles Mweshi",
+    "type": "contact_sharing",
+    "status": "sent",
+    "message": "**My Contact Information:**\n📧 Email: annie.mwape@mmmd.gov.zm\n📱 Phone: 776527215.0",
+    "contact_info": {
+      "email": "annie.mwape@mmmd.gov.zm",
+      "phone": "776527215.0",
+      "linkedin": null,
+      "website": null
+    },
+    "created_at": "2025-09-27T13:10:50.324655"
+  },
+  {
+    "id": 14,
+    "from_user_id": "6",
+    "to_user_id": "1",
+    "from_user_name": "Annie Mwape",
+    "to_user_name": "Charles Mweshi",
+    "type": "contact_sharing",
+    "status": "sent",
+    "message": "**My Contact Information:**\n📧 Email: annie.mwape@mmmd.gov.zm\n📱 Phone: 776527215.0",
+    "contact_info": {
+      "email": "annie.mwape@mmmd.gov.zm",
+      "phone": "776527215.0",
+      "linkedin": null,
+      "website": null
+    },
+    "created_at": "2025-09-27T13:10:51.023908"
+  },
+  {
+    "id": 15,
+    "from_user_id": "6",
+    "to_user_id": "1",
+    "from_user_name": "Annie Mwape",
+    "to_user_name": "Charles Mweshi",
+    "type": "contact_sharing",
+    "status": "sent",
+    "message": "**My Contact Information:**\n📧 Email: annie.mwape@mmmd.gov.zm\n📱 Phone: 776527215.0",
+    "contact_info": {
+      "email": "annie.mwape@mmmd.gov.zm",
+      "phone": "776527215.0",
+      "linkedin": null,
+      "website": null
+    },
+    "created_at": "2025-09-27T13:10:51.634825"
+  },
+  {
+    "id": 16,
+    "from_user_id": "6",
+    "to_user_id": "1",
+    "from_user_name": "Annie Mwape",
+    "to_user_name": "Charles Mweshi",
+    "type": "contact_sharing",
+    "status": "sent",
+    "message": "**My Contact Information:**\n📧 Email: annie.mwape@mmmd.gov.zm\n📱 Phone: 776527215.0",
+    "contact_info": {
+      "email": "annie.mwape@mmmd.gov.zm",
+      "phone": "776527215.0",
+      "linkedin": null,
+      "website": null
+    },
+    "created_at": "2025-09-27T13:10:52.260691"
+  },
+  {
+    "id": 17,
+    "from_user_id": "6",
+    "to_user_id": "1",
+    "from_user_name": "Annie Mwape",
+    "to_user_name": "Charles Mweshi",
+    "type": "contact_sharing",
+    "status": "sent",
+    "message": "**My Contact Information:**\n📧 Email: annie.mwape@mmmd.gov.zm\n📱 Phone: 776527215.0",
+    "contact_info": {
+      "email": "annie.mwape@mmmd.gov.zm",
+      "phone": "776527215.0",
+      "linkedin": null,
+      "website": null
+    },
+    "created_at": "2025-09-27T13:10:52.575280"
+  },
+  {
+    "id": 18,
+    "from_user_id": "6",
+    "to_user_id": "1",
+    "from_user_name": "Annie Mwape",
+    "to_user_name": "Charles Mweshi",
+    "type": "contact_sharing",
+    "status": "sent",
+    "message": "**My Contact Information:**\n📧 Email: annie.mwape@mmmd.gov.zm\n📱 Phone: 776527215.0",
+    "contact_info": {
+      "email": "annie.mwape@mmmd.gov.zm",
+      "phone": "776527215.0",
+      "linkedin": null,
+      "website": null
+    },
+    "created_at": "2025-09-27T13:10:52.832141"
+  },
+  {
+    "id": 19,
+    "from_user_id": "6",
+    "to_user_id": "1",
+    "from_user_name": "Annie Mwape",
+    "to_user_name": "Charles Mweshi",
+    "type": "contact_sharing",
+    "status": "sent",
+    "message": "**My Contact Information:**\n📧 Email: annie.mwape@mmmd.gov.zm\n📱 Phone: 776527215.0",
+    "contact_info": {
+      "email": "annie.mwape@mmmd.gov.zm",
+      "phone": "776527215.0",
+      "linkedin": null,
+      "website": null
+    },
+    "created_at": "2025-09-27T13:10:53.112258"
+  },
+  {
+    "id": 20,
+    "from_user_id": "6",
+    "to_user_id": "1",
+    "from_user_name": "Annie Mwape",
+    "to_user_name": "Charles Mweshi",
+    "type": "contact_sharing",
+    "status": "sent",
+    "message": "**My Contact Information:**\n📧 Email: annie.mwape@mmmd.gov.zm\n📱 Phone: 776527215.0",
+    "contact_info": {
+      "email": "annie.mwape@mmmd.gov.zm",
+      "phone": "776527215.0",
+      "linkedin": null,
+      "website": null
+    },
+    "created_at": "2025-09-27T13:10:53.563089"
+  },
+  {
+    "id": 21,
+    "from_user_id": "1",
+    "to_user_id": "6",
+    "from_user_name": "Charles Mweshi",
+    "to_user_name": "Annie Mwape",
+    "type": "chat_message",
+    "status": "read",
+    "message": "Hello",
+    "created_at": "2025-09-27T13:16:34.090290"
+  },
+  {
+    "id": 22,
+    "from_user_id": "6",
+    "to_user_id": "1",
+    "from_user_name": "Annie Mwape",
+    "to_user_name": "Charles Mweshi",
+    "type": "chat_message",
+    "status": "read",
+    "message": "boss",
+    "created_at": "2025-09-27T14:32:12.024067"
+  }
+]

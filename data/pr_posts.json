@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "title": "Insaka Launch",
+    "content": "The Zambia Mining Insaka",
+    "hashtags": [
+      "#ZAMII2025"
+    ],
+    "type": "Trending News",
+    "priority": "High",
+    "image": "assets/uploads/pr_posts/insaka-launch_20250927_121852.jpg",
+    "engagement": {
+      "views": 35,
+      "likes": 2,
+      "shares": 1
+    },
+    "created_at": "2025-09-27T12:18:52.944740",
+    "created_by": "PR Team"
+  }
+]

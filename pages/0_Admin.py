@@ -13,13 +13,36 @@ from utils_assets import save_upload
 # Zambian-themed header
 st.markdown('<div class="zambia-accent"></div>', unsafe_allow_html=True)
 
-st.markdown("# 🎫 Complimentary Passes")
+st.markdown("# 🎫 Admin Panel")
 st.markdown("**Organizers / Services / VIP Management**")
 
 st.markdown('<div class="zambia-accent"></div>', unsafe_allow_html=True)
 
-tab_new, tab_manage, tab_import, tab_export = st.tabs(
-    ["➕ Add", "🗂 Manage", "⬆️ Import", "⬇️ Export"]
+            # Navigation to other admin pages
+            st.markdown("### 🔗 Admin Navigation")
+            nav_col1, nav_col2, nav_col3, nav_col4 = st.columns(4)
+
+            with nav_col1:
+                if st.button("📢 Manage Announcements", use_container_width=True):
+                    st.switch_page("pages/Admin_Announcements.py")
+
+            with nav_col2:
+                if st.button("📰 Manage News & Updates", use_container_width=True):
+                    st.switch_page("pages/Admin_News.py")
+
+            with nav_col3:
+                if st.button("📸 PR & Social Media", use_container_width=True):
+                    st.switch_page("pages/Admin_PR.py")
+
+            with nav_col4:
+                if st.button("🌐 View Public Page", use_container_width=True):
+                    st.switch_page("pages/9_External_Content.py")
+
+st.markdown("---")
+st.markdown("### 🎫 Complimentary Passes Management")
+
+tab_new, tab_manage, tab_stats, tab_import, tab_export = st.tabs(
+    ["➕ Add", "🗂 Manage", "📊 Statistics", "⬆️ Import", "⬇️ Export"]
 )
 
 # --- Add single ---
@@ -90,6 +113,161 @@ with tab_manage:
                 df.loc[mask, "BadgePhoto"] = path
                 save_staff_df(df)
                 st.success(f"Photo saved → {path}")
+
+# --- Statistics Dashboard ---
+with tab_stats:
+    df = load_staff_df()
+    
+    if len(df) == 0:
+        st.info("No delegate records found. Add some records to see statistics.")
+    else:
+        # Overall statistics
+        st.subheader("📊 Delegate Statistics Overview")
+        
+        # Key metrics in columns
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            st.metric(
+                label="Total Delegates",
+                value=len(df),
+                help="Total number of delegates in the system"
+            )
+        
+        with col2:
+            checked_in_count = len(df[df.get('CheckedIn', False) == True])
+            st.metric(
+                label="Checked In",
+                value=checked_in_count,
+                delta=f"{checked_in_count/len(df)*100:.1f}%" if len(df) > 0 else "0%",
+                help="Number and percentage of delegates who have checked in"
+            )
+        
+        st.markdown("---")
+        
+        # Category breakdown
+        st.subheader("👥 Delegates by Category")
+        
+        if 'Category' in df.columns:
+            category_counts = df['Category'].value_counts()
+            
+            col1, col2 = st.columns([2, 1])
+            
+            with col1:
+                st.bar_chart(category_counts)
+            
+            with col2:
+                st.write("**Category Breakdown:**")
+                for category, count in category_counts.items():
+                    percentage = (count / len(df)) * 100
+                    st.write(f"• **{category}**: {count} ({percentage:.1f}%)")
+        
+        st.markdown("---")
+        
+        # Organization breakdown
+        st.subheader("🏢 Delegates by Organization")
+        
+        if 'Organization' in df.columns:
+            org_counts = df['Organization'].value_counts().head(10)  # Top 10 organizations
+            
+            if len(org_counts) > 0:
+                col1, col2 = st.columns([2, 1])
+                
+                with col1:
+                    st.bar_chart(org_counts)
+                
+                with col2:
+                    st.write("**Top Organizations:**")
+                    for org, count in org_counts.items():
+                        percentage = (count / len(df)) * 100
+                        st.write(f"• **{org}**: {count} ({percentage:.1f}%)")
+            else:
+                st.info("No organization data available.")
+        
+        st.markdown("---")
+        
+        # Nationality breakdown
+        st.subheader("🌍 Delegates by Nationality")
+        
+        if 'Nationality' in df.columns:
+            nationality_counts = df['Nationality'].value_counts()
+            
+            # Filter out empty nationalities
+            nationality_counts = nationality_counts[nationality_counts.index != '']
+            
+            if len(nationality_counts) > 0:
+                col1, col2 = st.columns([2, 1])
+                
+                with col1:
+                    st.bar_chart(nationality_counts)
+                
+                with col2:
+                    st.write("**Nationality Breakdown:**")
+                    for nationality, count in nationality_counts.items():
+                        percentage = (count / len(df)) * 100
+                        st.write(f"• **{nationality}**: {count} ({percentage:.1f}%)")
+            else:
+                st.info("No nationality data available.")
+        
+        st.markdown("---")
+        
+        # Daily check-in status
+        st.subheader("✅ Daily Check-in Status")
+        
+        checkin_columns = [col for col in df.columns if col.startswith('Day') and col.endswith('_CheckIn')]
+        
+        if checkin_columns:
+            checkin_stats = {}
+            for col in checkin_columns:
+                day_num = col.replace('Day', '').replace('_CheckIn', '')
+                checked_count = len(df[df[col] == True])
+                checkin_stats[f"Day {day_num}"] = checked_count
+            
+            col1, col2 = st.columns([2, 1])
+            
+            with col1:
+                st.bar_chart(checkin_stats)
+            
+            with col2:
+                st.write("**Daily Check-in:**")
+                for day, count in checkin_stats.items():
+                    percentage = (count / len(df)) * 100
+                    st.write(f"• **{day}**: {count} ({percentage:.1f}%)")
+        else:
+            st.info("No daily check-in data available.")
+        
+        st.markdown("---")
+        
+        # Recent activity summary
+        st.subheader("📈 Summary")
+        
+        summary_col1, summary_col2 = st.columns(2)
+        
+        with summary_col1:
+            st.info(f"""
+            **Total Delegates:** {len(df)}
+            
+            **Checked In:** {checked_in_count} ({checked_in_count/len(df)*100:.1f}%)
+            
+            **Categories:** {len(df['Category'].unique()) if 'Category' in df.columns else 0}
+            
+            **Organizations:** {len(df['Organization'].unique()) if 'Organization' in df.columns else 0}
+            """)
+        
+        with summary_col2:
+            if 'Category' in df.columns:
+                top_category = df['Category'].value_counts().index[0] if len(df) > 0 else "N/A"
+                top_category_count = df['Category'].value_counts().iloc[0] if len(df) > 0 else 0
+                
+                st.info(f"""
+                **Top Category:** {top_category}
+                
+                **Count:** {top_category_count}
+                
+                **Percentage:** {top_category_count/len(df)*100:.1f}%
+                
+                **Last Updated:** {df.index.max() if len(df) > 0 else "N/A"}
+                """)
 
 # --- Import ---
 with tab_import:

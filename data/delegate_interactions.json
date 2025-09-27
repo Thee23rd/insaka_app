@@ -1,0 +1,44 @@
+[
+  {
+    "id": 3,
+    "post_id": 1,
+    "user_id": "6",
+    "user_name": "Annie Mwape",
+    "type": "comment",
+    "content": "Awesome",
+    "mentions": [
+      "Kagosi Mwamulowe"
+    ],
+    "created_at": "2025-09-27T12:26:00.091895"
+  },
+  {
+    "id": 4,
+    "post_id": 1,
+    "user_id": "1",
+    "user_name": "Charles Mweshi",
+    "type": "like",
+    "content": null,
+    "mentions": [],
+    "created_at": "2025-09-27T12:29:38.038742"
+  },
+  {
+    "id": 5,
+    "post_id": 1,
+    "user_id": "1",
+    "user_name": "Charles Mweshi",
+    "type": "share",
+    "content": null,
+    "mentions": [],
+    "created_at": "2025-09-27T12:30:51.190580"
+  },
+  {
+    "id": 5,
+    "post_id": 1,
+    "user_id": "6",
+    "user_name": "Annie Mwape",
+    "type": "like",
+    "content": null,
+    "mentions": [],
+    "created_at": "2025-09-27T13:38:47.032179"
+  }
+]
