@@ -98,32 +98,32 @@ with st.container():
     
     st.markdown('</div>', unsafe_allow_html=True)
 
-# Language demo section
-with st.expander("🌍 Language Demo - Try Different Languages", expanded=False):
-    st.markdown("**Try switching languages to see the interface change!**")
+# # Language demo section
+# with st.expander("🌍 Language Demo - Try Different Languages", expanded=False):
+#     st.markdown("**Try switching languages to see the interface change!**")
     
-    # Show some sample translations
-    sample_keys = ['welcome', 'my_information', 'quick_access', 'agenda', 'speakers']
+#     # Show some sample translations
+#     sample_keys = ['welcome', 'my_information', 'quick_access', 'agenda', 'speakers']
     
-    col_demo1, col_demo2, col_demo3 = st.columns(3)
+#     col_demo1, col_demo2, col_demo3 = st.columns(3)
     
-    with col_demo1:
-        st.markdown("**English (US) 🇺🇸**")
-        for key in sample_keys:
-            st.write(f"• {get_translation(key, 'en-us')}")
+#     with col_demo1:
+#         st.markdown("**English (US) 🇺🇸**")
+#         for key in sample_keys:
+#             st.write(f"• {get_translation(key, 'en-us')}")
     
-    with col_demo2:
-        st.markdown("**Français 🇫🇷**")
-        for key in sample_keys:
-            st.write(f"• {get_translation(key, 'fr')}")
+#     with col_demo2:
+#         st.markdown("**Français 🇫🇷**")
+#         for key in sample_keys:
+#             st.write(f"• {get_translation(key, 'fr')}")
     
-    with col_demo3:
-        st.markdown("**العربية 🇸🇦**")
-        for key in sample_keys:
-            st.write(f"• {get_translation(key, 'ar')}")
+#     with col_demo3:
+#         st.markdown("**العربية 🇸🇦**")
+#         for key in sample_keys:
+#             st.write(f"• {get_translation(key, 'ar')}")
     
-    st.markdown("---")
-    st.info("💡 **Tip:** Select different languages from the dropdown above to see the entire interface change to your chosen language!")
+#     st.markdown("---")
+#     st.info("💡 **Tip:** Select different languages from the dropdown above to see the entire interface change to your chosen language!")
 
 # Import notification system
 try:
