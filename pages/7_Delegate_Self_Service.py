@@ -2,13 +2,30 @@
 import streamlit as st
 import pandas as pd
 from lib.ui import apply_brand
-from lib.hide_streamlit_ui import apply_hide_streamlit_ui
 from staff_service import load_staff_df, save_staff_df
 
 st.set_page_config(page_title="Delegate Self-Service — Insaka", page_icon="👤", layout="wide")
 
-# Apply clean UI (hides Streamlit elements)
-apply_hide_streamlit_ui()
+# Hide sidebar and navigation for delegates
+st.markdown("""
+<style>
+    .stApp > header {
+        display: none;
+    }
+    .stApp > div[data-testid="stToolbar"] {
+        display: none;
+    }
+    .stSidebar {
+        display: none;
+    }
+    .stApp > div[data-testid="stSidebar"] {
+        display: none;
+    }
+    .stApp > div[data-testid="stSidebar"] > div {
+        display: none;
+    }
+</style>
+""", unsafe_allow_html=True)
 
 apply_brand()
 

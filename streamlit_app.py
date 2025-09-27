@@ -1,10 +1,6 @@
 # streamlit_app.py
 from __future__ import annotations
 import streamlit as st
-from lib.hide_streamlit_ui import apply_hide_streamlit_ui, apply_pwa_meta_tags
-
-# Hide Streamlit UI elements for clean PWA experience
-apply_hide_streamlit_ui()
 
 # Add PWA meta tags and service worker registration
 st.markdown("""
