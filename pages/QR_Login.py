@@ -26,19 +26,18 @@ def _set_session_and_go(delegate):
     st.session_state.delegate_title = delegate.get('Title', '')
     st.session_state.delegate_nationality = delegate.get('Nationality', '')
     st.session_state.delegate_phone = delegate.get('Phone', '')
-    
-    st.balloons()
-    
-    # Show delegate info
-    st.markdown("### 🎉 Login Successful!")
-    st.markdown(f"**Welcome, {delegate.get('Full Name', '')}!**")
-    st.markdown(f"**Organization:** {delegate.get('Organization', '')}")
-    st.markdown(f"**Category:** {delegate.get('Attendee Type', '')}")
-    
-    st.markdown("🔄 Redirecting to your dashboard...")
-    
-    # Redirect to dashboard
-    st.switch_page("pages/1_Delegate_Dashboard.py")
+
+    # Navigate (try a couple paths)
+    try:
+        st.switch_page("pages/1_Delegate_Dashboard.py")
+    except Exception:
+        try:
+            st.switch_page("1_Delegate_Dashboard.py")
+        except Exception:
+            st.markdown(
+                "<script>window.location.href = window.location.origin + '/?page=1_Delegate_Dashboard.py';</script>",
+                unsafe_allow_html=True,
+            )
     st.stop()
 
 st.set_page_config(page_title="QR Code Login — Insaka", page_icon="📱", layout="wide")
@@ -134,12 +133,15 @@ if qr_data_from_url:
         if success:
             st.success(f"✅ {message}")
             st.markdown("🔄 Setting session and redirecting...")
-            # Clear the URL parameter to prevent re-processing
-            st.query_params.clear()
+            # Don't clear query params before switching pages - let redirect happen first
             _set_session_and_go(delegate)  # this calls st.switch_page(...) and st.stop()
         else:
             st.error(f"❌ {message}")
             st.markdown("**Debug - Authentication failed. Check the data above.**")
+
+# Test dashboard link to verify correct path
+st.markdown("### 🔗 Test Dashboard Link")
+st.page_link("pages/1_Delegate_Dashboard.py", label="Test dashboard link ➜")
 
 # QR Code Login Section
 st.markdown("## 📱 QR Code Login")
@@ -286,47 +288,8 @@ if login_method == "📱 Scan QR Code":
          if uploaded_file is not None:
              st.success("QR code image uploaded! Please use manual entry method below to enter the QR data.")
      
-     # Debug: Show what we received from the component  
-    st.markdown(f"**Debug - Component returned:** `{qr_scanned_value}`")
-     
-     # If the component returned a QR payload, process it (no URL tricks needed)
-    if qr_scanned_value:
-         qr_text = qr_scanned_value  # raw string from the QR
-         st.success(f"🎉 QR Code detected! Processing: `{qr_text}`")
-
-         # Normalize / parse (your helper)
-         norm_text, payload = _normalize_qr_payload(qr_text)
-
-         with st.spinner("Authenticating..."):
-             success, message, delegate = authenticate_with_qr_code(norm_text, staff_df)
-
-             # Fallback: direct lookup by ID
-             if not success and isinstance(payload, dict) and payload.get("delegate_id"):
-                 norm_id = str(payload["delegate_id"])
-                 try:
-                     match_df = staff_df[staff_df["ID"].astype(str) == norm_id]
-                     if not match_df.empty:
-                         row = match_df.iloc[0].to_dict()
-                         delegate = {
-                             'ID': row.get('ID'),
-                             'Full Name': row.get('Full Name') or row.get('Name') or '',
-                             'Organization': row.get('Organization') or row.get('Company') or '',
-                             'Attendee Type': row.get('Attendee Type') or row.get('Category') or '',
-                             'Title': row.get('Title') or '',
-                             'Nationality': row.get('Nationality') or '',
-                             'Phone': row.get('Phone') or row.get('Contact') or '',
-                         }
-                         success, message = True, "Authenticated by ID lookup"
-                 except Exception as e:
-                     st.info(f"Debug: ID lookup failed ({e})")
-
-             if success:
-                 st.success(f"✅ {message}")
-                 _set_session_and_go(delegate)  # this calls st.switch_page(...) and st.stop()
-             else:
-                 st.error(f"❌ {message}")
-    else:
-         st.info("📷 No QR data received from scanner yet. Try scanning a QR code.")
+     # Component-return path removed - using URL parameter approach only
+    st.info("📷 QR scanner ready. Scan a QR code to authenticate.")
     
     # Manual test with the detected QR data
     st.markdown("---")
