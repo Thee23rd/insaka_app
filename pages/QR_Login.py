@@ -190,9 +190,9 @@ if login_method == "📱 Scan QR Code":
         
     
      # Render the component and CAPTURE its return value (the scanned QR payload)
-    try:
-         qr_scanned_value = components.html(scanner_html, height=520, key="qr_scanner")
-    except Exception as e:
+     try:
+         qr_scanned_value = components.html(scanner_html, height=520)
+     except Exception as e:
          st.error(f"Component error: {str(e)}")
          st.markdown("**Fallback:** Camera scanner unavailable. Please use manual entry below.")
          qr_scanned_value = None
