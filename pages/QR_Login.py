@@ -11,9 +11,35 @@ import streamlit.components.v1 as components
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from lib.ui import apply_brand
-from lib.qr_system import authenticate_with_qr_code, create_qr_scanner_script
+from lib.qr_system import authenticate_with_qr_code, create_qr_scanner_script, _normalize_qr_payload
 from staff_service import load_staff_df
 from lib.translations import get_translation, get_text_direction, is_rtl_language
+
+def _set_session_and_go(delegate):
+    """Set session state and redirect to delegate dashboard"""
+    # Set session state for authenticated delegate
+    st.session_state.delegate_authenticated = True
+    st.session_state.delegate_id = delegate.get('ID')
+    st.session_state.delegate_name = delegate.get('Full Name', '')
+    st.session_state.delegate_organization = delegate.get('Organization', '')
+    st.session_state.delegate_category = delegate.get('Attendee Type', '')
+    st.session_state.delegate_title = delegate.get('Title', '')
+    st.session_state.delegate_nationality = delegate.get('Nationality', '')
+    st.session_state.delegate_phone = delegate.get('Phone', '')
+    
+    st.balloons()
+    
+    # Show delegate info
+    st.markdown("### 🎉 Login Successful!")
+    st.markdown(f"**Welcome, {delegate.get('Full Name', '')}!**")
+    st.markdown(f"**Organization:** {delegate.get('Organization', '')}")
+    st.markdown(f"**Category:** {delegate.get('Attendee Type', '')}")
+    
+    st.markdown("🔄 Redirecting to your dashboard...")
+    
+    # Redirect to dashboard
+    st.switch_page("pages/1_Delegate_Dashboard.py")
+    st.stop()
 
 st.set_page_config(page_title="QR Code Login — Insaka", page_icon="📱", layout="wide")
 

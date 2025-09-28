@@ -30,6 +30,46 @@ def generate_delegate_qr_data(delegate_id, delegate_name, organization):
     }
     return json.dumps(qr_data)
 
+def _normalize_qr_payload(qr_text):
+    """Normalize and parse QR code payload"""
+    if not qr_text:
+        return None, None
+    
+    # Clean the text
+    clean_text = str(qr_text).strip().replace('\uFEFF', '').replace('\u200B-\u200D\uFEFF', '')
+    
+    # Try to parse as JSON
+    try:
+        payload = json.loads(clean_text)
+        return clean_text, payload
+    except json.JSONDecodeError:
+        # Try to fix common JSON issues
+        try:
+            # Fix missing quotes around keys
+            fixed_text = clean_text.replace('{', '{"').replace('}', '"}').replace(':', '":"').replace(',', '","')
+            # Fix the first and last quotes
+            if fixed_text.startswith('{"') and fixed_text.endswith('"}'):
+                fixed_text = fixed_text[1:-1]  # Remove extra quotes
+                payload = json.loads(fixed_text)
+                return fixed_text, payload
+        except:
+            pass
+        
+        # If it's just a number, treat it as delegate ID
+        if clean_text.isdigit():
+            payload = {
+                "type": "delegate_login",
+                "delegate_id": clean_text,
+                "delegate_name": "",
+                "organization": "",
+                "timestamp": datetime.now().isoformat(),
+                "conference": "Insaka Conference 2025"
+            }
+            return json.dumps(payload), payload
+        
+        # Return raw text and None payload
+        return clean_text, None
+
 def create_fallback_qr_code(delegate_id, delegate_name, organization, size=200):
     """Create a fallback QR code representation when libraries aren't available"""
     # Create a QR-like pattern using simple blocks
