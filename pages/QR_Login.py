@@ -207,7 +207,9 @@ if login_method == "📱 Scan QR Code":
     
     # Handle QR code data from scanner
     if 'qr_data' in st.query_params:
-        qr_data_input = st.query_params['qr_data']
+        raw = st.query_params['qr_data']
+        qr_data_input = raw[0] if isinstance(raw, list) else raw
+
         st.success("QR Code detected! Processing...")
         
         with st.spinner("Authenticating..."):
@@ -215,7 +217,7 @@ if login_method == "📱 Scan QR Code":
             
             if success:
                 st.success(f"✅ {message}")
-                
+
                 # Set session state for authenticated delegate
                 st.session_state.delegate_authenticated = True
                 st.session_state.delegate_id = delegate.get('ID')
@@ -225,20 +227,32 @@ if login_method == "📱 Scan QR Code":
                 st.session_state.delegate_title = delegate.get('Title', '')
                 st.session_state.delegate_nationality = delegate.get('Nationality', '')
                 st.session_state.delegate_phone = delegate.get('Phone', '')
-                
-                st.balloons()
-                
-                # Show success message and redirect immediately
-                st.markdown("### 🎉 Login Successful!")
-                st.markdown(f"**Welcome, {delegate.get('Full Name', '')}!**")
-                st.markdown(f"**Organization:** {delegate.get('Organization', '')}")
-                st.markdown(f"**Category:** {delegate.get('Attendee Type', '')}")
-                st.markdown("🔄 Redirecting to your dashboard...")
-                
-                # Immediate redirect
-                st.switch_page("pages/1_Delegate_Dashboard.py")
+
+                # Clear QR from URL so refreshes don’t re-trigger auth
+                try:
+                    st.query_params.clear()
+                except Exception:
+                    pass
+
+                # Try both common switch_page targets, then stop
+                try:
+                    st.switch_page("pages/1_Delegate_Dashboard.py")
+                except Exception:
+                    try:
+                        st.switch_page("1_Delegate_Dashboard.py")  # some setups want no "pages/"
+                    except Exception:
+                        # As a last resort, client-side redirect (works everywhere)
+                        st.markdown("""
+                            <script>
+                            // Navigate parent (not the iframe)
+                            window.top.location.href = window.top.location.href.split('?')[0]
+                            + '?page=1_Delegate_Dashboard.py';
+                            </script>
+                        """, unsafe_allow_html=True)
+                st.stop()
             else:
                 st.error(f"❌ {message}")
+
                 st.markdown("Please try scanning the QR code again.")
 
 else:
