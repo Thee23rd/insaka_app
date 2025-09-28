@@ -228,18 +228,14 @@ if login_method == "📱 Scan QR Code":
                 
                 st.balloons()
                 
-                # Show success message briefly then auto-redirect
+                # Show success message and redirect immediately
                 st.markdown("### 🎉 Login Successful!")
                 st.markdown(f"**Welcome, {delegate.get('Full Name', '')}!**")
                 st.markdown(f"**Organization:** {delegate.get('Organization', '')}")
                 st.markdown(f"**Category:** {delegate.get('Attendee Type', '')}")
-                
-                # Auto-redirect to dashboard
                 st.markdown("🔄 Redirecting to your dashboard...")
                 
-                # Use Streamlit's built-in redirect
-                import time
-                time.sleep(1)  # Brief delay to show success message
+                # Immediate redirect
                 st.switch_page("pages/1_Delegate_Dashboard.py")
             else:
                 st.error(f"❌ {message}")
@@ -283,8 +279,8 @@ else:
                     st.markdown(f"**Category:** {delegate.get('Attendee Type', '')}")
                     
                     st.markdown("🔄 Redirecting to your dashboard...")
-                    import time
-                    time.sleep(1)  # Brief delay to show success message
+                    
+                    # Immediate redirect
                     st.switch_page("pages/1_Delegate_Dashboard.py")
                 else:
                     st.error(f"❌ {message}")
