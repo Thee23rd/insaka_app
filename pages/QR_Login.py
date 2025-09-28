@@ -155,35 +155,23 @@ if login_method == "📱 Scan QR Code":
               const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
               const code = jsQR(imageData.data, imageData.width, imageData.height);
 
-              if (code && code.data) {
-                console.log('QR Code detected:', code.data);
-                scanning = false;
-                statusEl.textContent = '✅ QR Code detected! Redirecting...';
-                
-                // Try multiple redirect methods
-                try {
-                  // Method 1: Direct URL update
-                  const url = new URL(window.top.location.href);
-                  url.searchParams.set('qr_data', code.data);
-                  console.log('Attempting direct redirect to:', url.toString());
-                  
-                  // Force redirect
-                  window.top.location.href = url.toString();
-                  
-                } catch (redirectErr) {
-                  console.log('Direct redirect failed:', redirectErr);
-                  
-                  // Method 2: PostMessage fallback
-                  try {
-                    window.parent.postMessage({ type: 'insaka:qr', qr: code.data }, '*');
-                    console.log('QR data sent to parent:', code.data);
-                    statusEl.textContent = '✅ QR detected! Check if page reloaded...';
-                  } catch (postMessageErr) {
-                    console.log('PostMessage failed:', postMessageErr);
-                    statusEl.textContent = '❌ Both redirect methods failed. Please refresh manually.';
-                  }
-                }
-                return;
+               if (code && code.data) {
+                 console.log('QR Code detected:', code.data);
+                 scanning = false;
+                 statusEl.textContent = '✅ QR Code detected! Redirecting...';
+                 
+                 // Direct redirect (no iframe sandboxing)
+                 try {
+                   const url = new URL(window.location.href);
+                   url.searchParams.set('qr_data', code.data);
+                   console.log('QR data detected, redirecting to:', url.toString());
+                   statusEl.textContent = '✅ QR detected! Redirecting...';
+                   window.location.href = url.toString();
+                 } catch (redirectErr) {
+                   console.log('Redirect failed:', redirectErr);
+                   statusEl.textContent = '❌ Redirect failed. Please refresh manually.';
+                 }
+                 return;
               } else {
                 statusEl.textContent = '📷 Scanning... Point camera at QR code';
               }
@@ -198,24 +186,9 @@ if login_method == "📱 Scan QR Code":
         </script>
         """
         
-    # Parent page listener: receives QR data from the scanner iframe and redirects
-    st.markdown("""
-    <script>
-      window.addEventListener('message', function (event) {
-        try {
-          const data = event.data || {};
-          if (data.type === 'insaka:qr' && typeof data.qr === 'string') {
-            const url = new URL(window.location.href);
-            url.searchParams.set('qr_data', data.qr);   // keep raw; Python will parse/normalize
-            window.location.href = url.toString();      // do redirect from the parent
-          }
-        } catch (e) { console.error('QR listener error:', e); }
-      }, false);
-    </script>
-    """, unsafe_allow_html=True)
     
-    # Use components.html for better JavaScript execution
-    components.html(simple_scanner_html, height=400)
+     # Use st.markdown for direct JavaScript execution (no iframe sandboxing)
+    st.markdown(simple_scanner_html, unsafe_allow_html=True)
     
     # Manual redirect button as backup
     st.markdown("---")
