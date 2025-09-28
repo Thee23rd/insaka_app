@@ -249,7 +249,7 @@ current_user_name = st.session_state.get('delegate_name', 'Anonymous User')
 # Back to dashboard button
 col1, col2, col3 = st.columns([1, 2, 1])
 with col1:
-    if st.button("🏠 Back to Dashboard", use_container_width=True):
+    if st.button("🏠 Back to Dashboard", width='stretch'):
         st.switch_page("pages/1_Delegate_Dashboard.py")
 
 with col2:
@@ -385,21 +385,21 @@ else:
                     
                     with col_whatsapp:
                         whatsapp_url = f"https://wa.me/?text={post_text}%20{post_url}"
-                        if st.button("📱 WhatsApp", key=f"whatsapp_{post_id}", use_container_width=True):
+                        if st.button("📱 WhatsApp", key=f"whatsapp_{post_id}", width='stretch'):
                             st.markdown(f'<script>window.open("{whatsapp_url}", "_blank")</script>', unsafe_allow_html=True)
                     
                     with col_twitter:
                         twitter_url = f"https://twitter.com/intent/tweet?text={post_text}&url={post_url}"
-                        if st.button("🐦 Twitter", key=f"twitter_{post_id}", use_container_width=True):
+                        if st.button("🐦 Twitter", key=f"twitter_{post_id}", width='stretch'):
                             st.markdown(f'<script>window.open("{twitter_url}", "_blank")</script>', unsafe_allow_html=True)
                     
                     with col_linkedin:
                         linkedin_url = f"https://www.linkedin.com/sharing/share-offsite/?url={post_url}"
-                        if st.button("💼 LinkedIn", key=f"linkedin_{post_id}", use_container_width=True):
+                        if st.button("💼 LinkedIn", key=f"linkedin_{post_id}", width='stretch'):
                             st.markdown(f'<script>window.open("{linkedin_url}", "_blank")</script>', unsafe_allow_html=True)
                     
                     with col_copy:
-                        if st.button("📋 Copy Link", key=f"copy_{post_id}", use_container_width=True):
+                        if st.button("📋 Copy Link", key=f"copy_{post_id}", width='stretch'):
                             # Use JavaScript to copy to clipboard
                             st.markdown(f"""
                             <script>
@@ -425,13 +425,13 @@ else:
                     col_confirm, col_cancel = st.columns(2)
                     
                     with col_confirm:
-                        if st.button("✅ Share & Count", key=f"confirm_share_{post_id}", use_container_width=True):
+                        if st.button("✅ Share & Count", key=f"confirm_share_{post_id}", width='stretch'):
                             add_interaction(post_id, current_user_id, current_user_name, 'share')
                             st.session_state[f'show_share_options_{post_id}'] = False
                             st.rerun()
                     
                     with col_cancel:
-                        if st.button("❌ Cancel", key=f"cancel_share_{post_id}", use_container_width=True):
+                        if st.button("❌ Cancel", key=f"cancel_share_{post_id}", width='stretch'):
                             st.session_state[f'show_share_options_{post_id}'] = False
                             st.rerun()
                     
@@ -485,10 +485,10 @@ else:
                 col_submit, col_cancel = st.columns([1, 1])
                 
                 with col_submit:
-                    comment_submitted = st.form_submit_button("💬 Post Comment", use_container_width=True, type="primary")
+                    comment_submitted = st.form_submit_button("💬 Post Comment", width='stretch', type="primary")
                 
                 with col_cancel:
-                    st.form_submit_button("❌ Cancel", use_container_width=True)
+                    st.form_submit_button("❌ Cancel", width='stretch')
                 
                 if comment_submitted and comment_text.strip():
                     add_interaction(
@@ -517,7 +517,7 @@ with col_footer1:
     st.caption("💡 Tip: Use mentions (@name) to tag fellow delegates in your comments!")
 with col_footer2:
     if hasattr(st.session_state, 'delegate_authenticated') and st.session_state.delegate_authenticated:
-        if st.button("🚪 Logout", use_container_width=True, key="interactive_pr_logout"):
+        if st.button("🚪 Logout", width='stretch', key="interactive_pr_logout"):
             # Clear all session state
             for key in list(st.session_state.keys()):
                 if key.startswith('delegate_'):

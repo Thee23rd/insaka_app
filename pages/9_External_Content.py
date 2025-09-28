@@ -323,27 +323,27 @@ st.markdown("### 🚀 Quick Access")
 quick_col1, quick_col2, quick_col3, quick_col4, quick_col5 = st.columns(5)
 
 with quick_col1:
-    if st.button("🏢 Exhibitors", key="quick_local_exhibitors", use_container_width=True, type="primary"):
+    if st.button("🏢 Exhibitors", key="quick_local_exhibitors", width='stretch', type="primary"):
         st.session_state.quick_load_local_exhibitors = True
         st.rerun()
 
 with quick_col2:
-    if st.button("🎤 Speakers", key="quick_local_speakers", use_container_width=True):
+    if st.button("🎤 Speakers", key="quick_local_speakers", width='stretch'):
         st.session_state.quick_load_local_speakers = True
         st.rerun()
 
 with quick_col3:
-    if st.button("📢 Announcements", key="quick_announcements", use_container_width=True):
+    if st.button("📢 Announcements", key="quick_announcements", width='stretch'):
         st.session_state.quick_load_announcements = True
         st.rerun()
 
 with quick_col4:
-    if st.button("📰 Updates & News", key="quick_updates_news", use_container_width=True):
+    if st.button("📰 Updates & News", key="quick_updates_news", width='stretch'):
         st.session_state.quick_load_updates_news = True
         st.rerun()
 
 with quick_col5:
-    if st.button("📸 Interactive Posts", key="quick_pr_posts", use_container_width=True):
+    if st.button("📸 Interactive Posts", key="quick_pr_posts", width='stretch'):
         # Track view for all posts when accessing interactive page
         try:
             with open("data/pr_posts.json", "r", encoding="utf-8") as f:
@@ -535,7 +535,7 @@ st.markdown("---")
 # )
 
 # # Fetch button
-# if st.button("🔍 Fetch Content", type="primary", use_container_width=True):
+# if st.button("🔍 Fetch Content", type="primary", width='stretch'):
 #     if website_url:
 #         with st.spinner("Fetching content from website..."):
 #             if ADVANCED_SCRAPING and use_selector and content_selector:
@@ -700,7 +700,7 @@ with col_footer1:
     st.caption("Need help? Contact the conference organizers or visit the registration desks.")
 with col_footer2:
     if hasattr(st.session_state, 'delegate_authenticated') and st.session_state.delegate_authenticated:
-        if st.button("🚪 Logout", use_container_width=True, key="external_content_logout"):
+        if st.button("🚪 Logout", width='stretch', key="external_content_logout"):
             # Clear all session state
             for key in list(st.session_state.keys()):
                 if key.startswith('delegate_'):

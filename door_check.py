@@ -11,7 +11,7 @@ if q.strip():
         df["Name"].str.lower().str.contains(qq, na=False) |
         df["Organization"].str.lower().str.contains(qq, na=False)
     ]
-st.dataframe(df, use_container_width=True, height=420)
+st.dataframe(df, width='stretch', height=420)
 
 picked = st.multiselect("Select IDs to mark checked-in", options=df["ID"].tolist())
 if st.button("Check-in Selected"):

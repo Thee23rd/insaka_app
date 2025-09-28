@@ -121,7 +121,7 @@ if NOTIFICATION_SYSTEM_AVAILABLE:
 # Quick sound test for matchmaking
 # if NOTIFICATION_SYSTEM_AVAILABLE:
 #     st.markdown("### 🔊 Sound Test")
-#     if st.button("🔊🔊🔊 TEST LOUD NOTIFICATION 🔊🔊🔊", use_container_width=True, type="primary"):
+#     if st.button("🔊🔊🔊 TEST LOUD NOTIFICATION 🔊🔊🔊", width='stretch', type="primary"):
 #         st.markdown("""
 #         <script>
 #         console.log('🔊 MATCHMAKING SOUND TEST...');
@@ -140,7 +140,7 @@ if not hasattr(st.session_state, 'delegate_authenticated') or not st.session_sta
     st.error("🔒 Authentication Required")
     st.info("Please authenticate first by visiting the Delegate Self-Service page.")
     
-    if st.button("🔑 Go to Authentication", use_container_width=True):
+    if st.button("🔑 Go to Authentication", width='stretch'):
         st.switch_page("pages/7_Delegate_Self_Service.py")
     
     st.stop()
@@ -150,7 +150,7 @@ col_header, col_logout = st.columns([3, 1])
 with col_header:
     st.success(f"✅ Authenticated as: **{st.session_state.delegate_name}** (ID: {st.session_state.delegate_id})")
 with col_logout:
-    if st.button("🚪 Logout", use_container_width=True):
+    if st.button("🚪 Logout", width='stretch'):
         # Clear all session state
         for key in list(st.session_state.keys()):
             if key.startswith('delegate_'):
@@ -224,7 +224,7 @@ current_user_org = st.session_state.get('delegate_organization', 'Unknown Organi
 # Back to dashboard button
 col1, col2, col3 = st.columns([1, 2, 1])
 with col1:
-    if st.button("🏠 Back to Dashboard", use_container_width=True):
+    if st.button("🏠 Back to Dashboard", width='stretch'):
         st.switch_page("pages/1_Delegate_Dashboard.py")
 
 with col2:
@@ -302,7 +302,7 @@ with tab1:
                             connection_status = get_connection_status(current_user_id, delegate.get('ID'))
                             
                             if connection_status == 'none':
-                                if st.button(f"🤝 Connect", key=f"connect_{delegate.get('ID')}", use_container_width=True):
+                                if st.button(f"🤝 Connect", key=f"connect_{delegate.get('ID')}", width='stretch'):
                                     # Send connection request
                                     interactions = load_matchmaking_data()
                                     new_interaction = {
@@ -336,13 +336,13 @@ with tab1:
                                 col_chat, col_meet = st.columns(2)
                                 
                                 with col_chat:
-                                    if st.button(f"💬 Chat", key=f"chat_{delegate.get('ID')}", use_container_width=True):
+                                    if st.button(f"💬 Chat", key=f"chat_{delegate.get('ID')}", width='stretch'):
                                         st.session_state.selected_chat_user = delegate
                                         st.session_state.selected_chat_user_id = delegate.get('ID')
                                         st.rerun()
                                 
                                 with col_meet:
-                                    if st.button(f"📅 Meet", key=f"meet_{delegate.get('ID')}", use_container_width=True):
+                                    if st.button(f"📅 Meet", key=f"meet_{delegate.get('ID')}", width='stretch'):
                                         st.session_state.show_meeting_request = True
                                         st.session_state.meeting_target_user = delegate
                                         st.rerun()
@@ -379,7 +379,7 @@ with tab2:
                 col_accept, col_decline = st.columns(2)
                 
                 with col_accept:
-                    if st.button("✅ Accept Connection", key=f"accept_conn_{request.get('id')}", use_container_width=True):
+                    if st.button("✅ Accept Connection", key=f"accept_conn_{request.get('id')}", width='stretch'):
                         # Update connection status
                         interactions = load_matchmaking_data()
                         for i in interactions:
@@ -400,7 +400,7 @@ with tab2:
                         st.rerun()
                 
                 with col_decline:
-                    if st.button("❌ Decline", key=f"decline_conn_{request.get('id')}", use_container_width=True):
+                    if st.button("❌ Decline", key=f"decline_conn_{request.get('id')}", width='stretch'):
                         # Update connection status
                         interactions = load_matchmaking_data()
                         for i in interactions:
@@ -549,7 +549,7 @@ with tab3:
             col_send, col_close = st.columns([1, 1])
             
             with col_send:
-                    if st.form_submit_button("📤 Send Message", use_container_width=True):
+                    if st.form_submit_button("📤 Send Message", width='stretch'):
                         if message.strip():
                             # Save chat message to matchmaking data
                             interactions = load_matchmaking_data()
@@ -570,7 +570,7 @@ with tab3:
                             st.rerun()
             
             with col_close:
-                if st.form_submit_button("❌ Close Chat", use_container_width=True):
+                if st.form_submit_button("❌ Close Chat", width='stretch'):
                     st.session_state.selected_chat_user = None
                     st.session_state.selected_chat_user_id = None
                     st.rerun()
@@ -613,7 +613,7 @@ with tab3:
                 col_send, col_cancel = st.columns(2)
                 
                 with col_send:
-                    if st.form_submit_button("📤 Send Contact Info", use_container_width=True):
+                    if st.form_submit_button("📤 Send Contact Info", width='stretch'):
                         if not (share_email or share_phone):
                             st.error("Please select at least one contact method!")
                         elif share_phone and not phone_display.strip():
@@ -655,7 +655,7 @@ with tab3:
                             st.rerun()
                 
                 with col_cancel:
-                    if st.form_submit_button("❌ Cancel", use_container_width=True):
+                    if st.form_submit_button("❌ Cancel", width='stretch'):
                         st.session_state.show_contact_form = False
                         st.session_state.contact_target_user = None
                         st.rerun()
@@ -763,7 +763,7 @@ with tab4:
                 col_send, col_cancel = st.columns(2)
                 
                 with col_send:
-                    if st.form_submit_button("📤 Send Contact Information", use_container_width=True):
+                    if st.form_submit_button("📤 Send Contact Information", width='stretch'):
                         if not (share_email or share_phone or share_linkedin or share_website):
                             st.error("Please select at least one contact method to share!")
                         elif share_phone and not phone_display.strip():
@@ -813,7 +813,7 @@ with tab4:
                             st.rerun()
                 
                 with col_cancel:
-                    if st.form_submit_button("❌ Cancel", use_container_width=True):
+                    if st.form_submit_button("❌ Cancel", width='stretch'):
                         st.rerun()
     else:
         st.info("No connected delegates yet. Connect with delegates first to share contact information!")
@@ -962,7 +962,7 @@ with tab5:
             col_send, col_cancel = st.columns(2)
             
             with col_send:
-                if st.form_submit_button("📤 Send Request", use_container_width=True):
+                if st.form_submit_button("📤 Send Request", width='stretch'):
                     # Create meeting request
                     interactions = load_matchmaking_data()
                     new_request = {
@@ -986,7 +986,7 @@ with tab5:
                     st.rerun()
             
             with col_cancel:
-                if st.form_submit_button("❌ Cancel", use_container_width=True):
+                if st.form_submit_button("❌ Cancel", width='stretch'):
                     st.session_state.show_meeting_request = False
                     st.session_state.meeting_target_user = None
                     st.rerun()
@@ -1054,7 +1054,7 @@ with tab6:
                         connection_status = get_connection_status(current_user_id, delegate.get('ID'))
                         
                         if connection_status == 'none':
-                            if st.button(f"🤝 Connect", key=f"rec_connect_{delegate.get('ID')}", use_container_width=True):
+                            if st.button(f"🤝 Connect", key=f"rec_connect_{delegate.get('ID')}", width='stretch'):
                                 # Send connection request
                                 interactions = load_matchmaking_data()
                                 new_interaction = {
@@ -1085,7 +1085,7 @@ with tab6:
                             st.info("⏳ Pending")
                         
                         elif connection_status == 'accepted':
-                            if st.button(f"💬 Chat", key=f"rec_chat_{delegate.get('ID')}", use_container_width=True):
+                            if st.button(f"💬 Chat", key=f"rec_chat_{delegate.get('ID')}", width='stretch'):
                                 st.session_state.selected_chat_user = delegate
                                 st.session_state.selected_chat_user_id = delegate.get('ID')
                                 st.rerun()
@@ -1100,7 +1100,7 @@ col_footer1, col_footer2, col_footer3 = st.columns([2, 1, 2])
 with col_footer1:
     st.caption("💡 Tip: Be professional, respectful, and genuine in your networking interactions!")
 with col_footer2:
-    if st.button("🚪 Logout", use_container_width=True, key="matchmaking_logout"):
+    if st.button("🚪 Logout", width='stretch', key="matchmaking_logout"):
         # Clear all session state
         for key in list(st.session_state.keys()):
             if key.startswith('delegate_'):

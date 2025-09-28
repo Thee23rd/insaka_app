@@ -49,7 +49,7 @@ for sp in speakers:
         cols = st.columns([1,3,1])
         with cols[0]:
             if sp.get("photo"):
-                st.image(sp["photo"], use_container_width=True)
+                st.image(sp["photo"], width='stretch')
         with cols[1]:
             st.markdown(f"### {sp['name']}")
             st.caption(sp.get("talk","Talk"))
@@ -66,7 +66,7 @@ with col_footer1:
     st.caption("Need help? Contact the conference organizers or visit the registration desk.")
 with col_footer2:
     if hasattr(st.session_state, 'delegate_authenticated') and st.session_state.delegate_authenticated:
-        if st.button("🚪 Logout", use_container_width=True, key="speakers_logout"):
+        if st.button("🚪 Logout", width='stretch', key="speakers_logout"):
             # Clear all session state
             for key in list(st.session_state.keys()):
                 if key.startswith('delegate_'):

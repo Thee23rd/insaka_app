@@ -52,9 +52,9 @@ with st.form("admin_login", clear_on_submit=False):
     
     col1, col2 = st.columns(2)
     with col1:
-        submitted = st.form_submit_button("🔓 Access Admin Panel", use_container_width=True, type="primary")
+        submitted = st.form_submit_button("🔓 Access Admin Panel", width='stretch', type="primary")
     with col2:
-        if st.form_submit_button("🏠 Back to Main", use_container_width=True, type="secondary"):
+        if st.form_submit_button("🏠 Back to Main", width='stretch', type="secondary"):
             st.switch_page("pages/0_Landing.py")
     
     if submitted:

@@ -91,7 +91,7 @@ with st.form("add_announcement", clear_on_submit=True):
         height=150
     )
     
-    submitted = st.form_submit_button("📢 Post Announcement", type="primary", use_container_width=True)
+    submitted = st.form_submit_button("📢 Post Announcement", type="primary", width='stretch')
     
     if submitted:
         if title.strip() and content.strip():

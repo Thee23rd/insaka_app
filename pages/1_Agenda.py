@@ -58,7 +58,7 @@ with col_footer1:
     st.caption("Need help? Contact the conference organizers or visit the registration desk.")
 with col_footer2:
     if hasattr(st.session_state, 'delegate_authenticated') and st.session_state.delegate_authenticated:
-        if st.button("🚪 Logout", use_container_width=True, key="agenda_logout"):
+        if st.button("🚪 Logout", width='stretch', key="agenda_logout"):
             # Clear all session state
             for key in list(st.session_state.keys()):
                 if key.startswith('delegate_'):

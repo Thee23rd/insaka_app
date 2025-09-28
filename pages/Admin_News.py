@@ -101,7 +101,7 @@ with st.form("add_news", clear_on_submit=True):
         help="Upload an image to make your news more engaging"
     )
     
-    submitted = st.form_submit_button("📰 Post News", type="primary", use_container_width=True)
+    submitted = st.form_submit_button("📰 Post News", type="primary", width='stretch')
     
     if submitted:
         if title.strip() and content.strip():

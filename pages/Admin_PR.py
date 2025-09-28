@@ -129,7 +129,7 @@ with st.form("pr_post_form", clear_on_submit=True):
     with col_shares:
         shares = st.number_input("🔄 Shares", min_value=0, value=0)
     
-    submitted = st.form_submit_button("🚀 Publish PR Post", use_container_width=True, type="primary")
+    submitted = st.form_submit_button("🚀 Publish PR Post", width='stretch', type="primary")
     
     if submitted:
         if not post_title.strip():
@@ -184,15 +184,15 @@ st.markdown("### 🔗 Navigation")
 nav_col1, nav_col2, nav_col3 = st.columns(3)
 
 with nav_col1:
-    if st.button("🏠 Back to Admin Panel", use_container_width=True):
+    if st.button("🏠 Back to Admin Panel", width='stretch'):
         st.switch_page("pages/0_Admin.py")
 
 with nav_col2:
-    if st.button("📢 Manage Announcements", use_container_width=True):
+    if st.button("📢 Manage Announcements", width='stretch'):
         st.switch_page("pages/Admin_Announcements.py")
 
 with nav_col3:
-    if st.button("🌐 View Public Page", use_container_width=True):
+    if st.button("🌐 View Public Page", width='stretch'):
         st.switch_page("pages/9_External_Content.py")
 
 # Footer

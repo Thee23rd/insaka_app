@@ -38,7 +38,7 @@ if not hasattr(st.session_state, 'delegate_authenticated') or not st.session_sta
     st.error("🔒 Authentication Required")
     st.info("Please authenticate first by visiting the Delegate Self-Service page.")
     
-    if st.button("🔑 Go to Authentication", use_container_width=True):
+    if st.button("🔑 Go to Authentication", width='stretch'):
         st.switch_page("pages/7_Delegate_Self_Service.py")
     
     st.stop()
@@ -309,7 +309,7 @@ def get_total_notifications():
 # test_col1, test_col2, test_col3 = st.columns(3)
 
 # with test_col1:
-#     if st.button("🔔 Create Test Notifications", use_container_width=True):
+#     if st.button("🔔 Create Test Notifications", width='stretch'):
 #         if NOTIFICATION_SYSTEM_AVAILABLE:
 #             try:
 #                 create_test_notifications(current_user_id, 3)
@@ -321,7 +321,7 @@ def get_total_notifications():
 #             st.error("❌ Notification system not available")
 
 # with test_col2:
-#     if st.button("🗑️ Clear All Notifications", use_container_width=True):
+#     if st.button("🗑️ Clear All Notifications", width='stretch'):
 #         if NOTIFICATION_SYSTEM_AVAILABLE:
 #             try:
 #                 clear_all_notifications(current_user_id)
@@ -333,7 +333,7 @@ def get_total_notifications():
 #             st.error("❌ Notification system not available")
 
 # with test_col3:
-#     if st.button("🔄 Refresh Page", use_container_width=True):
+#     if st.button("🔄 Refresh Page", width='stretch'):
 #         st.rerun()
 
 # Sound and vibration test buttons
@@ -343,7 +343,7 @@ def get_total_notifications():
 #     st.warning("🔊 **Click the button below to test if sound works!** This will play a loud triple beep to get attention.")
     
 #     # Big prominent test button
-#     if st.button("🔊🔊🔊 TEST LOUD NOTIFICATION SOUND 🔊🔊🔊", use_container_width=True, type="primary"):
+#     if st.button("🔊🔊🔊 TEST LOUD NOTIFICATION SOUND 🔊🔊🔊", width='stretch', type="primary"):
 #         st.markdown("""
 #         <script>
 #         console.log('🔊 TESTING LOUD NOTIFICATION...');
@@ -401,7 +401,7 @@ def get_total_notifications():
 #     col_sound, col_vibrate, col_visual = st.columns(3)
     
 #     with col_sound:
-#         if st.button("🔊 Sound Only", use_container_width=True):
+#         if st.button("🔊 Sound Only", width='stretch'):
 #             st.markdown("""
 #             <script>
 #             if (window.playNotificationSound) {
@@ -412,7 +412,7 @@ def get_total_notifications():
 #             st.success("🔊 Sound test triggered!")
     
 #     with col_vibrate:
-#         if st.button("📳 Vibration Only", use_container_width=True):
+#         if st.button("📳 Vibration Only", width='stretch'):
 #             st.markdown("""
 #             <script>
 #             if (window.vibrateDevice) {
@@ -423,7 +423,7 @@ def get_total_notifications():
 #             st.success("📳 Vibration test triggered!")
     
 #     with col_visual:
-#         if st.button("👁️ Visual Alert", use_container_width=True):
+#         if st.button("👁️ Visual Alert", width='stretch'):
 #             st.markdown("""
 #             <script>
 #             if (window.showVisualAlert) {
@@ -534,16 +534,65 @@ with st.expander(f"👤 {get_translation('my_information', current_language)}", 
     col1, col2, col3 = st.columns(3)
 
     with col1:
-        if st.button(f"✏️ {get_translation('update_details', current_language)}", use_container_width=True):
+        if st.button(f"✏️ {get_translation('update_details', current_language)}", width='stretch'):
             st.switch_page("pages/7_Delegate_Self_Service.py")
 
     with col2:
-        if st.button(f"📱 {get_translation('download_materials', current_language)}", use_container_width=True):
+        if st.button(f"📱 {get_translation('download_materials', current_language)}", width='stretch'):
             st.switch_page("pages/5_Materials.py")
 
     with col3:
-        if st.button(f"✅ {get_translation('daily_checkin', current_language)}", use_container_width=True):
+        if st.button(f"✅ {get_translation('daily_checkin', current_language)}", width='stretch'):
             st.switch_page("pages/8_Check_In.py")
+
+    # QR Code section
+    st.markdown("---")
+    st.markdown("### 📱 Your QR Code")
+    
+    # Generate and display QR code for current delegate
+    try:
+        from lib.qr_system import create_qr_code
+        
+        qr_img, qr_data = create_qr_code(
+            st.session_state.delegate_id,
+            st.session_state.delegate_name,
+            st.session_state.delegate_organization,
+            size=200
+        )
+        
+        if qr_img is not None:
+            col_qr1, col_qr2 = st.columns([1, 2])
+            
+            with col_qr1:
+                st.image(qr_img, caption="Your Conference QR Code", width='stretch')
+            
+            with col_qr2:
+                st.markdown("**📱 QR Code Benefits:**")
+                st.markdown("• **Quick Login** - Scan to access your dashboard")
+                st.markdown("• **Badge Integration** - Print on your conference badge")
+                st.markdown("• **Secure Access** - Unique to your account")
+                st.markdown("• **Mobile Friendly** - Works on any smartphone")
+                
+                if st.button("📥 Download QR Code", width='stretch'):
+                    # Save QR code temporarily for download
+                    import tempfile
+                    with tempfile.NamedTemporaryFile(delete=False, suffix='.png') as tmp_file:
+                        qr_img.save(tmp_file.name)
+                        
+                        with open(tmp_file.name, "rb") as file:
+                            st.download_button(
+                                label="📥 Download QR Code",
+                                data=file.read(),
+                                file_name=f"insaka_qr_{st.session_state.delegate_id}.png",
+                                mime="image/png",
+                                width='stretch'
+                            )
+        else:
+            st.info("📱 QR Code generation is not available. Your delegate ID is: **" + str(st.session_state.delegate_id) + "**")
+        
+    except Exception as e:
+        st.warning(f"Could not generate QR code: {str(e)}")
+        st.info("📱 Your delegate ID is: **" + str(st.session_state.delegate_id) + "**")
 
 st.write("")
 
@@ -562,7 +611,7 @@ with st.expander(f"🚀 {get_translation('quick_access', current_language)}", ex
         else:
             st.markdown(f"📅 **{get_translation('agenda', current_language)}**")
         
-        if st.button(get_translation('view_schedule', current_language), use_container_width=True, help="View conference schedule"):
+        if st.button(get_translation('view_schedule', current_language), width='stretch', help="View conference schedule"):
             st.switch_page("pages/1_Agenda.py")
 
     with col2:
@@ -575,7 +624,7 @@ with st.expander(f"🚀 {get_translation('quick_access', current_language)}", ex
         else:
             st.markdown(f"👥 **{get_translation('speakers', current_language)}**")
         
-        if st.button(get_translation('meet_speakers', current_language), use_container_width=True, help="Meet our speakers"):
+        if st.button(get_translation('meet_speakers', current_language), width='stretch', help="Meet our speakers"):
             st.switch_page("pages/2_Speakers.py")
 
     with col3:
@@ -588,7 +637,7 @@ with st.expander(f"🚀 {get_translation('quick_access', current_language)}", ex
         else:
             st.markdown(f"🏢 **{get_translation('exhibitors', current_language)}**")
         
-        if st.button(get_translation('explore_booths', current_language), use_container_width=True, help="Explore exhibitor booths"):
+        if st.button(get_translation('explore_booths', current_language), width='stretch', help="Explore exhibitor booths"):
             st.switch_page("pages/3_Exhibitors.py")
 
     with col4:
@@ -601,7 +650,7 @@ with st.expander(f"🚀 {get_translation('quick_access', current_language)}", ex
         else:
             st.markdown(f"🏛️ **{get_translation('venue', current_language)}**")
         
-        if st.button(get_translation('venue_info', current_language), use_container_width=True, help="Venue information"):
+        if st.button(get_translation('venue_info', current_language), width='stretch', help="Venue information"):
             st.switch_page("pages/6_Venue.py")
 
     with col5:
@@ -616,7 +665,7 @@ with st.expander(f"🚀 {get_translation('quick_access', current_language)}", ex
         else:
             st.markdown(f"🌐 **{get_translation('showcase_news', current_language)}**")
         
-        if st.button(get_translation('latest_updates', current_language), use_container_width=True, help="Latest news and announcements"):
+        if st.button(get_translation('latest_updates', current_language), width='stretch', help="Latest news and announcements"):
             st.switch_page("pages/9_External_Content.py")
 
     with col6:
@@ -646,7 +695,7 @@ with st.expander(f"🚀 {get_translation('quick_access', current_language)}", ex
         else:
             st.markdown(f"📸 **{get_translation('interactive_posts', current_language)}**")
         
-        if st.button(get_translation('engage_posts', current_language), use_container_width=True, help="Engage with conference posts"):
+        if st.button(get_translation('engage_posts', current_language), width='stretch', help="Engage with conference posts"):
             st.switch_page("pages/10_Interactive_PR.py")
 
     with col7:
@@ -671,7 +720,7 @@ with st.expander(f"🚀 {get_translation('quick_access', current_language)}", ex
         else:
             st.markdown(f"🤝 **{get_translation('matchmaking', current_language)}**")
         
-        if st.button(get_translation('network_now', current_language), use_container_width=True, help="Network with other delegates"):
+        if st.button(get_translation('network_now', current_language), width='stretch', help="Network with other delegates"):
             st.switch_page("pages/11_Matchmaking.py")
 
 # Conference info
@@ -929,11 +978,11 @@ with col4:
     # Quick networking stats
     if connection_count == 0:
         st.info("🌟 Start networking by connecting with fellow delegates!")
-        if st.button("🤝 Find Connections", use_container_width=True):
+        if st.button("🤝 Find Connections", width='stretch'):
             st.switch_page("pages/11_Matchmaking.py")
     else:
         st.success(f"🎉 You're connected with {connection_count} delegate{'s' if connection_count > 1 else ''}!")
-        if st.button("🤝 Expand Network", use_container_width=True):
+        if st.button("🤝 Expand Network", width='stretch'):
             st.switch_page("pages/11_Matchmaking.py")
 
 # Footer with logout button
@@ -942,7 +991,7 @@ col_footer1, col_footer2, col_footer3 = st.columns([2, 1, 2])
 with col_footer1:
     st.caption("Need help? Contact the conference organizers or visit the registration desks.")
 with col_footer2:
-    if st.button(f"🚪 {get_translation('logout', current_language)}", use_container_width=True, key="dashboard_logout"):
+    if st.button(f"🚪 {get_translation('logout', current_language)}", width='stretch', key="dashboard_logout"):
         # Clear all session state
         for key in list(st.session_state.keys()):
             if key.startswith('delegate_'):

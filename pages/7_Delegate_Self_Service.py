@@ -48,7 +48,7 @@ if not hasattr(st.session_state, 'delegate_authenticated') or not st.session_sta
         with st.form("quick_auth_form"):
             delegate_id = st.text_input("Your Delegate ID:", placeholder="Enter your delegate ID", help="Use the ID shown after your first search")
             
-            if st.form_submit_button("🔑 Quick Login", use_container_width=True):
+            if st.form_submit_button("🔑 Quick Login", width='stretch'):
                 if delegate_id.strip():
                     # Verify delegate exists
                     df = load_staff_df()
@@ -83,7 +83,7 @@ if not hasattr(st.session_state, 'delegate_authenticated') or not st.session_sta
     search_term = st.text_input(f"Enter your {search_method.lower()}:", placeholder="Type your name or email here...")
     
     # Add search button for mobile-friendly experience
-    search_clicked = st.button("🔍 Search My Record", use_container_width=True, type="primary")
+    search_clicked = st.button("🔍 Search My Record", width='stretch', type="primary")
     
     # Process search when button is clicked OR when text is entered
     if (search_clicked or search_term) and search_term:
@@ -134,7 +134,7 @@ if not hasattr(st.session_state, 'delegate_authenticated') or not st.session_sta
             st.session_state.delegate_id = str(delegate_record['ID'])
             
             # Authentication button
-            if st.button("🚀 Continue to Dashboard", use_container_width=True, type="primary"):
+            if st.button("🚀 Continue to Dashboard", width='stretch', type="primary"):
                 # Set authentication and session data
                 st.session_state.delegate_authenticated = True
                 st.session_state.delegate_name = delegate_record.get('Name', '')
@@ -147,7 +147,7 @@ if not hasattr(st.session_state, 'delegate_authenticated') or not st.session_sta
             
         else:
             st.warning(f"Multiple records found ({len(results)}). Please be more specific with your search.")
-            st.dataframe(results[["ID", "Name", "Category", "Organization", "Email"]], use_container_width=True)
+            st.dataframe(results[["ID", "Name", "Category", "Organization", "Email"]], width='stretch')
     
     else:
         st.info("👆 Please enter your name or email to search for your record.")
@@ -160,7 +160,7 @@ with col_header:
     st.subheader("👤 Your Delegate Information")
     st.success(f"✅ Authenticated as: **{st.session_state.delegate_name}** (ID: {st.session_state.delegate_id})")
 # with col_logout:
-#     if st.button("🚪 Logout", use_container_width=True):
+#     if st.button("🚪 Logout", width='stretch'):
 #         # Clear all session state
 #         for key in list(st.session_state.keys()):
 #             if key.startswith('delegate_'):
@@ -214,7 +214,7 @@ with col2:
 
 # Dashboard access option
 st.markdown("---")
-if st.button("🚀 Go to Conference Dashboard", use_container_width=True, type="primary"):
+if st.button("🚀 Go to Conference Dashboard", width='stretch', type="primary"):
     st.switch_page("pages/1_Delegate_Dashboard.py")
 
 # Edit form
@@ -246,7 +246,7 @@ with st.form("update_delegate", clear_on_submit=False):
             st.caption(f"Current photo: {delegate_record['BadgePhoto']}")
         new_photo = st.file_uploader("Upload new photo (JPG/PNG/WebP)", type=["jpg","jpeg","png","webp"], key="delegate_photo")
 
-    submitted = st.form_submit_button("💾 Update My Information", use_container_width=True)
+    submitted = st.form_submit_button("💾 Update My Information", width='stretch')
     
     if submitted:
         # Validate required fields
@@ -319,7 +319,7 @@ with st.form("update_delegate", clear_on_submit=False):
 # Show dashboard button if update was successful
 if hasattr(st.session_state, 'show_dashboard_button') and st.session_state.show_dashboard_button:
     st.markdown("---")
-    if st.button("🚀 Go to Conference Dashboard", use_container_width=True, type="primary", key="dashboard_btn_after_update"):
+    if st.button("🚀 Go to Conference Dashboard", width='stretch', type="primary", key="dashboard_btn_after_update"):
         st.switch_page("pages/1_Delegate_Dashboard.py")
 
 else:
@@ -332,7 +332,7 @@ with col_footer1:
     st.caption("Need help? Contact the conference organizers or visit the registration desk.")
 with col_footer2:
     if hasattr(st.session_state, 'delegate_authenticated') and st.session_state.delegate_authenticated:
-        if st.button("🚪 Logout", use_container_width=True, key="self_service_logout"):
+        if st.button("🚪 Logout", width='stretch', key="self_service_logout"):
             # Clear all session state
             for key in list(st.session_state.keys()):
                 if key.startswith('delegate_'):

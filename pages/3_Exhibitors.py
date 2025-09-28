@@ -49,7 +49,7 @@ cols = st.columns(3)
 for i, ex in enumerate(exhibitors):
     with cols[i % 3]:
         with st.container(border=True):
-            if ex.get("logo"): st.image(ex["logo"], use_container_width=True)
+            if ex.get("logo"): st.image(ex["logo"], width='stretch')
             st.markdown(f"**{ex['name']}**  \nStand **{ex.get('stand','TBA')}**")
             if ex.get("url"):
                 st.link_button("Visit website", ex["url"])
@@ -61,7 +61,7 @@ with col_footer1:
     st.caption("Need help? Contact the conference organizers or visit the registration desk.")
 with col_footer2:
     if hasattr(st.session_state, 'delegate_authenticated') and st.session_state.delegate_authenticated:
-        if st.button("🚪 Logout", use_container_width=True, key="exhibitors_logout"):
+        if st.button("🚪 Logout", width='stretch', key="exhibitors_logout"):
             # Clear all session state
             for key in list(st.session_state.keys()):
                 if key.startswith('delegate_'):

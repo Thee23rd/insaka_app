@@ -56,7 +56,7 @@ if hasattr(st.session_state, 'delegate_id_displayed') and st.session_state.deleg
         
         col_quick1, col_quick2 = st.columns([1, 1])
         with col_quick1:
-            if st.form_submit_button("🚀 Quick Access", use_container_width=True, type="primary"):
+            if st.form_submit_button("🚀 Quick Access", width='stretch', type="primary"):
                 if delegate_id.strip():
                     # Verify delegate exists and authenticate
                     try:
@@ -85,16 +85,34 @@ if hasattr(st.session_state, 'delegate_id_displayed') and st.session_state.deleg
                     st.error("❌ Please enter your delegate ID.")
         
         with col_quick2:
-            if st.form_submit_button("🔍 Search Again", use_container_width=True):
+            if st.form_submit_button("🔍 Search Again", width='stretch'):
                 st.switch_page("pages/7_Delegate_Self_Service.py")
     
     st.markdown("---")
 
-# Main delegate button with enhanced styling
+# Main delegate buttons with enhanced styling
 col1, col2, col3 = st.columns([1, 2, 1])
 with col2:
-    if st.button("🚀 Enter as Delegate", use_container_width=True, type="primary", key="delegate_btn"):
+    if st.button("🚀 Enter as Delegate", width='stretch', type="primary", key="delegate_btn"):
         st.switch_page("pages/7_Delegate_Self_Service.py")
+
+# QR Code Login Option
+st.markdown("---")
+st.markdown("### 📱 Alternative Login Methods")
+
+col_qr1, col_qr2, col_qr3 = st.columns(3)
+
+with col_qr1:
+    if st.button("📱 QR Code Login", width='stretch', key="qr_login_btn"):
+        st.switch_page("pages/QR_Login.py")
+
+with col_qr2:
+    if st.button("🔍 Search by Name", width='stretch', key="search_btn"):
+        st.switch_page("pages/7_Delegate_Self_Service.py")
+
+with col_qr3:
+    if st.button("🔑 Quick ID Login", width='stretch', key="quick_id_btn"):
+        st.switch_page("pages/0_Landing.py")
 
 # Zambian-themed Footer
 st.markdown('<div class="zambia-accent"></div>', unsafe_allow_html=True)
@@ -108,7 +126,7 @@ if hasattr(st.session_state, 'delegate_authenticated') and st.session_state.dele
     st.markdown("---")
     col_logout1, col_logout2, col_logout3 = st.columns([1, 1, 1])
     with col_logout2:
-        if st.button("🚪 Logout", use_container_width=True, key="landing_logout"):
+        if st.button("🚪 Logout", width='stretch', key="landing_logout"):
             # Clear all session state
             for key in list(st.session_state.keys()):
                 if key.startswith('delegate_'):

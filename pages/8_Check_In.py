@@ -40,7 +40,7 @@ st.markdown('<div class="zambia-accent"></div>', unsafe_allow_html=True)
 # Check if delegate is logged in
 if not hasattr(st.session_state, 'delegate_name') or not st.session_state.delegate_name:
     st.warning("Please search for your record first to access check-in.")
-    if st.button("🔍 Find My Record", use_container_width=True):
+    if st.button("🔍 Find My Record", width='stretch'):
         st.switch_page("pages/7_Delegate_Self_Service.py")
     st.stop()
 
@@ -48,7 +48,7 @@ if not hasattr(st.session_state, 'delegate_name') or not st.session_state.delega
 delegate_id = st.session_state.get('delegate_id')
 if not delegate_id:
     st.error("Delegate ID not found. Please search for your record again.")
-    if st.button("🔍 Search Again", use_container_width=True):
+    if st.button("🔍 Search Again", width='stretch'):
         st.switch_page("pages/7_Delegate_Self_Service.py")
     st.stop()
 
@@ -187,7 +187,7 @@ else:
             st.success("✅ You are checked in for today!")
             st.balloons()
         else:
-            if st.button(f"✅ Check In for {day_info['title']}", use_container_width=True, type="primary"):
+            if st.button(f"✅ Check In for {day_info['title']}", width='stretch', type="primary"):
                 success, message = set_daily_checkin(delegate_id, current_day, True)
                 if success:
                     st.success("🎉 Check-in successful!")
@@ -201,7 +201,7 @@ else:
 
 # Back to dashboard
 st.markdown("---")
-if st.button("🏠 Back to Dashboard", use_container_width=True):
+if st.button("🏠 Back to Dashboard", width='stretch'):
     st.switch_page("pages/1_Delegate_Dashboard.py")
 
 # Footer with logout button
@@ -210,7 +210,7 @@ col_footer1, col_footer2, col_footer3 = st.columns([2, 1, 2])
 with col_footer1:
     st.caption("Need help? Contact the conference organizers or visit the registration desk.")
 with col_footer2:
-    if st.button("🚪 Logout", use_container_width=True, key="checkin_logout"):
+    if st.button("🚪 Logout", width='stretch', key="checkin_logout"):
         # Clear all session state
         for key in list(st.session_state.keys()):
             if key.startswith('delegate_'):

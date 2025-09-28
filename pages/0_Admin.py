@@ -20,22 +20,26 @@ st.markdown('<div class="zambia-accent"></div>', unsafe_allow_html=True)
 
             # Navigation to other admin pages
             st.markdown("### 🔗 Admin Navigation")
-            nav_col1, nav_col2, nav_col3, nav_col4 = st.columns(4)
+            nav_col1, nav_col2, nav_col3, nav_col4, nav_col5 = st.columns(5)
 
             with nav_col1:
-                if st.button("📢 Manage Announcements", use_container_width=True):
+                if st.button("📢 Manage Announcements", width='stretch'):
                     st.switch_page("pages/Admin_Announcements.py")
 
             with nav_col2:
-                if st.button("📰 Manage News & Updates", use_container_width=True):
+                if st.button("📰 Manage News & Updates", width='stretch'):
                     st.switch_page("pages/Admin_News.py")
 
             with nav_col3:
-                if st.button("📸 PR & Social Media", use_container_width=True):
+                if st.button("📸 PR & Social Media", width='stretch'):
                     st.switch_page("pages/Admin_PR.py")
 
             with nav_col4:
-                if st.button("🌐 View Public Page", use_container_width=True):
+                if st.button("📱 QR Code Management", width='stretch'):
+                    st.switch_page("pages/Admin_QR_Codes.py")
+
+            with nav_col5:
+                if st.button("🌐 View Public Page", width='stretch'):
                     st.switch_page("pages/9_External_Content.py")
 
 st.markdown("---")
@@ -87,7 +91,7 @@ with tab_new:
 with tab_manage:
     df = load_staff_df()
     st.caption(f"{len(df)} complimentary records")
-    st.dataframe(df, use_container_width=True, height=420)
+    st.dataframe(df, width='stretch', height=420)
 
     st.subheader("Edit selected")
     ids = st.multiselect("Select ID(s)", options=df["ID"].tolist())
@@ -330,7 +334,7 @@ with tab_agenda:
     edited = st.data_editor(
         agenda,
         num_rows="dynamic",
-        use_container_width=True,
+        width='stretch',
         column_config={
             "day": "Day",
             "time": "Time",
@@ -350,7 +354,7 @@ with tab_speakers:
     edited = st.data_editor(
         speakers,
         num_rows="dynamic",
-        use_container_width=True,
+        width='stretch',
         column_config={
             "name": "Name",
             "talk": "Talk Title",
@@ -384,7 +388,7 @@ with tab_exhibitors:
     edited = st.data_editor(
         exhibitors,
         num_rows="dynamic",
-        use_container_width=True,
+        width='stretch',
         column_config={
             "name":"Name",
             "stand":"Stand",
@@ -427,7 +431,7 @@ with tab_sponsors:
         edited = st.data_editor(
             sponsors.get(tier, []),
             num_rows="dynamic",
-            use_container_width=True,
+            width='stretch',
             column_config={"name":"Name", "logo":"Logo (path or URL)"},
             key=f"ed_sponsors_{tier}"
         )

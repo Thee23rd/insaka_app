@@ -43,5 +43,5 @@ for tier, items in sponsors.items():
     for i, sp in enumerate(items):
         with row[i % 4]:
             with st.container(border=True):
-                if sp.get("logo"): st.image(sp["logo"], use_container_width=True)
+                if sp.get("logo"): st.image(sp["logo"], width='stretch')
                 st.markdown(f"**{sp['name']}**")
