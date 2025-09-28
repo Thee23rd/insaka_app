@@ -3,6 +3,7 @@ import streamlit as st
 import json
 import sys
 import os
+import urllib.parse
 import streamlit.components.v1 as components
 
 
@@ -179,6 +180,30 @@ if login_method == "📱 Scan QR Code":
               }
             } catch (err) {
               console.error('QR parse error:', err);
+              console.log('Raw QR data:', code.data);
+              
+              // Try to handle non-JSON QR codes (like simple delegate IDs)
+              if (code.data && code.data.trim()) {
+                // If it's just a number (delegate ID), create a simple QR data
+                if (/^\d+$/.test(code.data.trim())) {
+                  const simpleQrData = JSON.stringify({
+                    type: 'delegate_login',
+                    delegate_id: code.data.trim(),
+                    delegate_name: 'Unknown',
+                    organization: 'Unknown',
+                    timestamp: new Date().toISOString(),
+                    conference: 'Insaka Conference 2025'
+                  });
+                  
+                  statusEl.textContent = '🔄 Processing delegate ID...';
+                  const url = new URL(window.top.location.href);
+                  url.searchParams.set('qr_data', simpleQrData);
+                  console.log('Redirecting with delegate ID:', url.toString());
+                  window.top.location.href = url.toString();
+                  return;
+                }
+              }
+              
               statusEl.textContent = '❌ Invalid QR code format';
               setTimeout(() => { scanning = true; scanLoop(); }, 1500);
             }
@@ -210,6 +235,30 @@ if login_method == "📱 Scan QR Code":
         3. Point camera at QR code on badge
         4. Wait for automatic detection
         """)
+        
+        # Test QR code generator
+        st.markdown("---")
+        st.markdown("**🧪 Test QR Code:**")
+        if st.button("Generate Test QR Code", width='stretch'):
+            # Generate a test QR code for testing
+            test_qr_data = {
+                "type": "delegate_login",
+                "delegate_id": "123",
+                "delegate_name": "Test User",
+                "organization": "Test Organization",
+                "timestamp": "2025-09-28T12:00:00",
+                "conference": "Insaka Conference 2025"
+            }
+            
+            # Display the test QR data
+            st.json(test_qr_data)
+            st.info("Copy this JSON and create a QR code to test the scanner!")
+            
+            # Also show as a clickable link for testing
+            import urllib.parse
+            encoded_data = urllib.parse.quote(json.dumps(test_qr_data))
+            test_url = f"http://localhost:8522/pages/QR_Login.py?qr_data={encoded_data}"
+            st.markdown(f"**Test URL:** [Click to test authentication]({test_url})")
     
     # Handle QR code data from scanner
     if 'qr_data' in st.query_params:
