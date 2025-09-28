@@ -160,14 +160,28 @@ if login_method == "📱 Scan QR Code":
                 scanning = false;
                 statusEl.textContent = '✅ QR Code detected! Redirecting...';
                 
-                // Send QR to parent; parent will update URL & redirect
+                // Try multiple redirect methods
                 try {
-                  window.parent.postMessage({ type: 'insaka:qr', qr: code.data }, '*');
-                  console.log('QR data sent to parent:', code.data);
+                  // Method 1: Direct URL update
+                  const url = new URL(window.top.location.href);
+                  url.searchParams.set('qr_data', code.data);
+                  console.log('Attempting direct redirect to:', url.toString());
                   
-                } catch (postMessageErr) {
-                  console.log('PostMessage failed:', postMessageErr);
-                  statusEl.textContent = '❌ Communication failed. Please refresh manually.';
+                  // Force redirect
+                  window.top.location.href = url.toString();
+                  
+                } catch (redirectErr) {
+                  console.log('Direct redirect failed:', redirectErr);
+                  
+                  // Method 2: PostMessage fallback
+                  try {
+                    window.parent.postMessage({ type: 'insaka:qr', qr: code.data }, '*');
+                    console.log('QR data sent to parent:', code.data);
+                    statusEl.textContent = '✅ QR detected! Check if page reloaded...';
+                  } catch (postMessageErr) {
+                    console.log('PostMessage failed:', postMessageErr);
+                    statusEl.textContent = '❌ Both redirect methods failed. Please refresh manually.';
+                  }
                 }
                 return;
               } else {
@@ -203,6 +217,19 @@ if login_method == "📱 Scan QR Code":
     # Use components.html for better JavaScript execution
     components.html(simple_scanner_html, height=400)
     
+    # Manual redirect button as backup
+    st.markdown("---")
+    st.markdown("### 🔄 If QR scanning doesn't redirect automatically:")
+    
+    col_manual1, col_manual2 = st.columns(2)
+    
+    with col_manual1:
+        if st.button("🚀 Go to Delegate Dashboard", width='stretch'):
+            st.switch_page("pages/1_Delegate_Dashboard.py")
+    
+    with col_manual2:
+        if st.button("🔍 Go to Self-Service", width='stretch'):
+            st.switch_page("pages/7_Delegate_Self_Service.py")
     
     col1, col2 = st.columns([1, 1])
     
@@ -281,10 +308,14 @@ if login_method == "📱 Scan QR Code":
         raw = st.query_params['qr_data']
         qr_data_input = raw[0] if isinstance(raw, list) else raw
 
-        st.success("QR Code detected! Processing...")
+        st.success("🎉 QR Code detected! Processing...")
+        st.markdown(f"**Raw QR Data:** `{qr_data_input}`")
 
         # Normalize / parse
         qr_text, payload = _normalize_qr_payload(qr_data_input)
+        
+        st.markdown(f"**Normalized QR Data:** `{qr_text}`")
+        st.json(payload)
 
         with st.spinner("Authenticating..."):
             # 1) Try your existing validator first (pass original text)
