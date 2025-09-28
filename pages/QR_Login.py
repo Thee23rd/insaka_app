@@ -159,15 +159,21 @@ if login_method == "📱 Scan QR Code":
           const code = jsQR(imageData.data, imageData.width, imageData.height);
 
           if (code && code.data) {
+            console.log('QR Code detected:', code.data);
             scanning = false;
             statusEl.textContent = '✅ QR Code detected! Processing...';
             try {
               const parsed = JSON.parse(code.data);
+              console.log('Parsed QR data:', parsed);
               if (parsed && parsed.type === 'delegate_login') {
-                const url = new URL(window.location.href);
+                statusEl.textContent = '🔄 Redirecting to dashboard...';
+                // Redirect parent window (not the iframe)
+                const url = new URL(window.top.location.href);
                 url.searchParams.set('qr_data', code.data);
-                window.location.href = url.toString();
+                console.log('Redirecting to:', url.toString());
+                window.top.location.href = url.toString();
               } else {
+                console.log('Invalid QR code type:', parsed?.type);
                 statusEl.textContent = '❌ Invalid QR code type';
                 setTimeout(() => { scanning = true; scanLoop(); }, 1500);
               }
