@@ -164,18 +164,53 @@ if login_method == "📱 Scan QR Code":
             scanning = false;
             statusEl.textContent = '✅ QR Code detected! Processing...';
             try {
-              const parsed = JSON.parse(code.data);
+              // Clean the data first - remove any extra whitespace or characters
+              let cleanData = code.data.trim();
+              
+              // Remove any potential BOM or invisible characters
+              cleanData = cleanData.replace(/^\uFEFF/, ''); // Remove BOM
+              cleanData = cleanData.replace(/[\u200B-\u200D\uFEFF]/g, ''); // Remove zero-width characters
+              
+              console.log('Original QR data:', code.data);
+              console.log('Cleaned QR data:', cleanData);
+              console.log('Data length:', cleanData.length);
+              
+              // Try to parse the JSON
+              let parsed;
+              try {
+                parsed = JSON.parse(cleanData);
+              } catch (parseErr) {
+                // If direct parsing fails, try to fix common JSON issues
+                console.log('Direct parse failed, trying to fix JSON...');
+                
+                // Try to fix common JSON formatting issues
+                let fixedData = cleanData;
+                
+                // Fix missing quotes around keys
+                fixedData = fixedData.replace(/(\w+):/g, '"$1":');
+                
+                // Fix single quotes to double quotes
+                fixedData = fixedData.replace(/'/g, '"');
+                
+                // Try parsing the fixed data
+                parsed = JSON.parse(fixedData);
+                console.log('Fixed JSON parse successful');
+              }
+              
               console.log('Parsed QR data:', parsed);
-              if (parsed && parsed.type === 'delegate_login') {
-                statusEl.textContent = '🔄 Redirecting to dashboard...';
+              
+              if (parsed && parsed.type === 'delegate_login' && parsed.delegate_id) {
+                statusEl.textContent = '✅ Valid QR code! Redirecting...';
+                console.log('Valid delegate login QR detected');
+                
                 // Redirect parent window (not the iframe)
                 const url = new URL(window.top.location.href);
-                url.searchParams.set('qr_data', code.data);
+                url.searchParams.set('qr_data', cleanData);
                 console.log('Redirecting to:', url.toString());
                 window.top.location.href = url.toString();
               } else {
-                console.log('Invalid QR code type:', parsed?.type);
-                statusEl.textContent = '❌ Invalid QR code type';
+                console.log('Invalid QR code structure:', parsed);
+                statusEl.textContent = '❌ Invalid QR code structure - missing required fields';
                 setTimeout(() => { scanning = true; scanLoop(); }, 1500);
               }
             } catch (err) {
@@ -185,15 +220,17 @@ if login_method == "📱 Scan QR Code":
               console.log('QR data length:', code.data ? code.data.length : 'null');
               
               // Show the raw data to the user for debugging
-              statusEl.innerHTML = `❌ Invalid QR code format<br><small>Raw data: "${code.data}"</small>`;
+              statusEl.innerHTML = `❌ JSON Parse Error<br><small>Error: ${err.message}</small><br><small>Raw data: "${code.data}"</small>`;
               
               // Try to handle non-JSON QR codes (like simple delegate IDs)
               if (code.data && code.data.trim()) {
+                const trimmedData = code.data.trim();
+                
                 // If it's just a number (delegate ID), create a simple QR data
-                if (/^[0-9]+$/.test(code.data.trim())) {
+                if (/^[0-9]+$/.test(trimmedData)) {
                   const simpleQrData = JSON.stringify({
                     type: 'delegate_login',
-                    delegate_id: code.data.trim(),
+                    delegate_id: trimmedData,
                     delegate_name: 'Unknown',
                     organization: 'Unknown',
                     timestamp: new Date().toISOString(),
@@ -209,7 +246,6 @@ if login_method == "📱 Scan QR Code":
                 }
                 
                 // Try to handle any text that might be a delegate ID or name
-                const trimmedData = code.data.trim();
                 if (trimmedData.length > 0 && trimmedData.length < 100) {
                   // Create a generic QR data structure
                   const genericQrData = JSON.stringify({
