@@ -185,7 +185,7 @@ if login_method == "📱 Scan QR Code":
               // Try to handle non-JSON QR codes (like simple delegate IDs)
               if (code.data && code.data.trim()) {
                 // If it's just a number (delegate ID), create a simple QR data
-                if (/^\d+$/.test(code.data.trim())) {
+                if (/^[0-9]+$/.test(code.data.trim())) {
                   const simpleQrData = JSON.stringify({
                     type: 'delegate_login',
                     delegate_id: code.data.trim(),
@@ -250,14 +250,28 @@ if login_method == "📱 Scan QR Code":
                 "conference": "Insaka Conference 2025"
             }
             
+            # Try to generate an actual QR code image
+            try:
+                from lib.qr_system import create_qr_code
+                qr_img, qr_data = create_qr_code(
+                    "123", "Test User", "Test Organization", size=200
+                )
+                
+                if qr_img is not None:
+                    st.image(qr_img, caption="Test QR Code - Scan this with the camera scanner", width=200)
+                    st.success("✅ Test QR code generated! Scan it with the camera scanner above.")
+                else:
+                    st.warning("QR code generation failed, showing data only.")
+            except Exception as e:
+                st.warning(f"Could not generate QR code: {e}")
+            
             # Display the test QR data
             st.json(test_qr_data)
-            st.info("Copy this JSON and create a QR code to test the scanner!")
+            st.info("This is the data that will be processed when you scan the QR code above.")
             
             # Also show as a clickable link for testing
-            import urllib.parse
             encoded_data = urllib.parse.quote(json.dumps(test_qr_data))
-            test_url = f"http://localhost:8522/pages/QR_Login.py?qr_data={encoded_data}"
+            test_url = f"http://localhost:8523/pages/QR_Login.py?qr_data={encoded_data}"
             st.markdown(f"**Test URL:** [Click to test authentication]({test_url})")
     
     # Handle QR code data from scanner
