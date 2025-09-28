@@ -93,6 +93,45 @@ except Exception as e:
     st.error(f"Error loading delegate data: {str(e)}")
     st.stop()
 
+# Check for QR data in URL parameters first
+qr_data_from_url = st.query_params.get("qr_data")
+if qr_data_from_url:
+    st.success(f"🎉 QR Code detected from URL! Processing...")
+    
+    # Normalize / parse (your helper)
+    norm_text, payload = _normalize_qr_payload(qr_data_from_url)
+
+    with st.spinner("Authenticating..."):
+        success, message, delegate = authenticate_with_qr_code(norm_text, staff_df)
+
+        # Fallback: direct lookup by ID
+        if not success and isinstance(payload, dict) and payload.get("delegate_id"):
+            norm_id = str(payload["delegate_id"])
+            try:
+                match_df = staff_df[staff_df["ID"].astype(str) == norm_id]
+                if not match_df.empty:
+                    row = match_df.iloc[0].to_dict()
+                    delegate = {
+                        'ID': row.get('ID'),
+                        'Full Name': row.get('Full Name') or row.get('Name') or '',
+                        'Organization': row.get('Organization') or row.get('Company') or '',
+                        'Attendee Type': row.get('Attendee Type') or row.get('Category') or '',
+                        'Title': row.get('Title') or '',
+                        'Nationality': row.get('Nationality') or '',
+                        'Phone': row.get('Phone') or row.get('Contact') or '',
+                    }
+                    success, message = True, "Authenticated by ID lookup"
+            except Exception as e:
+                st.info(f"Debug: ID lookup failed ({e})")
+
+        if success:
+            st.success(f"✅ {message}")
+            # Clear the URL parameter to prevent re-processing
+            st.query_params.clear()
+            _set_session_and_go(delegate)  # this calls st.switch_page(...) and st.stop()
+        else:
+            st.error(f"❌ {message}")
+
 # QR Code Login Section
 st.markdown("## 📱 QR Code Login")
 
@@ -187,13 +226,19 @@ if login_method == "📱 Scan QR Code":
              try {
                // Clean string a bit
                let cleanData = (code.data || '').trim().replace(/^\uFEFF/, '').replace(/[\\u200B-\\u200D\\uFEFF]/g, '');
-               // Return QR payload to Python via Streamlit components API
-               if (window.Streamlit && typeof window.Streamlit.setComponentValue === 'function') {
-                 window.Streamlit.setComponentValue(cleanData);
-               } else {
-                 // Fallback: show payload visibly
-                 statusEl.textContent = '✅ Detected (but cannot return to Streamlit).';
-                 console.log('QR payload:', cleanData);
+               // Return QR payload to Python via URL parameter (more reliable than setComponentValue)
+               try {
+                 const url = new URL(window.location.href);
+                 url.searchParams.set('qr_data', cleanData);
+                 window.location.href = url.toString();
+               } catch (e) {
+                 // Fallback: try setComponentValue
+                 if (window.Streamlit && typeof window.Streamlit.setComponentValue === 'function') {
+                   window.Streamlit.setComponentValue(cleanData);
+                 } else {
+                   statusEl.textContent = '✅ Detected (but cannot return to Streamlit).';
+                   console.log('QR payload:', cleanData);
+                 }
                }
              } catch (err) {
                console.error('QR processing error:', err);
