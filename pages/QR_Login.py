@@ -94,6 +94,31 @@ except Exception as e:
 
 # QR parameter handling moved to main streamlit_app.py
 
+# Parent listener: receives QR from the scanner iframe and redirects to APP ROOT with ?qr_data
+st.markdown("""
+<script>
+(function () {
+  if (window.__insakaQrListenerInstalled__) return;
+  window.__insakaQrListenerInstalled__ = true;
+
+  window.addEventListener('message', function (event) {
+    try {
+      const data = event.data || {};
+      if (data.type !== 'insaka:qr' || typeof data.qr !== 'string') return;
+
+      // Compute app root (drop the last path segment like /QR_Login)
+      const u = new URL(window.location.href);
+      u.pathname = u.pathname.replace(/[^/]+\\/?$/, '');  // keep base path, remove page slug
+      u.searchParams.set('qr_data', data.qr);
+
+      // Redirect from TOP PAGE (not the iframe)
+      window.location.assign(u.toString());
+    } catch (e) { console.error('QR listener error:', e); }
+  }, false);
+})();
+</script>
+""", unsafe_allow_html=True)
+
 # Test dashboard link to verify correct path
 st.markdown("### 🔗 Test Dashboard Link")
 st.page_link("pages/1_Delegate_Dashboard.py", label="Test dashboard link ➜")
@@ -205,13 +230,9 @@ if login_method == "📱 Scan QR Code":
              try {
                // Clean string a bit
                let cleanData = (code.data || '').trim().replace(/^\uFEFF/, '').replace(/[\\u200B-\\u200D\\uFEFF]/g, '');
-               // Go to app root (not the page path) to avoid _stcore 404s on Streamlit Cloud
+               // Send QR payload to the parent page. Parent will build the root URL and redirect.
                try {
-                 const u = new URL(window.location.href);
-                 // strip the last path segment (the page slug), keeping any app base path (/app-name/)
-                 u.pathname = u.pathname.replace(/[^/]+\/?$/, '');
-                 u.searchParams.set('qr_data', cleanData);
-                 window.location.assign(u.toString());
+                 window.parent.postMessage({ type: 'insaka:qr', qr: cleanData }, '*');
                } catch (e) {
                  // Fallback: try setComponentValue
                  if (window.Streamlit && typeof window.Streamlit.setComponentValue === 'function') {
@@ -311,12 +332,12 @@ if login_method == "📱 Scan QR Code":
     
     with col_test2:
         if st.button("🌐 Test URL Parameter Method", width='stretch'):
-            # Simulate URL parameter by redirecting with QR data
-            test_url = f"?qr_data={test_qr_data}"
-            st.markdown(f"**Redirecting to:** `{test_url}`")
+            # Simulate postMessage to parent listener
+            st.markdown(f"**Testing postMessage with QR data:** `{test_qr_data}`")
             st.markdown(f"""
             <script>
-                window.location.href = window.location.href.split('?')[0] + '{test_url}';
+                // Simulate the postMessage that the scanner would send
+                window.postMessage({{ type: 'insaka:qr', qr: `{test_qr_data}` }}, '*');
             </script>
             """, unsafe_allow_html=True)
     
