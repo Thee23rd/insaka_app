@@ -81,101 +81,154 @@ if login_method == "📱 Scan QR Code":
     st.markdown("### 📷 Camera Scanner")
     st.markdown("Use your device camera to scan the QR code from your conference badge.")
     
-     # Simple QR Scanner - Basic Working Version
-    simple_scanner_html = """
-         <div style="text-align: center; max-width: 600px; margin: 0 auto;">
-             <video id="video" style="width: 100%; height: 300px; border: 2px solid #198A00; border-radius: 10px; display: none;"></video>
-             <canvas id="canvas" style="display: none;"></canvas>
-             <div id="status" style="padding: 10px; margin: 10px 0; background: #f0f8f0; border-radius: 5px; font-weight: bold;">
-                 Camera ready - click start to begin
-             </div>
-             <button id="start" style="background: #198A00; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin: 5px;">
-                 Start Camera
-             </button>
-             <button id="stop" style="background: #D10000; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin: 5px; display: none;">
-                 Stop Camera
-             </button>
-         </div>
+     # QR scanner via components.html that RETURNS the QR payload
+    scanner_html = """
+     <div id="qr-scanner-container" style="max-width: 720px; margin: 0 auto;">
+       <video id="qr-video" style="width: 100%; height: 300px; border: 3px solid #198A00; border-radius: 15px; display: none;" playsinline></video>
+       <canvas id="qr-canvas" style="display: none;"></canvas>
+       <div id="qr-status" style="text-align: center; padding: 10px; background: #f0f8f0; border-radius: 10px; margin: 10px 0; font-weight: bold; color: #198A00;">
+         📷 Camera scanner ready — click start to begin
+       </div>
+       <div style="text-align:center;">
+         <button id="start-btn" style="background:#198A00;color:white;border:none;padding:12px 24px;border-radius:25px;cursor:pointer;font-weight:bold;margin:5px;">
+           📷 Start Camera
+         </button>
+         <button id="stop-btn" style="background:#D10000;color:white;border:none;padding:12px 24px;border-radius:25px;cursor:pointer;font-weight:bold;margin:5px;display:none;">
+           🛑 Stop Camera
+         </button>
+       </div>
+     </div>
 
-         <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
-         <script>
-         let stream = null;
-         let scanning = false;
+     <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
+     <script>
+     (function () {
+       let stream = null;
+       let scanning = false;
+       let rafId = null;
 
-         function startCamera() {
-             const video = document.getElementById('video');
-             const status = document.getElementById('status');
-             const startBtn = document.getElementById('start');
-             const stopBtn = document.getElementById('stop');
-             
-             navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
-             .then(function(mediaStream) {
-                 stream = mediaStream;
-                 video.srcObject = mediaStream;
-                 video.style.display = 'block';
-                 startBtn.style.display = 'none';
-                 stopBtn.style.display = 'inline-block';
-                 video.play();
-                 scanning = true;
-                 status.textContent = 'Camera started - point at QR code';
-                 scanLoop();
-             })
-             .catch(function(err) {
-                 status.textContent = 'Camera access denied';
-             });
+       const video = document.getElementById('qr-video');
+       const canvas = document.getElementById('qr-canvas');
+       const ctx = canvas.getContext('2d', { willReadFrequently: true });
+       const statusEl = document.getElementById('qr-status');
+       const startBtn = document.getElementById('start-btn');
+       const stopBtn = document.getElementById('stop-btn');
+
+       async function startCamera() {
+         try {
+           statusEl.textContent = '📷 Requesting camera access...';
+           const constraints = {
+             video: { facingMode: 'environment', width: { ideal: 1280 }, height: { ideal: 720 } },
+             audio: false
+           };
+           stream = await navigator.mediaDevices.getUserMedia(constraints);
+           video.srcObject = stream;
+           video.style.display = 'block';
+           startBtn.style.display = 'none';
+           stopBtn.style.display = 'inline-block';
+           await video.play();
+           scanning = true;
+           statusEl.textContent = '📷 Camera active! Point at QR code';
+           scanLoop();
+         } catch (e) {
+           console.error('Camera error:', e);
+           statusEl.textContent = '❌ Camera access denied. Please allow camera permissions.';
          }
+       }
 
-         function stopCamera() {
+       function stopCamera() {
+         scanning = false;
+         if (rafId) cancelAnimationFrame(rafId);
+         if (stream) { stream.getTracks().forEach(t => t.stop()); stream = null; }
+         video.pause(); video.removeAttribute('src'); video.load();
+         video.style.display = 'none';
+         startBtn.style.display = 'inline-block';
+         stopBtn.style.display = 'none';
+         statusEl.textContent = '📷 Camera stopped';
+       }
+
+       function scanLoop() {
+         if (!scanning) return;
+         if (video.readyState === video.HAVE_ENOUGH_DATA) {
+           canvas.width = video.videoWidth;
+           canvas.height = video.videoHeight;
+           ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+           const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+           const code = jsQR(imageData.data, imageData.width, imageData.height);
+
+           if (code && code.data) {
              scanning = false;
-             if (stream) {
-                 stream.getTracks().forEach(track => track.stop());
-                 stream = null;
+             statusEl.textContent = '✅ QR Code detected! Processing...';
+             try {
+               // Clean string a bit
+               let cleanData = (code.data || '').trim().replace(/^\uFEFF/, '').replace(/[\\u200B-\\u200D\\uFEFF]/g, '');
+               // Return QR payload to Python via Streamlit components API
+               if (window.Streamlit && typeof window.Streamlit.setComponentValue === 'function') {
+                 window.Streamlit.setComponentValue(cleanData);
+               } else {
+                 // Fallback: show payload visibly
+                 statusEl.textContent = '✅ Detected (but cannot return to Streamlit).';
+                 console.log('QR payload:', cleanData);
+               }
+             } catch (err) {
+               console.error('QR processing error:', err);
+               statusEl.textContent = '❌ Invalid QR code data';
              }
-             const video = document.getElementById('video');
-             const status = document.getElementById('status');
-             const startBtn = document.getElementById('start');
-             const stopBtn = document.getElementById('stop');
-             video.style.display = 'none';
-             startBtn.style.display = 'inline-block';
-             stopBtn.style.display = 'none';
-             status.textContent = 'Camera stopped';
+             return;
+           } else {
+             statusEl.textContent = '📷 Scanning... Point camera at QR code';
+           }
          }
+         rafId = requestAnimationFrame(scanLoop);
+       }
 
-         function scanLoop() {
-             if (!scanning) return;
-             const video = document.getElementById('video');
-             const canvas = document.getElementById('canvas');
-             const ctx = canvas.getContext('2d');
-             const status = document.getElementById('status');
-             
-             if (video.readyState === video.HAVE_ENOUGH_DATA) {
-                 canvas.width = video.videoWidth;
-                 canvas.height = video.videoHeight;
-                 ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-                 const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-                 const code = jsQR(imageData.data, imageData.width, imageData.height);
-
-                 if (code && code.data) {
-                     scanning = false;
-                     status.textContent = 'QR Code detected! Redirecting...';
-                     const url = new URL(window.location.href);
-                     url.searchParams.set('qr_data', code.data);
-                     window.location.href = url.toString();
-                     return;
-                 }
-             }
-             requestAnimationFrame(scanLoop);
-         }
-
-         document.getElementById('start').addEventListener('click', startCamera);
-         document.getElementById('stop').addEventListener('click', stopCamera);
-         window.addEventListener('beforeunload', stopCamera);
-         </script>
-         """
+       startBtn.addEventListener('click', startCamera);
+       stopBtn.addEventListener('click', stopCamera);
+       window.addEventListener('beforeunload', stopCamera);
+     })();
+     </script>
+     """
         
     
-     # Use st.markdown for direct JavaScript execution (no iframe sandboxing)
-    st.markdown(simple_scanner_html, unsafe_allow_html=True)
+     # Render the component and CAPTURE its return value (the scanned QR payload)
+    qr_scanned_value = components.html(scanner_html, height=520, scrolling=False, key="qr_scanner_component")
+     
+     # Handle QR data returned from component
+    if qr_scanned_value is not None:
+         st.success("🎉 QR Code detected! Processing...")
+         st.markdown(f"**QR Data:** `{qr_scanned_value}`")
+         
+         # Process the QR data
+         with st.spinner("Authenticating..."):
+             success, message, delegate = authenticate_with_qr_code(qr_scanned_value, staff_df)
+             
+             if success:
+                 st.success(f"✅ {message}")
+                 
+                 # Set session state for authenticated delegate
+                 st.session_state.delegate_authenticated = True
+                 st.session_state.delegate_id = delegate.get('ID')
+                 st.session_state.delegate_name = delegate.get('Full Name', '')
+                 st.session_state.delegate_organization = delegate.get('Organization', '')
+                 st.session_state.delegate_category = delegate.get('Attendee Type', '')
+                 st.session_state.delegate_title = delegate.get('Title', '')
+                 st.session_state.delegate_nationality = delegate.get('Nationality', '')
+                 st.session_state.delegate_phone = delegate.get('Phone', '')
+                 
+                 st.balloons()
+                 
+                 # Show delegate info
+                 st.markdown("### 🎉 Login Successful!")
+                 st.markdown(f"**Welcome, {delegate.get('Full Name', '')}!**")
+                 st.markdown(f"**Organization:** {delegate.get('Organization', '')}")
+                 st.markdown(f"**Category:** {delegate.get('Attendee Type', '')}")
+                 
+                 st.markdown("🔄 Redirecting to your dashboard...")
+                 
+                 # Redirect to dashboard
+                 st.switch_page("pages/1_Delegate_Dashboard.py")
+             else:
+                 st.error(f"❌ {message}")
+                 st.markdown("Please try scanning the QR code again.")
     
     # Manual redirect button as backup
     st.markdown("---")
