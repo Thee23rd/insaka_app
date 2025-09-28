@@ -97,18 +97,24 @@ except Exception as e:
 qr_data_from_url = st.query_params.get("qr_data")
 if qr_data_from_url:
     st.success(f"🎉 QR Code detected from URL! Processing...")
+    st.markdown(f"**Debug - QR Data:** `{qr_data_from_url}`")
     
     # Normalize / parse (your helper)
     norm_text, payload = _normalize_qr_payload(qr_data_from_url)
+    st.markdown(f"**Debug - Normalized:** `{norm_text}`")
+    st.markdown(f"**Debug - Payload:** `{payload}`")
 
     with st.spinner("Authenticating..."):
         success, message, delegate = authenticate_with_qr_code(norm_text, staff_df)
+        st.markdown(f"**Debug - Auth Result:** Success={success}, Message={message}")
 
         # Fallback: direct lookup by ID
         if not success and isinstance(payload, dict) and payload.get("delegate_id"):
             norm_id = str(payload["delegate_id"])
+            st.markdown(f"**Debug - Trying ID lookup for:** `{norm_id}`")
             try:
                 match_df = staff_df[staff_df["ID"].astype(str) == norm_id]
+                st.markdown(f"**Debug - Found {len(match_df)} matches**")
                 if not match_df.empty:
                     row = match_df.iloc[0].to_dict()
                     delegate = {
@@ -121,16 +127,19 @@ if qr_data_from_url:
                         'Phone': row.get('Phone') or row.get('Contact') or '',
                     }
                     success, message = True, "Authenticated by ID lookup"
+                    st.markdown(f"**Debug - Delegate found:** `{delegate}`")
             except Exception as e:
                 st.info(f"Debug: ID lookup failed ({e})")
 
         if success:
             st.success(f"✅ {message}")
+            st.markdown("🔄 Setting session and redirecting...")
             # Clear the URL parameter to prevent re-processing
             st.query_params.clear()
             _set_session_and_go(delegate)  # this calls st.switch_page(...) and st.stop()
         else:
             st.error(f"❌ {message}")
+            st.markdown("**Debug - Authentication failed. Check the data above.**")
 
 # QR Code Login Section
 st.markdown("## 📱 QR Code Login")
@@ -329,41 +338,55 @@ if login_method == "📱 Scan QR Code":
         height=100
     )
     
-    if st.button("🔍 Test with This QR Data", width='stretch'):
-        if test_qr_data:
-            st.success(f"🎉 Testing with QR data: `{test_qr_data}`")
-            
-            # Normalize / parse (your helper)
-            norm_text, payload = _normalize_qr_payload(test_qr_data)
+    col_test1, col_test2 = st.columns(2)
+    
+    with col_test1:
+        if st.button("🔍 Test with This QR Data", width='stretch'):
+            if test_qr_data:
+                st.success(f"🎉 Testing with QR data: `{test_qr_data}`")
+                
+                # Normalize / parse (your helper)
+                norm_text, payload = _normalize_qr_payload(test_qr_data)
 
-            with st.spinner("Authenticating..."):
-                success, message, delegate = authenticate_with_qr_code(norm_text, staff_df)
+                with st.spinner("Authenticating..."):
+                    success, message, delegate = authenticate_with_qr_code(norm_text, staff_df)
 
-                # Fallback: direct lookup by ID
-                if not success and isinstance(payload, dict) and payload.get("delegate_id"):
-                    norm_id = str(payload["delegate_id"])
-                    try:
-                        match_df = staff_df[staff_df["ID"].astype(str) == norm_id]
-                        if not match_df.empty:
-                            row = match_df.iloc[0].to_dict()
-                            delegate = {
-                                'ID': row.get('ID'),
-                                'Full Name': row.get('Full Name') or row.get('Name') or '',
-                                'Organization': row.get('Organization') or row.get('Company') or '',
-                                'Attendee Type': row.get('Attendee Type') or row.get('Category') or '',
-                                'Title': row.get('Title') or '',
-                                'Nationality': row.get('Nationality') or '',
-                                'Phone': row.get('Phone') or row.get('Contact') or '',
-                            }
-                            success, message = True, "Authenticated by ID lookup"
-                    except Exception as e:
-                        st.info(f"Debug: ID lookup failed ({e})")
+                    # Fallback: direct lookup by ID
+                    if not success and isinstance(payload, dict) and payload.get("delegate_id"):
+                        norm_id = str(payload["delegate_id"])
+                        try:
+                            match_df = staff_df[staff_df["ID"].astype(str) == norm_id]
+                            if not match_df.empty:
+                                row = match_df.iloc[0].to_dict()
+                                delegate = {
+                                    'ID': row.get('ID'),
+                                    'Full Name': row.get('Full Name') or row.get('Name') or '',
+                                    'Organization': row.get('Organization') or row.get('Company') or '',
+                                    'Attendee Type': row.get('Attendee Type') or row.get('Category') or '',
+                                    'Title': row.get('Title') or '',
+                                    'Nationality': row.get('Nationality') or '',
+                                    'Phone': row.get('Phone') or row.get('Contact') or '',
+                                }
+                                success, message = True, "Authenticated by ID lookup"
+                        except Exception as e:
+                            st.info(f"Debug: ID lookup failed ({e})")
 
-                if success:
-                    st.success(f"✅ {message}")
-                    _set_session_and_go(delegate)  # this calls st.switch_page(...) and st.stop()
-                else:
-                    st.error(f"❌ {message}")
+                    if success:
+                        st.success(f"✅ {message}")
+                        _set_session_and_go(delegate)  # this calls st.switch_page(...) and st.stop()
+                    else:
+                        st.error(f"❌ {message}")
+    
+    with col_test2:
+        if st.button("🌐 Test URL Parameter Method", width='stretch'):
+            # Simulate URL parameter by redirecting with QR data
+            test_url = f"?qr_data={test_qr_data}"
+            st.markdown(f"**Redirecting to:** `{test_url}`")
+            st.markdown(f"""
+            <script>
+                window.location.href = window.location.href.split('?')[0] + '{test_url}';
+            </script>
+            """, unsafe_allow_html=True)
     
     # Manual redirect button as backup
     st.markdown("---")
