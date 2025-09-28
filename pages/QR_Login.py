@@ -92,55 +92,7 @@ except Exception as e:
     st.error(f"Error loading delegate data: {str(e)}")
     st.stop()
 
-# Check for QR data in URL parameters first
-raw_param = st.query_params.get("qr_data")
-st.markdown(f"**Debug - Raw Param Type:** `{type(raw_param)}`, Value: `{raw_param}`")
-qr_data_from_url = raw_param[0] if isinstance(raw_param, list) else raw_param
-st.markdown(f"**Debug - Processed Param:** `{qr_data_from_url}`")
-if isinstance(qr_data_from_url, str) and qr_data_from_url.strip():
-    st.success(f"🎉 QR Code detected from URL! Processing...")
-    st.markdown(f"**Debug - QR Data:** `{qr_data_from_url}`")
-    
-    # Normalize / parse (your helper)
-    norm_text, payload = _normalize_qr_payload(qr_data_from_url)
-    st.markdown(f"**Debug - Normalized:** `{norm_text}`")
-    st.markdown(f"**Debug - Payload:** `{payload}`")
-
-    with st.spinner("Authenticating..."):
-        success, message, delegate = authenticate_with_qr_code(norm_text, staff_df)
-        st.markdown(f"**Debug - Auth Result:** Success={success}, Message={message}")
-
-        # Fallback: direct lookup by ID
-        if not success and isinstance(payload, dict) and payload.get("delegate_id"):
-            norm_id = str(payload["delegate_id"])
-            st.markdown(f"**Debug - Trying ID lookup for:** `{norm_id}`")
-            try:
-                match_df = staff_df[staff_df["ID"].astype(str) == norm_id]
-                st.markdown(f"**Debug - Found {len(match_df)} matches**")
-                if not match_df.empty:
-                    row = match_df.iloc[0].to_dict()
-                    delegate = {
-                        'ID': row.get('ID'),
-                        'Full Name': row.get('Full Name') or row.get('Name') or '',
-                        'Organization': row.get('Organization') or row.get('Company') or '',
-                        'Attendee Type': row.get('Attendee Type') or row.get('Category') or '',
-                        'Title': row.get('Title') or '',
-                        'Nationality': row.get('Nationality') or '',
-                        'Phone': row.get('Phone') or row.get('Contact') or '',
-                    }
-                    success, message = True, "Authenticated by ID lookup"
-                    st.markdown(f"**Debug - Delegate found:** `{delegate}`")
-            except Exception as e:
-                st.info(f"Debug: ID lookup failed ({e})")
-
-        if success:
-            st.success(f"✅ {message}")
-            st.markdown("🔄 Setting session and redirecting...")
-            # Don't clear query params before switching pages - let redirect happen first
-            _set_session_and_go(delegate)  # this calls st.switch_page(...) and st.stop()
-        else:
-            st.error(f"❌ {message}")
-            st.markdown("**Debug - Authentication failed. Check the data above.**")
+# QR parameter handling moved to main streamlit_app.py
 
 # Test dashboard link to verify correct path
 st.markdown("### 🔗 Test Dashboard Link")
@@ -253,11 +205,13 @@ if login_method == "📱 Scan QR Code":
              try {
                // Clean string a bit
                let cleanData = (code.data || '').trim().replace(/^\uFEFF/, '').replace(/[\\u200B-\\u200D\\uFEFF]/g, '');
-               // Return QR payload to Python via URL parameter (more reliable than setComponentValue)
+               // Go to app root (not the page path) to avoid _stcore 404s on Streamlit Cloud
                try {
-                 const url = new URL(window.location.href);
-                 url.searchParams.set('qr_data', cleanData);
-                 window.location.href = url.toString();
+                 const u = new URL(window.location.href);
+                 // strip the last path segment (the page slug), keeping any app base path (/app-name/)
+                 u.pathname = u.pathname.replace(/[^/]+\/?$/, '');
+                 u.searchParams.set('qr_data', cleanData);
+                 window.location.assign(u.toString());
                } catch (e) {
                  // Fallback: try setComponentValue
                  if (window.Streamlit && typeof window.Streamlit.setComponentValue === 'function') {

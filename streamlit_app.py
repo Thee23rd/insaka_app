@@ -1,6 +1,15 @@
 # streamlit_app.py
 from __future__ import annotations
 import streamlit as st
+import sys
+import os
+
+# Add the parent directory to the Python path
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
+# Import required functions
+from lib.qr_system import authenticate_with_qr_code, _normalize_qr_payload
+from staff_service import load_staff_df
 
 # Add PWA meta tags and service worker registration
 st.markdown("""
@@ -117,6 +126,79 @@ st.markdown("""
 </body>
 </html>
 """, unsafe_allow_html=True)
+
+# Check for QR data in URL parameters first
+raw_param = st.query_params.get("qr_data")
+if raw_param:
+    qr_data_from_url = raw_param[0] if isinstance(raw_param, list) else raw_param
+    if isinstance(qr_data_from_url, str) and qr_data_from_url.strip():
+        st.success(f"🎉 QR Code detected! Processing...")
+        
+        # Load staff data
+        try:
+            staff_df = load_staff_df()
+            if staff_df.empty:
+                st.error("No delegate data found. Please contact administrator.")
+                st.stop()
+        except Exception as e:
+            st.error(f"Error loading delegate data: {str(e)}")
+            st.stop()
+        
+        # Normalize / parse (your helper)
+        norm_text, payload = _normalize_qr_payload(qr_data_from_url)
+
+        with st.spinner("Authenticating..."):
+            success, message, delegate = authenticate_with_qr_code(norm_text, staff_df)
+
+            # Fallback: direct lookup by ID
+            if not success and isinstance(payload, dict) and payload.get("delegate_id"):
+                norm_id = str(payload["delegate_id"])
+                try:
+                    match_df = staff_df[staff_df["ID"].astype(str) == norm_id]
+                    if not match_df.empty:
+                        row = match_df.iloc[0].to_dict()
+                        delegate = {
+                            'ID': row.get('ID'),
+                            'Full Name': row.get('Full Name') or row.get('Name') or '',
+                            'Organization': row.get('Organization') or row.get('Company') or '',
+                            'Attendee Type': row.get('Attendee Type') or row.get('Category') or '',
+                            'Title': row.get('Title') or '',
+                            'Nationality': row.get('Nationality') or '',
+                            'Phone': row.get('Phone') or row.get('Contact') or '',
+                        }
+                        success, message = True, "Authenticated by ID lookup"
+                except Exception as e:
+                    st.info(f"Debug: ID lookup failed ({e})")
+
+            if success:
+                st.success(f"✅ {message}")
+                # Set session state and redirect to dashboard
+                st.session_state.delegate_authenticated = True
+                st.session_state.delegate_id = delegate.get('ID')
+                st.session_state.delegate_name = delegate.get('Full Name', '')
+                st.session_state.delegate_organization = delegate.get('Organization', '')
+                st.session_state.delegate_category = delegate.get('Attendee Type', '')
+                st.session_state.delegate_title = delegate.get('Title', '')
+                st.session_state.delegate_nationality = delegate.get('Nationality', '')
+                st.session_state.delegate_phone = delegate.get('Phone', '')
+                
+                # Navigate to dashboard
+                try:
+                    st.switch_page("pages/1_Delegate_Dashboard.py")
+                except Exception:
+                    try:
+                        st.switch_page("1_Delegate_Dashboard.py")
+                    except Exception:
+                        st.markdown(
+                            "<script>window.location.href = window.location.origin + '/?page=1_Delegate_Dashboard.py';</script>",
+                            unsafe_allow_html=True,
+                        )
+                st.stop()
+            else:
+                st.error(f"❌ {message}")
+                # Clear the failed QR parameter and continue to landing page
+                st.query_params.clear()
+                st.rerun()
 
 # Redirect to landing page
 st.switch_page("pages/0_Landing.py")
