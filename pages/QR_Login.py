@@ -190,7 +190,21 @@ if login_method == "📱 Scan QR Code":
         
     
      # Render the component and CAPTURE its return value (the scanned QR payload)
-    qr_scanned_value = components.html(scanner_html, height=520, scrolling=False, key="qr_scanner_component")
+    try:
+         qr_scanned_value = components.html(scanner_html, height=520, key="qr_scanner")
+    except Exception as e:
+         st.error(f"Component error: {str(e)}")
+         st.markdown("**Fallback:** Camera scanner unavailable. Please use manual entry below.")
+         qr_scanned_value = None
+         
+         # Show fallback camera option
+         st.markdown("### 📷 Alternative Camera Method")
+         st.markdown("If the camera scanner above doesn't work, you can still scan QR codes manually:")
+         
+         # Simple file upload for QR code images
+         uploaded_file = st.file_uploader("Upload QR Code Image", type=['png', 'jpg', 'jpeg'])
+         if uploaded_file is not None:
+             st.success("QR code image uploaded! Please use manual entry method below to enter the QR data.")
      
      # Handle QR data returned from component
     if qr_scanned_value is not None:
