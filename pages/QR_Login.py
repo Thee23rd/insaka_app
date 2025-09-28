@@ -228,14 +228,19 @@ if login_method == "📱 Scan QR Code":
                 
                 st.balloons()
                 
-                # Redirect to dashboard
+                # Show success message briefly then auto-redirect
                 st.markdown("### 🎉 Login Successful!")
                 st.markdown(f"**Welcome, {delegate.get('Full Name', '')}!**")
                 st.markdown(f"**Organization:** {delegate.get('Organization', '')}")
                 st.markdown(f"**Category:** {delegate.get('Attendee Type', '')}")
                 
-                if st.button("🏠 Go to Dashboard", type="primary", width='stretch'):
-                    st.switch_page("pages/1_Delegate_Dashboard.py")
+                # Auto-redirect to dashboard
+                st.markdown("🔄 Redirecting to your dashboard...")
+                
+                # Use Streamlit's built-in redirect
+                import time
+                time.sleep(1)  # Brief delay to show success message
+                st.switch_page("pages/1_Delegate_Dashboard.py")
             else:
                 st.error(f"❌ {message}")
                 st.markdown("Please try scanning the QR code again.")
@@ -271,14 +276,16 @@ else:
                     
                     st.balloons()
                     
-                    # Redirect to dashboard
+                    # Auto-redirect to dashboard
                     st.markdown("### 🎉 Login Successful!")
                     st.markdown(f"**Welcome, {delegate.get('Full Name', '')}!**")
                     st.markdown(f"**Organization:** {delegate.get('Organization', '')}")
                     st.markdown(f"**Category:** {delegate.get('Attendee Type', '')}")
                     
-                    if st.button("🏠 Go to Dashboard", type="primary", width='stretch'):
-                        st.switch_page("pages/1_Delegate_Dashboard.py")
+                    st.markdown("🔄 Redirecting to your dashboard...")
+                    import time
+                    time.sleep(1)  # Brief delay to show success message
+                    st.switch_page("pages/1_Delegate_Dashboard.py")
                 else:
                     st.error(f"❌ {message}")
         else:
