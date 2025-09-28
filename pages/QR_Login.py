@@ -1,453 +1,223 @@
-# pages/QR_Login.py
 import streamlit as st
-import json
 import sys
 import os
-import urllib.parse
-import streamlit.components.v1 as components
-
-
-# Add the parent directory to the Python path
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from lib.ui import apply_brand
-from lib.qr_system import authenticate_with_qr_code, create_qr_scanner_script
-from staff_service import load_staff_df
-from lib.translations import get_translation, get_text_direction, is_rtl_language
+from lib.qr_system import authenticate_with_qr_code
+import pandas as pd
+import urllib.parse
+import json
 
-st.set_page_config(page_title="QR Code Login — Insaka", page_icon="📱", layout="wide")
+st.set_page_config(
+    page_title="QR Code Login - Insaka Conference 2025",
+    page_icon="📱",
+    layout="wide"
+)
 
-# Hide sidebar and navigation
+# Load staff data
+@st.cache_data
+def load_staff_data():
+    try:
+        return pd.read_csv("data/complimentary_passes.csv")
+    except FileNotFoundError:
+        st.error("Staff data file not found. Please ensure data/complimentary_passes.csv exists.")
+        return pd.DataFrame()
+
+staff_df = load_staff_data()
+
 st.markdown("""
-<style>
-    .stApp > header {
-        display: none;
-    }
-    .stApp > div[data-testid="stToolbar"] {
-        display: none;
-    }
-    .stSidebar {
-        display: none;
-    }
-    .stApp > div[data-testid="stSidebar"] {
-        display: none;
-    }
-    .stApp > div[data-testid="stSidebar"] > div {
-        display: none;
-    }
-</style>
-""", unsafe_allow_html=True)
-
-apply_brand()
-
-# Zambian-themed header
-st.markdown('<div class="zambia-accent"></div>', unsafe_allow_html=True)
-
-# Get current language
-current_language = st.session_state.get('language', 'en-us')
-
-# RTL support
-text_direction = get_text_direction(current_language)
-rtl_style = "direction: rtl; text-align: right;" if is_rtl_language(current_language) else "direction: ltr; text-align: center;"
-
-st.markdown(f"""
-<div style="background: linear-gradient(135deg, #198A00 0%, #2BA300 50%, #D10000 100%); color: white; padding: 2rem; border-radius: 20px; margin-bottom: 2rem; {rtl_style} box-shadow: 0 8px 32px rgba(25, 138, 0, 0.2);">
-    <h1 style="color: white; margin-bottom: 0.5rem; font-size: 2.5rem; font-weight: 700;">📱 {get_translation('qr_login', current_language)}</h1>
-    <p style="color: #f0f8f0; margin-bottom: 0; font-size: 1.2rem; font-weight: 500;">{get_translation('qr_login_subtitle', current_language)}</p>
+<div style="text-align: center; padding: 20px; background: linear-gradient(135deg, #198A00, #2BA300); color: white; border-radius: 15px; margin-bottom: 30px;">
+    <h1>📱 QR Code Login</h1>
+    <p>Scan your conference badge QR code to access your delegate dashboard</p>
 </div>
 """, unsafe_allow_html=True)
 
-# Load staff data
-try:
-    staff_df = load_staff_df()
-    if staff_df.empty:
-        st.error("No delegate data found. Please contact administrator.")
-        st.stop()
-except Exception as e:
-    st.error(f"Error loading delegate data: {str(e)}")
-    st.stop()
+# Handle QR code data from URL
+if 'qr_data' in st.query_params:
+    raw = st.query_params['qr_data']
+    qr_data_input = raw[0] if isinstance(raw, list) else raw
 
-# QR Code Login Section
-st.markdown("## 📱 QR Code Login")
-
-# Method selection
-login_method = st.radio(
-    "Choose login method:",
-    ["📱 Scan QR Code", "📝 Enter QR Code Data"],
-    horizontal=True
-)
-
-if login_method == "📱 Scan QR Code":
-    st.markdown("### 📷 Camera Scanner")
-    st.markdown("Use your device camera to scan the QR code from your conference badge.")
+    st.success("QR Code detected! Processing...")
     
-    # Simple QR Scanner
-    simple_scanner_html = """
-        <div id="qr-scanner-container" style="max-width: 720px; margin: 0 auto;">
-          <video id="qr-video" style="width: 100%; height: 300px; border: 3px solid #198A00; border-radius: 15px; display: none;" playsinline></video>
-          <canvas id="qr-canvas" style="display: none;"></canvas>
-          <div id="qr-status" style="text-align: center; padding: 10px; background: #f0f8f0; border-radius: 10px; margin: 10px 0; font-weight: bold; color: #198A00;">
-            📷 Camera scanner ready — click start to begin
-          </div>
-          <div style="text-align:center;">
-            <button id="start-btn" style="background:#198A00;color:white;border:none;padding:12px 24px;border-radius:25px;cursor:pointer;font-weight:bold;margin:5px;">
-              📷 Start Camera
-            </button>
-            <button id="stop-btn" style="background:#D10000;color:white;border:none;padding:12px 24px;border-radius:25px;cursor:pointer;font-weight:bold;margin:5px;display:none;">
-              🛑 Stop Camera
-            </button>
-          </div>
-        </div>
-
-        <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
-        <script>
-        // Global variables and functions for QR scanner
-        let stream = null;
-        let scanning = false;
-        let rafId = null;
-
-        const video = document.getElementById('qr-video');
-        const canvas = document.getElementById('qr-canvas');
-        const ctx = canvas.getContext('2d');
-        const statusEl = document.getElementById('qr-status');
-        const startBtn = document.getElementById('start-btn');
-        const stopBtn = document.getElementById('stop-btn');
-
-        // Make functions globally accessible
-        window.startCamera = async function() {
-            try {
-              statusEl.textContent = '📷 Requesting camera access...';
-              const constraints = {
-                video: { facingMode: 'environment', width: { ideal: 1280 }, height: { ideal: 720 } },
-                audio: false
-              };
-              stream = await navigator.mediaDevices.getUserMedia(constraints);
-              video.srcObject = stream;
-              video.style.display = 'block';
-              startBtn.style.display = 'none';
-              stopBtn.style.display = 'inline-block';
-              await video.play();
-              scanning = true;
-              statusEl.textContent = '📷 Camera active! Point at QR code';
-              scanLoop();
-            } catch (e) {
-              console.error('Camera error:', e);
-              statusEl.textContent = '❌ Camera access denied. Please allow camera permissions.';
-            }
-          };
-
-        window.stopCamera = function() {
-          scanning = false;
-          if (rafId) cancelAnimationFrame(rafId);
-          if (stream) { stream.getTracks().forEach(t => t.stop()); stream = null; }
-          video.pause(); video.removeAttribute('src'); video.load();
-          video.style.display = 'none';
-          startBtn.style.display = 'inline-block';
-          stopBtn.style.display = 'none';
-          statusEl.textContent = '📷 Camera stopped';
-        };
-
-        window.scanLoop = function() {
-            if (!scanning) return;
-            if (video.readyState === video.HAVE_ENOUGH_DATA) {
-              canvas.width = video.videoWidth;
-              canvas.height = video.videoHeight;
-              ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-              const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-              const code = jsQR(imageData.data, imageData.width, imageData.height);
-
-              if (code && code.data) {
-                console.log('QR Code detected:', code.data);
-                scanning = false;
-                statusEl.textContent = '✅ QR Code detected! Sending to parent...';
+    try:
+        # Try to parse as JSON first
+        qr_data = json.loads(qr_data_input)
+        delegate_id = qr_data.get('delegate_id', '')
+    except:
+        # If not JSON, treat as simple ID
+        delegate_id = str(qr_data_input).strip()
+    
+    if delegate_id:
+        # Find delegate in staff data
+        try:
+            match_df = staff_df[staff_df["ID"].astype(str) == str(delegate_id)]
+            if not match_df.empty:
+                row = match_df.iloc[0].to_dict()
                 
-                // Direct redirect (no iframe sandboxing)
-                try {
-                  const url = new URL(window.location.href);
-                  url.searchParams.set('qr_data', code.data);
-                  console.log('QR data detected, redirecting to:', url.toString());
-                  statusEl.textContent = '✅ QR detected! Redirecting...';
-                  window.location.href = url.toString();
-                } catch (redirectErr) {
-                  console.log('Redirect failed:', redirectErr);
-                  statusEl.textContent = '❌ Redirect failed. Please refresh manually.';
-                }
-                return;
-              } else {
-                statusEl.textContent = '📷 Scanning... Point camera at QR code';
-              }
-            }
-            rafId = requestAnimationFrame(window.scanLoop);
-          };
+                # Set session state
+                st.session_state.delegate_authenticated = True
+                st.session_state.delegate_id = row.get('ID')
+                st.session_state.delegate_name = row.get('Full Name', '')
+                st.session_state.delegate_organization = row.get('Organization', '')
+                st.session_state.delegate_category = row.get('Attendee Type', '')
+                st.session_state.delegate_title = row.get('Title', '')
+                st.session_state.delegate_nationality = row.get('Nationality', '')
+                st.session_state.delegate_phone = row.get('Phone', '')
 
-        startBtn.addEventListener('click', window.startCamera);
-        stopBtn.addEventListener('click', window.stopCamera);
-        window.addEventListener('beforeunload', window.stopCamera);
-        </script>
-        """
-        
-    
-    # Use st.markdown for direct JavaScript execution (no iframe sandboxing)
-    st.markdown(simple_scanner_html, unsafe_allow_html=True)
-    
-    # Manual redirect button as backup
-    st.markdown("---")
-    st.markdown("### 🔄 If QR scanning doesn't redirect automatically:")
-    
-    col_manual1, col_manual2 = st.columns(2)
-    
-    with col_manual1:
-        if st.button("🚀 Go to Delegate Dashboard", width='stretch'):
-            st.switch_page("pages/1_Delegate_Dashboard.py")
-    
-    with col_manual2:
-        if st.button("🔍 Go to Self-Service", width='stretch'):
-            st.switch_page("pages/7_Delegate_Self_Service.py")
-    
-    
-   
-    
-    col1, col2 = st.columns([1, 1])
-    
-    with col2:
-        st.markdown("**Instructions:**")
-        st.markdown("""
-        1. Click "Start Camera" button above
-        2. Allow camera access when prompted
-        3. Point camera at QR code on badge
-        4. Wait for automatic detection
-        """)
-        
-    
-    # --- Handle QR code data from scanner (robust) ---
-    def _normalize_qr_payload(qr_text: str):
-        # 1) URL-decode and strip common wrappers
-        try:
-            qr_text = urllib.parse.unquote_plus(qr_text or "")
-        except Exception:
-            pass
-        qr_text = qr_text.strip()
-        # Remove accidental leading/trailing quotes
-        if (qr_text.startswith('"') and qr_text.endswith('"')) or (qr_text.startswith("'") and qr_text.endswith("'")):
-            qr_text = qr_text[1:-1].strip()
-
-        # 2) Try parse JSON
-        payload = {}
-        try:
-            payload = json.loads(qr_text)
-        except Exception:
-            # allow non-JSON simple IDs (e.g., "6")
-            if qr_text.isdigit():
-                payload = {"type": "delegate_login", "delegate_id": qr_text}
-
-        # 3) Normalize keys and types
-        if isinstance(payload, dict):
-            delegate_id = payload.get("delegate_id") or payload.get("ID") or payload.get("id")
-            if delegate_id is not None:
-                # cast to string for comparison
-                payload["delegate_id"] = str(delegate_id).strip()
-            payload["type"] = payload.get("type") or "delegate_login"
-        return qr_text, payload
-
-    def _set_session_and_go(delegate: dict):
-        st.session_state.delegate_authenticated = True
-        st.session_state.delegate_id = delegate.get('ID')
-        st.session_state.delegate_name = delegate.get('Full Name', '')
-        st.session_state.delegate_organization = delegate.get('Organization', '')
-        st.session_state.delegate_category = delegate.get('Attendee Type', '')
-        st.session_state.delegate_title = delegate.get('Title', '')
-        st.session_state.delegate_nationality = delegate.get('Nationality', '')
-        st.session_state.delegate_phone = delegate.get('Phone', '')
-
-        # Clear param so refresh doesn't re-trigger
-        try:
-            st.query_params.clear()
-        except Exception:
-            pass
-
-        # Navigate (try both)
-        try:
-            st.switch_page("pages/1_Delegate_Dashboard.py")
-        except Exception:
-            try:
-                st.switch_page("1_Delegate_Dashboard.py")
-            except Exception:
-                st.markdown("""
-                    <script>
-                    window.top.location.href = window.top.location.href.split('?')[0]
-                      + '?page=1_Delegate_Dashboard.py';
-                    </script>
-                """, unsafe_allow_html=True)
-        st.stop()
-
-    if 'qr_data' in st.query_params:
-        raw = st.query_params['qr_data']
-        qr_data_input = raw[0] if isinstance(raw, list) else raw
-
-        st.success("🎉 QR Code detected! Processing...")
-        st.markdown(f"**Raw QR Data:** `{qr_data_input}`")
-
-        # Normalize / parse
-        qr_text, payload = _normalize_qr_payload(qr_data_input)
-        
-        st.markdown(f"**Normalized QR Data:** `{qr_text}`")
-        st.json(payload)
-
-        with st.spinner("Authenticating..."):
-            # 1) Try your existing validator first (pass original text)
-            success, message, delegate = authenticate_with_qr_code(qr_text, staff_df)
-
-            # 2) If that fails, fall back to a direct lookup by normalized ID
-            if not success and isinstance(payload, dict) and payload.get("type") == "delegate_login" and payload.get("delegate_id"):
-                norm_id = payload["delegate_id"]
-                # accept either numeric or string id; compare as strings
+                st.success(f"Welcome, {row.get('Full Name', 'Unknown')}!")
+                st.info("Redirecting to your dashboard...")
+                
+                # Clear URL parameters
                 try:
-                    # Convert staff_df ID to str for comparison
-                    match_df = staff_df[staff_df["ID"].astype(str) == str(norm_id)]
-                    if not match_df.empty:
-                        row = match_df.iloc[0].to_dict()
-                        delegate = {
-                            'ID': row.get('ID'),
-                            'Full Name': row.get('Full Name') or row.get('Name') or row.get('Full_Name') or '',
-                            'Organization': row.get('Organization') or row.get('Company') or '',
-                            'Attendee Type': row.get('Attendee Type') or row.get('Category') or '',
-                            'Title': row.get('Title') or '',
-                            'Nationality': row.get('Nationality') or '',
-                            'Phone': row.get('Phone') or row.get('Contact') or '',
-                        }
-                        success, message = True, "Authenticated by ID lookup"
-                except Exception as e:
-                    st.info(f"Debug: ID lookup failed ({e})")
-
-            if success:
-                st.success(f"✅ {message}")
+                    st.query_params.clear()
+                except:
+                    pass
                 
-                # Show delegate info before redirect
-                st.markdown("### 🎉 Login Successful!")
-                st.markdown(f"**Welcome, {delegate.get('Full Name', 'Unknown')}!**")
-                st.markdown(f"**Organization:** {delegate.get('Organization', 'Unknown')}")
-                st.markdown(f"**Category:** {delegate.get('Attendee Type', 'Unknown')}")
-                st.markdown(f"**Delegate ID:** {delegate.get('ID', 'Unknown')}")
-                
-                st.markdown("🔄 Redirecting to your dashboard...")
-                st.markdown("If redirect doesn't work, use the manual redirect buttons below.")
-                
-                # Try redirect with delay
-                import time
-                time.sleep(2)
-                _set_session_and_go(delegate)
+                # Redirect to dashboard
+                st.switch_page("pages/1_Delegate_Dashboard.py")
             else:
-                st.error(f"❌ {message}")
-                st.markdown("Please try scanning the QR code again.")
+                st.error(f"Delegate ID {delegate_id} not found in the system.")
+        except Exception as e:
+            st.error(f"Error processing delegate data: {str(e)}")
+    else:
+        st.error("Invalid QR code data received.")
 
-else:
-    st.markdown("### 📝 Manual QR Code Entry")
-    st.markdown("If you have the QR code data, enter it below:")
+# QR Code Scanner
+st.markdown("### Camera Scanner")
+st.markdown("Use your device camera to scan the QR code from your conference badge.")
+
+# Simple scanner HTML
+scanner_html = """
+<div style="text-align: center; max-width: 600px; margin: 0 auto;">
+    <video id="video" style="width: 100%; height: 300px; border: 2px solid #198A00; border-radius: 10px; display: none;"></video>
+    <canvas id="canvas" style="display: none;"></canvas>
+    <div id="status" style="padding: 10px; margin: 10px 0; background: #f0f8f0; border-radius: 5px; font-weight: bold;">
+        Camera ready - click start to begin
+    </div>
+    <button id="start" style="background: #198A00; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin: 5px;">
+        Start Camera
+    </button>
+    <button id="stop" style="background: #D10000; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin: 5px; display: none;">
+        Stop Camera
+    </button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
+<script>
+let stream = null;
+let scanning = false;
+
+function startCamera() {
+    const video = document.getElementById('video');
+    const status = document.getElementById('status');
+    const startBtn = document.getElementById('start');
+    const stopBtn = document.getElementById('stop');
     
-    # Manual QR code data entry
-    qr_data_input = st.text_area(
-        "QR Code Data:",
-        placeholder="Paste the QR code data here...",
-        height=100
-    )
+    navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
+    .then(function(mediaStream) {
+        stream = mediaStream;
+        video.srcObject = mediaStream;
+        video.style.display = 'block';
+        startBtn.style.display = 'none';
+        stopBtn.style.display = 'inline-block';
+        video.play();
+        scanning = true;
+        status.textContent = 'Camera started - point at QR code';
+        scanLoop();
+    })
+    .catch(function(err) {
+        status.textContent = 'Camera access denied';
+    });
+}
+
+function stopCamera() {
+    scanning = false;
+    if (stream) {
+        stream.getTracks().forEach(track => track.stop());
+        stream = null;
+    }
+    const video = document.getElementById('video');
+    const status = document.getElementById('status');
+    const startBtn = document.getElementById('start');
+    const stopBtn = document.getElementById('stop');
+    video.style.display = 'none';
+    startBtn.style.display = 'inline-block';
+    stopBtn.style.display = 'none';
+    status.textContent = 'Camera stopped';
+}
+
+function scanLoop() {
+    if (!scanning) return;
     
-    if st.button("🔐 Login with QR Code", type="primary", width='stretch'):
-        if qr_data_input.strip():
-            with st.spinner("Authenticating..."):
-                success, message, delegate = authenticate_with_qr_code(qr_data_input.strip(), staff_df)
-                
-                if success:
-                    st.success(f"✅ {message}")
-                    
-                    # Set session state for authenticated delegate
-                    st.session_state.delegate_authenticated = True
-                    st.session_state.delegate_id = delegate.get('ID')
-                    st.session_state.delegate_name = delegate.get('Full Name', '')
-                    st.session_state.delegate_organization = delegate.get('Organization', '')
-                    st.session_state.delegate_category = delegate.get('Attendee Type', '')
-                    st.session_state.delegate_title = delegate.get('Title', '')
-                    st.session_state.delegate_nationality = delegate.get('Nationality', '')
-                    st.session_state.delegate_phone = delegate.get('Phone', '')
-                    
-                    st.balloons()
-                    
-                    # Auto-redirect to dashboard
-                    st.markdown("### 🎉 Login Successful!")
-                    st.markdown(f"**Welcome, {delegate.get('Full Name', '')}!**")
-                    st.markdown(f"**Organization:** {delegate.get('Organization', '')}")
-                    st.markdown(f"**Category:** {delegate.get('Attendee Type', '')}")
-                    
-                    st.markdown("🔄 Redirecting to your dashboard...")
-                    
-                    # Immediate redirect
-                    st.switch_page("pages/1_Delegate_Dashboard.py")
-                else:
-                    st.error(f"❌ {message}")
-        else:
-            st.warning("Please enter QR code data")
-
-# QR Code Information
-st.markdown("## ℹ️ About QR Code Login")
-
-with st.expander("📋 How QR Code Login Works", expanded=True):
-    st.markdown("""
-    **QR Code Login Benefits:**
-    - 🚀 **Fast & Easy** - No need to remember passwords
-    - 🔒 **Secure** - Each QR code is unique and time-limited
-    - 📱 **Mobile-Friendly** - Works on any smartphone
-    - 🎫 **Badge Integration** - QR code printed on your conference badge
+    const video = document.getElementById('video');
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    const status = document.getElementById('status');
     
-    **How It Works:**
-    1. **QR Code Generation** - Each delegate gets a unique QR code
-    2. **Badge Printing** - QR code is printed on your conference badge
-    3. **Quick Login** - Scan QR code to instantly access your dashboard
-    4. **Secure Access** - QR codes expire after 24 hours for security
-    """)
+    if (video.readyState === video.HAVE_ENOUGH_DATA) {
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const code = jsQR(imageData.data, imageData.width, imageData.height);
 
-with st.expander("🔧 Troubleshooting", expanded=False):
-    st.markdown("""
-    **Common Issues:**
-    
-    **❌ "QR code has expired"**
-    - QR codes are valid for 24 hours
-    - Contact admin for a new QR code
-    
-    **❌ "Delegate not found"**
-    - Verify you're using the correct QR code
-    - Check if delegate data is properly loaded
-    
-    **❌ "Camera access denied"**
-    - Allow camera permissions in browser
-    - Try refreshing the page
-    
-    **❌ "Invalid QR code data"**
-    - Ensure QR code is not damaged
-    - Try manual entry method
-    """)
+        if (code && code.data) {
+            scanning = false;
+            status.textContent = 'QR Code detected! Redirecting...';
+            const url = new URL(window.location.href);
+            url.searchParams.set('qr_data', code.data);
+            window.location.href = url.toString();
+            return;
+        }
+    }
+    requestAnimationFrame(scanLoop);
+}
 
-# Alternative login methods
-st.markdown("## 🔄 Alternative Login Methods")
+document.getElementById('start').addEventListener('click', startCamera);
+document.getElementById('stop').addEventListener('click', stopCamera);
+window.addEventListener('beforeunload', stopCamera);
+</script>
+"""
 
-col1, col2 = st.columns(2)
+st.markdown(scanner_html, unsafe_allow_html=True)
 
-with col1:
-    st.markdown("### 🔍 Search by Name")
-    if st.button("Search for Your Name", width='stretch'):
-        st.switch_page("pages/7_Delegate_Self_Service.py")
-
-with col2:
-    st.markdown("### 🔑 Quick Login")
-    if st.button("Enter Delegate ID", width='stretch'):
-        st.switch_page("pages/0_Landing.py")
-
-# Footer
+# Manual entry option
 st.markdown("---")
-st.markdown("### 🎯 Need Help?")
-st.markdown("""
-- **QR Code Issues:** Contact registration desk
-- **Technical Support:** Ask conference staff
-- **Alternative Login:** Use name search or delegate ID
-""")
+st.markdown("### Manual Entry")
+st.markdown("If you can't use the camera, enter your delegate ID manually:")
 
-if st.button("🏠 Back to Landing Page", width='stretch'):
-    st.switch_page("pages/0_Landing.py")
+manual_id = st.text_input("Enter your delegate ID:", placeholder="e.g., 123")
+if st.button("Login with ID"):
+    if manual_id:
+        try:
+            match_df = staff_df[staff_df["ID"].astype(str) == str(manual_id)]
+            if not match_df.empty:
+                row = match_df.iloc[0].to_dict()
+                
+                st.session_state.delegate_authenticated = True
+                st.session_state.delegate_id = row.get('ID')
+                st.session_state.delegate_name = row.get('Full Name', '')
+                st.session_state.delegate_organization = row.get('Organization', '')
+                st.session_state.delegate_category = row.get('Attendee Type', '')
+                st.session_state.delegate_title = row.get('Title', '')
+                st.session_state.delegate_nationality = row.get('Nationality', '')
+                st.session_state.delegate_phone = row.get('Phone', '')
+
+                st.success(f"Welcome, {row.get('Full Name', 'Unknown')}!")
+                st.switch_page("pages/1_Delegate_Dashboard.py")
+            else:
+                st.error(f"Delegate ID {manual_id} not found.")
+        except Exception as e:
+            st.error(f"Error: {str(e)}")
+    else:
+        st.warning("Please enter a delegate ID.")
+
+# Navigation
+st.markdown("---")
+col1, col2 = st.columns(2)
+with col1:
+    if st.button("Back to Landing Page"):
+        st.switch_page("pages/0_Landing.py")
+with col2:
+    if st.button("Go to Self-Service"):
+        st.switch_page("pages/7_Delegate_Self_Service.py")
