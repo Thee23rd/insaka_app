@@ -143,6 +143,19 @@ if qr_data_from_url:
 st.markdown("### 🔗 Test Dashboard Link")
 st.page_link("pages/1_Delegate_Dashboard.py", label="Test dashboard link ➜")
 
+# Auto-redirect listener for URL parameter changes
+st.markdown("""
+<script>
+// Auto-redirect listener for QR data URL parameters
+(function() {
+    const currentUrl = window.location.href;
+    if (currentUrl.includes('qr_data=')) {
+        console.log('QR data detected in URL, page will process it automatically');
+    }
+})();
+</script>
+""", unsafe_allow_html=True)
+
 # QR Code Login Section
 st.markdown("## 📱 QR Code Login")
 
@@ -271,25 +284,24 @@ if login_method == "📱 Scan QR Code":
      """
         
     
-     # Render the component and CAPTURE its return value (the scanned QR payload)
+    # Render the component (URL parameter approach only - no return value processing)
     try:
-         qr_scanned_value = components.html(scanner_html, height=520)
+        components.html(scanner_html, height=520)
     except Exception as e:
-         st.error(f"Component error: {str(e)}")
-         st.markdown("**Fallback:** Camera scanner unavailable. Please use manual entry below.")
-         qr_scanned_value = None
-         
-         # Show fallback camera option
-         st.markdown("### 📷 Alternative Camera Method")
-         st.markdown("If the camera scanner above doesn't work, you can still scan QR codes manually:")
-         
-         # Simple file upload for QR code images
-         uploaded_file = st.file_uploader("Upload QR Code Image", type=['png', 'jpg', 'jpeg'])
-         if uploaded_file is not None:
-             st.success("QR code image uploaded! Please use manual entry method below to enter the QR data.")
-     
-     # Component-return path removed - using URL parameter approach only
-    st.info("📷 QR scanner ready. Scan a QR code to authenticate.")
+        st.error(f"Component error: {str(e)}")
+        st.markdown("**Fallback:** Camera scanner unavailable. Please use manual entry below.")
+        
+        # Show fallback camera option
+        st.markdown("### 📷 Alternative Camera Method")
+        st.markdown("If the camera scanner above doesn't work, you can still scan QR codes manually:")
+        
+        # Simple file upload for QR code images
+        uploaded_file = st.file_uploader("Upload QR Code Image", type=['png', 'jpg', 'jpeg'])
+        if uploaded_file is not None:
+            st.success("QR code image uploaded! Please use manual entry method below to enter the QR data.")
+    
+    # URL parameter approach only - no component return value processing
+    st.info("📷 QR scanner ready. Scan a QR code to authenticate via URL parameters.")
     
     # Manual test with the detected QR data
     st.markdown("---")
