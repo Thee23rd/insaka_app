@@ -82,7 +82,7 @@ if login_method == "📱 Scan QR Code":
     st.markdown("Use your device camera to scan the QR code from your conference badge.")
     
      # Simple QR Scanner - Basic Working Version
-     simple_scanner_html = """
+    simple_scanner_html = """
          <div style="text-align: center; max-width: 600px; margin: 0 auto;">
              <video id="video" style="width: 100%; height: 300px; border: 2px solid #198A00; border-radius: 10px; display: none;"></video>
              <canvas id="canvas" style="display: none;"></canvas>
