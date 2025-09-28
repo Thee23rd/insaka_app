@@ -389,54 +389,107 @@ if login_method == "📱 Scan QR Code":
                             """, unsafe_allow_html=True)
                     st.stop()
     
-    # Handle QR code data from scanner
+    # --- Handle QR code data from scanner (robust) ---
+    def _normalize_qr_payload(qr_text: str):
+        # 1) URL-decode and strip common wrappers
+        try:
+            qr_text = urllib.parse.unquote_plus(qr_text or "")
+        except Exception:
+            pass
+        qr_text = qr_text.strip()
+        # Remove accidental leading/trailing quotes
+        if (qr_text.startswith('"') and qr_text.endswith('"')) or (qr_text.startswith("'") and qr_text.endswith("'")):
+            qr_text = qr_text[1:-1].strip()
+
+        # 2) Try parse JSON
+        payload = {}
+        try:
+            payload = json.loads(qr_text)
+        except Exception:
+            # allow non-JSON simple IDs (e.g., "6")
+            if qr_text.isdigit():
+                payload = {"type": "delegate_login", "delegate_id": qr_text}
+
+        # 3) Normalize keys and types
+        if isinstance(payload, dict):
+            delegate_id = payload.get("delegate_id") or payload.get("ID") or payload.get("id")
+            if delegate_id is not None:
+                # cast to string for comparison
+                payload["delegate_id"] = str(delegate_id).strip()
+            payload["type"] = payload.get("type") or "delegate_login"
+        return qr_text, payload
+
+    def _set_session_and_go(delegate: dict):
+        st.session_state.delegate_authenticated = True
+        st.session_state.delegate_id = delegate.get('ID')
+        st.session_state.delegate_name = delegate.get('Full Name', '')
+        st.session_state.delegate_organization = delegate.get('Organization', '')
+        st.session_state.delegate_category = delegate.get('Attendee Type', '')
+        st.session_state.delegate_title = delegate.get('Title', '')
+        st.session_state.delegate_nationality = delegate.get('Nationality', '')
+        st.session_state.delegate_phone = delegate.get('Phone', '')
+
+        # Clear param so refresh doesn't re-trigger
+        try:
+            st.query_params.clear()
+        except Exception:
+            pass
+
+        # Navigate (try both)
+        try:
+            st.switch_page("pages/1_Delegate_Dashboard.py")
+        except Exception:
+            try:
+                st.switch_page("1_Delegate_Dashboard.py")
+            except Exception:
+                st.markdown("""
+                    <script>
+                    window.top.location.href = window.top.location.href.split('?')[0]
+                      + '?page=1_Delegate_Dashboard.py';
+                    </script>
+                """, unsafe_allow_html=True)
+        st.stop()
+
     if 'qr_data' in st.query_params:
         raw = st.query_params['qr_data']
         qr_data_input = raw[0] if isinstance(raw, list) else raw
 
         st.success("QR Code detected! Processing...")
-        
+
+        # Normalize / parse
+        qr_text, payload = _normalize_qr_payload(qr_data_input)
+
         with st.spinner("Authenticating..."):
-            success, message, delegate = authenticate_with_qr_code(qr_data_input, staff_df)
-            
+            # 1) Try your existing validator first (pass original text)
+            success, message, delegate = authenticate_with_qr_code(qr_text, staff_df)
+
+            # 2) If that fails, fall back to a direct lookup by normalized ID
+            if not success and isinstance(payload, dict) and payload.get("type") == "delegate_login" and payload.get("delegate_id"):
+                norm_id = payload["delegate_id"]
+                # accept either numeric or string id; compare as strings
+                try:
+                    # Convert staff_df ID to str for comparison
+                    match_df = staff_df[staff_df["ID"].astype(str) == str(norm_id)]
+                    if not match_df.empty:
+                        row = match_df.iloc[0].to_dict()
+                        delegate = {
+                            'ID': row.get('ID'),
+                            'Full Name': row.get('Full Name') or row.get('Name') or row.get('Full_Name') or '',
+                            'Organization': row.get('Organization') or row.get('Company') or '',
+                            'Attendee Type': row.get('Attendee Type') or row.get('Category') or '',
+                            'Title': row.get('Title') or '',
+                            'Nationality': row.get('Nationality') or '',
+                            'Phone': row.get('Phone') or row.get('Contact') or '',
+                        }
+                        success, message = True, "Authenticated by ID lookup"
+                except Exception as e:
+                    st.info(f"Debug: ID lookup failed ({e})")
+
             if success:
                 st.success(f"✅ {message}")
-
-                # Set session state for authenticated delegate
-                st.session_state.delegate_authenticated = True
-                st.session_state.delegate_id = delegate.get('ID')
-                st.session_state.delegate_name = delegate.get('Full Name', '')
-                st.session_state.delegate_organization = delegate.get('Organization', '')
-                st.session_state.delegate_category = delegate.get('Attendee Type', '')
-                st.session_state.delegate_title = delegate.get('Title', '')
-                st.session_state.delegate_nationality = delegate.get('Nationality', '')
-                st.session_state.delegate_phone = delegate.get('Phone', '')
-
-                # Clear QR from URL so refreshes don’t re-trigger auth
-                try:
-                    st.query_params.clear()
-                except Exception:
-                    pass
-
-                # Try both common switch_page targets, then stop
-                try:
-                    st.switch_page("pages/1_Delegate_Dashboard.py")
-                except Exception:
-                    try:
-                        st.switch_page("1_Delegate_Dashboard.py")  # some setups want no "pages/"
-                    except Exception:
-                        # As a last resort, client-side redirect (works everywhere)
-                        st.markdown("""
-                            <script>
-                            // Navigate parent (not the iframe)
-                            window.top.location.href = window.top.location.href.split('?')[0]
-                            + '?page=1_Delegate_Dashboard.py';
-                            </script>
-                        """, unsafe_allow_html=True)
-                st.stop()
+                _set_session_and_go(delegate)
             else:
                 st.error(f"❌ {message}")
-
                 st.markdown("Please try scanning the QR code again.")
 
 else:
