@@ -101,19 +101,20 @@ if login_method == "📱 Scan QR Code":
 
         <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
         <script>
-        (function() {
-          let stream = null;
-          let scanning = false;
-          let rafId = null;
+        // Global variables and functions for QR scanner
+        let stream = null;
+        let scanning = false;
+        let rafId = null;
 
-          const video = document.getElementById('qr-video');
-          const canvas = document.getElementById('qr-canvas');
-          const ctx = canvas.getContext('2d');
-          const statusEl = document.getElementById('qr-status');
-          const startBtn = document.getElementById('start-btn');
-          const stopBtn = document.getElementById('stop-btn');
+        const video = document.getElementById('qr-video');
+        const canvas = document.getElementById('qr-canvas');
+        const ctx = canvas.getContext('2d');
+        const statusEl = document.getElementById('qr-status');
+        const startBtn = document.getElementById('start-btn');
+        const stopBtn = document.getElementById('stop-btn');
 
-          async function startCamera() {
+        // Make functions globally accessible
+        window.startCamera = async function() {
             try {
               statusEl.textContent = '📷 Requesting camera access...';
               const constraints = {
@@ -133,20 +134,20 @@ if login_method == "📱 Scan QR Code":
               console.error('Camera error:', e);
               statusEl.textContent = '❌ Camera access denied. Please allow camera permissions.';
             }
-          }
+          };
 
-          function stopCamera() {
-            scanning = false;
-            if (rafId) cancelAnimationFrame(rafId);
-            if (stream) { stream.getTracks().forEach(t => t.stop()); stream = null; }
-            video.pause(); video.removeAttribute('src'); video.load();
-            video.style.display = 'none';
-            startBtn.style.display = 'inline-block';
-            stopBtn.style.display = 'none';
-            statusEl.textContent = '📷 Camera stopped';
-          }
+        window.stopCamera = function() {
+          scanning = false;
+          if (rafId) cancelAnimationFrame(rafId);
+          if (stream) { stream.getTracks().forEach(t => t.stop()); stream = null; }
+          video.pause(); video.removeAttribute('src'); video.load();
+          video.style.display = 'none';
+          startBtn.style.display = 'inline-block';
+          stopBtn.style.display = 'none';
+          statusEl.textContent = '📷 Camera stopped';
+        };
 
-          function scanLoop() {
+        window.scanLoop = function() {
             if (!scanning) return;
             if (video.readyState === video.HAVE_ENOUGH_DATA) {
               canvas.width = video.videoWidth;
@@ -158,64 +159,36 @@ if login_method == "📱 Scan QR Code":
               if (code && code.data) {
                 console.log('QR Code detected:', code.data);
                 scanning = false;
-                statusEl.textContent = '✅ QR Code detected! Redirecting...';
+                statusEl.textContent = '✅ QR Code detected! Sending to parent...';
                 
-                // Try multiple redirect methods
+                // Direct redirect (no iframe sandboxing)
                 try {
-                  // Method 1: Direct URL update
-                  const url = new URL(window.top.location.href);
+                  const url = new URL(window.location.href);
                   url.searchParams.set('qr_data', code.data);
-                  console.log('Attempting direct redirect to:', url.toString());
-                  
-                  // Force redirect
-                  window.top.location.href = url.toString();
-                  
+                  console.log('QR data detected, redirecting to:', url.toString());
+                  statusEl.textContent = '✅ QR detected! Redirecting...';
+                  window.location.href = url.toString();
                 } catch (redirectErr) {
-                  console.log('Direct redirect failed:', redirectErr);
-                  
-                  // Method 2: PostMessage fallback
-                  try {
-                    window.parent.postMessage({ type: 'insaka:qr', qr: code.data }, '*');
-                    console.log('QR data sent to parent:', code.data);
-                    statusEl.textContent = '✅ QR detected! Check if page reloaded...';
-                  } catch (postMessageErr) {
-                    console.log('PostMessage failed:', postMessageErr);
-                    statusEl.textContent = '❌ Both redirect methods failed. Please refresh manually.';
-                  }
+                  console.log('Redirect failed:', redirectErr);
+                  statusEl.textContent = '❌ Redirect failed. Please refresh manually.';
                 }
                 return;
               } else {
                 statusEl.textContent = '📷 Scanning... Point camera at QR code';
               }
             }
-            rafId = requestAnimationFrame(scanLoop);
-          }
+            rafId = requestAnimationFrame(window.scanLoop);
+          };
 
-          startBtn.addEventListener('click', startCamera);
-          stopBtn.addEventListener('click', stopCamera);
-          window.addEventListener('beforeunload', stopCamera);
-        })();
+        startBtn.addEventListener('click', window.startCamera);
+        stopBtn.addEventListener('click', window.stopCamera);
+        window.addEventListener('beforeunload', window.stopCamera);
         </script>
         """
         
-    # Parent page listener: receives QR data from the scanner iframe and redirects
-    st.markdown("""
-    <script>
-      window.addEventListener('message', function (event) {
-        try {
-          const data = event.data || {};
-          if (data.type === 'insaka:qr' && typeof data.qr === 'string') {
-            const url = new URL(window.location.href);
-            url.searchParams.set('qr_data', data.qr);   // keep raw; Python will parse/normalize
-            window.location.href = url.toString();      // do redirect from the parent
-          }
-        } catch (e) { console.error('QR listener error:', e); }
-      }, false);
-    </script>
-    """, unsafe_allow_html=True)
     
-    # Use components.html for better JavaScript execution
-    components.html(simple_scanner_html, height=400)
+    # Use st.markdown for direct JavaScript execution (no iframe sandboxing)
+    st.markdown(simple_scanner_html, unsafe_allow_html=True)
     
     # Manual redirect button as backup
     st.markdown("---")
@@ -230,6 +203,9 @@ if login_method == "📱 Scan QR Code":
     with col_manual2:
         if st.button("🔍 Go to Self-Service", width='stretch'):
             st.switch_page("pages/7_Delegate_Self_Service.py")
+    
+    
+   
     
     col1, col2 = st.columns([1, 1])
     

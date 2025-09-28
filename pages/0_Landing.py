@@ -102,9 +102,9 @@ st.markdown("### 📱 Alternative Login Methods")
 
 col_qr1, col_qr2, col_qr3 = st.columns(3)
 
-with col_qr1:
-    if st.button("📱 QR Code Login", width='stretch', key="qr_login_btn"):
-        st.switch_page("pages/QR_Login.py")
+    with col_qr1:
+        if st.button("📱 QR Code Login", width='stretch', key="qr_login_btn"):
+            st.switch_page("pages/QR_Login_Simple.py")
 
 with col_qr2:
     if st.button("🔍 Search by Name", width='stretch', key="search_btn"):
