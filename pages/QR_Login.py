@@ -171,6 +171,18 @@ if login_method == "📱 Scan QR Code":
               cleanData = cleanData.replace(/^\uFEFF/, ''); // Remove BOM
               cleanData = cleanData.replace(/[\u200B-\u200D\uFEFF]/g, ''); // Remove zero-width characters
               
+              // Handle truncated JSON by checking for proper structure
+              if (cleanData.startsWith('{') && !cleanData.endsWith('}')) {
+                console.log('Detected truncated JSON, attempting to fix...');
+                // Try to find where it should end and add missing parts
+                const lastQuote = cleanData.lastIndexOf('"');
+                if (lastQuote > 0) {
+                  // Add missing closing parts
+                  cleanData = cleanData.substring(0, lastQuote + 1) + '}';
+                  console.log('Fixed truncated JSON:', cleanData);
+                }
+              }
+              
               console.log('Original QR data:', code.data);
               console.log('Cleaned QR data:', cleanData);
               console.log('Data length:', cleanData.length);
@@ -203,11 +215,28 @@ if login_method == "📱 Scan QR Code":
                 statusEl.textContent = '✅ Valid QR code! Redirecting...';
                 console.log('Valid delegate login QR detected');
                 
-                // Redirect parent window (not the iframe)
-                const url = new URL(window.top.location.href);
-                url.searchParams.set('qr_data', cleanData);
-                console.log('Redirecting to:', url.toString());
-                window.top.location.href = url.toString();
+                // Use a safer redirect method that works in iframes
+                try {
+                  // Try to redirect the parent window
+                  const url = new URL(window.top.location.href);
+                  url.searchParams.set('qr_data', cleanData);
+                  console.log('Redirecting to:', url.toString());
+                  
+                  // Use replace instead of direct href assignment
+                  window.top.location.replace(url.toString());
+                } catch (redirectErr) {
+                  console.log('Parent redirect failed, trying alternative method');
+                  // Alternative: Use postMessage to communicate with parent
+                  if (window.parent && window.parent !== window) {
+                    window.parent.postMessage({
+                      type: 'qr_redirect',
+                      url: window.top.location.href.split('?')[0] + '?qr_data=' + encodeURIComponent(cleanData)
+                    }, '*');
+                  } else {
+                    // Fallback: Try direct navigation
+                    window.location.href = window.location.href.split('?')[0] + '?qr_data=' + encodeURIComponent(cleanData);
+                  }
+                }
               } else {
                 console.log('Invalid QR code structure:', parsed);
                 statusEl.textContent = '❌ Invalid QR code structure - missing required fields';
@@ -280,10 +309,18 @@ if login_method == "📱 Scan QR Code":
         rafId = requestAnimationFrame(scanLoop);
       }
 
-      startBtn.addEventListener('click', startCamera);
-      stopBtn.addEventListener('click', stopCamera);
-      window.addEventListener('beforeunload', stopCamera);
-    })();
+          startBtn.addEventListener('click', startCamera);
+          stopBtn.addEventListener('click', stopCamera);
+          window.addEventListener('beforeunload', stopCamera);
+          
+          // Listen for postMessage from iframe
+          window.addEventListener('message', function(event) {
+            if (event.data && event.data.type === 'qr_redirect') {
+              console.log('Received redirect message:', event.data.url);
+              window.location.href = event.data.url;
+            }
+          });
+        })();
     </script>
     """
     
