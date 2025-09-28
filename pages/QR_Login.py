@@ -100,20 +100,19 @@ if login_method == "📱 Scan QR Code":
         </div>
 
         <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
-        <script>
-        (function() {
-          let stream = null;
-          let scanning = false;
-          let rafId = null;
+         <script>
+         let stream = null;
+         let scanning = false;
+         let rafId = null;
 
-          const video = document.getElementById('qr-video');
-          const canvas = document.getElementById('qr-canvas');
-          const ctx = canvas.getContext('2d');
-          const statusEl = document.getElementById('qr-status');
-          const startBtn = document.getElementById('start-btn');
-          const stopBtn = document.getElementById('stop-btn');
+         const video = document.getElementById('qr-video');
+         const canvas = document.getElementById('qr-canvas');
+         const ctx = canvas.getContext('2d');
+         const statusEl = document.getElementById('qr-status');
+         const startBtn = document.getElementById('start-btn');
+         const stopBtn = document.getElementById('stop-btn');
 
-          async function startCamera() {
+         window.startCamera = async function() {
             try {
               statusEl.textContent = '📷 Requesting camera access...';
               const constraints = {
@@ -135,7 +134,7 @@ if login_method == "📱 Scan QR Code":
             }
           }
 
-          function stopCamera() {
+         window.stopCamera = function() {
             scanning = false;
             if (rafId) cancelAnimationFrame(rafId);
             if (stream) { stream.getTracks().forEach(t => t.stop()); stream = null; }
@@ -146,7 +145,7 @@ if login_method == "📱 Scan QR Code":
             statusEl.textContent = '📷 Camera stopped';
           }
 
-          function scanLoop() {
+         window.scanLoop = function() {
             if (!scanning) return;
             if (video.readyState === video.HAVE_ENOUGH_DATA) {
               canvas.width = video.videoWidth;
@@ -176,13 +175,12 @@ if login_method == "📱 Scan QR Code":
                 statusEl.textContent = '📷 Scanning... Point camera at QR code';
               }
             }
-            rafId = requestAnimationFrame(scanLoop);
+            rafId = requestAnimationFrame(window.scanLoop);
           }
 
-          startBtn.addEventListener('click', startCamera);
-          stopBtn.addEventListener('click', stopCamera);
-          window.addEventListener('beforeunload', stopCamera);
-        })();
+         startBtn.addEventListener('click', window.startCamera);
+         stopBtn.addEventListener('click', window.stopCamera);
+         window.addEventListener('beforeunload', window.stopCamera);
         </script>
         """
         
