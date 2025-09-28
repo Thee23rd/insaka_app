@@ -181,6 +181,11 @@ if login_method == "📱 Scan QR Code":
             } catch (err) {
               console.error('QR parse error:', err);
               console.log('Raw QR data:', code.data);
+              console.log('QR data type:', typeof code.data);
+              console.log('QR data length:', code.data ? code.data.length : 'null');
+              
+              // Show the raw data to the user for debugging
+              statusEl.innerHTML = `❌ Invalid QR code format<br><small>Raw data: "${code.data}"</small>`;
               
               // Try to handle non-JSON QR codes (like simple delegate IDs)
               if (code.data && code.data.trim()) {
@@ -202,10 +207,34 @@ if login_method == "📱 Scan QR Code":
                   window.top.location.href = url.toString();
                   return;
                 }
+                
+                // Try to handle any text that might be a delegate ID or name
+                const trimmedData = code.data.trim();
+                if (trimmedData.length > 0 && trimmedData.length < 100) {
+                  // Create a generic QR data structure
+                  const genericQrData = JSON.stringify({
+                    type: 'delegate_login',
+                    delegate_id: trimmedData,
+                    delegate_name: 'Unknown',
+                    organization: 'Unknown',
+                    timestamp: new Date().toISOString(),
+                    conference: 'Insaka Conference 2025'
+                  });
+                  
+                  statusEl.textContent = '🔄 Processing generic data...';
+                  const url = new URL(window.top.location.href);
+                  url.searchParams.set('qr_data', genericQrData);
+                  console.log('Redirecting with generic data:', url.toString());
+                  window.top.location.href = url.toString();
+                  return;
+                }
               }
               
-              statusEl.textContent = '❌ Invalid QR code format';
-              setTimeout(() => { scanning = true; scanLoop(); }, 1500);
+              setTimeout(() => { 
+                scanning = true; 
+                statusEl.textContent = '📷 Scanning... Point camera at QR code';
+                scanLoop(); 
+              }, 3000);
             }
             return;
           } else {
@@ -271,8 +300,58 @@ if login_method == "📱 Scan QR Code":
             
             # Also show as a clickable link for testing
             encoded_data = urllib.parse.quote(json.dumps(test_qr_data))
-            test_url = f"http://localhost:8523/pages/QR_Login.py?qr_data={encoded_data}"
+            test_url = f"http://localhost:8524/pages/QR_Login.py?qr_data={encoded_data}"
             st.markdown(f"**Test URL:** [Click to test authentication]({test_url})")
+            
+            # Direct test button
+            if st.button("🚀 Test Authentication Directly", width='stretch'):
+                # Simulate the QR data processing directly
+                st.success("Testing authentication with test data...")
+                
+                with st.spinner("Authenticating..."):
+                    # Create a fake delegate for testing
+                    fake_delegate = {
+                        'ID': 123,
+                        'Full Name': 'Test User',
+                        'Organization': 'Test Organization',
+                        'Attendee Type': 'Delegate',
+                        'Title': 'Test Title',
+                        'Nationality': 'Zambian',
+                        'Phone': '1234567890'
+                    }
+                    
+                    # Set session state for authenticated delegate
+                    st.session_state.delegate_authenticated = True
+                    st.session_state.delegate_id = fake_delegate.get('ID')
+                    st.session_state.delegate_name = fake_delegate.get('Full Name', '')
+                    st.session_state.delegate_organization = fake_delegate.get('Organization', '')
+                    st.session_state.delegate_category = fake_delegate.get('Attendee Type', '')
+                    st.session_state.delegate_title = fake_delegate.get('Title', '')
+                    st.session_state.delegate_nationality = fake_delegate.get('Nationality', '')
+                    st.session_state.delegate_phone = fake_delegate.get('Phone', '')
+                    
+                    st.balloons()
+                    
+                    # Show success message and redirect
+                    st.markdown("### 🎉 Login Successful!")
+                    st.markdown(f"**Welcome, {fake_delegate.get('Full Name', '')}!**")
+                    st.markdown(f"**Organization:** {fake_delegate.get('Organization', '')}")
+                    st.markdown(f"**Category:** {fake_delegate.get('Attendee Type', '')}")
+                    st.markdown("🔄 Redirecting to your dashboard...")
+                    
+                    # Try multiple redirect methods
+                    try:
+                        st.switch_page("pages/1_Delegate_Dashboard.py")
+                    except Exception:
+                        try:
+                            st.switch_page("1_Delegate_Dashboard.py")
+                        except Exception:
+                            st.markdown("""
+                                <script>
+                                window.top.location.href = '/pages/1_Delegate_Dashboard.py';
+                                </script>
+                            """, unsafe_allow_html=True)
+                    st.stop()
     
     # Handle QR code data from scanner
     if 'qr_data' in st.query_params:
