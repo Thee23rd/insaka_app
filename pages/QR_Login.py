@@ -212,30 +212,37 @@ if login_method == "📱 Scan QR Code":
               console.log('Parsed QR data:', parsed);
               
               if (parsed && parsed.type === 'delegate_login' && parsed.delegate_id) {
-                statusEl.textContent = '✅ Valid QR code! Redirecting...';
+                statusEl.textContent = '✅ Valid QR code! Processing...';
                 console.log('Valid delegate login QR detected');
                 
-                // Use a safer redirect method that works in iframes
+                // Store the QR data and trigger a page reload with the data
                 try {
-                  // Try to redirect the parent window
-                  const url = new URL(window.top.location.href);
-                  url.searchParams.set('qr_data', cleanData);
-                  console.log('Redirecting to:', url.toString());
+                  // Create a URL with the QR data as a parameter
+                  const currentUrl = new URL(window.top.location.href);
+                  currentUrl.searchParams.set('qr_data', cleanData);
                   
-                  // Use replace instead of direct href assignment
-                  window.top.location.replace(url.toString());
+                  console.log('Redirecting to:', currentUrl.toString());
+                  statusEl.textContent = '🔄 Redirecting to dashboard...';
+                  
+                  // Force a page reload with the QR data
+                  setTimeout(() => {
+                    window.top.location.href = currentUrl.toString();
+                  }, 1000);
+                  
                 } catch (redirectErr) {
-                  console.log('Parent redirect failed, trying alternative method');
-                  // Alternative: Use postMessage to communicate with parent
-                  if (window.parent && window.parent !== window) {
-                    window.parent.postMessage({
-                      type: 'qr_redirect',
-                      url: window.top.location.href.split('?')[0] + '?qr_data=' + encodeURIComponent(cleanData)
-                    }, '*');
-                  } else {
-                    // Fallback: Try direct navigation
-                    window.location.href = window.location.href.split('?')[0] + '?qr_data=' + encodeURIComponent(cleanData);
-                  }
+                  console.log('Redirect failed:', redirectErr);
+                  statusEl.textContent = '❌ Redirect failed. Please refresh the page manually.';
+                  
+                  // Show the QR data for manual processing
+                  statusEl.innerHTML = `
+                    <div style="background: #f0f8f0; padding: 10px; border-radius: 5px; margin: 10px 0;">
+                      <strong>QR Code Data Detected:</strong><br>
+                      <small>Delegate ID: ${parsed.delegate_id}</small><br>
+                      <small>Name: ${parsed.delegate_name || 'Unknown'}</small><br>
+                      <small>Organization: ${parsed.organization || 'Unknown'}</small><br>
+                      <button onclick="window.top.location.reload()" style="background: #198A00; color: white; border: none; padding: 5px 10px; border-radius: 3px; margin-top: 5px;">Refresh Page</button>
+                    </div>
+                  `;
                 }
               } else {
                 console.log('Invalid QR code structure:', parsed);
@@ -324,8 +331,32 @@ if login_method == "📱 Scan QR Code":
     </script>
     """
     
-    # Use components.html for better JavaScript execution
-    components.html(scanner_html, height=520)
+        # Use components.html for better JavaScript execution
+        components.html(scanner_html, height=520)
+        
+        # Add a manual redirect button as backup
+        st.markdown("---")
+        st.markdown("### 🔄 Manual Redirect (if automatic redirect fails)")
+        
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            if st.button("🔄 Force Redirect to Dashboard", width='stretch'):
+                # Force redirect to dashboard
+                st.markdown("""
+                    <script>
+                    window.top.location.href = window.top.location.href.split('?')[0] + '?page=1_Delegate_Dashboard.py';
+                    </script>
+                """, unsafe_allow_html=True)
+        
+        with col2:
+            if st.button("🔍 Go to Self-Service", width='stretch'):
+                # Redirect to self-service page
+                st.markdown("""
+                    <script>
+                    window.top.location.href = window.top.location.href.split('?')[0] + '?page=7_Delegate_Self_Service.py';
+                    </script>
+                """, unsafe_allow_html=True)
     
     col1, col2 = st.columns([1, 1])
     
@@ -524,6 +555,20 @@ if login_method == "📱 Scan QR Code":
 
             if success:
                 st.success(f"✅ {message}")
+                
+                # Show delegate info before redirect
+                st.markdown("### 🎉 Login Successful!")
+                st.markdown(f"**Welcome, {delegate.get('Full Name', 'Unknown')}!**")
+                st.markdown(f"**Organization:** {delegate.get('Organization', 'Unknown')}")
+                st.markdown(f"**Category:** {delegate.get('Attendee Type', 'Unknown')}")
+                st.markdown(f"**Delegate ID:** {delegate.get('ID', 'Unknown')}")
+                
+                st.markdown("🔄 Redirecting to your dashboard...")
+                st.markdown("If redirect doesn't work, use the manual redirect buttons below.")
+                
+                # Try redirect with delay
+                import time
+                time.sleep(2)
                 _set_session_and_go(delegate)
             else:
                 st.error(f"❌ {message}")
