@@ -93,8 +93,11 @@ except Exception as e:
     st.stop()
 
 # Check for QR data in URL parameters first
-qr_data_from_url = st.query_params.get("qr_data")
-if qr_data_from_url:
+raw_param = st.query_params.get("qr_data")
+st.markdown(f"**Debug - Raw Param Type:** `{type(raw_param)}`, Value: `{raw_param}`")
+qr_data_from_url = raw_param[0] if isinstance(raw_param, list) else raw_param
+st.markdown(f"**Debug - Processed Param:** `{qr_data_from_url}`")
+if isinstance(qr_data_from_url, str) and qr_data_from_url.strip():
     st.success(f"🎉 QR Code detected from URL! Processing...")
     st.markdown(f"**Debug - QR Data:** `{qr_data_from_url}`")
     
