@@ -331,32 +331,32 @@ if login_method == "📱 Scan QR Code":
     </script>
     """
     
-        # Use components.html for better JavaScript execution
-        components.html(scanner_html, height=520)
-        
-        # Add a manual redirect button as backup
-        st.markdown("---")
-        st.markdown("### 🔄 Manual Redirect (if automatic redirect fails)")
-        
-        col1, col2 = st.columns(2)
-        
-        with col1:
-            if st.button("🔄 Force Redirect to Dashboard", width='stretch'):
-                # Force redirect to dashboard
-                st.markdown("""
-                    <script>
-                    window.top.location.href = window.top.location.href.split('?')[0] + '?page=1_Delegate_Dashboard.py';
-                    </script>
-                """, unsafe_allow_html=True)
-        
-        with col2:
-            if st.button("🔍 Go to Self-Service", width='stretch'):
-                # Redirect to self-service page
-                st.markdown("""
-                    <script>
-                    window.top.location.href = window.top.location.href.split('?')[0] + '?page=7_Delegate_Self_Service.py';
-                    </script>
-                """, unsafe_allow_html=True)
+    # Use components.html for better JavaScript execution
+    components.html(scanner_html, height=520)
+    
+    # Add a manual redirect button as backup
+    st.markdown("---")
+    st.markdown("### 🔄 Manual Redirect (if automatic redirect fails)")
+    
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        if st.button("🔄 Force Redirect to Dashboard", width='stretch'):
+            # Force redirect to dashboard
+            st.markdown("""
+                <script>
+                window.top.location.href = window.top.location.href.split('?')[0] + '?page=1_Delegate_Dashboard.py';
+                </script>
+            """, unsafe_allow_html=True)
+    
+    with col2:
+        if st.button("🔍 Go to Self-Service", width='stretch'):
+            # Redirect to self-service page
+            st.markdown("""
+                <script>
+                window.top.location.href = window.top.location.href.split('?')[0] + '?page=7_Delegate_Self_Service.py';
+                </script>
+            """, unsafe_allow_html=True)
     
     col1, col2 = st.columns([1, 1])
     
