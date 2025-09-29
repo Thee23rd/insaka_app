@@ -71,6 +71,25 @@ except Exception as e:
 def _stage_delegate(delegate: dict):
     st.session_state.pending_delegate = delegate
 
+# Commit delegate and navigate (must be defined before use)
+def _set_session_and_go(delegate: dict):
+    st.session_state.delegate_authenticated = True
+    st.session_state.delegate_id = delegate.get('ID')
+    st.session_state.delegate_name = delegate.get('Full Name', '')
+    st.session_state.delegate_organization = delegate.get('Organization', '')
+    st.session_state.delegate_category = delegate.get('Attendee Type', '')
+    st.session_state.delegate_title = delegate.get('Title', '')
+    st.session_state.delegate_nationality = delegate.get('Nationality', '')
+    st.session_state.delegate_phone = delegate.get('Phone', '')
+
+    # clear staged info
+    st.session_state.pop('pending_delegate', None)
+
+    try:
+        st.switch_page("pages/1_Delegate_Dashboard.py")
+    except Exception:
+        st.switch_page("1_Delegate_Dashboard.py")
+
 # Commit delegate to session and navigate to dashboard
 def _set_session_and_go(delegate: dict):
     st.session_state.delegate_authenticated = True
