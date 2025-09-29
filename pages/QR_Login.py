@@ -67,6 +67,10 @@ except Exception as e:
     st.error(f"Error loading delegate data: {str(e)}")
     st.stop()
 
+# Stage helper for user-confirmed redirect
+def _stage_delegate(delegate: dict):
+    st.session_state.pending_delegate = delegate
+
 # --- Utilities ---
 def _normalize_qr_payload(qr_text: str):
     try:
@@ -335,43 +339,13 @@ if login_method == "📱 Scan QR Code":
                     st.info(f"Debug: ID lookup failed ({e})")
 
             if success:
-                st.success(f"✅ {message}")
-                
-                # Show detailed delegate info and authentication context
-                st.markdown("### 🎉 Authentication Successful!")
-                st.markdown("**Welcome to the Insaka Conference 2025 Delegate Portal!**")
-                
-                # Delegate information card
-                st.markdown("#### 👤 Your Information")
-                col1, col2 = st.columns(2)
-                with col1:
-                    st.markdown(f"**👤 Name:** {delegate.get('Full Name', 'N/A')}")
-                    st.markdown(f"**🏢 Organization:** {delegate.get('Organization', 'N/A')}")
-                    st.markdown(f"**📱 Phone:** {delegate.get('Phone', 'N/A')}")
-                with col2:
-                    st.markdown(f"**🎫 Category:** {delegate.get('Attendee Type', 'N/A')}")
-                    st.markdown(f"**🆔 Delegate ID:** {delegate.get('ID', 'N/A')}")
-                    st.markdown(f"**🌍 Nationality:** {delegate.get('Nationality', 'N/A')}")
-                
-                # Authentication details
-                st.markdown("#### 🔐 Authentication Details")
-                from datetime import datetime
-                col_auth1, col_auth2 = st.columns(2)
-                with col_auth1:
-                    st.markdown(f"**✅ Status:** Authenticated")
-                    st.markdown(f"**📅 Login Time:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-                with col_auth2:
-                    st.markdown(f"**🎯 Method:** QR Code Authentication")
-                    st.markdown(f"**🏆 Access Level:** Full Delegate Access")
-                
-                # Dashboard access section
-                st.markdown("#### 🚀 Ready to Access Your Dashboard")
-                st.info("📋 **Your dashboard includes:**\n• Conference agenda and schedule\n• Speaker profiles and presentations\n• Exhibitor information and networking\n• Venue details and maps\n• Interactive posts and announcements\n• Matchmaking and networking tools")
-                
-                # Go to Dashboard button with more context
-                if st.button("🚀 **Enter Delegate Dashboard**", width='stretch', type="primary"):
-                    st.markdown("🔄 **Redirecting to your personalized dashboard...**")
-                    _set_session_and_go(delegate)
+                # Stage delegate, clear param, and rerun for confirm view
+                _stage_delegate(delegate)
+                try:
+                    st.query_params.clear()
+                except Exception:
+                    pass
+                st.rerun()
             else:
                 st.error(f"❌ Authentication Failed: {message}")
                 st.markdown("### 🔍 Troubleshooting")
@@ -422,6 +396,33 @@ else:
                     st.error(f"❌ {message}")
         else:
             st.warning("Please enter QR code data")
+
+# ---- If a delegate is staged, show the confirm card + button ----
+if st.session_state.get("pending_delegate"):
+    delegate = st.session_state["pending_delegate"]
+
+    st.success("✅ QR verified! Review and continue.")
+    with st.container():
+        st.markdown("### 👤 Delegate")
+        colA, colB = st.columns(2)
+        with colA:
+            st.markdown(f"**Name:** {delegate.get('Full Name','N/A')}")
+            st.markdown(f"**Organization:** {delegate.get('Organization','N/A')}")
+            st.markdown(f"**Category:** {delegate.get('Attendee Type','N/A')}")
+        with colB:
+            st.markdown(f"**Delegate ID:** {delegate.get('ID','N/A')}")
+            st.markdown(f"**Title:** {delegate.get('Title','N/A')}")
+            st.markdown(f"**Nationality:** {delegate.get('Nationality','N/A')}")
+
+    col_go, col_cancel = st.columns([3,1])
+    with col_go:
+        if st.button("🚀 Enter Delegate Dashboard", type="primary", use_container_width=True):
+            _set_session_and_go(delegate)
+
+    with col_cancel:
+        if st.button("↩️ Cancel", use_container_width=True):
+            st.session_state.pop("pending_delegate", None)
+            st.rerun()
 
 # QR Code Information
 st.markdown("## ℹ️ About QR Code Login")
