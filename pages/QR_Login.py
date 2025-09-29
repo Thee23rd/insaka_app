@@ -94,7 +94,7 @@ except Exception as e:
 
 # QR parameter handling moved to main streamlit_app.py
 
-# Parent listener: receives QR from the scanner iframe and redirects to APP ROOT with ?qr_data
+# Parent listener: receives QR from the scanner iframe and shows manual Go button
 st.markdown("""
 <script>
 (function () {
@@ -106,18 +106,76 @@ st.markdown("""
       const data = event.data || {};
       if (data.type !== 'insaka:qr' || typeof data.qr !== 'string') return;
 
-      // Compute app root (drop the last path segment like /QR_Login)
-      const u = new URL(window.location.href);
-      u.pathname = u.pathname.replace(/[^/]+\\/?$/, '');  // keep base path, remove page slug
-      u.searchParams.set('qr_data', data.qr);
-
-      // Redirect from TOP PAGE (not the iframe)
-      window.location.assign(u.toString());
+      // Show QR data in a visible element for user to see
+      const statusDiv = document.getElementById('qr-status') || document.createElement('div');
+      statusDiv.id = 'qr-status';
+      statusDiv.innerHTML = `
+        <div style="background: #d4edda; border: 1px solid #c3e6cb; border-radius: 5px; padding: 15px; margin: 10px 0;">
+          <h4 style="color: #155724; margin: 0 0 10px 0;">✅ QR Code Scanned Successfully!</h4>
+          <p style="margin: 0; color: #155724;">QR Data: <code>${data.qr.substring(0, 50)}...</code></p>
+        </div>
+      `;
+      
+      // Insert after the scanner
+      const scannerElement = document.querySelector('[data-testid="stMarkdownContainer"]');
+      if (scannerElement) {
+        scannerElement.parentNode.insertBefore(statusDiv, scannerElement.nextSibling);
+      }
+      
+      // Store QR data for processing
+      window.insakaScannedQR = data.qr;
+      
     } catch (e) { console.error('QR listener error:', e); }
   }, false);
 })();
 </script>
 """, unsafe_allow_html=True)
+
+# Initialize session state for QR data
+if 'scanned_qr_data' not in st.session_state:
+    st.session_state.scanned_qr_data = None
+
+# Add a button to process scanned QR data
+st.markdown("### 📱 QR Code Processing")
+
+# JavaScript to get QR data and create a button
+st.markdown("""
+<script>
+// Check if QR data was scanned
+if (window.insakaScannedQR) {
+    // Create a button to process the QR data
+    const buttonDiv = document.createElement('div');
+    buttonDiv.innerHTML = `
+        <div style="background: #e3f2fd; border: 1px solid #bbdefb; border-radius: 5px; padding: 15px; margin: 10px 0;">
+            <h4 style="color: #1565c0; margin: 0 0 10px 0;">✅ QR Code Ready for Processing!</h4>
+            <p style="margin: 0 0 10px 0; color: #1565c0;">Click the button below to authenticate and go to your dashboard.</p>
+            <button onclick="processQRData()" style="background: #1976d2; color: white; border: none; border-radius: 5px; padding: 10px 20px; font-size: 16px; cursor: pointer;">
+                🚀 Process QR Code & Go to Dashboard
+            </button>
+        </div>
+    `;
+    
+    // Insert after the scanner
+    const scannerElement = document.querySelector('[data-testid="stMarkdownContainer"]');
+    if (scannerElement) {
+        scannerElement.parentNode.insertBefore(buttonDiv, scannerElement.nextSibling);
+    }
+}
+
+function processQRData() {
+    if (window.insakaScannedQR) {
+        // Redirect to app root with QR data
+        const u = new URL(window.location.href);
+        u.pathname = u.pathname.replace(/[^/]+\\/?$/, '');
+        u.searchParams.set('qr_data', window.insakaScannedQR);
+        window.location.assign(u.toString());
+    }
+}
+</script>
+""", unsafe_allow_html=True)
+
+# Instructions for QR scanning
+st.info("📱 **How to use QR Login:**\n1. Click 'Start Camera' below\n2. Point your camera at a delegate's QR code\n3. When detected, a 'Process QR Code' button will appear\n4. Click the button to authenticate and go to dashboard")
 
 # Test dashboard link to verify correct path
 st.markdown("### 🔗 Test Dashboard Link")
