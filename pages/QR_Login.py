@@ -106,10 +106,10 @@ if login_method == "📱 Scan QR Code":
           let scanning = false;
           let rafId = null;
 
-          const video = document.getElementById('qr-video');
-          const canvas = document.getElementById('qr-canvas');
-          const ctx = canvas.getContext('2d');
-          const statusEl = document.getElementById('qr-status');
+           const video = document.getElementById('qr-video');
+           const canvas = document.getElementById('qr-canvas');
+           const ctx = canvas.getContext('2d', { willReadFrequently: true });
+           const statusEl = document.getElementById('qr-status');
           const startBtn = document.getElementById('start-btn');
           const stopBtn = document.getElementById('stop-btn');
 
@@ -184,23 +184,47 @@ if login_method == "📱 Scan QR Code":
         </script>
         """
         
-    # Parent page listener: receives QR data from the scanner iframe and redirects
+     # Parent page listener: receives QR data from the scanner iframe and shows details
     st.markdown("""
-    <script>
-      window.addEventListener('message', function (event) {
-        try {
-          const data = event.data || {};
-          if (data.type === 'insaka:qr' && typeof data.qr === 'string') {
-            const url = new URL(window.location.href);
-            url.searchParams.set('qr_data', data.qr);   // keep raw; Python will parse/normalize
-            window.location.href = url.toString();      // do redirect from the parent
-          }
-        } catch (e) { console.error('QR listener error:', e); }
-      }, false);
-    </script>
-    """, unsafe_allow_html=True)
+     <script>
+       window.addEventListener('message', function (event) {
+         try {
+           const data = event.data || {};
+           if (data.type === 'insaka:qr' && typeof data.qr === 'string') {
+             console.log('✅ QR data received by parent:', data.qr);
+             
+             // Store QR data for processing
+             sessionStorage.setItem('insaka_scanned_qr', data.qr);
+             
+             // Show success message
+             alert('✅ QR Code Scanned Successfully!\\n\\nQR Data: ' + data.qr.substring(0, 100) + '...\\n\\nThe page will refresh to show authentication details.');
+             
+             // Refresh to show authentication details
+             window.location.reload();
+           }
+         } catch (e) { console.error('QR listener error:', e); }
+       }, false);
+     </script>
+     """, unsafe_allow_html=True)
     
-    # Use components.html for better JavaScript execution
+     # Check for QR data in sessionStorage from scanner
+    st.markdown("""
+     <script>
+     const scannedQR = sessionStorage.getItem('insaka_scanned_qr');
+     if (scannedQR) {
+       console.log('📱 Found scanned QR data:', scannedQR);
+       // Clear it so it doesn't keep processing
+       sessionStorage.removeItem('insaka_scanned_qr');
+       
+       // Redirect to process the QR data
+       const url = new URL(window.location.href);
+       url.searchParams.set('qr_data', scannedQR);
+       window.location.href = url.toString();
+     }
+     </script>
+     """, unsafe_allow_html=True)
+     
+     # Use components.html for better JavaScript execution
     components.html(simple_scanner_html, height=400)
     
     
