@@ -197,47 +197,27 @@ if login_method == "📱 Scan QR Code":
              sessionStorage.setItem('insaka_scanned_qr', data.qr);
              
              // Show success message
-             alert('✅ QR Code Scanned Successfully!\\n\\nQR Data: ' + data.qr.substring(0, 100) + '...\\n\\nThe page will refresh to show authentication details.');
+             alert('✅ QR Code Scanned Successfully!\\n\\nQR Data: ' + data.qr.substring(0, 100) + '...\\n\\nClick OK to proceed to authentication.');
              
-             // Refresh to show authentication details
-             window.location.reload();
+             // Redirect to process the QR data
+             const url = new URL(window.location.href);
+             url.searchParams.set('qr_data', data.qr);
+             window.location.href = url.toString();
            }
          } catch (e) { console.error('QR listener error:', e); }
        }, false);
      </script>
      """, unsafe_allow_html=True)
     
-     # Check for QR data in sessionStorage from scanner
-    st.markdown("""
-     <script>
-     const scannedQR = sessionStorage.getItem('insaka_scanned_qr');
-     if (scannedQR) {
-       console.log('📱 Found scanned QR data:', scannedQR);
-       // Clear it so it doesn't keep processing
-       sessionStorage.removeItem('insaka_scanned_qr');
-       
-       // Redirect to process the QR data
-       const url = new URL(window.location.href);
-       url.searchParams.set('qr_data', scannedQR);
-       window.location.href = url.toString();
-     }
-     </script>
-     """, unsafe_allow_html=True)
      
      # Use components.html for better JavaScript execution
     components.html(simple_scanner_html, height=400)
-    
-    
+     
+     # Instructions after the scanner (so they don't cover buttons)
+    st.markdown("---")
+    st.info("📱 **How to use QR Login:**\n1. Click 'Start Camera' above\n2. Allow camera access when prompted\n3. Point camera at QR code on badge\n4. Wait for automatic detection and authentication")
+     
     col1, col2 = st.columns([1, 1])
-    
-    with col2:
-        st.markdown("**Instructions:**")
-        st.markdown("""
-        1. Click "Start Camera" button above
-        2. Allow camera access when prompted
-        3. Point camera at QR code on badge
-        4. Wait for automatic detection
-        """)
         
     
     # --- Handle QR code data from scanner (robust) ---
