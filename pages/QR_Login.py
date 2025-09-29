@@ -188,17 +188,12 @@ if login_method == "📱 Scan QR Code":
                 scanning = false;
                 statusEl.textContent = '✅ QR Code detected! Redirecting...';
                 
-                // Return the QR payload to Streamlit component (no redirect)
+                // Send QR to parent (no direct redirect here)
                 try {
-                  if (window.parent && window.parent.Streamlit && typeof window.parent.Streamlit.setComponentValue === 'function') {
-                    window.parent.Streamlit.setComponentValue(code.data);
-                    statusEl.textContent = '✅ QR detected! See the button below to continue.';
-                  } else {
-                    console.log('Streamlit.setComponentValue not available');
-                    statusEl.textContent = '✅ QR detected!';
-                  }
-                } catch (errSet) {
-                  console.log('setComponentValue failed:', errSet);
+                  window.parent.postMessage({ type: 'insaka:qr', qr: code.data }, '*');
+                  statusEl.textContent = '✅ QR detected! Preparing details...';
+                } catch (errPost) {
+                  console.log('postMessage failed:', errPost);
                 }
                 return;
               } else {
@@ -227,9 +222,11 @@ if login_method == "📱 Scan QR Code":
           try {
             const data = event.data || {};
             if (data.type === 'insaka:qr' && typeof data.qr === 'string') {
-              const url = new URL(window.location.href);
-              url.searchParams.set('qr_data', data.qr);
-              window.location.href = url.toString();
+              // Redirect to APP ROOT (strip the page slug) to avoid /QR_Login/_stcore 404s
+              const u = new URL(window.location.href);
+              u.pathname = u.pathname.replace(/[^/]+\/?$/, '');
+              u.searchParams.set('qr_data', data.qr);
+              window.location.assign(u.toString());
             }
           } catch (e) { console.error('QR listener error:', e); }
         }, false);
@@ -238,11 +235,11 @@ if login_method == "📱 Scan QR Code":
     """, unsafe_allow_html=True)
 
     # Render scanner (postMessage to parent on detection)
-    components.html(simple_scanner_html, height=400)
+    components.html(simple_scanner_html, height=420)
      
      # Instructions after the scanner (with extra spacing)
     st.markdown("---")
-    st.markdown("<div style='height:16px'></div>", unsafe_allow_html=True)
+    st.markdown("<div style='height:32px'></div>", unsafe_allow_html=True)
     st.info("📱 **How to use QR Login:**\n1. Click 'Start Camera' above\n2. Allow camera access when prompted\n3. Point camera at QR code on badge\n4. When detected, press the Go button")
      
     col1, col2 = st.columns([1, 1])

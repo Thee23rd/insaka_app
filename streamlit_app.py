@@ -171,28 +171,18 @@ if raw_param:
                     st.info(f"Debug: ID lookup failed ({e})")
 
             if success:
-                st.success(f"✅ {message}")
-                # Set session state and redirect to dashboard
-                st.session_state.delegate_authenticated = True
-                st.session_state.delegate_id = delegate.get('ID')
-                st.session_state.delegate_name = delegate.get('Full Name', '')
-                st.session_state.delegate_organization = delegate.get('Organization', '')
-                st.session_state.delegate_category = delegate.get('Attendee Type', '')
-                st.session_state.delegate_title = delegate.get('Title', '')
-                st.session_state.delegate_nationality = delegate.get('Nationality', '')
-                st.session_state.delegate_phone = delegate.get('Phone', '')
-                
-                # Navigate to dashboard
+                # Stage delegate for user-confirmed redirect on QR_Login page
+                st.session_state.pending_delegate = delegate
+                # Clear URL param to avoid re-auth on refresh
                 try:
-                    st.switch_page("pages/1_Delegate_Dashboard.py")
+                    st.query_params.clear()
                 except Exception:
-                    try:
-                        st.switch_page("1_Delegate_Dashboard.py")
-                    except Exception:
-                        st.markdown(
-                            "<script>window.location.href = window.location.origin + '/?page=1_Delegate_Dashboard.py';</script>",
-                            unsafe_allow_html=True,
-                        )
+                    pass
+                # Navigate to QR Login to show confirmation card + big button
+                try:
+                    st.switch_page("pages/QR_Login.py")
+                except Exception:
+                    st.switch_page("QR_Login.py")
                 st.stop()
             else:
                 st.error(f"❌ {message}")
