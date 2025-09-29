@@ -71,6 +71,36 @@ except Exception as e:
 def _stage_delegate(delegate: dict):
     st.session_state.pending_delegate = delegate
 
+# ---- If a delegate is already staged, show the confirm card FIRST and stop ----
+if st.session_state.get("pending_delegate"):
+    delegate = st.session_state["pending_delegate"]
+
+    st.success("✅ QR verified! Review and continue.")
+    with st.container():
+        st.markdown("### 👤 Delegate")
+        colA, colB = st.columns(2)
+        with colA:
+            st.markdown(f"**Name:** {delegate.get('Full Name','N/A')}")
+            st.markdown(f"**Organization:** {delegate.get('Organization','N/A')}")
+            st.markdown(f"**Category:** {delegate.get('Attendee Type','N/A')}")
+        with colB:
+            st.markdown(f"**Delegate ID:** {delegate.get('ID','N/A')}")
+            st.markdown(f"**Title:** {delegate.get('Title','N/A')}")
+            st.markdown(f"**Nationality:** {delegate.get('Nationality','N/A')}")
+
+    col_go, col_cancel = st.columns([3,1])
+    with col_go:
+        if st.button("🚀 Enter Delegate Dashboard", type="primary", use_container_width=True):
+            _set_session_and_go(delegate)
+
+    with col_cancel:
+        if st.button("↩️ Cancel", use_container_width=True):
+            st.session_state.pop("pending_delegate", None)
+            st.rerun()
+
+    # Do not render the scanner when confirm UI is visible
+    st.stop()
+
 # --- Utilities ---
 def _normalize_qr_payload(qr_text: str):
     try:
