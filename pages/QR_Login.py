@@ -160,14 +160,17 @@ if login_method == "📱 Scan QR Code":
                 scanning = false;
                 statusEl.textContent = '✅ QR Code detected! Redirecting...';
                 
-                // Send QR to parent; parent will update URL & redirect
+                // Return the QR payload to Streamlit component (no redirect)
                 try {
-                  window.parent.postMessage({ type: 'insaka:qr', qr: code.data }, '*');
-                  console.log('QR data sent to parent:', code.data);
-                  
-                } catch (postMessageErr) {
-                  console.log('PostMessage failed:', postMessageErr);
-                  statusEl.textContent = '❌ Communication failed. Please refresh manually.';
+                  if (window.parent && window.parent.Streamlit && typeof window.parent.Streamlit.setComponentValue === 'function') {
+                    window.parent.Streamlit.setComponentValue(code.data);
+                    statusEl.textContent = '✅ QR detected! See the button below to continue.';
+                  } else {
+                    console.log('Streamlit.setComponentValue not available');
+                    statusEl.textContent = '✅ QR detected!';
+                  }
+                } catch (errSet) {
+                  console.log('setComponentValue failed:', errSet);
                 }
                 return;
               } else {
@@ -184,38 +187,62 @@ if login_method == "📱 Scan QR Code":
         </script>
         """
         
-     # Parent page listener: receives QR data from the scanner iframe and shows details
-    st.markdown("""
-     <script>
-       window.addEventListener('message', function (event) {
-         try {
-           const data = event.data || {};
-           if (data.type === 'insaka:qr' && typeof data.qr === 'string') {
-             console.log('✅ QR data received by parent:', data.qr);
-             
-             // Store QR data for processing
-             sessionStorage.setItem('insaka_scanned_qr', data.qr);
-             
-             // Show success message
-             alert('✅ QR Code Scanned Successfully!\\n\\nQR Data: ' + data.qr.substring(0, 100) + '...\\n\\nClick OK to proceed to authentication.');
-             
-             // Redirect to process the QR data
-             const url = new URL(window.location.href);
-             url.searchParams.set('qr_data', data.qr);
-             window.location.href = url.toString();
-           }
-         } catch (e) { console.error('QR listener error:', e); }
-       }, false);
-     </script>
-     """, unsafe_allow_html=True)
+     # Note: No parent-page redirect. We use the component return value instead.
     
      
-     # Use components.html for better JavaScript execution
-    components.html(simple_scanner_html, height=400)
+     # Use components.html and capture the returned QR value
+    qr_scanned_value = components.html(simple_scanner_html, height=400)
+
+    # If we received a QR payload from the component, authenticate and show a Go button
+    if qr_scanned_value:
+        qr_text, payload = _normalize_qr_payload(qr_scanned_value)
+        with st.spinner("Authenticating..."):
+            success, message, delegate = authenticate_with_qr_code(qr_text, staff_df)
+
+            if not success and isinstance(payload, dict) and payload.get("type") == "delegate_login" and payload.get("delegate_id"):
+                norm_id = str(payload["delegate_id"])  # fallback by ID
+                try:
+                    match_df = staff_df[staff_df["ID"].astype(str) == norm_id]
+                    if not match_df.empty:
+                        row = match_df.iloc[0].to_dict()
+                        delegate = {
+                            'ID': row.get('ID'),
+                            'Full Name': row.get('Full Name') or row.get('Name') or row.get('Full_Name') or '',
+                            'Organization': row.get('Organization') or row.get('Company') or '',
+                            'Attendee Type': row.get('Attendee Type') or row.get('Category') or '',
+                            'Title': row.get('Title') or '',
+                            'Nationality': row.get('Nationality') or '',
+                            'Phone': row.get('Phone') or row.get('Contact') or '',
+                        }
+                        success, message = True, "Authenticated by ID lookup"
+                except Exception as e:
+                    st.info(f"Debug: ID lookup failed ({e})")
+
+            if success:
+                st.success(f"✅ {message}")
+                st.markdown("### 🎯 Ready to Login!")
+                colA, colB = st.columns(2)
+                with colA:
+                    st.markdown(f"**👤 Name:** {delegate.get('Full Name', 'N/A')}")
+                    st.markdown(f"**🏢 Organization:** {delegate.get('Organization', 'N/A')}")
+                with colB:
+                    st.markdown(f"**🎫 Category:** {delegate.get('Attendee Type', 'N/A')}")
+                    st.markdown(f"**🆔 ID:** {delegate.get('ID', 'N/A')}")
+
+                # Space before button
+                st.markdown("<div style='height:16px'></div>", unsafe_allow_html=True)
+                if st.button("🚀 Go to Delegate Dashboard", type="primary", width='stretch'):
+                    _set_session_and_go(delegate)
+                # Larger gap before instructions
+                st.markdown("<div style='height:24px'></div>", unsafe_allow_html=True)
+            else:
+                st.error(f"❌ {message}")
+                st.markdown("Please try scanning again.")
      
-     # Instructions after the scanner (so they don't cover buttons)
+     # Instructions after the scanner (with extra spacing)
     st.markdown("---")
-    st.info("📱 **How to use QR Login:**\n1. Click 'Start Camera' above\n2. Allow camera access when prompted\n3. Point camera at QR code on badge\n4. Wait for automatic detection and authentication")
+    st.markdown("<div style='height:16px'></div>", unsafe_allow_html=True)
+    st.info("📱 **How to use QR Login:**\n1. Click 'Start Camera' above\n2. Allow camera access when prompted\n3. Point camera at QR code on badge\n4. When detected, press the Go button")
      
     col1, col2 = st.columns([1, 1])
         
