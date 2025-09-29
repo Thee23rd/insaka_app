@@ -2,13 +2,15 @@
 import os, json, io, pathlib
 import streamlit as st
 from lib.ui import apply_brand, top_nav 
-
-import streamlit as st
 from staff_service import (
     load_staff_df, save_staff_df, register_staff,
     import_staff_excel, export_staff_excel, set_checked_in
 )
 from utils_assets import save_upload
+
+st.set_page_config(page_title="Admin — Insaka", page_icon="🔐", layout="wide")
+apply_brand()
+top_nav()
 
 # Zambian-themed header
 st.markdown('<div class="zambia-accent"></div>', unsafe_allow_html=True)
@@ -18,29 +20,29 @@ st.markdown("**Organizers / Services / VIP Management**")
 
 st.markdown('<div class="zambia-accent"></div>', unsafe_allow_html=True)
 
-            # Navigation to other admin pages
-            st.markdown("### 🔗 Admin Navigation")
-            nav_col1, nav_col2, nav_col3, nav_col4, nav_col5 = st.columns(5)
+# Navigation to other admin pages
+st.markdown("### 🔗 Admin Navigation")
+nav_col1, nav_col2, nav_col3, nav_col4, nav_col5 = st.columns(5)
 
-            with nav_col1:
-                if st.button("📢 Manage Announcements", width='stretch'):
-                    st.switch_page("pages/Admin_Announcements.py")
+with nav_col1:
+    if st.button("📢 Manage Announcements", use_container_width=True):
+        st.switch_page("pages/Admin_Announcements.py")
 
-            with nav_col2:
-                if st.button("📰 Manage News & Updates", width='stretch'):
-                    st.switch_page("pages/Admin_News.py")
+with nav_col2:
+    if st.button("📰 Manage News & Updates", use_container_width=True):
+        st.switch_page("pages/Admin_News.py")
 
-            with nav_col3:
-                if st.button("📸 PR & Social Media", width='stretch'):
-                    st.switch_page("pages/Admin_PR.py")
+with nav_col3:
+    if st.button("📸 PR & Social Media", use_container_width=True):
+        st.switch_page("pages/Admin_PR.py")
 
-            with nav_col4:
-                if st.button("📱 QR Code Management", width='stretch'):
-                    st.switch_page("pages/Admin_QR_Codes.py")
+with nav_col4:
+    if st.button("📱 QR Code Management", use_container_width=True):
+        st.switch_page("pages/Admin_QR_Codes.py")
 
-            with nav_col5:
-                if st.button("🌐 View Public Page", width='stretch'):
-                    st.switch_page("pages/9_External_Content.py")
+with nav_col5:
+    if st.button("🌐 View Public Page", use_container_width=True):
+        st.switch_page("pages/9_External_Content.py")
 
 st.markdown("---")
 st.markdown("### 🎫 Complimentary Passes Management")
@@ -91,7 +93,7 @@ with tab_new:
 with tab_manage:
     df = load_staff_df()
     st.caption(f"{len(df)} complimentary records")
-    st.dataframe(df, width='stretch', height=420)
+    st.dataframe(df, use_container_width=True, height=420)
 
     st.subheader("Edit selected")
     ids = st.multiselect("Select ID(s)", options=df["ID"].tolist())
@@ -287,9 +289,7 @@ with tab_export:
     st.download_button("Download Excel", data=data, file_name=fname,
                        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
 
-st.set_page_config(page_title="Admin — Insaka", page_icon="🔐", layout="wide")
-apply_brand()
-top_nav()
+ 
 
 ADMIN_PIN = os.environ.get("ADMIN_PIN", "") or st.secrets.get("ADMIN_PIN", "")
 st.title("Admin Console")
