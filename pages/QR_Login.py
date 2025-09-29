@@ -71,6 +71,25 @@ except Exception as e:
 def _stage_delegate(delegate: dict):
     st.session_state.pending_delegate = delegate
 
+# Commit delegate to session and navigate to dashboard
+def _set_session_and_go(delegate: dict):
+    st.session_state.delegate_authenticated = True
+    st.session_state.delegate_id = delegate.get('ID')
+    st.session_state.delegate_name = delegate.get('Full Name', '')
+    st.session_state.delegate_organization = delegate.get('Organization', '')
+    st.session_state.delegate_category = delegate.get('Attendee Type', '')
+    st.session_state.delegate_title = delegate.get('Title', '')
+    st.session_state.delegate_nationality = delegate.get('Nationality', '')
+    st.session_state.delegate_phone = delegate.get('Phone', '')
+
+    # clear staged info
+    st.session_state.pop('pending_delegate', None)
+
+    try:
+        st.switch_page("pages/1_Delegate_Dashboard.py")
+    except Exception:
+        st.switch_page("1_Delegate_Dashboard.py")
+
 # ---- If a delegate is already staged, show the confirm card FIRST and stop ----
 if st.session_state.get("pending_delegate"):
     delegate = st.session_state["pending_delegate"]
@@ -244,23 +263,23 @@ if login_method == "📱 Scan QR Code":
     
      
     # Parent page listener: receive QR data and attach it as URL param (no auto dashboard redirect)
-    st.markdown("""
+    st.markdown(r"""
     <script>
-      (function(){
-        if (window.__insakaQrListener) return; window.__insakaQrListener = true;
-        window.addEventListener('message', function (event) {
-          try {
-            const data = event.data || {};
-            if (data.type === 'insaka:qr' && typeof data.qr === 'string') {
-              // Redirect to APP ROOT (strip the page slug) to avoid /QR_Login/_stcore 404s
-              const u = new URL(window.location.href);
-              u.pathname = u.pathname.replace(/[^/]+\/?$/, '');
-              u.searchParams.set('qr_data', data.qr);
-              window.location.assign(u.toString());
-            }
-          } catch (e) { console.error('QR listener error:', e); }
-        }, false);
-      })();
+    (function(){
+      if (window.__insakaQrListener) return; window.__insakaQrListener = true;
+      window.addEventListener('message', function (event) {
+        try {
+          const data = event.data || {};
+          if (data.type === 'insaka:qr' && typeof data.qr === 'string') {
+            // Redirect to APP ROOT (strip the page slug) to avoid /QR_Login/_stcore 404s
+            const u = new URL(window.location.href);
+            u.pathname = u.pathname.replace(/[^/]+\/?$/, '');
+            u.searchParams.set('qr_data', data.qr);
+            window.location.assign(u.toString());
+          }
+        } catch (e) { console.error('QR listener error:', e); }
+      }, false);
+    })();
     </script>
     """, unsafe_allow_html=True)
 
