@@ -178,3 +178,4 @@ After setting up your PWA:
 5. **Share install instructions** with delegates
 
 Your Insaka Conference app is now ready to be installed as a native-like experience on delegates' mobile devices! 🇿🇲📱✨
+

@@ -274,3 +274,4 @@ if __name__ == "__main__":
         print("pip install Pillow")
     except Exception as e:
         print(f"❌ Error: {e}")
+

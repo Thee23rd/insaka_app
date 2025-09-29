@@ -67,11 +67,10 @@ except Exception as e:
     st.error(f"Error loading delegate data: {str(e)}")
     st.stop()
 
-# Stage helper for user-confirmed redirect
+# Helpers for staged confirmation → button → dashboard
 def _stage_delegate(delegate: dict):
     st.session_state.pending_delegate = delegate
 
-# Commit delegate and navigate (must be defined before use)
 def _set_session_and_go(delegate: dict):
     st.session_state.delegate_authenticated = True
     st.session_state.delegate_id = delegate.get('ID')
@@ -81,38 +80,15 @@ def _set_session_and_go(delegate: dict):
     st.session_state.delegate_title = delegate.get('Title', '')
     st.session_state.delegate_nationality = delegate.get('Nationality', '')
     st.session_state.delegate_phone = delegate.get('Phone', '')
-
-    # clear staged info
     st.session_state.pop('pending_delegate', None)
-
     try:
         st.switch_page("pages/1_Delegate_Dashboard.py")
     except Exception:
         st.switch_page("1_Delegate_Dashboard.py")
 
-# Commit delegate to session and navigate to dashboard
-def _set_session_and_go(delegate: dict):
-    st.session_state.delegate_authenticated = True
-    st.session_state.delegate_id = delegate.get('ID')
-    st.session_state.delegate_name = delegate.get('Full Name', '')
-    st.session_state.delegate_organization = delegate.get('Organization', '')
-    st.session_state.delegate_category = delegate.get('Attendee Type', '')
-    st.session_state.delegate_title = delegate.get('Title', '')
-    st.session_state.delegate_nationality = delegate.get('Nationality', '')
-    st.session_state.delegate_phone = delegate.get('Phone', '')
-
-    # clear staged info
-    st.session_state.pop('pending_delegate', None)
-
-    try:
-        st.switch_page("pages/1_Delegate_Dashboard.py")
-    except Exception:
-        st.switch_page("1_Delegate_Dashboard.py")
-
-# ---- If a delegate is already staged, show the confirm card FIRST and stop ----
-if st.session_state.get("pending_delegate"):
-    delegate = st.session_state["pending_delegate"]
-
+# If a delegate was staged, show confirmation card first
+if st.session_state.get('pending_delegate'):
+    delegate = st.session_state['pending_delegate']
     st.success("✅ QR verified! Review and continue.")
     with st.container():
         st.markdown("### 👤 Delegate")
@@ -125,43 +101,15 @@ if st.session_state.get("pending_delegate"):
             st.markdown(f"**Delegate ID:** {delegate.get('ID','N/A')}")
             st.markdown(f"**Title:** {delegate.get('Title','N/A')}")
             st.markdown(f"**Nationality:** {delegate.get('Nationality','N/A')}")
-
     col_go, col_cancel = st.columns([3,1])
     with col_go:
         if st.button("🚀 Enter Delegate Dashboard", type="primary", use_container_width=True):
             _set_session_and_go(delegate)
-
     with col_cancel:
         if st.button("↩️ Cancel", use_container_width=True):
-            st.session_state.pop("pending_delegate", None)
+            st.session_state.pop('pending_delegate', None)
             st.rerun()
-
-    # Do not render the scanner when confirm UI is visible
     st.stop()
-
-# --- Utilities ---
-def _normalize_qr_payload(qr_text: str):
-    try:
-        qr_text = urllib.parse.unquote_plus(qr_text or "")
-    except Exception:
-        pass
-    qr_text = qr_text.strip()
-    if (qr_text.startswith('"') and qr_text.endswith('"')) or (qr_text.startswith("'") and qr_text.endswith("'")):
-        qr_text = qr_text[1:-1].strip()
-
-    payload = {}
-    try:
-        payload = json.loads(qr_text)
-    except Exception:
-        if qr_text.isdigit():
-            payload = {"type": "delegate_login", "delegate_id": qr_text}
-
-    if isinstance(payload, dict):
-        delegate_id = payload.get("delegate_id") or payload.get("ID") or payload.get("id")
-        if delegate_id is not None:
-            payload["delegate_id"] = str(delegate_id).strip()
-        payload["type"] = payload.get("type") or "delegate_login"
-    return qr_text, payload
 
 # QR Code Login Section
 st.markdown("## 📱 QR Code Login")
@@ -177,244 +125,239 @@ if login_method == "📱 Scan QR Code":
     st.markdown("### 📷 Camera Scanner")
     st.markdown("Use your device camera to scan the QR code from your conference badge.")
     
-    # Simple QR Scanner
-    simple_scanner_html = """
-        <div id="qr-scanner-container" style="max-width: 720px; margin: 0 auto;">
-          <video id="qr-video" style="width: 100%; height: 300px; border: 3px solid #198A00; border-radius: 15px; display: none;" playsinline></video>
-          <canvas id="qr-canvas" style="display: none;"></canvas>
-          <div id="qr-status" style="text-align: center; padding: 10px; background: #f0f8f0; border-radius: 10px; margin: 10px 0; font-weight: bold; color: #198A00;">
-            📷 Camera scanner ready — click start to begin
-          </div>
-          <div style="text-align:center;">
-            <button id="start-btn" style="background:#198A00;color:white;border:none;padding:12px 24px;border-radius:25px;cursor:pointer;font-weight:bold;margin:5px;">
-              📷 Start Camera
-            </button>
-            <button id="stop-btn" style="background:#D10000;color:white;border:none;padding:12px 24px;border-radius:25px;cursor:pointer;font-weight:bold;margin:5px;display:none;">
-              🛑 Stop Camera
-            </button>
-          </div>
-        </div>
+    # Use the improved scanner HTML with components.html
+    scanner_html = """
+    <div id="qr-scanner-container" style="max-width: 720px; margin: 0 auto;">
+      <video id="qr-video" style="width: 100%; height: 300px; border: 3px solid #198A00; border-radius: 15px; display: none;" playsinline></video>
+      <canvas id="qr-canvas" style="display: none;"></canvas>
+      <div id="qr-status" style="text-align: center; padding: 10px; background: #f0f8f0; border-radius: 10px; margin: 10px 0; font-weight: bold; color: #198A00;">
+        📷 Camera scanner ready — click start to begin
+      </div>
+      <div style="text-align:center;">
+        <button id="start-btn" style="background:#198A00;color:white;border:none;padding:12px 24px;border-radius:25px;cursor:pointer;font-weight:bold;margin:5px;">
+          📷 Start Camera
+        </button>
+        <button id="stop-btn" style="background:#D10000;color:white;border:none;padding:12px 24px;border-radius:25px;cursor:pointer;font-weight:bold;margin:5px;display:none;">
+          🛑 Stop Camera
+        </button>
+      </div>
+    </div>
 
-        <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
-        <script>
-        (function() {
-          let stream = null;
-          let scanning = false;
-          let rafId = null;
-
-           const video = document.getElementById('qr-video');
-           const canvas = document.getElementById('qr-canvas');
-           const ctx = canvas.getContext('2d', { willReadFrequently: true });
-           const statusEl = document.getElementById('qr-status');
-          const startBtn = document.getElementById('start-btn');
-          const stopBtn = document.getElementById('stop-btn');
-
-          async function startCamera() {
-            try {
-              statusEl.textContent = '📷 Requesting camera access...';
-              const constraints = {
-                video: { facingMode: 'environment', width: { ideal: 1280 }, height: { ideal: 720 } },
-                audio: false
-              };
-              stream = await navigator.mediaDevices.getUserMedia(constraints);
-              video.srcObject = stream;
-              video.style.display = 'block';
-              startBtn.style.display = 'none';
-              stopBtn.style.display = 'inline-block';
-              await video.play();
-              scanning = true;
-              statusEl.textContent = '📷 Camera active! Point at QR code';
-              scanLoop();
-            } catch (e) {
-              console.error('Camera error:', e);
-              statusEl.textContent = '❌ Camera access denied. Please allow camera permissions.';
-            }
-          }
-
-          function stopCamera() {
-            scanning = false;
-            if (rafId) cancelAnimationFrame(rafId);
-            if (stream) { stream.getTracks().forEach(t => t.stop()); stream = null; }
-            video.pause(); video.removeAttribute('src'); video.load();
-            video.style.display = 'none';
-            startBtn.style.display = 'inline-block';
-            stopBtn.style.display = 'none';
-            statusEl.textContent = '📷 Camera stopped';
-          }
-
-          function scanLoop() {
-            if (!scanning) return;
-            if (video.readyState === video.HAVE_ENOUGH_DATA) {
-              canvas.width = video.videoWidth;
-              canvas.height = video.videoHeight;
-              ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-              const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-              const code = jsQR(imageData.data, imageData.width, imageData.height);
-
-              if (code && code.data) {
-                console.log('QR Code detected:', code.data);
-                scanning = false;
-                statusEl.textContent = '✅ QR Code detected! Redirecting...';
-                
-                // Send QR to parent (no direct redirect here)
-                try {
-                  window.parent.postMessage({ type: 'insaka:qr', qr: code.data }, '*');
-                  statusEl.textContent = '✅ QR detected! Preparing details...';
-                } catch (errPost) {
-                  console.log('postMessage failed:', errPost);
-                }
-                return;
-              } else {
-                statusEl.textContent = '📷 Scanning... Point camera at QR code';
-              }
-            }
-            rafId = requestAnimationFrame(scanLoop);
-          }
-
-          startBtn.addEventListener('click', startCamera);
-          stopBtn.addEventListener('click', stopCamera);
-          window.addEventListener('beforeunload', stopCamera);
-        })();
-        </script>
-        """
-        
-     # Note: No parent-page redirect. We use the component return value instead.
-    
-     
-    # Parent page listener: receive QR data and attach it as URL param (no auto dashboard redirect)
-    st.markdown(r"""
+    <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
     <script>
-    (function(){
-      if (window.__insakaQrListener) return; window.__insakaQrListener = true;
-      window.addEventListener('message', function (event) {
+    (function() {
+      let stream = null;
+      let scanning = false;
+      let rafId = null;
+
+      const video = document.getElementById('qr-video');
+      const canvas = document.getElementById('qr-canvas');
+      const ctx = canvas.getContext('2d');
+      const statusEl = document.getElementById('qr-status');
+      const startBtn = document.getElementById('start-btn');
+      const stopBtn = document.getElementById('stop-btn');
+
+      async function startCamera() {
         try {
-          const data = event.data || {};
-          if (data.type === 'insaka:qr' && typeof data.qr === 'string') {
-            // Redirect to APP ROOT (strip the page slug) to avoid /QR_Login/_stcore 404s
-            const u = new URL(window.location.href);
-            u.pathname = u.pathname.replace(/[^/]+\/?$/, '');
-            u.searchParams.set('qr_data', data.qr);
-            window.location.assign(u.toString());
+          statusEl.textContent = '📷 Requesting camera access...';
+          const constraints = {
+            video: { facingMode: 'environment', width: { ideal: 1280 }, height: { ideal: 720 } },
+            audio: false
+          };
+          stream = await navigator.mediaDevices.getUserMedia(constraints);
+          video.srcObject = stream;
+          video.style.display = 'block';
+          startBtn.style.display = 'none';
+          stopBtn.style.display = 'inline-block';
+          await video.play();
+          scanning = true;
+          statusEl.textContent = '📷 Camera active! Point at QR code';
+          scanLoop();
+        } catch (e) {
+          console.error('Camera error:', e);
+          if (location.protocol !== 'https:' && location.hostname !== 'localhost') {
+            statusEl.textContent = '❌ Camera blocked: use HTTPS or run on localhost.';
+          } else {
+            statusEl.textContent = '❌ Camera access denied. Allow permissions in your browser.';
           }
-        } catch (e) { console.error('QR listener error:', e); }
-      }, false);
+        }
+      }
+
+      function stopCamera() {
+        scanning = false;
+        if (rafId) cancelAnimationFrame(rafId);
+        if (stream) { stream.getTracks().forEach(t => t.stop()); stream = null; }
+        video.pause(); video.removeAttribute('src'); video.load();
+        video.style.display = 'none';
+        startBtn.style.display = 'inline-block';
+        stopBtn.style.display = 'none';
+        statusEl.textContent = '📷 Camera stopped';
+      }
+
+      function sendToStreamlit(value) {
+        try {
+          window.parent.postMessage({
+            isStreamlitMessage: true,
+            type: 'streamlit:setComponentValue',
+            value: value
+          }, '*');
+        } catch (e) {
+          console.error('postMessage failed:', e);
+        }
+      }
+
+      function scanLoop() {
+        if (!scanning) return;
+        if (video.readyState === video.HAVE_ENOUGH_DATA) {
+          canvas.width = video.videoWidth;
+          canvas.height = video.videoHeight;
+          ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+          const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+          const code = jsQR(imageData.data, imageData.width, imageData.height);
+
+          if (code && code.data) {
+            console.log('QR Code detected:', code.data);
+            scanning = false;
+            statusEl.textContent = '✅ QR Code detected! Processing...';
+            // Send value back to Streamlit (components.html return value)
+            sendToStreamlit(code.data);
+            return;
+          } else {
+            statusEl.textContent = '📷 Scanning... Point camera at QR code';
+          }
+        }
+        rafId = requestAnimationFrame(scanLoop);
+      }
+
+      startBtn.addEventListener('click', startCamera);
+      stopBtn.addEventListener('click', stopCamera);
+      window.addEventListener('beforeunload', stopCamera);
     })();
     </script>
-    """, unsafe_allow_html=True)
-
-    # Render scanner (postMessage to parent on detection)
-    components.html(simple_scanner_html, height=420)
-     
-     # Instructions after the scanner (with extra spacing)
-    st.markdown("---")
-    st.markdown("<div style='height:32px'></div>", unsafe_allow_html=True)
-    st.info("📱 **How to use QR Login:**\n1. Click 'Start Camera' above\n2. Allow camera access when prompted\n3. Point camera at QR code on badge\n4. When detected, press the Go button")
-     
-    col1, col2 = st.columns([1, 1])
-        
+    """
     
-    # --- Handle QR code data from scanner (robust) ---
-    def _normalize_qr_payload(qr_text: str):
-        # 1) URL-decode and strip common wrappers
-        try:
-            qr_text = urllib.parse.unquote_plus(qr_text or "")
-        except Exception:
-            pass
-        qr_text = qr_text.strip()
-        # Remove accidental leading/trailing quotes
-        if (qr_text.startswith('"') and qr_text.endswith('"')) or (qr_text.startswith("'") and qr_text.endswith("'")):
-            qr_text = qr_text[1:-1].strip()
-
-        # 2) Try parse JSON
-        payload = {}
-        try:
-            payload = json.loads(qr_text)
-        except Exception:
-            # allow non-JSON simple IDs (e.g., "6")
-            if qr_text.isdigit():
-                payload = {"type": "delegate_login", "delegate_id": qr_text}
-
-        # 3) Normalize keys and types
-        if isinstance(payload, dict):
-            delegate_id = payload.get("delegate_id") or payload.get("ID") or payload.get("id")
-            if delegate_id is not None:
-                # cast to string for comparison
-                payload["delegate_id"] = str(delegate_id).strip()
-            payload["type"] = payload.get("type") or "delegate_login"
-        return qr_text, payload
-
-    def _set_session_and_go(delegate: dict):
-        st.session_state.delegate_authenticated = True
-        st.session_state.delegate_id = delegate.get('ID')
-        st.session_state.delegate_name = delegate.get('Full Name', '')
-        st.session_state.delegate_organization = delegate.get('Organization', '')
-        st.session_state.delegate_category = delegate.get('Attendee Type', '')
-        st.session_state.delegate_title = delegate.get('Title', '')
-        st.session_state.delegate_nationality = delegate.get('Nationality', '')
-        st.session_state.delegate_phone = delegate.get('Phone', '')
-
-        # Navigate (try both)
-        try:
-            st.switch_page("pages/1_Delegate_Dashboard.py")
-        except Exception:
+    # Use components.html for better JavaScript execution
+    qr_value = components.html(scanner_html, height=520, key="qr_scanner")
+    
+    col1, col2 = st.columns([1, 1])
+    
+    with col2:
+        st.markdown("**Instructions:**")
+        st.markdown("""
+        1. Click "Start Camera" button above
+        2. Allow camera access when prompted
+        3. Point camera at QR code on badge
+        4. Wait for automatic detection
+        """)
+        
+        # Test QR code generator
+        st.markdown("---")
+        st.markdown("**🧪 Test QR Code:**")
+        if st.button("Generate Test QR Code", width='stretch'):
+            # Generate a test QR code for testing
+            test_qr_data = {
+                "type": "delegate_login",
+                "delegate_id": "7",
+                "delegate_name": "Ntama Mwape",
+                "organization": "Organizing Committee",
+                "timestamp": "2025-09-26T12:00:00",
+                "conference": "Insaka Conference 2025"
+            }
+            
+            # Try to generate an actual QR code image
             try:
-                st.switch_page("1_Delegate_Dashboard.py")
-            except Exception:
-                st.markdown("""
-                    <script>
-                    window.top.location.href = window.top.location.href.split('?')[0]
-                      + '?page=1_Delegate_Dashboard.py';
-                    </script>
-                """, unsafe_allow_html=True)
-        st.stop()
-
-    if 'qr_data' in st.query_params:
+                from lib.qr_system import create_qr_code
+                qr_img, qr_data = create_qr_code(
+                    "7", "Ntama Mwape", "Organizing Committee", size=200
+                )
+                
+                if qr_img is not None:
+                    st.image(qr_img, caption="Test QR Code - Scan this with the camera scanner", width=200)
+                    st.success("✅ Test QR code generated! Scan it with the camera scanner above.")
+                else:
+                    st.warning("QR code generation failed, showing data only.")
+            except Exception as e:
+                st.warning(f"Could not generate QR code: {e}")
+            
+            # Display the test QR data
+            st.json(test_qr_data)
+            st.info("This is the data that will be processed when you scan the QR code above.")
+            
+            # Also show as a clickable link for testing
+            encoded_data = urllib.parse.quote(json.dumps(test_qr_data))
+            test_url = f"http://localhost:8524/pages/QR_Login.py?qr_data={encoded_data}"
+            st.markdown(f"**Test URL:** [Click to test authentication]({test_url})")
+            
+            # Direct test button
+            if st.button("🚀 Test Authentication Directly", width='stretch'):
+                # Simulate the QR data processing directly
+                st.success("Testing authentication with test data...")
+                
+                with st.spinner("Authenticating..."):
+                    # Create a fake delegate for testing
+                    fake_delegate = {
+                        'ID': 123,
+                        'Full Name': 'Test User',
+                        'Organization': 'Test Organization',
+                        'Attendee Type': 'Delegate',
+                        'Title': 'Test Title',
+                        'Nationality': 'Zambian',
+                        'Phone': '1234567890'
+                    }
+                    
+                    # Set session state for authenticated delegate
+                    st.session_state.delegate_authenticated = True
+                    st.session_state.delegate_id = fake_delegate.get('ID')
+                    st.session_state.delegate_name = fake_delegate.get('Full Name', '')
+                    st.session_state.delegate_organization = fake_delegate.get('Organization', '')
+                    st.session_state.delegate_category = fake_delegate.get('Attendee Type', '')
+                    st.session_state.delegate_title = fake_delegate.get('Title', '')
+                    st.session_state.delegate_nationality = fake_delegate.get('Nationality', '')
+                    st.session_state.delegate_phone = fake_delegate.get('Phone', '')
+                    
+                    st.balloons()
+                    
+                    # Show success message and redirect
+                    st.markdown("### 🎉 Login Successful!")
+                    st.markdown(f"**Welcome, {fake_delegate.get('Full Name', '')}!**")
+                    st.markdown(f"**Organization:** {fake_delegate.get('Organization', '')}")
+                    st.markdown(f"**Category:** {fake_delegate.get('Attendee Type', '')}")
+                    st.markdown("🔄 Redirecting to your dashboard...")
+                    
+                    # Try multiple redirect methods
+                    try:
+                        st.switch_page("pages/1_Delegate_Dashboard.py")
+                    except Exception:
+                        try:
+                            st.switch_page("1_Delegate_Dashboard.py")
+                        except Exception:
+                            st.markdown("""
+                                <script>
+                                window.top.location.href = '/pages/1_Delegate_Dashboard.py';
+                                </script>
+                            """, unsafe_allow_html=True)
+                    st.stop()
+    
+    # Handle QR code data from scanner (preferred: via components value)
+    qr_data_input = None
+    if qr_value is not None:
+        qr_data_input = qr_value
+    elif 'qr_data' in st.query_params:
         raw = st.query_params['qr_data']
         qr_data_input = raw[0] if isinstance(raw, list) else raw
 
+    if qr_data_input:
         st.success("QR Code detected! Processing...")
-
-        # Normalize / parse
-        qr_text, payload = _normalize_qr_payload(qr_data_input)
-
         with st.spinner("Authenticating..."):
-            # 1) Try your existing validator first (pass original text)
-            success, message, delegate = authenticate_with_qr_code(qr_text, staff_df)
-
-            # 2) If that fails, fall back to a direct lookup by normalized ID
-            if not success and isinstance(payload, dict) and payload.get("type") == "delegate_login" and payload.get("delegate_id"):
-                norm_id = payload["delegate_id"]
-                # accept either numeric or string id; compare as strings
-                try:
-                    # Convert staff_df ID to str for comparison
-                    match_df = staff_df[staff_df["ID"].astype(str) == str(norm_id)]
-                    if not match_df.empty:
-                        row = match_df.iloc[0].to_dict()
-                        delegate = {
-                            'ID': row.get('ID'),
-                            'Full Name': row.get('Full Name') or row.get('Name') or row.get('Full_Name') or '',
-                            'Organization': row.get('Organization') or row.get('Company') or '',
-                            'Attendee Type': row.get('Attendee Type') or row.get('Category') or '',
-                            'Title': row.get('Title') or '',
-                            'Nationality': row.get('Nationality') or '',
-                            'Phone': row.get('Phone') or row.get('Contact') or '',
-                        }
-                        success, message = True, "Authenticated by ID lookup"
-                except Exception as e:
-                    st.info(f"Debug: ID lookup failed ({e})")
-
+            success, message, delegate = authenticate_with_qr_code(qr_data_input, staff_df)
             if success:
-                # Stage delegate, clear param, and rerun for confirm view
+                st.success(f"✅ {message}")
+                # Stage delegate and show confirmation button (no client-side nav needed)
                 _stage_delegate(delegate)
-                try:
-                    st.query_params.clear()
-                except Exception:
-                    pass
                 st.rerun()
             else:
-                st.error(f"❌ Authentication Failed: {message}")
-                st.markdown("### 🔍 Troubleshooting")
-                st.markdown("**If you're having trouble:**\n• Ensure you're scanning a valid Insaka Conference delegate QR code\n• Check that your QR code is not damaged or blurry\n• Try refreshing the page and scanning again\n• Contact conference support if the issue persists")
+                st.error(f"❌ {message}")
+                st.markdown("Please try scanning the QR code again.")
 
 else:
     st.markdown("### 📝 Manual QR Code Entry")
@@ -461,33 +404,6 @@ else:
                     st.error(f"❌ {message}")
         else:
             st.warning("Please enter QR code data")
-
-# ---- If a delegate is staged, show the confirm card + button ----
-if st.session_state.get("pending_delegate"):
-    delegate = st.session_state["pending_delegate"]
-
-    st.success("✅ QR verified! Review and continue.")
-    with st.container():
-        st.markdown("### 👤 Delegate")
-        colA, colB = st.columns(2)
-        with colA:
-            st.markdown(f"**Name:** {delegate.get('Full Name','N/A')}")
-            st.markdown(f"**Organization:** {delegate.get('Organization','N/A')}")
-            st.markdown(f"**Category:** {delegate.get('Attendee Type','N/A')}")
-        with colB:
-            st.markdown(f"**Delegate ID:** {delegate.get('ID','N/A')}")
-            st.markdown(f"**Title:** {delegate.get('Title','N/A')}")
-            st.markdown(f"**Nationality:** {delegate.get('Nationality','N/A')}")
-
-    col_go, col_cancel = st.columns([3,1])
-    with col_go:
-        if st.button("🚀 Enter Delegate Dashboard", type="primary", use_container_width=True):
-            _set_session_and_go(delegate)
-
-    with col_cancel:
-        if st.button("↩️ Cancel", use_container_width=True):
-            st.session_state.pop("pending_delegate", None)
-            st.rerun()
 
 # QR Code Information
 st.markdown("## ℹ️ About QR Code Login")

@@ -264,3 +264,4 @@ pandas       # Data management
 6. **Deploy to Production** - Make QR codes available to delegates
 
 **Your QR code system is now ready for the Insaka Conference 2025! 🎉**
+
