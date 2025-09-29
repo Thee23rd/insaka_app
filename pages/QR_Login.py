@@ -214,54 +214,27 @@ if login_method == "📱 Scan QR Code":
      # Note: No parent-page redirect. We use the component return value instead.
     
      
-     # Use components.html and capture the returned QR value
-    qr_scanned_value = components.html(simple_scanner_html, height=400)
+    # Parent page listener: receive QR data and attach it as URL param (no auto dashboard redirect)
+    st.markdown("""
+    <script>
+      (function(){
+        if (window.__insakaQrListener) return; window.__insakaQrListener = true;
+        window.addEventListener('message', function (event) {
+          try {
+            const data = event.data || {};
+            if (data.type === 'insaka:qr' && typeof data.qr === 'string') {
+              const url = new URL(window.location.href);
+              url.searchParams.set('qr_data', data.qr);
+              window.location.href = url.toString();
+            }
+          } catch (e) { console.error('QR listener error:', e); }
+        }, false);
+      })();
+    </script>
+    """, unsafe_allow_html=True)
 
-    # If we received a QR payload from the component, authenticate and show a Go button
-    if qr_scanned_value:
-        qr_text, payload = _normalize_qr_payload(qr_scanned_value)
-        with st.spinner("Authenticating..."):
-            success, message, delegate = authenticate_with_qr_code(qr_text, staff_df)
-
-            if not success and isinstance(payload, dict) and payload.get("type") == "delegate_login" and payload.get("delegate_id"):
-                norm_id = str(payload["delegate_id"])  # fallback by ID
-                try:
-                    match_df = staff_df[staff_df["ID"].astype(str) == norm_id]
-                    if not match_df.empty:
-                        row = match_df.iloc[0].to_dict()
-                        delegate = {
-                            'ID': row.get('ID'),
-                            'Full Name': row.get('Full Name') or row.get('Name') or row.get('Full_Name') or '',
-                            'Organization': row.get('Organization') or row.get('Company') or '',
-                            'Attendee Type': row.get('Attendee Type') or row.get('Category') or '',
-                            'Title': row.get('Title') or '',
-                            'Nationality': row.get('Nationality') or '',
-                            'Phone': row.get('Phone') or row.get('Contact') or '',
-                        }
-                        success, message = True, "Authenticated by ID lookup"
-                except Exception as e:
-                    st.info(f"Debug: ID lookup failed ({e})")
-
-            if success:
-                st.success(f"✅ {message}")
-                st.markdown("### 🎯 Ready to Login!")
-                colA, colB = st.columns(2)
-                with colA:
-                    st.markdown(f"**👤 Name:** {delegate.get('Full Name', 'N/A')}")
-                    st.markdown(f"**🏢 Organization:** {delegate.get('Organization', 'N/A')}")
-                with colB:
-                    st.markdown(f"**🎫 Category:** {delegate.get('Attendee Type', 'N/A')}")
-                    st.markdown(f"**🆔 ID:** {delegate.get('ID', 'N/A')}")
-
-                # Space before button
-                st.markdown("<div style='height:16px'></div>", unsafe_allow_html=True)
-                if st.button("🚀 Go to Delegate Dashboard", type="primary", width='stretch'):
-                    _set_session_and_go(delegate)
-                # Larger gap before instructions
-                st.markdown("<div style='height:24px'></div>", unsafe_allow_html=True)
-            else:
-                st.error(f"❌ {message}")
-                st.markdown("Please try scanning again.")
+    # Render scanner (postMessage to parent on detection)
+    components.html(simple_scanner_html, height=400)
      
      # Instructions after the scanner (with extra spacing)
     st.markdown("---")
