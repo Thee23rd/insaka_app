@@ -67,6 +67,30 @@ except Exception as e:
     st.error(f"Error loading delegate data: {str(e)}")
     st.stop()
 
+# --- Utilities ---
+def _normalize_qr_payload(qr_text: str):
+    try:
+        qr_text = urllib.parse.unquote_plus(qr_text or "")
+    except Exception:
+        pass
+    qr_text = qr_text.strip()
+    if (qr_text.startswith('"') and qr_text.endswith('"')) or (qr_text.startswith("'") and qr_text.endswith("'")):
+        qr_text = qr_text[1:-1].strip()
+
+    payload = {}
+    try:
+        payload = json.loads(qr_text)
+    except Exception:
+        if qr_text.isdigit():
+            payload = {"type": "delegate_login", "delegate_id": qr_text}
+
+    if isinstance(payload, dict):
+        delegate_id = payload.get("delegate_id") or payload.get("ID") or payload.get("id")
+        if delegate_id is not None:
+            payload["delegate_id"] = str(delegate_id).strip()
+        payload["type"] = payload.get("type") or "delegate_login"
+    return qr_text, payload
+
 # QR Code Login Section
 st.markdown("## 📱 QR Code Login")
 
