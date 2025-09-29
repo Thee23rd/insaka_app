@@ -260,12 +260,6 @@ if login_method == "📱 Scan QR Code":
         st.session_state.delegate_nationality = delegate.get('Nationality', '')
         st.session_state.delegate_phone = delegate.get('Phone', '')
 
-        # Clear param so refresh doesn't re-trigger
-        try:
-            st.query_params.clear()
-        except Exception:
-            pass
-
         # Navigate (try both)
         try:
             st.switch_page("pages/1_Delegate_Dashboard.py")
