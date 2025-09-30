@@ -1,20 +1,58 @@
 [
   {
     "day": "Sun 6 Oct",
-    "time": "09:00",
+    "time": "09:00 AM",
     "title": "Opening & Keynote",
-    "room": "Main Hall"
+    "room": "Main Hall",
+    "segment_type": "keynote",
+    "description": "Official opening ceremony and keynote address",
+    "speakers": [
+      "Mr Harrison Mbewe",
+      "Annie Mwape"
+    ],
+    "facilitators": []
   },
   {
     "day": "Sun 6 Oct",
     "time": "10:00 AM",
     "title": "Mining Technologies",
-    "room": "Main Audotorium"
+    "room": "Main Auditorium",
+    "segment_type": "presentation",
+    "description": "Latest advancements in mining technology",
+    "speakers": [],
+    "facilitators": []
+  },
+  {
+    "day": "Sun 6 Oct",
+    "time": "11:30 AM",
+    "title": "Coffee Break & Networking",
+    "room": "Lobby",
+    "segment_type": "break",
+    "description": "Refreshments and networking opportunity",
+    "speakers": [],
+    "facilitators": []
   },
   {
     "day": "Mon 7 Oct",
     "time": "11:00 AM",
     "title": "Big Data",
-    "room": null
+    "room": "Conference Room A",
+    "segment_type": "panel",
+    "description": "Panel discussion on big data applications",
+    "speakers": [],
+    "facilitators": []
+  },
+  {
+    "day": "Mon 7 Oct",
+    "time": "09:30 AM",
+    "title": "Big Mine Data",
+    "room": "Main Auditorium",
+    "segment_type": "panel",
+    "description": "",
+    "speakers": [
+      "Mr Harrison Mbewe",
+      "Annie Mwape"
+    ],
+    "facilitators": []
   }
 ]

@@ -47,6 +47,17 @@ st.markdown("""
     <link rel="manifest" href="/manifest.json">
     
     <style>
+        /* Force dark theme and hide theme switcher */
+        [data-testid="stHeader"] button[kind="header"] {
+            display: none !important;
+        }
+        
+        /* Hide theme toggle in settings menu */
+        section[data-testid="stSidebar"] button[aria-label*="theme"],
+        section[data-testid="stSidebar"] button[aria-label*="Theme"] {
+            display: none !important;
+        }
+        
         /* PWA-specific styles */
         body {
             -webkit-user-select: none;
@@ -122,6 +133,84 @@ st.markdown("""
         window.addEventListener('appinstalled', (evt) => {
             console.log('✅ Insaka PWA: App installed successfully');
         });
+        
+        // Request notification permissions
+        if ('Notification' in window && 'serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                setTimeout(() => {
+                    if (Notification.permission === 'default') {
+                        Notification.requestPermission().then(permission => {
+                            console.log('🔔 Notification permission:', permission);
+                            if (permission === 'granted') {
+                                console.log('✅ Notification permission granted!');
+                            }
+                        });
+                    }
+                }, 3000); // Request after 3 seconds to avoid interrupting user
+            });
+        }
+        
+        // Notification sound playback function
+        window.playNotificationSound = function() {
+            try {
+                const audio = new Audio('/app/static/assets/notification.wav');
+                audio.volume = 1.0;
+                audio.play().then(() => {
+                    console.log('🔊 Notification sound played');
+                }).catch(err => {
+                    console.log('🔇 Sound play failed (needs user interaction):', err);
+                });
+            } catch (error) {
+                console.error('❌ Sound playback error:', error);
+            }
+        };
+        
+        // Test notification function (for debugging)
+        window.testNotification = function() {
+            if (!('Notification' in window)) {
+                console.error('❌ This browser does not support notifications');
+                return;
+            }
+            
+            if (Notification.permission === 'granted') {
+                // Play sound first
+                window.playNotificationSound();
+                
+                // Show notification
+                const notification = new Notification('Insaka Conference', {
+                    body: 'Test notification - This is a test message!',
+                    icon: '/app/static/assets/pwa/icon-192x192.png',
+                    badge: '/app/static/assets/pwa/icon-96x96.png',
+                    vibrate: [200, 100, 200, 100, 200],
+                    tag: 'test-notification'
+                });
+                
+                notification.onclick = function() {
+                    window.focus();
+                    notification.close();
+                };
+                
+                console.log('🔔 Test notification sent!');
+            } else if (Notification.permission === 'default') {
+                Notification.requestPermission().then(permission => {
+                    if (permission === 'granted') {
+                        window.testNotification();
+                    }
+                });
+            } else {
+                console.error('❌ Notification permission denied');
+                alert('Please enable notifications in your browser settings to receive conference updates!');
+            }
+        };
+        
+        // Auto-play sound on any notification (for PWA)
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.addEventListener('message', event => {
+                if (event.data && event.data.type === 'notification') {
+                    window.playNotificationSound();
+                }
+            });
+        }
     </script>
 </body>
 </html>

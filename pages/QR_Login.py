@@ -237,7 +237,7 @@ if login_method == "📱 Scan QR Code":
     """
     
     # Use components.html for better JavaScript execution
-    qr_value = components.html(scanner_html, height=520, key="qr_scanner")
+    qr_value = components.html(scanner_html, height=520)
     
     col1, col2 = st.columns([1, 1])
     

@@ -1,14 +1,17 @@
 [theme]
-primaryColor = "#198A00"
-backgroundColor = "#ffffff"
-secondaryBackgroundColor = "#f0f8f0"
-textColor = "#262730"
+# Force dark theme for the entire app
+base = "dark"
+primaryColor = "#198A00"  # Zambian green
+backgroundColor = "#0A0A0A"  # Dark background
+secondaryBackgroundColor = "#1A1A1A"  # Slightly lighter dark
+textColor = "#F3F4F6"  # Light text for readability
+font = "sans serif"
 
-[server]
-headless = true
-port = 8501
-enableCORS = false
-enableXsrfProtection = false
+[client]
+# Disable theme change button - users cannot switch themes
+showSidebarNavigation = true
+toolbarMode = "minimal"
 
 [browser]
+# Additional browser settings
 gatherUsageStats = false

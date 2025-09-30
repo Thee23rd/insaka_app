@@ -529,6 +529,89 @@ else:
 
 st.markdown('<div class="zambia-accent"></div>', unsafe_allow_html=True)
 
+# Helper functions for agenda snippets
+def load_agenda():
+    """Load agenda from JSON file"""
+    try:
+        with open("data/agenda.json", "r", encoding="utf-8") as f:
+            return json.load(f)
+    except Exception:
+        return []
+
+def parse_time_to_minutes(time_str):
+    """Convert time string to minutes since midnight for comparison"""
+    import re
+    try:
+        time_str = time_str.strip().upper()
+        time_str = re.sub(r'\s+', ' ', time_str)
+        
+        if 'AM' in time_str or 'PM' in time_str:
+            time_obj = datetime.strptime(time_str, "%I:%M %p")
+        else:
+            time_obj = datetime.strptime(time_str, "%H:%M")
+        return time_obj.hour * 60 + time_obj.minute
+    except:
+        return 540  # Default to 9 AM
+
+def get_current_and_upcoming_sessions():
+    """Get current session and next 2 upcoming sessions"""
+    agenda = load_agenda()
+    if not agenda:
+        return None, []
+    
+    # Get current time and day
+    now = datetime.now()
+    current_minutes = now.hour * 60 + now.minute
+    
+    # Simple day name mapping (you may need to adjust based on your day format)
+    current_day_name = now.strftime("%a %d %b")  # e.g., "Sun 6 Oct"
+    
+    # Get today's events
+    today_events = [e for e in agenda if current_day_name in e.get('day', '')]
+    
+    # If no events today, get all future events
+    if not today_events:
+        future_events = sorted(agenda, key=lambda x: parse_time_to_minutes(x.get('time', '09:00')))
+        return None, future_events[:2]
+    
+    # Sort by time
+    today_events.sort(key=lambda x: parse_time_to_minutes(x.get('time', '09:00')))
+    
+    # Find current and upcoming
+    current_session = None
+    upcoming = []
+    
+    for idx, event in enumerate(today_events):
+        event_time = parse_time_to_minutes(event.get('time', '09:00'))
+        
+        # Assume each session lasts 60 minutes (you can adjust this)
+        session_duration = 60
+        
+        if event_time <= current_minutes < event_time + session_duration:
+            # This is the current session
+            current_session = event
+            # Get next 2 sessions
+            upcoming = today_events[idx+1:idx+3]
+            break
+        elif event_time > current_minutes:
+            # This is a future session
+            upcoming = today_events[idx:idx+2]
+            break
+    
+    return current_session, upcoming
+
+# Segment type colors (matching agenda page)
+SEGMENT_COLORS = {
+    "keynote": "#D10000",
+    "presentation": "#198A00",
+    "panel": "#FF9500",
+    "break": "#FFD700",
+    "networking": "#2BA300",
+    "workshop": "#8B4513",
+    "closing": "#D10000",
+    "other": "#666666"
+}
+
 # Personal section - Check-in first (as dropdown)
 with st.expander(f"👤 {get_translation('my_information', current_language)}", expanded=True):
     col1, col2, col3 = st.columns(3)
@@ -729,16 +812,118 @@ st.info(f"""
 **{get_translation('conference_dates', current_language)}:** October 6-8, 2025  
 **{get_translation('location', current_language)}:** [Venue details will be shown here]  
 **{get_translation('theme', current_language)}:** {get_translation('collaborate_innovate_thrive', current_language)}
-
-**{get_translation('key_sessions', current_language)}:**
-- {get_translation('opening_keynote', current_language)}: Sunday 6 Oct, 09:00
-- [Additional sessions will be loaded from agenda]
-
-**{get_translation('important_notes', current_language)}:**
-- {get_translation('ensure_details_updated', current_language)}
-- {get_translation('check_agenda_regularly', current_language)}
-- {get_translation('download_materials_section', current_language)}
 """)
+
+# What's Happening Now & Coming Up section
+st.markdown("### 🎯 What's Happening Now & Coming Up")
+
+current_session, upcoming_sessions = get_current_and_upcoming_sessions()
+
+if current_session:
+    # Current session - large featured card
+    segment_type = current_session.get("segment_type", "other")
+    color = SEGMENT_COLORS.get(segment_type, SEGMENT_COLORS["other"])
+    
+    st.markdown(f"""
+    <div style="background: linear-gradient(135deg, {color}15 0%, {color}30 100%); 
+                border-left: 6px solid {color}; 
+                border-radius: 15px; 
+                padding: 1.5rem; 
+                margin-bottom: 1.5rem;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+        <div style="display: flex; justify-content: space-between; align-items: start;">
+            <div>
+                <span style="background: {color}; color: white; padding: 0.4rem 1rem; border-radius: 20px; 
+                             font-size: 0.75rem; font-weight: 700; letter-spacing: 1px;">
+                    ⚡ HAPPENING NOW
+                </span>
+            </div>
+            <span style="background: rgba(255,255,255,0.1); color: #F3F4F6; padding: 0.3rem 0.8rem; 
+                         border-radius: 15px; font-size: 0.75rem; font-weight: 600;">
+                {segment_type.upper()}
+            </span>
+        </div>
+        <h2 style="color: #F3F4F6; margin: 1rem 0 0.5rem 0; font-size: 1.5rem; font-weight: 700;">
+            {current_session.get('title', 'Untitled')}
+        </h2>
+        <div style="color: #FFD700; font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem;">
+            ⏰ {current_session.get('time', 'TBA')} • 📍 {current_session.get('room', 'TBA')}
+        </div>
+    """, unsafe_allow_html=True)
+    
+    # Show speakers if available
+    speakers = current_session.get("speakers", [])
+    speakers = [s.strip().lstrip(',').strip() for s in speakers if s.strip().lstrip(',').strip()]
+    if speakers:
+        speaker_text = ", ".join(speakers)
+        st.markdown(f"""
+        <div style="color: #2BA300; font-size: 0.9rem; margin-top: 0.5rem;">
+            🎤 <strong>Speakers:</strong> {speaker_text}
+        </div>
+        """, unsafe_allow_html=True)
+    
+    if current_session.get("description"):
+        st.markdown(f"""
+        <p style="color: rgba(243, 244, 246, 0.8); margin-top: 0.75rem; line-height: 1.5;">
+            {current_session.get("description")}
+        </p>
+        """, unsafe_allow_html=True)
+    
+    st.markdown('</div>', unsafe_allow_html=True)
+else:
+    st.info("📅 No session currently in progress. Check upcoming sessions below!")
+
+# Upcoming sessions - compact snippet cards
+if upcoming_sessions:
+    st.markdown("#### 📅 Coming Up Next")
+    
+    cols = st.columns(len(upcoming_sessions))
+    
+    for idx, session in enumerate(upcoming_sessions):
+        with cols[idx]:
+            segment_type = session.get("segment_type", "other")
+            color = SEGMENT_COLORS.get(segment_type, SEGMENT_COLORS["other"])
+            
+            st.markdown(f"""
+            <div style="background: linear-gradient(145deg, rgba(26, 26, 26, 0.9) 0%, rgba(42, 42, 42, 0.8) 100%); 
+                        border-left: 4px solid {color}; 
+                        border-radius: 12px; 
+                        padding: 1rem; 
+                        margin-bottom: 1rem;
+                        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+                        transition: transform 0.2s;
+                        cursor: pointer;">
+                <div style="background: {color}; color: white; padding: 0.3rem 0.8rem; border-radius: 15px; 
+                           font-size: 0.7rem; font-weight: 700; letter-spacing: 1px; margin-bottom: 0.75rem; display: inline-block;">
+                    {segment_type.upper()}
+                </div>
+                <h4 style="color: #F3F4F6; margin: 0.5rem 0; font-size: 1rem; font-weight: 700; line-height: 1.3;">
+                    {session.get('title', 'Untitled')[:50]}{"..." if len(session.get('title', '')) > 50 else ''}
+                </h4>
+                <div style="color: #FFD700; font-size: 0.85rem; font-weight: 600; margin: 0.5rem 0;">
+                    ⏰ {session.get('time', 'TBA')}
+                </div>
+                <div style="color: #2BA300; font-size: 0.8rem; margin-top: 0.3rem;">
+                    📍 {session.get('room', 'TBA')}
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+            
+            # Show speakers if available
+            speakers = session.get("speakers", [])
+            speakers = [s.strip().lstrip(',').strip() for s in speakers if s.strip().lstrip(',').strip()]
+            if speakers:
+                st.caption(f"🎤 {', '.join(speakers[:2])}")
+    
+    # Link to full schedule
+    if st.button("📅 View Full Schedule", use_container_width=True, key="schedule_view_btn"):
+        st.switch_page("pages/1_Agenda.py")
+else:
+    st.info("📋 No more sessions scheduled for today. Check the full agenda for other days!")
+    if st.button("📅 View Full Schedule", use_container_width=True, key="schedule_view_btn_alt"):
+        st.switch_page("pages/1_Agenda.py")
+
+st.markdown("---")
 
 # News, Announcements, PR, and Networking sections
 col1, col2, col3, col4 = st.columns(4)

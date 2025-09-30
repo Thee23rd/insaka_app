@@ -124,9 +124,11 @@ self.addEventListener('push', (event) => {
   
   const options = {
     body: event.data ? event.data.text() : 'New conference update available!',
-    icon: '/assets/logos/insaka.jpg',
-    badge: '/assets/logos/insaka.jpg',
-    vibrate: [200, 100, 200],
+    icon: '/app/static/assets/pwa/icon-192x192.png',
+    badge: '/app/static/assets/pwa/icon-96x96.png',
+    vibrate: [200, 100, 200, 100, 200],
+    sound: '/app/static/assets/notification.wav',
+    requireInteraction: false,
     data: {
       dateOfArrival: Date.now(),
       primaryKey: 1
@@ -135,15 +137,16 @@ self.addEventListener('push', (event) => {
       {
         action: 'explore',
         title: 'View Details',
-        icon: '/assets/logos/insaka.jpg'
+        icon: '/app/static/assets/pwa/icon-96x96.png'
       },
       {
         action: 'close',
         title: 'Close',
-        icon: '/assets/logos/insaka.jpg'
+        icon: '/app/static/assets/pwa/icon-96x96.png'
       }
     ],
-    tag: 'insaka-notification'
+    tag: 'insaka-notification',
+    renotify: true
   };
 
   event.waitUntil(

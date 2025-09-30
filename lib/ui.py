@@ -21,6 +21,15 @@ def apply_brand():
     st.markdown(
         f"""
         <style>
+        /* Force dark theme - hide theme switcher */
+        [data-testid="stHeader"] button[kind="header"],
+        [data-testid="stHeader"] button[aria-label*="theme"],
+        [data-testid="stHeader"] button[aria-label*="Theme"],
+        section[data-testid="stSidebar"] button[aria-label*="theme"],
+        section[data-testid="stSidebar"] button[aria-label*="Theme"] {{
+            display: none !important;
+        }}
+        
         /* Main App Background with Zambian Gradient */
         .stApp {{ 
             background: linear-gradient(135deg, {p["black"]} 0%, {p["panel"]} 50%, {p["black"]} 100%);

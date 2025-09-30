@@ -114,6 +114,39 @@ with col_qr3:
     if st.button("🔑 Quick ID Login", width='stretch', key="quick_id_btn"):
         st.switch_page("pages/0_Landing.py")
 
+# PWA Notification Test
+st.markdown("---")
+st.markdown("### 🔔 PWA Features")
+st.info("📱 **Mobile App Features:** Install this page as an app on your phone for notifications and offline access!")
+
+col_test1, col_test2 = st.columns(2)
+with col_test1:
+    if st.button("🔔 Test Notification & Sound", use_container_width=True):
+        st.markdown("""
+        <script>
+        if (typeof window.testNotification === 'function') {
+            window.testNotification();
+        } else {
+            alert('Please refresh the page to enable notifications!');
+        }
+        </script>
+        """, unsafe_allow_html=True)
+        st.success("🔔 Notification test triggered! Check your device.")
+
+with col_test2:
+    if st.button("🔊 Test Sound Only", use_container_width=True):
+        st.markdown("""
+        <script>
+        if (typeof window.playNotificationSound === 'function') {
+            window.playNotificationSound();
+        } else {
+            const audio = new Audio('/app/static/assets/notification.wav');
+            audio.play().catch(e => console.log('Sound failed:', e));
+        }
+        </script>
+        """, unsafe_allow_html=True)
+        st.success("🔊 Sound test triggered!")
+
 # Zambian-themed Footer
 st.markdown('<div class="zambia-accent"></div>', unsafe_allow_html=True)
 
