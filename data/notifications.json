@@ -62,5 +62,19 @@
     },
     "read": false,
     "created_at": "2025-09-28T08:10:33.462026"
+  },
+  {
+    "id": 6,
+    "user_id": "SPEAKER_Mr._Isaac_Kuuwan_Mwinbelle",
+    "type": "connection",
+    "title": "Connection Request",
+    "message": "Connection request from another delegate",
+    "priority": "Normal",
+    "data": {
+      "from_user_id": "6",
+      "action": "request"
+    },
+    "read": false,
+    "created_at": "2025-09-30T17:10:36.185238"
   }
 ]

@@ -315,10 +315,10 @@ if login_method == "📱 Scan QR Code":
                     st.session_state.delegate_nationality = fake_delegate.get('Nationality', '')
                     st.session_state.delegate_phone = fake_delegate.get('Phone', '')
                     
-                    st.balloons()
+                    # st.balloons()  # Removed for corporate feel
                     
                     # Show success message and redirect
-                    st.markdown("### 🎉 Login Successful!")
+                    st.markdown("### ✅ Login Successful!")
                     st.markdown(f"**Welcome, {fake_delegate.get('Full Name', '')}!**")
                     st.markdown(f"**Organization:** {fake_delegate.get('Organization', '')}")
                     st.markdown(f"**Category:** {fake_delegate.get('Attendee Type', '')}")
@@ -388,10 +388,10 @@ else:
                     st.session_state.delegate_nationality = delegate.get('Nationality', '')
                     st.session_state.delegate_phone = delegate.get('Phone', '')
                     
-                    st.balloons()
+                    # st.balloons()  # Removed for corporate feel
                     
                     # Auto-redirect to dashboard
-                    st.markdown("### 🎉 Login Successful!")
+                    st.markdown("### ✅ Login Successful!")
                     st.markdown(f"**Welcome, {delegate.get('Full Name', '')}!**")
                     st.markdown(f"**Organization:** {delegate.get('Organization', '')}")
                     st.markdown(f"**Category:** {delegate.get('Attendee Type', '')}")

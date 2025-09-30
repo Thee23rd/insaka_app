@@ -61,7 +61,7 @@ def display_local_speakers(speakers):
         st.info("No speakers data available.")
         return
     
-    st.markdown("### 🎤 Conference Speakers")
+    st.markdown("### 🎙️ Conference Speakers")
     
     # Create columns for speakers
     cols = st.columns(min(len(speakers), 3))
@@ -235,7 +235,7 @@ def display_pr_posts(pr_posts):
             type_colors = {
                 "Trending News": "🔥",
                 "Event Highlights": "⭐",
-                "Speaker Spotlight": "🎤",
+                "Speaker Spotlight": "🎙️",
                 "Exhibitor Showcase": "🏢",
                 "Behind the Scenes": "🎬",
                 "Networking Moments": "🤝"
@@ -328,7 +328,7 @@ with quick_col1:
         st.rerun()
 
 with quick_col2:
-    if st.button("🎤 Speakers", key="quick_local_speakers", width='stretch'):
+    if st.button("🎙️ Speakers", key="quick_local_speakers", width='stretch'):
         st.session_state.quick_load_local_speakers = True
         st.rerun()
 
@@ -416,7 +416,7 @@ st.markdown("### 📋 Current Conference Information")
 auto_col1, auto_col2 = st.columns(2)
 
 with auto_col1:
-    st.markdown("#### 🎤 Speakers")
+    st.markdown("#### 🎙️ Speakers")
     speakers = load_local_speakers()
     if speakers:
         for speaker in speakers[:2]:  # Show first 2 speakers
@@ -584,7 +584,7 @@ st.markdown("---")
 #         display_local_exhibitors(exhibitors)
     
 #     # Local speakers
-#     if st.button("🎤 Load Speakers", key="local_speaker_btn"):
+#     if st.button("🎙️ Load Speakers", key="local_speaker_btn"):
 #         speakers = load_local_speakers()
 #         display_local_speakers(speakers)
 

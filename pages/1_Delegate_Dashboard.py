@@ -211,6 +211,19 @@ def get_user_connections(user_id):
     
     return connections
 
+def format_count(count):
+    """Format large numbers with k, M suffix (e.g., 1000 -> 1k, 1000000 -> 1M)"""
+    try:
+        count = int(count)
+        if count >= 1_000_000:
+            return f"{count / 1_000_000:.1f}M".rstrip('0').rstrip('.')
+        elif count >= 1_000:
+            return f"{count / 1_000:.1f}k".rstrip('0').rstrip('.')
+        else:
+            return str(count)
+    except (ValueError, TypeError):
+        return str(count)
+
 def get_relative_time(iso_timestamp):
     """Convert ISO timestamp to relative time like '2 hours ago'"""
     try:
@@ -514,13 +527,66 @@ text_direction = get_text_direction(current_language)
 rtl_style = "direction: rtl; text-align: right;" if is_rtl_language(current_language) else "direction: ltr; text-align: center;"
 
 if hasattr(st.session_state, 'delegate_name') and st.session_state.delegate_name:
-    st.markdown(f"""
-    <div style="background: linear-gradient(135deg, #198A00 0%, #2BA300 50%, #D10000 100%); color: white; padding: 2rem; border-radius: 20px; margin-bottom: 2rem; {rtl_style} box-shadow: 0 8px 32px rgba(25, 138, 0, 0.2);">
-        <h1 style="color: white; margin-bottom: 0.5rem; font-size: 2rem; font-weight: 700;">👋 {get_translation('hello', current_language)}, {st.session_state.delegate_name}!</h1>
-        <p style="color: #f0f8f0; margin-bottom: 0; font-size: 1.1rem; font-weight: 500;">{get_translation('welcome', current_language)} to The Zambian Mining and Investment Insaka Conference 2025</p>
-        <p style="color: #e8f5e8; margin-bottom: 0; font-size: 0.9rem;">{st.session_state.delegate_organization} • {st.session_state.delegate_category}</p>
-    </div>
-    """, unsafe_allow_html=True)
+    # Get delegate photo
+    try:
+        from staff_service import load_staff_df
+        df = load_staff_df()
+        delegate_id = str(st.session_state.delegate_id)
+        
+        # Check if it's a speaker ID
+        if delegate_id.startswith("SPEAKER_"):
+            # Load from speakers
+            import json
+            with open("data/speakers.json", "r", encoding="utf-8") as f:
+                speakers = json.load(f)
+            
+            delegate_photo = None
+            for sp in speakers:
+                if f"SPEAKER_{sp.get('name', '').replace(' ', '_')}" == delegate_id:
+                    delegate_photo = sp.get('photo', '')
+                    break
+        else:
+            # Load from delegates
+            mask = df["ID"].astype(str) == delegate_id
+            if mask.any():
+                delegate_photo = df[mask].iloc[0].get('BadgePhoto', '')
+            else:
+                delegate_photo = ''
+    except:
+        delegate_photo = ''
+    
+    # Display greeting with photo
+    col_photo, col_greeting = st.columns([1, 4])
+    
+    with col_photo:
+        if delegate_photo:
+            try:
+                st.image(delegate_photo, use_container_width=True)
+            except:
+                st.markdown("""
+                <div style="background: #F3F4F6; border-radius: 50%; width: 100px; height: 100px; 
+                           display: flex; align-items: center; justify-content: center; margin: 0 auto;">
+                    <span style="font-size: 3rem;">👤</span>
+                </div>
+                """, unsafe_allow_html=True)
+        else:
+            st.markdown("""
+            <div style="background: #F3F4F6; border-radius: 50%; width: 100px; height: 100px; 
+                       display: flex; align-items: center; justify-content: center; margin: 0 auto;">
+                <span style="font-size: 3rem;">👤</span>
+            </div>
+            """, unsafe_allow_html=True)
+    
+    with col_greeting:
+        st.markdown(f"""
+        <div style="background: linear-gradient(135deg, #198A00 0%, #2BA300 50%, #D10000 100%); color: white; padding: 2rem; border-radius: 20px; {rtl_style} box-shadow: 0 8px 32px rgba(25, 138, 0, 0.2);">
+            <h1 style="color: white; margin-bottom: 0.5rem; font-size: 2rem; font-weight: 700;">👋 {get_translation('hello', current_language)}, {st.session_state.delegate_name}!</h1>
+            <p style="color: #f0f8f0; margin-bottom: 0; font-size: 1.1rem; font-weight: 500;">{get_translation('welcome', current_language)} to The Zambian Mining and Investment Insaka Conference 2025</p>
+            <p style="color: #e8f5e8; margin-bottom: 0; font-size: 0.9rem;">{st.session_state.delegate_organization} • {st.session_state.delegate_category}</p>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    st.markdown("<br>", unsafe_allow_html=True)
 else:
     st.markdown(f"# 👤 {get_translation('delegate_dashboard', current_language)}")
     st.markdown("Welcome to your conference dashboard")
@@ -628,59 +694,15 @@ with st.expander(f"👤 {get_translation('my_information', current_language)}", 
         if st.button(f"✅ {get_translation('daily_checkin', current_language)}", width='stretch'):
             st.switch_page("pages/8_Check_In.py")
 
-    # QR Code section
-    st.markdown("---")
-    st.markdown("### 📱 Your QR Code")
-    
-    # Generate and display QR code for current delegate
-    try:
-        from lib.qr_system import create_qr_code
-        
-        qr_img, qr_data = create_qr_code(
-            st.session_state.delegate_id,
-            st.session_state.delegate_name,
-            st.session_state.delegate_organization,
-            size=200
-        )
-        
-        if qr_img is not None:
-            col_qr1, col_qr2 = st.columns([1, 2])
-            
-            with col_qr1:
-                st.image(qr_img, caption="Your Conference QR Code", width='stretch')
-            
-            with col_qr2:
-                st.markdown("**📱 QR Code Benefits:**")
-                st.markdown("• **Quick Login** - Scan to access your dashboard")
-                st.markdown("• **Badge Integration** - Print on your conference badge")
-                st.markdown("• **Secure Access** - Unique to your account")
-                st.markdown("• **Mobile Friendly** - Works on any smartphone")
-                
-                if st.button("📥 Download QR Code", width='stretch'):
-                    # Save QR code temporarily for download
-                    import tempfile
-                    with tempfile.NamedTemporaryFile(delete=False, suffix='.png') as tmp_file:
-                        qr_img.save(tmp_file.name)
-                        
-                        with open(tmp_file.name, "rb") as file:
-                            st.download_button(
-                                label="📥 Download QR Code",
-                                data=file.read(),
-                                file_name=f"insaka_qr_{st.session_state.delegate_id}.png",
-                                mime="image/png",
-                                width='stretch'
-                            )
-        else:
-            st.info("📱 QR Code generation is not available. Your delegate ID is: **" + str(st.session_state.delegate_id) + "**")
-        
-    except Exception as e:
-        st.warning(f"Could not generate QR code: {str(e)}")
-        st.info("📱 Your delegate ID is: **" + str(st.session_state.delegate_id) + "**")
+    # QR Code section - HIDDEN FOR NOW
+    # st.markdown("---")
+    # st.markdown("### 📱 Your QR Code")
+    # (QR code functionality hidden but available in code)
 
 st.write("")
 
 # Quick access buttons (as dropdown)
-with st.expander(f"🚀 {get_translation('quick_access', current_language)}", expanded=True):
+with st.expander(f"▶️ {get_translation('quick_access', current_language)}", expanded=True):
     col1, col2, col3, col4, col5, col6, col7 = st.columns(7)
 
     with col1:
@@ -703,9 +725,9 @@ with st.expander(f"🚀 {get_translation('quick_access', current_language)}", ex
         
         if speakers_notifications > 0:
             badge_html = get_notification_badge(speakers_notifications)
-            st.markdown(f"👥 **{get_translation('speakers', current_language)}** {badge_html}", unsafe_allow_html=True)
+            st.markdown(f"🎙️ **{get_translation('speakers', current_language)}** {badge_html}", unsafe_allow_html=True)
         else:
-            st.markdown(f"👥 **{get_translation('speakers', current_language)}**")
+            st.markdown(f"🎙️ **{get_translation('speakers', current_language)}**")
         
         if st.button(get_translation('meet_speakers', current_language), width='stretch', help="Meet our speakers"):
             st.switch_page("pages/2_Speakers.py")
@@ -724,6 +746,12 @@ with st.expander(f"🚀 {get_translation('quick_access', current_language)}", ex
             st.switch_page("pages/3_Exhibitors.py")
 
     with col4:
+        # Sponsors button (NEW)
+        st.markdown(f"🤝 **Sponsors**")
+        if st.button("View Sponsors", width='stretch', help="View conference sponsors"):
+            st.switch_page("pages/4_Sponsors.py")
+
+    with col5:
         # Check for venue updates
         venue_notifications = 0  # Could check for venue updates
         
@@ -736,50 +764,20 @@ with st.expander(f"🚀 {get_translation('quick_access', current_language)}", ex
         if st.button(get_translation('venue_info', current_language), width='stretch', help="Venue information"):
             st.switch_page("pages/6_Venue.py")
 
-    with col5:
-        # Check for news and announcements
+    with col6:
+        # Check for news and announcements (COMBINED)
         announcements = load_announcements()
         news_list = load_news()
-        showcase_notifications = len(announcements) + len(news_list)
+        updates_notifications = len(announcements) + len(news_list)
         
-        if showcase_notifications > 0:
-            badge_html = get_notification_badge(showcase_notifications)
-            st.markdown(f"🌐 **{get_translation('showcase_news', current_language)}** {badge_html}", unsafe_allow_html=True)
+        if updates_notifications > 0:
+            badge_html = get_notification_badge(updates_notifications)
+            st.markdown(f"📰 **Updates & News** {badge_html}", unsafe_allow_html=True)
         else:
-            st.markdown(f"🌐 **{get_translation('showcase_news', current_language)}**")
+            st.markdown(f"📰 **Updates & News**")
         
-        if st.button(get_translation('latest_updates', current_language), width='stretch', help="Latest news and announcements"):
+        if st.button("Latest Updates", width='stretch', help="Latest news and announcements"):
             st.switch_page("pages/9_External_Content.py")
-
-    with col6:
-        # Check for new PR posts and interactions
-        pr_posts = load_pr_posts()
-        pr_notifications = 0
-        
-        # Count total engagement
-        for post in pr_posts:
-            engagement = post.get('engagement', {})
-            pr_notifications += engagement.get('likes', 0) + engagement.get('shares', 0)
-        
-        # Also check for delegate interactions
-        try:
-            with open("data/delegate_interactions.json", "r", encoding="utf-8") as f:
-                interactions = json.load(f)
-            
-            # Count interactions involving this user
-            user_interactions = [i for i in interactions if i.get('user_id') == current_user_id]
-            pr_notifications += len(user_interactions)
-        except:
-            pass
-        
-        if pr_notifications > 0:
-            badge_html = get_notification_badge(pr_notifications)
-            st.markdown(f"📸 **{get_translation('interactive_posts', current_language)}** {badge_html}", unsafe_allow_html=True)
-        else:
-            st.markdown(f"📸 **{get_translation('interactive_posts', current_language)}**")
-        
-        if st.button(get_translation('engage_posts', current_language), width='stretch', help="Engage with conference posts"):
-            st.switch_page("pages/10_Interactive_PR.py")
 
     with col7:
         # Check for matchmaking activity
@@ -799,9 +797,9 @@ with st.expander(f"🚀 {get_translation('quick_access', current_language)}", ex
         
         if matchmaking_notifications > 0:
             badge_html = get_notification_badge(matchmaking_notifications)
-            st.markdown(f"🤝 **{get_translation('matchmaking', current_language)}** {badge_html}", unsafe_allow_html=True)
+            st.markdown(f"💼 **{get_translation('matchmaking', current_language)}** {badge_html}", unsafe_allow_html=True)
         else:
-            st.markdown(f"🤝 **{get_translation('matchmaking', current_language)}**")
+            st.markdown(f"💼 **{get_translation('matchmaking', current_language)}**")
         
         if st.button(get_translation('network_now', current_language), width='stretch', help="Network with other delegates"):
             st.switch_page("pages/11_Matchmaking.py")
@@ -858,7 +856,7 @@ if current_session:
         speaker_text = ", ".join(speakers)
         st.markdown(f"""
         <div style="color: #2BA300; font-size: 0.9rem; margin-top: 0.5rem;">
-            🎤 <strong>Speakers:</strong> {speaker_text}
+            🎙️ <strong>Speakers:</strong> {speaker_text}
         </div>
         """, unsafe_allow_html=True)
     
@@ -913,7 +911,7 @@ if upcoming_sessions:
             speakers = session.get("speakers", [])
             speakers = [s.strip().lstrip(',').strip() for s in speakers if s.strip().lstrip(',').strip()]
             if speakers:
-                st.caption(f"🎤 {', '.join(speakers[:2])}")
+                st.caption(f"🎙️ {', '.join(speakers[:2])}")
     
     # Link to full schedule
     if st.button("📅 View Full Schedule", use_container_width=True, key="schedule_view_btn"):
@@ -925,141 +923,152 @@ else:
 
 st.markdown("---")
 
-# News, Announcements, PR, and Networking sections
-col1, col2, col3, col4 = st.columns(4)
+# Updates, PR, and Networking sections
+col1, col2, col3 = st.columns(3)
 
-# Latest Announcements
+# Updates & News (Combined Announcements and News)
 with col1:
     announcements = load_announcements()
+    news_list = load_news()
+    
     urgent_count = len([a for a in announcements if a.get('priority') == 'Urgent'])
     high_count = len([a for a in announcements if a.get('priority') == 'High'])
-    total_notifications = urgent_count + high_count
+    total_updates = len(announcements) + len(news_list)
     
     # Add notification indicator to header
-    if total_notifications > 0:
-        badge_html = get_notification_badge(total_notifications)
-        st.markdown(f"### 📢 {get_translation('latest_announcements', current_language)} {badge_html}", unsafe_allow_html=True)
+    if total_updates > 0:
+        badge_html = get_notification_badge(total_updates)
+        st.markdown(f"### 📰 Updates & News {badge_html}", unsafe_allow_html=True)
         if urgent_count > 0:
-            st.error(f"🚨 {urgent_count} urgent announcement{'s' if urgent_count > 1 else ''} require immediate attention!")
+            st.error(f"🚨 {urgent_count} urgent update{'s' if urgent_count > 1 else ''} require immediate attention!")
         elif high_count > 0:
-            st.warning(f"⚠️ {high_count} high priority announcement{'s' if high_count > 1 else ''}")
+            st.warning(f"⚠️ {high_count} high priority update{'s' if high_count > 1 else ''}")
     else:
-        st.subheader(f"📢 {get_translation('latest_announcements', current_language)}")
+        st.subheader("📰 Updates & News")
     
-    if announcements:
-        # Sort by priority and date, show only latest 3
+    # Combine and sort all updates
+    all_updates = []
+    
+    # Add announcements with priority
+    for announcement in announcements:
         priority_order = {"Urgent": 4, "High": 3, "Normal": 2, "Low": 1}
-        announcements.sort(key=lambda x: (priority_order.get(x.get("priority", "Normal"), 2), x.get("created_at", "")), reverse=True)
-        
-        for announcement in announcements[:3]:  # Show only latest 3
-            priority = announcement.get("priority", "Normal")
-            priority_colors = {
-                "Urgent": "🔴",
-                "High": "🟠", 
-                "Normal": "🟡",
-                "Low": "🟢"
-            }
+        all_updates.append({
+            'type': 'announcement',
+            'data': announcement,
+            'sort_key': (priority_order.get(announcement.get("priority", "Normal"), 2), announcement.get("created_at", ""))
+        })
+    
+    # Add news
+    for news_item in news_list:
+        all_updates.append({
+            'type': 'news',
+            'data': news_item,
+            'sort_key': (2, news_item.get("created_at", ""))  # Normal priority
+        })
+    
+    # Sort by priority and date
+    all_updates.sort(key=lambda x: x['sort_key'], reverse=True)
+    
+    if all_updates:
+        # Show all updates chronologically (most recent first)
+        for update_item in all_updates[:5]:  # Show latest 5
+            item_type = update_item['type']
+            item = update_item['data']
             
-            # Create snippet (first 100 characters)
-            content_snippet = announcement['content'][:100] + "..." if len(announcement['content']) > 100 else announcement['content']
-            relative_time = get_relative_time(announcement['created_at'])
+            if item_type == 'announcement':
+                priority = item.get("priority", "Normal")
+                priority_colors = {
+                    "Urgent": "🔴",
+                    "High": "🟠", 
+                    "Normal": "🟡",
+                    "Low": "🟢"
+                }
+                icon = priority_colors.get(priority, '🟡')
+                badge = f"[Announcement]"
+            else:  # news
+                category = item.get("category", "General")
+                category_colors = {
+                    "General": "🔵",
+                    "Conference Updates": "🟢",
+                    "Industry News": "🟡",
+                    "Speaker Updates": "🟣",
+                    "Exhibitor News": "🟠",
+                    "Schedule Changes": "🔴"
+                }
+                icon = category_colors.get(category, '🔵')
+                badge = f"[{category}]"
+            
+            # Create snippet
+            content_snippet = item['content'][:100] + "..." if len(item['content']) > 100 else item['content']
+            relative_time = get_relative_time(item['created_at'])
             
             with st.container(border=True):
-                st.markdown(f"**{priority_colors.get(priority, '🟡')} {announcement['title']}**")
+                st.markdown(f"**{icon} {item['title']}**")
+                st.caption(badge)
                 st.write(content_snippet)
                 st.caption(f"Posted {relative_time}")
                 
-                if st.button(f"Read More", key=f"announcement_{announcement.get('id', 0)}"):
-                    st.session_state.show_announcements = True
+                if st.button(f"Read More", key=f"update_{item.get('id', 0)}_{item_type}", use_container_width=True):
+                    if item_type == 'announcement':
+                        st.session_state.show_announcements = True
+                    else:
+                        st.session_state.show_news = True
                     st.switch_page("pages/9_External_Content.py")
-    else:
-        st.info(get_translation('no_announcements', current_language))
-
-# Latest News
-with col2:
-    news_list = load_news()
-    new_news_count = len(news_list)  # Could implement "new since last visit" logic
-    
-    # Add notification indicator to header
-    if new_news_count > 0:
-        badge_html = get_notification_badge(new_news_count)
-        st.markdown(f"### 📰 {get_translation('latest_news', current_language)} {badge_html}", unsafe_allow_html=True)
-    else:
-        st.subheader(f"📰 {get_translation('latest_news', current_language)}")
-    
-    if news_list:
-        # Sort by date, show only latest 3
-        news_list.sort(key=lambda x: x.get("created_at", ""), reverse=True)
         
-        for news_item in news_list[:3]:  # Show only latest 3
-            category = news_item.get("category", "General")
-            category_colors = {
-                "General": "🔵",
-                "Conference Updates": "🟢",
-                "Industry News": "🟡",
-                "Speaker Updates": "🟣",
-                "Exhibitor News": "🟠",
-                "Schedule Changes": "🔴"
-            }
+        # Show "View All" if more than 5
+        if len(all_updates) > 5:
+            st.markdown(f"""
+            <div style="text-align: center; margin-top: 1rem;">
+                <span style="color: #FF9500; font-weight: 600; font-size: 0.9rem;">
+                    +{len(all_updates) - 5} more updates
+                </span>
+            </div>
+            """, unsafe_allow_html=True)
             
-            # Create snippet (first 100 characters)
-            content_snippet = news_item['content'][:100] + "..." if len(news_item['content']) > 100 else news_item['content']
-            relative_time = get_relative_time(news_item['created_at'])
-            
-            with st.container(border=True):
-                st.markdown(f"**{category_colors.get(category, '🔵')} {news_item['title']}**")
-                st.write(content_snippet)
-                st.caption(f"Posted {relative_time} | {category}")
-                
-                if st.button(f"Read More", key=f"news_{news_item.get('id', 0)}"):
-                    st.session_state.show_news = True
-                    st.switch_page("pages/9_External_Content.py")
+            if st.button("📰 View All Updates", use_container_width=True, key="view_all_updates"):
+                st.switch_page("pages/9_External_Content.py")
     else:
-        st.info(get_translation('no_news', current_language))
+        st.info("No updates or news available.")
 
 # Latest PR Posts
-with col3:
-    st.subheader(f"📸 {get_translation('trending_posts', current_language)}")
+with col2:
+    st.subheader(f"📰 {get_translation('trending_posts', current_language)}")
     pr_posts = load_pr_posts()
     
     if pr_posts:
-        # Sort by engagement and date, show only latest 2
-        pr_posts.sort(key=lambda x: (
-            x.get('engagement', {}).get('likes', 0) + 
-            x.get('engagement', {}).get('shares', 0) * 2,
-            x.get('created_at', "")
-        ), reverse=True)
+        # Sort by time (most recent first)
+        pr_posts.sort(key=lambda x: x.get('created_at', ""), reverse=True)
         
-        for post in pr_posts[:2]:  # Show only latest 2
+        type_colors = {
+            "Trending News": "🔥",
+            "Event Highlights": "🏆",
+            "Speaker Spotlight": "🎙️",
+            "Exhibitor Showcase": "🏢",
+            "Behind the Scenes": "📹",
+            "Networking Moments": "💼"
+        }
+        
+        # Show each post individually
+        for post in pr_posts[:3]:  # Show latest 3
             post_type = post.get("type", "General")
-            type_colors = {
-                "Trending News": "🔥",
-                "Event Highlights": "⭐",
-                "Speaker Spotlight": "🎤",
-                "Exhibitor Showcase": "🏢",
-                "Behind the Scenes": "🎬",
-                "Networking Moments": "🤝"
-            }
-            
-            # Create snippet (first 80 characters)
-            content_snippet = post['content'][:80] + "..." if len(post['content']) > 80 else post['content']
+            content_snippet = post['content'][:100] + "..." if len(post['content']) > 100 else post['content']
             relative_time = get_relative_time(post['created_at'])
             
             with st.container(border=True):
-                st.markdown(f"**{type_colors.get(post_type, '📸')} {post['title']}**")
+                st.markdown(f"**{type_colors.get(post_type, '📰')} {post['title']}**")
                 
                 # Show image thumbnail if available
                 if post.get('image'):
                     try:
-                        st.image(post['image'], width=150)
+                        st.image(post['image'], width=200)
                     except:
-                        st.write("📷")
+                        pass
                 
                 st.write(content_snippet)
                 
                 # Show hashtags
                 if post.get('hashtags'):
-                    hashtag_text = " ".join([f"#{tag}" for tag in post['hashtags'][:3]])  # Show first 3 hashtags
+                    hashtag_text = " ".join([f"#{tag}" for tag in post['hashtags'][:3]])
                     st.caption(f"🏷️ {hashtag_text}")
                 
                 # Show engagement
@@ -1067,55 +1076,32 @@ with col3:
                 if engagement:
                     likes = engagement.get('likes', 0)
                     shares = engagement.get('shares', 0)
-                    st.caption(f"❤️ {likes} • 🔄 {shares}")
+                    st.caption(f"❤️ {format_count(likes)} • 🔄 {format_count(shares)}")
                 
                 st.caption(f"Posted {relative_time}")
                 
-                # Quick action buttons
-                col_view, col_share = st.columns(2)
-                
-                with col_view:
-                    if st.button(f"👀 View", key=f"view_pr_{post.get('id', 0)}"):
-                        # Track view before navigating
-                        from staff_service import load_staff_df
-                        import json
-                        
-                        # Update view count
-                        try:
-                            with open("data/pr_posts.json", "r", encoding="utf-8") as f:
-                                posts = json.load(f)
-                            
-                            for p in posts:
-                                if p.get('id') == post.get('id'):
-                                    current_views = p.get('engagement', {}).get('views', 0)
-                                    p['engagement']['views'] = current_views + 1
-                                    break
-                            
-                            with open("data/pr_posts.json", "w", encoding="utf-8") as f:
-                                json.dump(posts, f, indent=2, ensure_ascii=False)
-                        except Exception as e:
-                            st.error(f"Error tracking view: {e}")
-                        
-                        st.switch_page("pages/10_Interactive_PR.py")
-                
-                with col_share:
-                    if st.button(f"📤 Share", key=f"quick_share_{post.get('id', 0)}"):
-                        # Generate share URL
-                        post_url = f"https://insaka-conference.streamlit.app/pages/10_Interactive_PR.py?post={post.get('id', 0)}"
-                        st.success("📋 Link copied to clipboard!")
-                        st.code(post_url, language="text")
-                        
-                        # JavaScript copy to clipboard
-                        st.markdown(f"""
-                        <script>
-                        navigator.clipboard.writeText('{post_url}');
-                        </script>
-                        """, unsafe_allow_html=True)
+                if st.button("View Post", key=f"view_pr_{post.get('id', 0)}", use_container_width=True):
+                    st.switch_page("pages/10_Interactive_PR.py")
+        
+        # Show "View All" if more than 3
+        if len(pr_posts) > 3:
+            st.markdown(f"""
+            <div style="text-align: center; margin-top: 1rem;">
+                <span style="color: #FF9500; font-weight: 600; font-size: 0.9rem;">
+                    +{len(pr_posts) - 3} more posts
+                </span>
+            </div>
+            """, unsafe_allow_html=True)
+            
+            if st.button("📰 View All Posts", use_container_width=True, key="view_all_pr"):
+                st.switch_page("pages/10_Interactive_PR.py")
     else:
         st.info(get_translation('no_trending_posts', current_language))
 
 # Networking Overview
-with col4:
+with col3:
+    st.subheader(f"💼 {get_translation('networking', current_language)}")
+    
     # Get user's connection count
     connection_count = get_user_connections(current_user_id)
     
@@ -1137,9 +1123,9 @@ with col4:
     # Add notification indicator to header
     if total_networking_notifications > 0:
         badge_html = get_notification_badge(total_networking_notifications)
-        st.markdown(f"### 🤝 {get_translation('networking', current_language)} {badge_html}", unsafe_allow_html=True)
+        st.markdown(f"### 💼 {get_translation('networking', current_language)} {badge_html}", unsafe_allow_html=True)
     else:
-        st.subheader(f"🤝 {get_translation('networking', current_language)}")
+        st.subheader(f"💼 {get_translation('networking', current_language)}")
     
     st.metric(get_translation('connections', current_language), connection_count)
     
@@ -1166,7 +1152,7 @@ with col4:
         if st.button("🤝 Find Connections", width='stretch'):
             st.switch_page("pages/11_Matchmaking.py")
     else:
-        st.success(f"🎉 You're connected with {connection_count} delegate{'s' if connection_count > 1 else ''}!")
+        st.success(f"🤝 You're connected with {connection_count} delegate{'s' if connection_count > 1 else ''}!")
         if st.button("🤝 Expand Network", width='stretch'):
             st.switch_page("pages/11_Matchmaking.py")
 

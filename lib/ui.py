@@ -258,7 +258,7 @@ def top_nav():
     c1, c2, c3, c4, c5, c6, c7 = st.columns([1.2,1,1,1,1,1,1])
     with c1: st.page_link("streamlit_app.py", label="Home", icon="🏠")
     with c2: st.page_link("pages/1_Agenda.py", label="Agenda", icon="🗓️")
-    with c3: st.page_link("pages/2_Speakers.py", label="Speakers", icon="🎤")
+    with c3: st.page_link("pages/2_Speakers.py", label="Speakers", icon="🎙️")
     with c4: st.page_link("pages/3_Exhibitors.py", label="Exhibitors", icon="🏢")
     with c5: st.page_link("pages/4_Sponsors.py", label="Sponsors", icon="🤝")
     with c6: st.page_link("pages/5_Materials.py", label="Materials", icon="📁")

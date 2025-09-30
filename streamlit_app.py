@@ -153,12 +153,16 @@ st.markdown("""
         // Notification sound playback function
         window.playNotificationSound = function() {
             try {
-                const audio = new Audio('/app/static/assets/notification.wav');
+                const audio = new Audio('./assets/notification.wav');
                 audio.volume = 1.0;
                 audio.play().then(() => {
                     console.log('🔊 Notification sound played');
                 }).catch(err => {
                     console.log('🔇 Sound play failed (needs user interaction):', err);
+                    // Fallback: try without ./ prefix
+                    const audioFallback = new Audio('assets/notification.wav');
+                    audioFallback.volume = 1.0;
+                    audioFallback.play().catch(e => console.log('🔇 Fallback also failed:', e));
                 });
             } catch (error) {
                 console.error('❌ Sound playback error:', error);
@@ -179,8 +183,8 @@ st.markdown("""
                 // Show notification
                 const notification = new Notification('Insaka Conference', {
                     body: 'Test notification - This is a test message!',
-                    icon: '/app/static/assets/pwa/icon-192x192.png',
-                    badge: '/app/static/assets/pwa/icon-96x96.png',
+                    icon: './assets/pwa/icon-192x192.png',
+                    badge: './assets/pwa/icon-96x96.png',
                     vibrate: [200, 100, 200, 100, 200],
                     tag: 'test-notification'
                 });

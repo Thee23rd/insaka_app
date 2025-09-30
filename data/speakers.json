@@ -1,16 +1,659 @@
 [
   {
     "name": "Mr Harrison Mbewe",
+    "position": "Systems Developer",
+    "organization": "Tech Solutions Ltd",
     "talk": "AI in GeoData",
-    "bio": "Systems Developer",
+    "bio": "Experienced systems developer specializing in geospatial data and artificial intelligence applications in the mining sector.",
     "photo": "assets/photos/K15.jpeg",
     "slides": null
   },
   {
     "name": "Annie Mwape",
+    "position": "Mines ICT Officer",
+    "organization": "Ministry of Mines and Minerals Development",
     "talk": "Mines Development",
-    "bio": "Mines ICT officer for a year",
-    "photo": "assets/photos/copper coat of arms (1).jpg",
+    "bio": "ICT officer with extensive experience in digital transformation of the mining sector in Zambia.",
+    "photo": "assets/photos/annie mwape.jpeg",
+    "slides": ""
+  },
+  {
+    "name": "Hon. Paul C. Kabuswe MP",
+    "position": "",
+    "organization": "Ministry of Mines and Minerals Development",
+    "talk": "",
+    "bio": "",
+    "photo": "",
+    "slides": ""
+  },
+  {
+    "name": "Dr. Hapenga M. Kabeta",
+    "position": "",
+    "organization": "Ministry of Mines and Minerals Development",
+    "talk": "",
+    "bio": "",
+    "photo": "assets/photos/Dr-Kabeta.jpg",
+    "slides": ""
+  },
+  {
+    "name": "Mr. Ian Mwiinga",
+    "position": "",
+    "organization": "Zambia EITI",
+    "talk": "",
+    "bio": "",
+    "photo": "",
+    "slides": ""
+  },
+  {
+    "name": "Mr. Ceaser Siwale",
+    "position": "",
+    "organization": "Pangae Securities",
+    "talk": "",
+    "bio": "",
+    "photo": "",
+    "slides": ""
+  },
+  {
+    "name": "Mr. Norman Mbazima",
+    "position": "",
+    "organization": "Anglo American Platinum",
+    "talk": "",
+    "bio": "",
+    "photo": "",
+    "slides": ""
+  },
+  {
+    "name": "Prof. Imasiku Nyambe",
+    "position": "",
+    "organization": "Copperbelt University",
+    "talk": "",
+    "bio": "",
+    "photo": "",
+    "slides": ""
+  },
+  {
+    "name": "Eng. Elite Mhone",
+    "position": "",
+    "organization": "Ministry of Mines and Minerals Development",
+    "talk": "",
+    "bio": "",
+    "photo": "",
+    "slides": ""
+  },
+  {
+    "name": "Dr. Sydney Mwamba",
+    "position": "",
+    "organization": "PMRC",
+    "talk": "",
+    "bio": "",
+    "photo": "",
+    "slides": ""
+  },
+  {
+    "name": "Mr. Kachiwala Sapalo",
+    "position": "",
+    "organization": "First Quantum Minerals",
+    "talk": "",
+    "bio": "",
+    "photo": "",
+    "slides": ""
+  },
+  {
+    "name": "Prof. Musango Lungu",
+    "position": "",
+    "organization": "Copperbelt University",
+    "talk": "",
+    "bio": "",
+    "photo": "",
+    "slides": ""
+  },
+  {
+    "name": "Mr. Brighton Kateka",
+    "position": "",
+    "organization": "Ministry of Mines and Minerals Development",
+    "talk": "",
+    "bio": "",
+    "photo": "",
+    "slides": ""
+  },
+  {
+    "name": "Mr. Lawrence Alexander",
+    "position": "",
+    "organization": "Lusaka Chamber of Commerce",
+    "talk": "",
+    "bio": "",
+    "photo": "",
+    "slides": ""
+  },
+  {
+    "name": "Mr. Kakenenwa Muyanga",
+    "position": "",
+    "organization": "ZCCM Investment Holdings Plc",
+    "talk": "",
+    "bio": "",
+    "photo": "",
+    "slides": ""
+  },
+  {
+    "name": "Prof. Emmanuel Chanda",
+    "position": "",
+    "organization": "University of Zambia",
+    "talk": "",
+    "bio": "",
+    "photo": "",
+    "slides": ""
+  },
+  {
+    "name": "Ms. Rashmi Sharma",
+    "position": "",
+    "organization": "Jewel of Africa",
+    "talk": "",
+    "bio": "",
+    "photo": "",
+    "slides": ""
+  },
+  {
+    "name": "Mr. Mikhail Nikomarov",
+    "position": "",
+    "organization": "Boston Consulting Group",
+    "talk": "",
+    "bio": "",
+    "photo": "",
+    "slides": ""
+  },
+  {
+    "name": "Mr. Chitula Lukonde",
+    "position": "",
+    "organization": "Radai Ltd / ZANIFI",
+    "talk": "",
+    "bio": "",
+    "photo": "",
+    "slides": ""
+  },
+  {
+    "name": "Mr. Tisa Chama",
+    "position": "",
+    "organization": "ZCCM-IH",
+    "talk": "",
+    "bio": "",
+    "photo": "",
+    "slides": ""
+  },
+  {
+    "name": "Ms Christine Chipala",
+    "position": "",
+    "organization": "SADC Women in Mining Zambia",
+    "talk": "",
+    "bio": "",
+    "photo": "",
+    "slides": ""
+  },
+  {
+    "name": "Eng. Sokwani Chilembo",
+    "position": "",
+    "organization": "Chamber of Mines, Zambia",
+    "talk": "",
+    "bio": "",
+    "photo": "",
+    "slides": ""
+  },
+  {
+    "name": "Mr. Anthony Malenga",
+    "position": "",
+    "organization": "Barrick Lumwana",
+    "talk": "",
+    "bio": "",
+    "photo": "",
+    "slides": ""
+  },
+  {
+    "name": "Mr. Charles Sakanya",
+    "position": "",
+    "organization": "Mopani Copper Mines Plc",
+    "talk": "",
+    "bio": "",
+    "photo": "",
+    "slides": ""
+  },
+  {
+    "name": "Mr. Daniel Chihili",
+    "position": "",
+    "organization": "Lubambe Copper Mines",
+    "talk": "",
+    "bio": "",
+    "photo": "",
+    "slides": ""
+  },
+  {
+    "name": "Mr. Gerald Mwila",
+    "position": "",
+    "organization": "Geological Survey Department (Zambia)",
+    "talk": "",
+    "bio": "",
+    "photo": "",
+    "slides": ""
+  },
+  {
+    "name": "Mr. Jerry Chitube",
+    "position": "",
+    "organization": "Presidential Projects Advisory Team, Botswana",
+    "talk": "",
+    "bio": "",
+    "photo": "",
+    "slides": ""
+  },
+  {
+    "name": "Ms. Mukwandi Chibesakunda",
+    "position": "",
+    "organization": "Zanaco",
+    "talk": "",
+    "bio": "",
+    "photo": "",
+    "slides": ""
+  },
+  {
+    "name": "His Royal Highness, Chief Dr. E Mumena",
+    "position": "",
+    "organization": "Solwezi Council of Elders",
+    "talk": "",
+    "bio": "",
+    "photo": "",
+    "slides": ""
+  },
+  {
+    "name": "Mr. James Wakiaga",
+    "position": "",
+    "organization": "UNDP Zambia",
+    "talk": "",
+    "bio": "",
+    "photo": "",
+    "slides": ""
+  },
+  {
+    "name": "Mr. Sean Gilbertson",
+    "position": "",
+    "organization": "Kagem Mine",
+    "talk": "",
+    "bio": "",
+    "photo": "",
+    "slides": ""
+  },
+  {
+    "name": "Malfred Moolela",
+    "position": "",
+    "organization": "Ministry of Mines and Minerals Development",
+    "talk": "",
+    "bio": "",
+    "photo": "",
+    "slides": ""
+  },
+  {
+    "name": "Dr. Mweene Himwiinga",
+    "position": "",
+    "organization": "Copperbelt University",
+    "talk": "",
+    "bio": "",
+    "photo": "",
+    "slides": ""
+  },
+  {
+    "name": "Ms. Isabel Mukelebai",
+    "position": "",
+    "organization": "Civil Society for Poverty Reduction",
+    "talk": "",
+    "bio": "",
+    "photo": "",
+    "slides": ""
+  },
+  {
+    "name": "Mr. Silvester Hibajane",
+    "position": "",
+    "organization": "Copperbelt Energy Corporation",
+    "talk": "",
+    "bio": "",
+    "photo": "",
+    "slides": ""
+  },
+  {
+    "name": "Mr. Raj Sharma",
+    "position": "",
+    "organization": "Jewel of Africa",
+    "talk": "",
+    "bio": "",
+    "photo": "",
+    "slides": ""
+  },
+  {
+    "name": "Mr. Misheck Mkokweza",
+    "position": "",
+    "organization": "ZICB",
+    "talk": "",
+    "bio": "",
+    "photo": "",
+    "slides": ""
+  },
+  {
+    "name": "Ms. Jacqueline Inonge Mpumpuni",
+    "position": "",
+    "organization": "Buterla Holding",
+    "talk": "",
+    "bio": "",
+    "photo": "",
+    "slides": ""
+  },
+  {
+    "name": "Mr. Patrick Mwamba",
+    "position": "",
+    "organization": "WSP Global US",
+    "talk": "",
+    "bio": "",
+    "photo": "",
+    "slides": ""
+  },
+  {
+    "name": "Eng. Misozi Mwanza",
+    "position": "",
+    "organization": "Ministry of Mines and Minerals Development",
+    "talk": "",
+    "bio": "",
+    "photo": "",
+    "slides": ""
+  },
+  {
+    "name": "Dr. Pius Kasolo",
+    "position": "",
+    "organization": "GreenCo Energy Zambia",
+    "talk": "",
+    "bio": "",
+    "photo": "",
+    "slides": ""
+  },
+  {
+    "name": "Hon. Sheal Mulyata, MP",
+    "position": "",
+    "organization": "Lusaka Provine",
+    "talk": "",
+    "bio": "",
+    "photo": "",
+    "slides": ""
+  },
+  {
+    "name": "Prof. Albert Malama",
+    "position": "",
+    "organization": "Ministry of Infrastructure, Housing and Urban Development",
+    "talk": "",
+    "bio": "",
+    "photo": "",
+    "slides": ""
+  },
+  {
+    "name": "Mr. Slaven Gajovic",
+    "position": "",
+    "organization": "Maximum Group Holdings (South Africa)",
+    "talk": "",
+    "bio": "",
+    "photo": "",
+    "slides": ""
+  },
+  {
+    "name": "Mr. Wezi Gondwe",
+    "position": "",
+    "organization": "GreenCo Zambia",
+    "talk": "",
+    "bio": "",
+    "photo": "",
+    "slides": ""
+  },
+  {
+    "name": "Sheik Ahmed EL Haiba (Dubai)",
+    "position": "",
+    "organization": "Global Women Network",
+    "talk": "",
+    "bio": "",
+    "photo": "",
+    "slides": ""
+  },
+  {
+    "name": "Mr. Chalker Kansteiner",
+    "position": "",
+    "organization": "GridX Africa",
+    "talk": "",
+    "bio": "",
+    "photo": "",
+    "slides": ""
+  },
+  {
+    "name": "Ms. Sindi Mzamo",
+    "position": "",
+    "organization": "Circle of Global Business Women",
+    "talk": "",
+    "bio": "",
+    "photo": "",
+    "slides": ""
+  },
+  {
+    "name": "Mr. Tobias Musonda",
+    "position": "",
+    "organization": "Ministry of Mines and Minerals Development",
+    "talk": "",
+    "bio": "",
+    "photo": "",
+    "slides": ""
+  },
+  {
+    "name": "Prof. Bwalya Malama",
+    "position": "",
+    "organization": "California Polytechnic",
+    "talk": "",
+    "bio": "",
+    "photo": "",
+    "slides": ""
+  },
+  {
+    "name": "Mr. Victor Mwaba",
+    "position": "",
+    "organization": "Emerson Measurement Solutions US.",
+    "talk": "",
+    "bio": "",
+    "photo": "",
+    "slides": ""
+  },
+  {
+    "name": "Mr. Victor Ngoma",
+    "position": "",
+    "organization": "North American Development Group",
+    "talk": "",
+    "bio": "",
+    "photo": "",
+    "slides": ""
+  },
+  {
+    "name": "Mr. Chushi Mwewa",
+    "position": "",
+    "organization": "Southland Engineering -USA",
+    "talk": "",
+    "bio": "",
+    "photo": "",
+    "slides": ""
+  },
+  {
+    "name": "Mr. Horace Clemmons",
+    "position": "",
+    "organization": "Oggun Tractors",
+    "talk": "",
+    "bio": "",
+    "photo": "",
+    "slides": ""
+  },
+  {
+    "name": "Dr. Luka Powanga",
+    "position": "",
+    "organization": "Regis University and Energy Africa Conference",
+    "talk": "",
+    "bio": "",
+    "photo": "",
+    "slides": ""
+  },
+  {
+    "name": "Mr. Claudio Bacigalupi",
+    "position": "",
+    "organization": "",
+    "talk": "",
+    "bio": "",
+    "photo": "",
+    "slides": ""
+  },
+  {
+    "name": "Mr. Dingani Banda",
+    "position": "",
+    "organization": "Zambia Revenue Authority (ZRA)",
+    "talk": "",
+    "bio": "",
+    "photo": "",
+    "slides": ""
+  },
+  {
+    "name": "Shawn Buckley",
+    "position": "",
+    "organization": "Focused Sun",
+    "talk": "",
+    "bio": "",
+    "photo": "",
+    "slides": ""
+  },
+  {
+    "name": "Mr. Phesto Musonda",
+    "position": "",
+    "organization": "ZCCM Investments Holdings Plc",
+    "talk": "",
+    "bio": "",
+    "photo": "",
+    "slides": ""
+  },
+  {
+    "name": "Mr. Albert Halwampa",
+    "position": "",
+    "organization": "Zambia Development Agency",
+    "talk": "",
+    "bio": "",
+    "photo": "",
+    "slides": ""
+  },
+  {
+    "name": "Mr. Claude Kabemba",
+    "position": "",
+    "organization": "SARWatch - South African",
+    "talk": "",
+    "bio": "",
+    "photo": "",
+    "slides": ""
+  },
+  {
+    "name": "Mr. Jed Goldstein",
+    "position": "",
+    "organization": "First Quantum Minerals",
+    "talk": "",
+    "bio": "",
+    "photo": "",
+    "slides": ""
+  },
+  {
+    "name": "Mr. Andrew Kamanga",
+    "position": "",
+    "organization": "North Western Energy Corporation",
+    "talk": "",
+    "bio": "",
+    "photo": "",
+    "slides": ""
+  },
+  {
+    "name": "Ms. Faith Mutete",
+    "position": "",
+    "organization": "Zimbabwe Women in Mining",
+    "talk": "",
+    "bio": "",
+    "photo": "",
+    "slides": ""
+  },
+  {
+    "name": "Ms. Justina Nelson",
+    "position": "",
+    "organization": "Mineral Income and Investment Fund",
+    "talk": "",
+    "bio": "",
+    "photo": "",
+    "slides": ""
+  },
+  {
+    "name": "H. E. Rebecca Terzeon",
+    "position": "",
+    "organization": "",
+    "talk": "",
+    "bio": "",
+    "photo": "",
+    "slides": ""
+  },
+  {
+    "name": "Mr Bwalya Kangwa",
+    "position": "",
+    "organization": "ZAMEFA",
+    "talk": "",
+    "bio": "",
+    "photo": "",
+    "slides": ""
+  },
+  {
+    "name": "Mr. Benjamin Shawa",
+    "position": "",
+    "organization": "International Growth Centre (ICG)",
+    "talk": "",
+    "bio": "",
+    "photo": "",
+    "slides": ""
+  },
+  {
+    "name": "Shahrukh Wani",
+    "position": "",
+    "organization": "Zambia, International Growth Centre (IGC)",
+    "talk": "",
+    "bio": "",
+    "photo": "",
+    "slides": ""
+  },
+  {
+    "name": "Eng. Dr. Ebelia Manda",
+    "position": "",
+    "organization": "University of Zambia",
+    "talk": "",
+    "bio": "",
+    "photo": "",
+    "slides": ""
+  },
+  {
+    "name": "Prof. Francis Tembo",
+    "position": "",
+    "organization": "Nkurumah University",
+    "talk": "",
+    "bio": "",
+    "photo": "",
+    "slides": ""
+  },
+  {
+    "name": "Mr. Isaac Kuuwan Mwinbelle",
+    "position": "",
+    "organization": "Ghana Geological Survey Authority",
+    "talk": "",
+    "bio": "",
+    "photo": "",
+    "slides": ""
+  },
+  {
+    "name": "Ms. Muntanga Sibalwe",
+    "position": "",
+    "organization": "",
+    "talk": "",
+    "bio": "",
+    "photo": "",
     "slides": ""
   }
 ]

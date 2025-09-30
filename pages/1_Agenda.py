@@ -300,7 +300,7 @@ except Exception:
 speakers_dict = {sp.get("name", ""): sp for sp in all_speakers}
 
 # Speaker bio popup using dialog
-@st.dialog("🎤 Speaker Biography", width="large")
+@st.dialog("🎙️ Speaker Biography", width="large")
 def show_speaker_bio(speaker_name):
     speaker = speakers_dict.get(speaker_name)
     if speaker:
@@ -312,7 +312,16 @@ def show_speaker_bio(speaker_name):
                 st.markdown("### 👤")
         with col2:
             st.markdown(f"### {speaker.get('name', '')}")
-            st.markdown(f"**Talk:** {speaker.get('talk', 'N/A')}")
+            
+            # Show position and organization
+            if speaker.get("position") and speaker.get("organization"):
+                st.caption(f"{speaker.get('position')} at {speaker.get('organization')}")
+            elif speaker.get("position"):
+                st.caption(speaker.get("position"))
+            elif speaker.get("organization"):
+                st.caption(speaker.get("organization"))
+            
+            st.markdown(f"**Presenting on:** {speaker.get('talk', 'N/A')}")
             st.markdown("---")
             st.markdown(speaker.get("bio", "No biography available."))
             if speaker.get("slides"):
@@ -506,7 +515,7 @@ else:
                 speakers = [s.strip().lstrip(',').strip() for s in speakers if s.strip().lstrip(',').strip()]
                 
                 if speakers:
-                    st.markdown("**🎤 Speakers:**")
+                    st.markdown("**🎙️ Speakers:**")
                     cols = st.columns(min(len(speakers), 3))
                     for idx2, speaker_name in enumerate(speakers):
                         with cols[idx2 % 3]:

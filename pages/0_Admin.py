@@ -474,7 +474,7 @@ with tab_agenda:
 # ===== Speakers =====
 with tab_speakers:
     st.subheader("Speakers")
-    default_speakers = [{"name":"Dr. Chileshe Banda","talk":"Digital Agriculture","bio":"","photo":"","slides":""}]
+    default_speakers = [{"name":"Dr. Chileshe Banda","position":"CEO","organization":"AgriTech Ltd","talk":"Digital Agriculture","bio":"","photo":"","slides":""}]
     speakers = load_json(DATA_DIR / "speakers.json", default_speakers)
     edited = st.data_editor(
         speakers,
@@ -482,8 +482,10 @@ with tab_speakers:
         width='stretch',
         column_config={
             "name": "Name",
-            "talk": "Talk Title",
-            "bio": "Bio",
+            "position": "Position/Title",
+            "organization": "Organization",
+            "talk": "Presentation Topic",
+            "bio": "Biography",
             "photo": "Photo (path or URL)",
             "slides": "Slides (path or URL)",
         },
@@ -513,21 +515,32 @@ with tab_speakers:
         st.markdown("#### ➕ Add Single Speaker")
         with st.form("add_speaker_form", clear_on_submit=True):
             s_name = st.text_input("Name*")
-            s_talk = st.text_input("Talk Title*")
-            s_bio = st.text_area("Bio")
-            s_photo = st.file_uploader("Photo (JPG/JPEG)", type=["jpg","jpeg"]) 
+            s_position = st.text_input("Position/Title*", placeholder="e.g., CEO, Director, Professor")
+            s_organization = st.text_input("Organization*", placeholder="e.g., Mining Company, University")
+            s_talk = st.text_input("Presentation Topic*", placeholder="What they will present on")
+            s_bio = st.text_area("Biography", placeholder="Professional background, achievements, expertise")
+            s_photo = st.file_uploader("Photo (JPG/JPEG)", type=["jpg","jpeg"])
+            s_slides = st.file_uploader("Slides (PDF)", type=["pdf"])
             submitted_add = st.form_submit_button("Add Speaker")
         if submitted_add:
             photo_path = ""
             if s_photo is not None:
                 (AS_PHOTOS / s_photo.name).write_bytes(s_photo.read())
                 photo_path = (AS_PHOTOS / s_photo.name).as_posix()
+            
+            slides_path = ""
+            if s_slides is not None:
+                (AS_MATERIALS / s_slides.name).write_bytes(s_slides.read())
+                slides_path = (AS_MATERIALS / s_slides.name).as_posix()
+            
             new_rec = {
                 "name": s_name.strip(),
+                "position": s_position.strip(),
+                "organization": s_organization.strip(),
                 "talk": s_talk.strip(),
                 "bio": s_bio.strip(),
                 "photo": photo_path,
-                "slides": "",
+                "slides": slides_path,
             }
             all_speakers = load_json(DATA_DIR / "speakers.json", default_speakers)
             all_speakers.append(new_rec)
@@ -555,6 +568,21 @@ with tab_speakers:
     # Bulk import and bulk link photos
     with colB:
         st.markdown("#### 📥 Bulk Import Speakers (CSV/XLSX)")
+        st.caption("Expected columns: name, position, organization, talk, bio, photo, slides")
+        
+        # Download template
+        try:
+            template_path = DATA_DIR / "speakers_template.csv"
+            if template_path.exists():
+                st.download_button(
+                    "📥 Download CSV Template",
+                    data=template_path.read_bytes(),
+                    file_name="speakers_template.csv",
+                    mime="text/csv"
+                )
+        except Exception:
+            pass
+        
         replace = st.checkbox("Replace existing list (otherwise merge by Name)")
         up_table = st.file_uploader("Upload file", type=["csv", "xlsx"], key="sp_bulk")
         if up_table is not None:
@@ -564,19 +592,13 @@ with tab_speakers:
                     df = pd.read_csv(up_table)
                 else:
                     df = pd.read_excel(up_table)
-                # normalize expected columns
-                cols_map = {
-                    "name": "name",
-                    "talk": "talk",
-                    "bio": "bio",
-                    "photo": "photo",
-                    "slides": "slides",
-                }
                 df.columns = [str(c).strip().lower() for c in df.columns]
                 rows = []
                 for _, r in df.iterrows():
                     rows.append({
                         "name": str(r.get("name", "")).strip(),
+                        "position": str(r.get("position", "")).strip() if not pd.isna(r.get("position", "")) else "",
+                        "organization": str(r.get("organization", "")).strip() if not pd.isna(r.get("organization", "")) else "",
                         "talk": str(r.get("talk", "")).strip(),
                         "bio": str(r.get("bio", "")).strip(),
                         "photo": str(r.get("photo", "")).strip() if not pd.isna(r.get("photo", "")) else "",
@@ -825,6 +847,32 @@ with tab_sponsors:
                         rec["logo"] = path
                         break
                 save_json(DATA_DIR / "sponsors.json", sponsors)
+            
+            st.markdown("#### 🔄 Change Sponsor Tier")
+            if names:
+                move_sponsor = st.selectbox("Select sponsor to move", options=names, key=f"sp_move_{tier}")
+                available_tiers = [t for t in tiers if t != tier]
+                if available_tiers:
+                    target_tier = st.selectbox("Move to tier", options=available_tiers, key=f"sp_target_{tier}")
+                    if st.button("Move Sponsor", key=f"sp_move_btn_{tier}"):
+                        # Find and remove from current tier
+                        current = load_json(DATA_DIR / "sponsors.json", default_sponsors)
+                        sponsor_to_move = None
+                        for idx, rec in enumerate(current.get(tier, [])):
+                            if rec.get("name") == move_sponsor:
+                                sponsor_to_move = current[tier].pop(idx)
+                                break
+                        
+                        # Add to target tier
+                        if sponsor_to_move:
+                            if target_tier not in current:
+                                current[target_tier] = []
+                            current[target_tier].append(sponsor_to_move)
+                            save_json(DATA_DIR / "sponsors.json", current)
+                            st.success(f"✅ Moved {move_sponsor} from {tier} to {target_tier}!")
+                            st.rerun()
+                else:
+                    st.info("Create another tier to enable moving sponsors")
 
         # Bulk import and bulk link for selected tier
         with c2:

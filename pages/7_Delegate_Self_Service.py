@@ -88,18 +88,68 @@ if not hasattr(st.session_state, 'delegate_authenticated') or not st.session_sta
     # Process search when button is clicked OR when text is entered
     if (search_clicked or search_term) and search_term:
         df = load_staff_df()
+        results = pd.DataFrame()
+        speaker_results = []
         
         if search_method == "Name":
-            # Search by name (case insensitive, partial match)
+            # Search delegates by name
             mask = df["Name"].str.contains(search_term, case=False, na=False)
+            results = df[mask]
+            
+            # Also search speakers
+            try:
+                import json
+                with open("data/speakers.json", "r", encoding="utf-8") as f:
+                    speakers = json.load(f)
+                
+                for speaker in speakers:
+                    if speaker.get("name") and search_term.lower() in speaker.get("name", "").lower():
+                        speaker_results.append(speaker)
+            except:
+                pass
         else:
-            # Search by email (case insensitive, partial match)
+            # Search by email (only delegates have emails)
             mask = df["Email"].str.contains(search_term, case=False, na=False)
-        
-        results = df[mask]
-        
-        if len(results) == 0:
+            
+        if len(results) == 0 and len(speaker_results) == 0:
             st.warning("No records found. Please check your spelling or contact the organizers.")
+        
+        elif len(speaker_results) == 1 and len(results) == 0:
+            # Speaker found
+            st.success("✅ Speaker record found!")
+            speaker_record = speaker_results[0]
+            
+            # Show speaker information
+            st.markdown("### 🎙️ Your Speaker Profile")
+            
+            col1, col2 = st.columns(2)
+            with col1:
+                st.info(f"**Name:** {speaker_record.get('name', '')}")
+                st.info(f"**Position:** {speaker_record.get('position', 'Not specified')}")
+                st.info(f"**Organization:** {speaker_record.get('organization', 'Not specified')}")
+            
+            with col2:
+                st.info(f"**Presenting on:** {speaker_record.get('talk', 'TBA')}")
+                st.info(f"**Category:** Speaker")
+                if speaker_record.get('photo'):
+                    st.image(speaker_record['photo'], width=150)
+            
+            # Authentication button for speakers
+            if st.button("🚀 Continue to Dashboard", width='stretch', type="primary", key="speaker_auth"):
+                # Set authentication and session data
+                speaker_id = f"SPEAKER_{speaker_record.get('name', '').replace(' ', '_')}"
+                st.session_state.delegate_authenticated = True
+                st.session_state.delegate_id = speaker_id
+                st.session_state.delegate_name = speaker_record.get('name', '')
+                st.session_state.delegate_organization = speaker_record.get('organization', '')
+                st.session_state.delegate_category = 'Speaker'
+                st.session_state.delegate_title = speaker_record.get('position', '')
+                st.session_state.delegate_nationality = ''
+                st.session_state.delegate_phone = ''
+                
+                st.success(f"✅ Welcome, {speaker_record.get('name', '')}!")
+                st.switch_page("pages/1_Delegate_Dashboard.py")
+        
         elif len(results) == 1:
             st.success("✅ Record found!")
             delegate_record = results.iloc[0]
@@ -146,8 +196,24 @@ if not hasattr(st.session_state, 'delegate_authenticated') or not st.session_sta
                 st.rerun()
             
         else:
-            st.warning(f"Multiple records found ({len(results)}). Please be more specific with your search.")
-            st.dataframe(results[["ID", "Name", "Category", "Organization", "Email"]], width='stretch')
+            total_found = len(results) + len(speaker_results)
+            st.warning(f"Multiple records found ({total_found}). Please be more specific with your search.")
+            
+            if len(results) > 0:
+                st.markdown("#### Delegates:")
+                st.dataframe(results[["ID", "Name", "Category", "Organization", "Email"]], width='stretch')
+            
+            if len(speaker_results) > 0:
+                st.markdown("#### Speakers:")
+                speaker_df = pd.DataFrame([
+                    {
+                        "Name": sp.get("name", ""),
+                        "Position": sp.get("position", ""),
+                        "Organization": sp.get("organization", ""),
+                        "Presenting on": sp.get("talk", "")
+                    } for sp in speaker_results
+                ])
+                st.dataframe(speaker_df, width='stretch')
     
     else:
         st.info("👆 Please enter your name or email to search for your record.")
@@ -199,7 +265,8 @@ st.markdown("""
 # Display current information
 st.subheader("📋 Your Current Information")
 
-col1, col2 = st.columns(2)
+col1, col2, col3 = st.columns([2, 2, 1])
+
 with col1:
     st.info(f"**Nationality:** {delegate_record.get('Nationality', 'Not specified')}")
     st.info(f"**Name:** {delegate_record['Name']}")
@@ -211,6 +278,23 @@ with col2:
     st.info(f"**Email:** {delegate_record['Email']}")
     st.info(f"**Phone:** {delegate_record['Phone']}")
     st.info(f"**Check-in Status:** {'✅ Checked In' if delegate_record['CheckedIn'] else '❌ Not Checked In'}")
+
+with col3:
+    st.markdown("**Your Photo:**")
+    if delegate_record.get('BadgePhoto'):
+        try:
+            st.image(delegate_record['BadgePhoto'], caption="Current Badge Photo", use_container_width=True)
+        except:
+            st.caption("📷 Photo on file")
+    else:
+        st.markdown("""
+        <div style="background: #F3F4F6; border-radius: 10px; padding: 2rem; 
+                   text-align: center; color: #666; min-height: 150px; 
+                   display: flex; align-items: center; justify-content: center;">
+            <span style="font-size: 3rem;">👤</span>
+        </div>
+        """, unsafe_allow_html=True)
+        st.caption("No photo uploaded")
 
 # Dashboard access option
 st.markdown("---")
@@ -239,12 +323,50 @@ with st.form("update_delegate", clear_on_submit=False):
         new_phone = st.text_input("Phone", value=delegate_record['Phone'])
         new_nationality = st.text_input("Nationality", value=delegate_record.get('Nationality', ''))
         new_notes = st.text_area("Notes", value=delegate_record['Notes'])
+    
+    # Photo upload section - separate and prominent
+    st.markdown("---")
+    st.markdown("### 📸 Badge Photo")
+    
+    col_photo1, col_photo2 = st.columns([1, 2])
+    
+    with col_photo1:
+        if delegate_record.get('BadgePhoto'):
+            try:
+                st.image(delegate_record['BadgePhoto'], caption="Current Badge Photo", use_container_width=True)
+            except:
+                st.markdown("""
+                <div style="background: #F3F4F6; border-radius: 10px; padding: 2rem; 
+                           text-align: center; color: #666; min-height: 180px; 
+                           display: flex; align-items: center; justify-content: center;">
+                    <span style="font-size: 4rem;">👤</span>
+                </div>
+                """, unsafe_allow_html=True)
+        else:
+            st.markdown("""
+            <div style="background: #F3F4F6; border-radius: 10px; padding: 2rem; 
+                       text-align: center; color: #666; min-height: 180px; 
+                       display: flex; align-items: center; justify-content: center;">
+                <span style="font-size: 4rem;">👤</span>
+            </div>
+            """, unsafe_allow_html=True)
+            st.caption("No photo yet")
+    
+    with col_photo2:
+        st.markdown("**Upload New Photo:**")
+        st.caption("📷 Photo will appear on your conference badge and networking profile")
+        st.caption("✅ Recommended: Professional headshot, clear background")
+        st.caption("📐 Recommended size: 400x400px or larger")
         
-        # Photo upload
-        st.write("**Badge Photo**")
-        if delegate_record['BadgePhoto']:
-            st.caption(f"Current photo: {delegate_record['BadgePhoto']}")
-        new_photo = st.file_uploader("Upload new photo (JPG/PNG/WebP)", type=["jpg","jpeg","png","webp"], key="delegate_photo")
+        new_photo = st.file_uploader(
+            "Choose photo file",
+            type=["jpg","jpeg","png","webp"],
+            key="delegate_photo",
+            help="Upload a professional photo for your badge"
+        )
+        
+        if new_photo:
+            st.success("✅ New photo selected! Click 'Update My Information' below to save.")
 
     submitted = st.form_submit_button("💾 Update My Information", width='stretch')
     

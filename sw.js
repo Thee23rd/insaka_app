@@ -124,10 +124,9 @@ self.addEventListener('push', (event) => {
   
   const options = {
     body: event.data ? event.data.text() : 'New conference update available!',
-    icon: '/app/static/assets/pwa/icon-192x192.png',
-    badge: '/app/static/assets/pwa/icon-96x96.png',
+    icon: './assets/pwa/icon-192x192.png',
+    badge: './assets/pwa/icon-96x96.png',
     vibrate: [200, 100, 200, 100, 200],
-    sound: '/app/static/assets/notification.wav',
     requireInteraction: false,
     data: {
       dateOfArrival: Date.now(),
@@ -137,12 +136,12 @@ self.addEventListener('push', (event) => {
       {
         action: 'explore',
         title: 'View Details',
-        icon: '/app/static/assets/pwa/icon-96x96.png'
+        icon: './assets/pwa/icon-96x96.png'
       },
       {
         action: 'close',
         title: 'Close',
-        icon: '/app/static/assets/pwa/icon-96x96.png'
+        icon: './assets/pwa/icon-96x96.png'
       }
     ],
     tag: 'insaka-notification',

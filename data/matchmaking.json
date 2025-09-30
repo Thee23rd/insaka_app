@@ -337,5 +337,16 @@
     "status": "read",
     "message": "boss",
     "created_at": "2025-09-27T14:32:12.024067"
+  },
+  {
+    "id": 23,
+    "from_user_id": "6",
+    "to_user_id": "SPEAKER_Mr._Isaac_Kuuwan_Mwinbelle",
+    "from_user_name": "Annie Mwape",
+    "to_user_name": "Mr. Isaac Kuuwan Mwinbelle",
+    "type": "connection_request",
+    "status": "pending",
+    "message": "Annie Mwape wants to connect with you",
+    "created_at": "2025-09-30T17:10:36.167600"
   }
 ]

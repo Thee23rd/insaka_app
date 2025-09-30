@@ -5,7 +5,7 @@ import random
 from datetime import datetime
 from lib.ui import apply_brand
 
-st.set_page_config(page_title="Matchmaking Portal — Insaka", page_icon="🤝", layout="wide")
+st.set_page_config(page_title="Matchmaking Portal — Insaka", page_icon="💼", layout="wide")
 
 # Hide sidebar and navigation for delegates
 st.markdown("""
@@ -104,9 +104,9 @@ def get_matchmaking_notifications():
 matchmaking_notifications = get_matchmaking_notifications()
 if matchmaking_notifications > 0:
     badge_html = get_notification_badge(matchmaking_notifications)
-    st.markdown(f"# 🤝 Conference Matchmaking Portal {badge_html}", unsafe_allow_html=True)
+    st.markdown(f"# 💼 Conference Matchmaking Portal {badge_html}", unsafe_allow_html=True)
 else:
-    st.markdown("# 🤝 Conference Matchmaking Portal")
+    st.markdown("# 💼 Conference Matchmaking Portal")
 
 st.markdown("Connect with fellow delegates and expand your network")
 
@@ -159,13 +159,42 @@ with col_logout:
 
 # Helper functions
 def load_delegates():
-    """Load delegates list"""
+    """Load delegates list including speakers"""
+    attendees = []
+    
+    # Load regular delegates
     try:
         from staff_service import load_staff_df
         df = load_staff_df()
-        return df[["ID", "Name", "Organization", "Category", "RoleTitle", "Email", "Phone"]].to_dict('records')
+        delegates = df[["ID", "Name", "Organization", "Category", "RoleTitle", "Email", "Phone"]].to_dict('records')
+        attendees.extend(delegates)
     except Exception:
-        return []
+        pass
+    
+    # Load speakers as special attendees
+    try:
+        with open("data/speakers.json", "r", encoding="utf-8") as f:
+            speakers = json.load(f)
+        
+        for speaker in speakers:
+            if speaker.get("name"):
+                speaker_attendee = {
+                    "ID": f"SPEAKER_{speaker.get('name', '').replace(' ', '_')}",
+                    "Name": speaker.get("name", ""),
+                    "Organization": speaker.get("organization", ""),
+                    "Category": "Speaker",
+                    "RoleTitle": speaker.get("position", ""),
+                    "Email": "",
+                    "Phone": "",
+                    "Photo": speaker.get("photo", ""),
+                    "Bio": speaker.get("bio", ""),
+                    "Talk": speaker.get("talk", "")
+                }
+                attendees.append(speaker_attendee)
+    except Exception:
+        pass
+    
+    return attendees
 
 def load_matchmaking_data():
     """Load matchmaking interactions"""

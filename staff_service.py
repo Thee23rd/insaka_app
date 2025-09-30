@@ -28,6 +28,26 @@ def _ensure_schema(df: pd.DataFrame) -> pd.DataFrame:
     df["CheckedIn"] = df["CheckedIn"].astype(bool)
     # ID numeric or string ok; keep as str for safety
     df["ID"] = df["ID"].astype(str)
+    
+    # Fix phone numbers: convert floats to integers, remove .0 suffix, preserve country codes
+    if "Phone" in df.columns:
+        def format_phone(val):
+            if pd.isna(val) or val == "" or val == "nan":
+                return ""
+            try:
+                val_str = str(val).strip()
+                # If it starts with +, preserve the country code
+                if val_str.startswith("+"):
+                    return val_str
+                # Otherwise, try to remove .0 suffix by converting to int
+                num_val = float(val)
+                if num_val == num_val:  # Check if not NaN
+                    return str(int(num_val))
+                return ""
+            except (ValueError, TypeError):
+                return str(val).strip()
+        df["Phone"] = df["Phone"].apply(format_phone)
+    
     return df[COLUMNS]
 
 def load_staff_df() -> pd.DataFrame:

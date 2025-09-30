@@ -3,18 +3,60 @@
     {
       "name": "Barrick",
       "logo": "assets/logos/barrick.png"
+    },
+    {
+      "name": "BARRICK LUMWANA",
+      "logo": "assets/logos/barrick.png"
     }
   ],
   "Gold": [
     {
-      "name": "ZCCM-IH"
+      "name": "ZCCM-IH",
+      "logo": "assets/logos/ZCCM-IH.png"
     },
     {
-      "name": "ZDA"
+      "name": "IDC",
+      "logo": "assets/logos/IDC.png"
     },
     {
-      "name": "ZRA",
-       "logo": "assets/logos/barrick.png"
+      "name": "MOPANI",
+      "logo": "assets/logos/mopani.png"
+    },
+    {
+      "name": "ZANACO",
+      "logo": "assets/logos/zanaco.png"
+    },
+    {
+      "name": "CMEAZ",
+      "logo": "assets/logos/cmeaz.png"
+    },
+    {
+      "name": "KCM",
+      "logo": "assets/logos/konkola.png"
+    },
+    {
+      "name": "FQM",
+      "logo": "assets/logos/first.png"
+    },
+    {
+      "name": "XCALIBAR",
+      "logo": "assets/logos/xcalibar.png"
+    },
+    {
+      "name": "MAAMBA ENERGIES",
+      "logo": "assets/logos/maamba.png"
+    },
+    {
+      "name": "PLANET GOLD ZAMBIA",
+      "logo": "assets/logos/planet.png"
+    },
+    {
+      "name": "GOVIEX",
+      "logo": "assets/logos/goviex.png"
+    },
+    {
+      "name": "ELANTRA PROCUREMENT",
+      "logo": "assets/logos/elantra.png"
     }
   ],
   "MMMD": []

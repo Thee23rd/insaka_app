@@ -93,59 +93,71 @@ if hasattr(st.session_state, 'delegate_id_displayed') and st.session_state.deleg
 # Main delegate buttons with enhanced styling
 col1, col2, col3 = st.columns([1, 2, 1])
 with col2:
-    if st.button("🚀 Enter as Delegate", width='stretch', type="primary", key="delegate_btn"):
+    if st.button("▶️ Enter as Delegate", width='stretch', type="primary", key="delegate_btn"):
         st.switch_page("pages/7_Delegate_Self_Service.py")
 
-# QR Code Login Option
-st.markdown("---")
-st.markdown("### 📱 Alternative Login Methods")
+# Alternative Login Methods (QR Code hidden)
+# st.markdown("---")
+# st.markdown("### 📱 Alternative Login Methods")
+# 
+# col_qr1, col_qr2, col_qr3 = st.columns(3)
+# 
+# with col_qr1:
+#         if st.button("📱 QR Code Login", width='stretch', key="qr_login_btn"):
+#             st.switch_page("pages/QR_Login.py")
+# 
+# with col_qr2:
+#     if st.button("🔍 Search by Name", width='stretch', key="search_btn"):
+#         st.switch_page("pages/7_Delegate_Self_Service.py")
+# 
+# with col_qr3:
+#     if st.button("🔑 Quick ID Login", width='stretch', key="quick_id_btn"):
+#         st.switch_page("pages/0_Landing.py")
 
-col_qr1, col_qr2, col_qr3 = st.columns(3)
+# # PWA Notification Test
+# st.markdown("---")
+# st.markdown("### 🔔 PWA Features")
+# st.info("📱 **Mobile App Features:** Install this page as an app on your phone for notifications and offline access!")
 
-with col_qr1:
-        if st.button("📱 QR Code Login", width='stretch', key="qr_login_btn"):
-            st.switch_page("pages/QR_Login.py")
+# # Debug page link
+# if st.button("🔧 Open PWA Diagnostic Tool", use_container_width=True, type="secondary"):
+#     st.switch_page("pages/PWA_Debug.py")
 
-with col_qr2:
-    if st.button("🔍 Search by Name", width='stretch', key="search_btn"):
-        st.switch_page("pages/7_Delegate_Self_Service.py")
+# col_test1, col_test2 = st.columns(2)
+# with col_test1:
+#     if st.button("🔔 Test Notification & Sound", use_container_width=True):
+#         st.markdown("""
+#         <script>
+#         if (typeof window.testNotification === 'function') {
+#             window.testNotification();
+#         } else {
+#             alert('Please refresh the page to enable notifications!');
+#         }
+#         </script>
+#         """, unsafe_allow_html=True)
+#         st.success("🔔 Notification test triggered! Check your device.")
 
-with col_qr3:
-    if st.button("🔑 Quick ID Login", width='stretch', key="quick_id_btn"):
-        st.switch_page("pages/0_Landing.py")
-
-# PWA Notification Test
-st.markdown("---")
-st.markdown("### 🔔 PWA Features")
-st.info("📱 **Mobile App Features:** Install this page as an app on your phone for notifications and offline access!")
-
-col_test1, col_test2 = st.columns(2)
-with col_test1:
-    if st.button("🔔 Test Notification & Sound", use_container_width=True):
-        st.markdown("""
-        <script>
-        if (typeof window.testNotification === 'function') {
-            window.testNotification();
-        } else {
-            alert('Please refresh the page to enable notifications!');
-        }
-        </script>
-        """, unsafe_allow_html=True)
-        st.success("🔔 Notification test triggered! Check your device.")
-
-with col_test2:
-    if st.button("🔊 Test Sound Only", use_container_width=True):
-        st.markdown("""
-        <script>
-        if (typeof window.playNotificationSound === 'function') {
-            window.playNotificationSound();
-        } else {
-            const audio = new Audio('/app/static/assets/notification.wav');
-            audio.play().catch(e => console.log('Sound failed:', e));
-        }
-        </script>
-        """, unsafe_allow_html=True)
-        st.success("🔊 Sound test triggered!")
+# with col_test2:
+#     if st.button("🔊 Test Sound Only", use_container_width=True):
+#         st.markdown("""
+#         <script>
+#         if (typeof window.playNotificationSound === 'function') {
+#             window.playNotificationSound();
+#         } else {
+#             const audio = new Audio('./assets/notification.wav');
+#             audio.volume = 1.0;
+#             audio.play().then(() => {
+#                 console.log('✅ Sound played!');
+#             }).catch(e => {
+#                 console.log('Sound failed, trying fallback:', e);
+#                 const audioFallback = new Audio('assets/notification.wav');
+#                 audioFallback.volume = 1.0;
+#                 audioFallback.play().catch(e2 => console.log('Fallback failed:', e2));
+#             });
+#         }
+#         </script>
+#         """, unsafe_allow_html=True)
+#         st.success("🔊 Sound test triggered!")
 
 # Zambian-themed Footer
 st.markdown('<div class="zambia-accent"></div>', unsafe_allow_html=True)

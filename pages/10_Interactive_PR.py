@@ -61,9 +61,9 @@ def get_engagement_notifications():
 engagement_notifications = get_engagement_notifications()
 if engagement_notifications > 0:
     badge_html = get_notification_badge(engagement_notifications)
-    st.markdown(f"# 📸 Interactive Conference Posts {badge_html}", unsafe_allow_html=True)
+    st.markdown(f"# 📰 Interactive Conference Posts {badge_html}", unsafe_allow_html=True)
 else:
-    st.markdown("# 📸 Interactive Conference Posts")
+    st.markdown("# 📰 Interactive Conference Posts")
 
 st.markdown("Engage with trending conference content")
 
@@ -99,6 +99,19 @@ def load_delegates():
         return df[["Name", "Organization", "ID"]].to_dict('records')
     except Exception:
         return []
+
+def format_count(count):
+    """Format large numbers with k, M suffix (e.g., 1000 -> 1k, 1000000 -> 1M)"""
+    try:
+        count = int(count)
+        if count >= 1_000_000:
+            return f"{count / 1_000_000:.1f}M".rstrip('0').rstrip('.')
+        elif count >= 1_000:
+            return f"{count / 1_000:.1f}k".rstrip('0').rstrip('.')
+        else:
+            return str(count)
+    except (ValueError, TypeError):
+        return str(count)
 
 def get_relative_time(iso_timestamp):
     """Convert ISO timestamp to relative time like '2 hours ago'"""
@@ -300,11 +313,11 @@ else:
             priority = post.get("priority", "Medium")
             type_colors = {
                 "Trending News": "🔥",
-                "Event Highlights": "⭐",
-                "Speaker Spotlight": "🎤",
+                "Event Highlights": "🏆",
+                "Speaker Spotlight": "🎙️",
                 "Exhibitor Showcase": "🏢",
-                "Behind the Scenes": "🎬",
-                "Networking Moments": "🤝"
+                "Behind the Scenes": "📹",
+                "Networking Moments": "💼"
             }
             priority_colors = {
                 "High": "🔴",
@@ -341,23 +354,25 @@ else:
             
             with col_like:
                 like_count = engagement.get('likes', 0)
+                formatted_likes = format_count(like_count)
                 if user_interactions['liked']:
-                    if st.button(f"❤️ {like_count}", key=f"unlike_{post_id}"):
+                    if st.button(f"❤️ {formatted_likes}", key=f"unlike_{post_id}"):
                         remove_interaction(post_id, current_user_id, 'like')
                         st.rerun()
                 else:
-                    if st.button(f"🤍 {like_count}", key=f"like_{post_id}"):
+                    if st.button(f"🤍 {formatted_likes}", key=f"like_{post_id}"):
                         add_interaction(post_id, current_user_id, current_user_name, 'like')
                         st.rerun()
             
             with col_share:
                 share_count = engagement.get('shares', 0)
+                formatted_shares = format_count(share_count)
                 if user_interactions['shared']:
-                    if st.button(f"🔄 {share_count}", key=f"unshare_{post_id}"):
+                    if st.button(f"🔄 {formatted_shares}", key=f"unshare_{post_id}"):
                         remove_interaction(post_id, current_user_id, 'share')
                         st.rerun()
                 else:
-                    if st.button(f"📤 {share_count}", key=f"share_{post_id}"):
+                    if st.button(f"📤 {formatted_shares}", key=f"share_{post_id}"):
                         # Show share options
                         st.session_state[f'show_share_options_{post_id}'] = True
                         st.rerun()
@@ -365,11 +380,13 @@ else:
             with col_comment:
                 comments = get_post_comments(post_id)
                 comment_count = len(comments)
-                st.button(f"💬 {comment_count}", key=f"comment_btn_{post_id}", disabled=True)
+                formatted_comments = format_count(comment_count)
+                st.button(f"💬 {formatted_comments}", key=f"comment_btn_{post_id}", disabled=True)
             
             with col_views:
                 views_count = engagement.get('views', 0)
-                st.metric("👀 Views", views_count)
+                formatted_views = format_count(views_count)
+                st.metric("👀 Views", formatted_views)
             
             # Share options modal
             if st.session_state.get(f'show_share_options_{post_id}', False):
