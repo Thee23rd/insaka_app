@@ -120,7 +120,7 @@ def show_speaker_details(speaker):
             st.markdown(f"**{speaker.get('position')}**")
         
         if speaker.get('organization'):
-            st.markdown(f"📍 {speaker.get('organization')}")
+            st.markdown(f"💼 {speaker.get('organization')}")
         
         if speaker.get('talk'):
             st.markdown("---")
@@ -179,13 +179,17 @@ if filtered_speakers:
                 
                 # Position
                 if speaker.get('position'):
-                    st.caption(speaker.get('position'))
+                    st.markdown(f"""
+                    <div style="color: #F3F4F6; font-size: 0.9rem; font-weight: 500; margin: 0.5rem 0;">
+                        {speaker.get('position')}
+                    </div>
+                    """, unsafe_allow_html=True)
                 
                 # Organization
                 if speaker.get('organization'):
                     st.markdown(f"""
                     <div style="color: #2BA300; font-size: 0.85rem; font-weight: 600; margin-bottom: 1rem;">
-                        📍 {speaker.get('organization')}
+                        💼 {speaker.get('organization')}
                     </div>
                     """, unsafe_allow_html=True)
                 

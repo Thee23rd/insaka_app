@@ -398,7 +398,7 @@ else:
         if not day_items:
             st.markdown('<div class="empty-slot">No events scheduled</div>', unsafe_allow_html=True)
         else:
-            for event in day_items:
+            for event_idx, event in enumerate(day_items):
                 segment_type = event.get("segment_type", "other")
                 color = SEGMENT_COLORS.get(segment_type, SEGMENT_COLORS["other"])
                 
@@ -421,7 +421,7 @@ else:
                 if speakers_list:
                     st.markdown('<div class="speaker-list">', unsafe_allow_html=True)
                     
-                    for speaker_name in speakers_list:
+                    for speaker_idx, speaker_name in enumerate(speakers_list):
                         speaker = speakers_dict.get(speaker_name)
                         col1, col2 = st.columns([1, 5])
                         
@@ -432,9 +432,11 @@ else:
                                 st.markdown("👤")
                         
                         with col2:
+                            # Create unique key using day, event index, speaker index, and speaker name
+                            unique_key = f"speaker_{day}_{event_idx}_{speaker_idx}_{speaker_name.replace(' ', '_').replace('.', '_')}"
                             if st.button(
                                 speaker_name,
-                                key=f"speaker_{day}_{event.get('time')}_{speaker_name}",
+                                key=unique_key,
                                 use_container_width=True
                             ):
                                 show_speaker_bio(speaker_name)

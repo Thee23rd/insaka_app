@@ -144,11 +144,12 @@ if not hasattr(st.session_state, 'delegate_authenticated') or not st.session_sta
                 st.session_state.delegate_organization = speaker_record.get('organization', '')
                 st.session_state.delegate_category = 'Speaker'
                 st.session_state.delegate_title = speaker_record.get('position', '')
-                st.session_state.delegate_nationality = ''
-                st.session_state.delegate_phone = ''
+                st.session_state.delegate_nationality = speaker_record.get('nationality', '')
+                st.session_state.delegate_phone = speaker_record.get('phone', '')
+                st.session_state.delegate_email = speaker_record.get('email', '')
                 
                 st.success(f"✅ Welcome, {speaker_record.get('name', '')}!")
-                st.switch_page("pages/1_Delegate_Dashboard.py")
+                st.rerun()
         
         elif len(results) == 1:
             st.success("✅ Record found!")
@@ -220,10 +221,11 @@ if not hasattr(st.session_state, 'delegate_authenticated') or not st.session_sta
     
     st.stop()
 
-# If authenticated, show delegate information and networking
+# If authenticated, show user information and self-service options
 col_header, col_logout = st.columns([3, 1])
 with col_header:
-    st.subheader("👤 Your Delegate Information")
+    user_type = "Speaker" if st.session_state.delegate_category == 'Speaker' else "Delegate"
+    st.subheader(f"👤 Your {user_type} Information")
     st.success(f"✅ Authenticated as: **{st.session_state.delegate_name}** (ID: {st.session_state.delegate_id})")
 # with col_logout:
 #     if st.button("🚪 Logout", width='stretch'):
@@ -233,15 +235,185 @@ with col_header:
 #                 del st.session_state[key]
         # st.rerun()
 
-# Show current user's record
-df = load_staff_df()
-mask = df["ID"].astype(str) == str(st.session_state.delegate_id)
-delegate_record = df[mask].iloc[0]
+# Check if user is a speaker or delegate
+if st.session_state.delegate_category == 'Speaker':
+    # Handle speaker self-service
+    import json
+    try:
+        with open("data/speakers.json", "r", encoding="utf-8") as f:
+            speakers = json.load(f)
+        
+        # Find the speaker record
+        speaker_record = None
+        for speaker in speakers:
+            if speaker.get("name") == st.session_state.delegate_name:
+                speaker_record = speaker
+                break
+        
+        if speaker_record:
+            st.success("✅ Your speaker record found!")
+            
+            # Display current speaker information
+            st.markdown("### 🎙️ Current Speaker Information")
+            
+            col1, col2, col3 = st.columns([1, 2, 1])
+            with col1:
+                st.markdown("**Current Photo:**")
+                if speaker_record.get('photo'):
+                    st.image(speaker_record['photo'], width=150)
+                else:
+                    st.info("No photo uploaded")
+            
+            with col2:
+                st.info(f"**Name:** {speaker_record.get('name', '')}")
+                st.info(f"**Position:** {speaker_record.get('position', 'Not specified')}")
+                st.info(f"**Organization:** {speaker_record.get('organization', 'Not specified')}")
+                st.info(f"**Presenting on:** {speaker_record.get('talk', 'TBA')}")
+                st.info(f"**Email:** {speaker_record.get('email', 'Not provided')}")
+                st.info(f"**Phone:** {speaker_record.get('phone', 'Not provided')}")
+            
+            with col3:
+                st.info(f"**Category:** Speaker")
+                st.info(f"**Nationality:** {speaker_record.get('nationality', 'Not specified')}")
+                if speaker_record.get('bio'):
+                    st.info(f"**Bio:** {speaker_record.get('bio', 'Not provided')[:100]}...")
+            
+            st.markdown("---")
+            
+            # Speaker update form
+            st.markdown("### ✏️ Update Your Speaker Information")
+            
+            with st.form("speaker_update_form"):
+                col1, col2 = st.columns(2)
+                
+                with col1:
+                    new_name = st.text_input("Name", value=speaker_record.get('name', ''))
+                    new_position = st.text_input("Position", value=speaker_record.get('position', ''))
+                    new_organization = st.text_input("Organization", value=speaker_record.get('organization', ''))
+                    new_email = st.text_input("Email", value=speaker_record.get('email', ''))
+                    new_phone = st.text_input("Phone Number", value=speaker_record.get('phone', ''))
+                
+                with col2:
+                    new_talk = st.text_input("Presentation Topic", value=speaker_record.get('talk', ''))
+                    new_nationality = st.text_input("Nationality", value=speaker_record.get('nationality', ''))
+                    new_bio = st.text_area("Bio", value=speaker_record.get('bio', ''), height=100)
+                
+                # Photo upload section
+                st.markdown("#### 📸 Update Your Photo")
+                new_photo_file = st.file_uploader(
+                    "Upload new photo (JPG, JPEG, PNG)", 
+                    type=['jpg', 'jpeg', 'png'],
+                    help="Upload a professional headshot for your speaker profile"
+                )
+                
+                if new_photo_file:
+                    # Show preview
+                    col_preview1, col_preview2, col_preview3 = st.columns([1, 1, 1])
+                    with col_preview2:
+                        st.image(new_photo_file, width=150, caption="Photo Preview")
+                
+                # Slides upload section
+                st.markdown("#### 📊 Update Your Presentation Slides")
+                new_slides_file = st.file_uploader(
+                    "Upload presentation slides (PDF, PPT, PPTX)", 
+                    type=['pdf', 'ppt', 'pptx'],
+                    help="Upload your presentation slides"
+                )
+                
+                submitted = st.form_submit_button("💾 Save Changes", type="primary")
+                
+                if submitted:
+                    # Save photo if uploaded
+                    photo_path = speaker_record.get('photo', '')
+                    if new_photo_file:
+                        from utils_assets import save_upload
+                        photo_path = save_upload(new_photo_file, "speakers", new_name)
+                    
+                    # Save slides if uploaded
+                    slides_path = speaker_record.get('slides', '')
+                    if new_slides_file:
+                        from utils_assets import save_upload
+                        slides_path = save_upload(new_slides_file, "speakers", f"{new_name}_slides")
+                    
+                    # Update speaker record
+                    updated_speaker = {
+                        "name": new_name,
+                        "position": new_position,
+                        "organization": new_organization,
+                        "talk": new_talk,
+                        "bio": new_bio,
+                        "email": new_email,
+                        "phone": new_phone,
+                        "nationality": new_nationality,
+                        "photo": photo_path,
+                        "slides": slides_path
+                    }
+                    
+                    # Find and update the speaker in the list
+                    for i, speaker in enumerate(speakers):
+                        if speaker.get("name") == st.session_state.delegate_name:
+                            speakers[i] = updated_speaker
+                            break
+                    
+                    # Save updated speakers data
+                    with open("data/speakers.json", "w", encoding="utf-8") as f:
+                        json.dump(speakers, f, indent=2, ensure_ascii=False)
+                    
+                    # Update session state
+                    st.session_state.delegate_name = new_name
+                    st.session_state.delegate_organization = new_organization
+                    st.session_state.delegate_title = new_position
+                    st.session_state.delegate_email = new_email
+                    st.session_state.delegate_phone = new_phone
+                    st.session_state.delegate_nationality = new_nationality
+                    
+                    st.success("✅ Speaker information updated successfully!")
+                    st.rerun()
+            
+            # Dashboard access option for speakers
+            st.markdown("---")
+            if st.button("🚀 Go to Conference Dashboard", width='stretch', type="primary", key="speaker_dashboard_btn"):
+                st.switch_page("pages/1_Delegate_Dashboard.py")
+                
+        else:
+            st.error("❌ Speaker record not found in data.")
+            st.stop()
+            
+    except Exception as e:
+        st.error(f"❌ Error loading speaker data: {str(e)}")
+        st.stop()
 
-st.success("✅ Your record found!")
+else:
+    # Handle delegate self-service (existing logic)
+    df = load_staff_df()
+    mask = df["ID"].astype(str) == str(st.session_state.delegate_id)
 
-# QUICK THUMBS UP - DISAPPEAR AFTER ANIMATION
-st.markdown("""
+    # Check if delegate record exists
+    if mask.any():
+        delegate_record = df[mask].iloc[0]
+        st.success("✅ Your record found!")
+    else:
+        # Handle case where delegate record is not found
+        st.error("❌ Your delegate record was not found. Please contact support.")
+        st.info("If you are a speaker, please use the speaker authentication instead.")
+        
+        # Clear session state and redirect
+        for key in list(st.session_state.keys()):
+            if key.startswith('delegate_'):
+                del st.session_state[key]
+        
+        if st.button("🔑 Go to Authentication", width='stretch'):
+            st.switch_page("pages/7_Delegate_Self_Service.py")
+        
+        st.stop()
+
+# Continue with delegate self-service functionality
+if st.session_state.delegate_category != 'Speaker':
+    # Delegate-specific self-service functionality continues here
+    # This code will only run for delegates, not speakers
+    
+    # QUICK THUMBS UP - DISAPPEAR AFTER ANIMATION
+    st.markdown("""
         <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9998;">
             <div style="position: absolute; top: 20%; left: 20%; animation: quickthumbsup 2s ease-out forwards; font-size: 3rem;">👍</div>
             <div style="position: absolute; top: 30%; left: 40%; animation: quickthumbsup 2s ease-out 0.2s forwards; font-size: 2.5rem;">👍</div>
@@ -260,81 +432,89 @@ st.markdown("""
         </style>
         """, unsafe_allow_html=True)
         
-# Session state already set during authentication
+    # Session state already set during authentication
 
-# Display current information
-st.subheader("📋 Your Current Information")
+    # Display current information
+    st.subheader("📋 Your Current Information")
 
-col1, col2, col3 = st.columns([2, 2, 1])
+    col1, col2, col3 = st.columns([2, 2, 1])
 
-with col1:
-    st.info(f"**Nationality:** {delegate_record.get('Nationality', 'Not specified')}")
-    st.info(f"**Name:** {delegate_record['Name']}")
-    st.info(f"**Category:** {delegate_record['Category']}")
-    st.info(f"**Organization:** {delegate_record['Organization']}")
-
-with col2:
-    st.info(f"**Title:** {delegate_record['RoleTitle']}")
-    st.info(f"**Email:** {delegate_record['Email']}")
-    st.info(f"**Phone:** {delegate_record['Phone']}")
-    st.info(f"**Check-in Status:** {'✅ Checked In' if delegate_record['CheckedIn'] else '❌ Not Checked In'}")
-
-with col3:
-    st.markdown("**Your Photo:**")
-    if delegate_record.get('BadgePhoto'):
-        try:
-            st.image(delegate_record['BadgePhoto'], caption="Current Badge Photo", use_container_width=True)
-        except:
-            st.caption("📷 Photo on file")
-    else:
-        st.markdown("""
-        <div style="background: #F3F4F6; border-radius: 10px; padding: 2rem; 
-                   text-align: center; color: #666; min-height: 150px; 
-                   display: flex; align-items: center; justify-content: center;">
-            <span style="font-size: 3rem;">👤</span>
-        </div>
-        """, unsafe_allow_html=True)
-        st.caption("No photo uploaded")
-
-# Dashboard access option
-st.markdown("---")
-if st.button("🚀 Go to Conference Dashboard", width='stretch', type="primary"):
-    st.switch_page("pages/1_Delegate_Dashboard.py")
-
-# Edit form
-st.subheader("✏️ Update Your Information")
-st.caption("Fill in the fields you want to update. Leave blank to keep current values.")
-
-with st.form("update_delegate", clear_on_submit=False):
-    col1, col2 = st.columns(2)
-    
     with col1:
-        new_name = st.text_input("Full Name", value=delegate_record['Name'])
-        new_category = st.selectbox(
-            "Category", 
-            options=["Organizing Committee", "Speaker", "VIP", "Media", "Service Provider", "Sponsor/Exhibitor Staff", "Government Official", "Other"],
-            index=["Organizing Committee", "Speaker", "VIP", "Media", "Service Provider", "Sponsor/Exhibitor Staff", "Government Official", "Other"].index(delegate_record['Category']) if delegate_record['Category'] in ["Organizing Committee", "Speaker", "VIP", "Media", "Service Provider", "Sponsor/Exhibitor Staff", "Government Official", "Other"] else 6
-        )
-        new_organization = st.text_input("Organization", value=delegate_record['Organization'])
-        new_title = st.text_input("Title/Role", value=delegate_record['RoleTitle'])
-    
+        st.info(f"**Nationality:** {delegate_record.get('Nationality', 'Not specified')}")
+        st.info(f"**Name:** {delegate_record['Name']}")
+        st.info(f"**Category:** {delegate_record['Category']}")
+        st.info(f"**Organization:** {delegate_record['Organization']}")
+
     with col2:
-        new_email = st.text_input("Email", value=delegate_record['Email'])
-        new_phone = st.text_input("Phone", value=delegate_record['Phone'])
-        new_nationality = st.text_input("Nationality", value=delegate_record.get('Nationality', ''))
-        new_notes = st.text_area("Notes", value=delegate_record['Notes'])
-    
-    # Photo upload section - separate and prominent
-    st.markdown("---")
-    st.markdown("### 📸 Badge Photo")
-    
-    col_photo1, col_photo2 = st.columns([1, 2])
-    
-    with col_photo1:
+        st.info(f"**Title:** {delegate_record['RoleTitle']}")
+        st.info(f"**Email:** {delegate_record['Email']}")
+        st.info(f"**Phone:** {delegate_record['Phone']}")
+        st.info(f"**Check-in Status:** {'✅ Checked In' if delegate_record['CheckedIn'] else '❌ Not Checked In'}")
+
+    with col3:
+        st.markdown("**Your Photo:**")
         if delegate_record.get('BadgePhoto'):
             try:
                 st.image(delegate_record['BadgePhoto'], caption="Current Badge Photo", use_container_width=True)
             except:
+                st.caption("📷 Photo on file")
+        else:
+            st.markdown("""
+            <div style="background: #F3F4F6; border-radius: 10px; padding: 2rem; 
+                       text-align: center; color: #666; min-height: 150px; 
+                       display: flex; align-items: center; justify-content: center;">
+                <span style="font-size: 3rem;">👤</span>
+            </div>
+            """, unsafe_allow_html=True)
+            st.caption("No photo uploaded")
+
+    # Dashboard access option
+    st.markdown("---")
+    if st.button("🚀 Go to Conference Dashboard", width='stretch', type="primary"):
+        st.switch_page("pages/1_Delegate_Dashboard.py")
+
+    # Edit form
+    st.subheader("✏️ Update Your Information")
+    st.caption("Fill in the fields you want to update. Leave blank to keep current values.")
+
+    with st.form("update_delegate", clear_on_submit=False):
+        col1, col2 = st.columns(2)
+        
+        with col1:
+            new_name = st.text_input("Full Name", value=delegate_record['Name'])
+            new_category = st.selectbox(
+                "Category", 
+                options=["Organizing Committee", "Speaker", "VIP", "Media", "Service Provider", "Sponsor/Exhibitor Staff", "Government Official", "Other"],
+                index=["Organizing Committee", "Speaker", "VIP", "Media", "Service Provider", "Sponsor/Exhibitor Staff", "Government Official", "Other"].index(delegate_record['Category']) if delegate_record['Category'] in ["Organizing Committee", "Speaker", "VIP", "Media", "Service Provider", "Sponsor/Exhibitor Staff", "Government Official", "Other"] else 6
+            )
+            new_organization = st.text_input("Organization", value=delegate_record['Organization'])
+            new_title = st.text_input("Title/Role", value=delegate_record['RoleTitle'])
+        
+        with col2:
+            new_email = st.text_input("Email", value=delegate_record['Email'])
+            new_phone = st.text_input("Phone", value=delegate_record['Phone'])
+            new_nationality = st.text_input("Nationality", value=delegate_record.get('Nationality', ''))
+            new_notes = st.text_area("Notes", value=delegate_record['Notes'])
+        
+        # Photo upload section - inside the form
+        st.markdown("---")
+        st.markdown("### 📸 Badge Photo")
+        
+        col_photo1, col_photo2 = st.columns([1, 2])
+        
+        with col_photo1:
+            if delegate_record.get('BadgePhoto'):
+                try:
+                    st.image(delegate_record['BadgePhoto'], caption="Current Badge Photo", use_container_width=True)
+                except:
+                    st.markdown("""
+                    <div style="background: #F3F4F6; border-radius: 10px; padding: 2rem; 
+                               text-align: center; color: #666; min-height: 180px; 
+                               display: flex; align-items: center; justify-content: center;">
+                        <span style="font-size: 4rem;">👤</span>
+                    </div>
+                    """, unsafe_allow_html=True)
+            else:
                 st.markdown("""
                 <div style="background: #F3F4F6; border-radius: 10px; padding: 2rem; 
                            text-align: center; color: #666; min-height: 180px; 
@@ -342,68 +522,60 @@ with st.form("update_delegate", clear_on_submit=False):
                     <span style="font-size: 4rem;">👤</span>
                 </div>
                 """, unsafe_allow_html=True)
-        else:
-            st.markdown("""
-            <div style="background: #F3F4F6; border-radius: 10px; padding: 2rem; 
-                       text-align: center; color: #666; min-height: 180px; 
-                       display: flex; align-items: center; justify-content: center;">
-                <span style="font-size: 4rem;">👤</span>
-            </div>
-            """, unsafe_allow_html=True)
-            st.caption("No photo yet")
-    
-    with col_photo2:
-        st.markdown("**Upload New Photo:**")
-        st.caption("📷 Photo will appear on your conference badge and networking profile")
-        st.caption("✅ Recommended: Professional headshot, clear background")
-        st.caption("📐 Recommended size: 400x400px or larger")
+                st.caption("No photo yet")
         
-        new_photo = st.file_uploader(
-            "Choose photo file",
-            type=["jpg","jpeg","png","webp"],
-            key="delegate_photo",
-            help="Upload a professional photo for your badge"
-        )
-        
-        if new_photo:
-            st.success("✅ New photo selected! Click 'Update My Information' below to save.")
-
-    submitted = st.form_submit_button("💾 Update My Information", width='stretch')
-    
-    if submitted:
-        # Validate required fields
-        if not new_name.strip():
-            st.error("Name is required.")
-        elif not new_category.strip():
-            st.error("Category is required.")
-        else:
-            # Update the record
-            df = load_staff_df()
-            mask = df["ID"].astype(str) == str(delegate_record['ID'])
+        with col_photo2:
+            st.markdown("**Upload New Photo:**")
+            st.caption("📷 Photo will appear on your conference badge and networking profile")
+            st.caption("✅ Recommended: Professional headshot, clear background")
+            st.caption("📐 Recommended size: 400x400px or larger")
             
-            # Update fields
-            df.loc[mask, "Name"] = new_name.strip()
-            df.loc[mask, "Category"] = new_category.strip()
-            df.loc[mask, "Organization"] = new_organization.strip()
-            df.loc[mask, "RoleTitle"] = new_title.strip()
-            df.loc[mask, "Email"] = new_email.strip()
-            df.loc[mask, "Phone"] = new_phone.strip()
-            df.loc[mask, "Nationality"] = new_nationality.strip()
-            df.loc[mask, "Notes"] = new_notes.strip()
+            new_photo = st.file_uploader(
+                "Choose photo file",
+                type=["jpg","jpeg","png","webp"],
+                key="delegate_photo",
+                help="Upload a professional photo for your badge"
+            )
             
-            # Handle photo upload
             if new_photo:
-                from utils_assets import save_upload
-                photo_path = save_upload(new_photo, kind="badges", name_hint=new_name)
-                df.loc[mask, "BadgePhoto"] = photo_path
-                st.success(f"Photo uploaded: {photo_path}")
-            
-            # Save changes
-            save_staff_df(df)
-            st.success("✅ Your information has been updated successfully!")
-            
-            # BIG FLOATING BALLOONS ONLY
-            st.markdown("""
+                st.success("✅ New photo selected! Click 'Update My Information' below to save.")
+
+        submitted = st.form_submit_button("💾 Update My Information", width='stretch')
+        
+        if submitted:
+            # Validate required fields
+            if not new_name.strip():
+                st.error("Name is required.")
+            elif not new_category.strip():
+                st.error("Category is required.")
+            else:
+                # Update the record
+                df = load_staff_df()
+                mask = df["ID"].astype(str) == str(delegate_record['ID'])
+                
+                # Update fields
+                df.loc[mask, "Name"] = new_name.strip()
+                df.loc[mask, "Category"] = new_category.strip()
+                df.loc[mask, "Organization"] = new_organization.strip()
+                df.loc[mask, "RoleTitle"] = new_title.strip()
+                df.loc[mask, "Email"] = new_email.strip()
+                df.loc[mask, "Phone"] = new_phone.strip()
+                df.loc[mask, "Nationality"] = new_nationality.strip()
+                df.loc[mask, "Notes"] = new_notes.strip()
+                
+                # Handle photo upload
+                if new_photo:
+                    from utils_assets import save_upload
+                    photo_path = save_upload(new_photo, kind="badges", name_hint=new_name)
+                    df.loc[mask, "BadgePhoto"] = photo_path
+                    st.success(f"Photo uploaded: {photo_path}")
+                
+                # Save changes
+                save_staff_df(df)
+                st.success("✅ Your information has been updated successfully!")
+                
+                # BIG FLOATING BALLOONS ONLY
+                st.markdown("""
 <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999;">
     <div style="position: absolute; top: 20%; left: 10%; animation: float 180s ease-in-out infinite; font-size: 3rem;">🎈</div>
     <div style="position: absolute; top: 30%; left: 20%; animation: float 210s ease-in-out infinite 10s; font-size: 3.5rem;">🎈</div>

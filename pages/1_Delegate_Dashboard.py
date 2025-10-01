@@ -58,6 +58,26 @@ st.markdown("""
     margin-bottom: 20px;
     box-shadow: 0 4px 12px rgba(25, 138, 0, 0.3);
 }
+
+/* Profile photo styling for dashboard */
+.dashboard-profile-photo {
+    border-radius: 50% !important;
+    object-fit: cover !important;
+    border: 2px solid #198A00 !important;
+}
+
+/* Force all Streamlit images to be rounded */
+div[data-testid="stImage"] img {
+    border-radius: 50% !important;
+    object-fit: cover !important;
+    border: 2px solid #198A00 !important;
+}
+
+.stImage > div > img {
+    border-radius: 50% !important;
+    object-fit: cover !important;
+    border: 2px solid #198A00 !important;
+}
 </style>
 """, unsafe_allow_html=True)
 

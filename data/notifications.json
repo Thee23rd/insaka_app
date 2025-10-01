@@ -76,5 +76,61 @@
     },
     "read": false,
     "created_at": "2025-09-30T17:10:36.185238"
+  },
+  {
+    "id": 7,
+    "user_id": "SPEAKER_Annie_Mwape",
+    "type": "connection",
+    "title": "Connection Request",
+    "message": "Connection request from another delegate",
+    "priority": "Normal",
+    "data": {
+      "from_user_id": "6",
+      "action": "request"
+    },
+    "read": false,
+    "created_at": "2025-09-30T22:32:17.249992"
+  },
+  {
+    "id": 8,
+    "user_id": "SPEAKER_Annie_Mwape",
+    "type": "connection",
+    "title": "Connection Request",
+    "message": "Connection request from another delegate",
+    "priority": "Normal",
+    "data": {
+      "from_user_id": "SPEAKER_Mr_Harrison_Mbewe",
+      "action": "request"
+    },
+    "read": false,
+    "created_at": "2025-09-30T22:35:22.783773"
+  },
+  {
+    "id": 9,
+    "user_id": "SPEAKER_Mr_Harrison_Mbewe",
+    "type": "connection",
+    "title": "Connection Request",
+    "message": "Connection request from another delegate",
+    "priority": "Normal",
+    "data": {
+      "from_user_id": "6",
+      "action": "request"
+    },
+    "read": false,
+    "created_at": "2025-09-30T22:36:02.369933"
+  },
+  {
+    "id": 10,
+    "user_id": "6",
+    "type": "connection",
+    "title": "Connection Accepted",
+    "message": "Connection accepted from another delegate",
+    "priority": "Normal",
+    "data": {
+      "from_user_id": "SPEAKER_Mr_Harrison_Mbewe",
+      "action": "accepted"
+    },
+    "read": false,
+    "created_at": "2025-09-30T22:38:06.565907"
   }
 ]

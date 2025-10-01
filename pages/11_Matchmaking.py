@@ -25,6 +25,176 @@ st.markdown("""
     .stApp > div[data-testid="stSidebar"] > div {
         display: none;
     }
+    
+    /* Profile photo styling */
+    .profile-photo {
+        border-radius: 50% !important;
+        object-fit: cover !important;
+        border: 2px solid #198A00 !important;
+        width: 80px !important;
+        height: 80px !important;
+        display: block !important;
+    }
+    
+    /* Force all images in profile containers to be rounded */
+    .profile-container img {
+        border-radius: 50% !important;
+        object-fit: cover !important;
+        border: 2px solid #198A00 !important;
+    }
+    
+    /* Override Streamlit image styling */
+    .stImage img {
+        border-radius: 50% !important;
+        object-fit: cover !important;
+    }
+    
+    /* Specific targeting for profile photos */
+    div[data-testid="stImage"] img {
+        border-radius: 50% !important;
+        object-fit: cover !important;
+        border: 2px solid #198A00 !important;
+    }
+    
+    /* Force all Streamlit images to be rounded */
+    .stImage > div > img {
+        border-radius: 50% !important;
+        object-fit: cover !important;
+        border: 2px solid #198A00 !important;
+    }
+    
+    /* Additional targeting for Streamlit image containers */
+    div[data-testid="stImage"] {
+        display: flex !important;
+        justify-content: center !important;
+    }
+    
+    /* Chat bubble styles */
+    .chat-container {
+        max-width: 100%;
+        padding: 10px;
+        background: #f8f9fa;
+        border-radius: 15px;
+        margin: 10px 0;
+        max-height: 400px;
+        overflow-y: auto;
+        border: 1px solid #e0e0e0;
+    }
+    
+    .chat-container::-webkit-scrollbar {
+        width: 6px;
+    }
+    
+    .chat-container::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 3px;
+    }
+    
+    .chat-container::-webkit-scrollbar-thumb {
+        background: #198A00;
+        border-radius: 3px;
+    }
+    
+    .chat-container::-webkit-scrollbar-thumb:hover {
+        background: #2BA300;
+    }
+    
+    .chat-message {
+        margin: 8px 0;
+        display: flex;
+        align-items: flex-end;
+    }
+    
+    .chat-message.sent {
+        justify-content: flex-end;
+    }
+    
+    .chat-message.received {
+        justify-content: flex-start;
+    }
+    
+    .chat-bubble {
+        max-width: 70%;
+        padding: 12px 16px;
+        border-radius: 18px;
+        position: relative;
+        word-wrap: break-word;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    
+    .chat-bubble.sent {
+        background: linear-gradient(135deg, #198A00 0%, #2BA300 100%);
+        color: white;
+        border-bottom-right-radius: 6px;
+        border: none;
+    }
+    
+    .chat-bubble.received {
+       background: linear-gradient(135deg, #333333 0%, #000000 100%);
+
+        color: #000000;
+        border: 1px solid #dee2e6;
+        border-bottom-left-radius: 6px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        font-weight: 600;
+        text-shadow: none;
+    }
+    
+    .chat-bubble::before {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 0;
+        border: 8px solid transparent;
+    }
+    
+    .chat-bubble.sent::before {
+        bottom: 0;
+        right: -8px;
+        border-left-color: #2BA300;
+        border-bottom: none;
+    }
+    
+    .chat-bubble.received::before {
+        bottom: 0;
+        left: -8px;
+        border-right-color: #dee2e6;
+        border-bottom: none;
+    }
+    
+    .chat-timestamp {
+        font-size: 0.75rem;
+        color: #666;
+        margin-top: 4px;
+        text-align: center;
+    }
+    
+    .chat-sender {
+        font-size: 0.8rem;
+        font-weight: 600;
+        margin-bottom: 4px;
+    }
+    
+    .chat-sender.sent {
+        color: #ffffff;
+        font-weight: 700;
+    }
+    
+    .chat-sender.received {
+        color: #198A00;
+        font-weight: 700;
+        text-shadow: none;
+    }
+    
+    /* Ensure all chat text is dark and readable */
+    .chat-bubble.received * {
+        color: #000000 !important;
+        text-shadow: none !important;
+    }
+    
+    .chat-bubble.received .chat-sender {
+        color: #198A00 !important;
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -184,8 +354,9 @@ def load_delegates():
                     "Organization": speaker.get("organization", ""),
                     "Category": "Speaker",
                     "RoleTitle": speaker.get("position", ""),
-                    "Email": "",
-                    "Phone": "",
+                    "Email": speaker.get("email", ""),
+                    "Phone": speaker.get("phone", ""),
+                    "Nationality": speaker.get("nationality", ""),
                     "Photo": speaker.get("photo", ""),
                     "Bio": speaker.get("bio", ""),
                     "Talk": speaker.get("talk", "")
@@ -281,6 +452,7 @@ if not other_delegates:
     st.stop()
 
 # Tabs for different matchmaking features
+# Note: Streamlit tabs don't support programmatic switching, so we'll handle this differently
 tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(["🔍 Browse Delegates", "📩 Connection Requests", "💬 My Conversations", "📞 Contact Sharing", "📅 Meeting Requests", "🎯 Recommended Matches"])
 
 with tab1:
@@ -319,16 +491,49 @@ with tab1:
                     
                     with col:
                         with st.container(border=True):
-                            # Delegate info
-                            st.markdown(f"**👤 {delegate.get('Name', 'Unknown')}**")
+                            # Display photo if available (especially for speakers) - uniform size
+                            if delegate.get('Photo'):
+                                try:
+                                    # Use Streamlit's image component with proper styling
+                                    col_img = st.container()
+                                    with col_img:
+                                        st.markdown('<div style="display: flex; justify-content: center; margin-bottom: 10px;">', unsafe_allow_html=True)
+                                        st.image(delegate.get('Photo'), width=80, caption="")
+                                        st.markdown('</div>', unsafe_allow_html=True)
+                                except:
+                                    st.markdown("""
+                                    <div style="display: flex; justify-content: center; margin-bottom: 10px;">
+                                        <div style="width: 80px; height: 80px; border-radius: 50%; background: #F3F4F6; display: flex; align-items: center; justify-content: center; border: 2px solid #198A00;">
+                                            <span style="font-size: 2rem;">👤</span>
+                                        </div>
+                                    </div>
+                                    """, unsafe_allow_html=True)
+                            
+                            # Connection status indicator
+                            connection_status = get_connection_status(current_user_id, delegate.get('ID'))
+                            
+                            # Delegate/Speaker info with connection indicator
+                            if connection_status == 'accepted':
+                                if delegate.get('Category') == 'Speaker':
+                                    st.markdown(f"**🎙️ {delegate.get('Name', 'Unknown')}** 🟢")
+                                else:
+                                    st.markdown(f"**👤 {delegate.get('Name', 'Unknown')}** 🟢")
+                                st.caption("✅ Connected")
+                            else:
+                                if delegate.get('Category') == 'Speaker':
+                                    st.markdown(f"**🎙️ {delegate.get('Name', 'Unknown')}**")
+                                else:
+                                    st.markdown(f"**👤 {delegate.get('Name', 'Unknown')}**")
+                            
                             st.write(f"🏢 {delegate.get('Organization', 'Unknown')}")
                             st.write(f"📋 {delegate.get('Category', 'Unknown')}")
                             
                             if delegate.get('RoleTitle'):
                                 st.write(f"💼 {delegate.get('RoleTitle')}")
                             
-                            # Connection status
-                            connection_status = get_connection_status(current_user_id, delegate.get('ID'))
+                            # Show speaker talk topic if available
+                            if delegate.get('Category') == 'Speaker' and delegate.get('Talk'):
+                                st.caption(f"🎤 Presenting: {delegate.get('Talk')}")
                             
                             if connection_status == 'none':
                                 if st.button(f"🤝 Connect", key=f"connect_{delegate.get('ID')}", width='stretch'):
@@ -365,15 +570,17 @@ with tab1:
                                 col_chat, col_meet = st.columns(2)
                                 
                                 with col_chat:
-                                    if st.button(f"💬 Chat", key=f"chat_{delegate.get('ID')}", width='stretch'):
+                                    if st.button(f"💬 Chat", key=f"chat_{delegate.get('ID')}", width='stretch', type="primary"):
                                         st.session_state.selected_chat_user = delegate
                                         st.session_state.selected_chat_user_id = delegate.get('ID')
+                                        st.success(f"💬 Chat opened with {delegate.get('Name')}! Go to 'My Conversations' tab to chat.")
                                         st.rerun()
                                 
                                 with col_meet:
                                     if st.button(f"📅 Meet", key=f"meet_{delegate.get('ID')}", width='stretch'):
                                         st.session_state.show_meeting_request = True
                                         st.session_state.meeting_target_user = delegate
+                                        st.success(f"📅 Meeting request opened for {delegate.get('Name')}! Go to 'Meeting Requests' tab to schedule.")
                                         st.rerun()
                             
                             elif connection_status == 'declined':
@@ -514,26 +721,88 @@ with tab3:
         # Display conversations
         for conn in unique_connections:
             with st.container(border=True):
-                col1, col2 = st.columns([3, 1])
+                col_photo, col_info, col_actions = st.columns([1, 3, 1])
                 
-                with col1:
-                    st.markdown(f"**💬 {conn['user_name']}**")
+                with col_photo:
+                    # Get user photo
+                    user_photo = None
+                    try:
+                        # Check if it's a speaker
+                        if conn['user_id'].startswith('SPEAKER_'):
+                            import json
+                            with open("data/speakers.json", "r", encoding="utf-8") as f:
+                                speakers = json.load(f)
+                            speaker_name = conn['user_id'].replace('SPEAKER_', '').replace('_', ' ')
+                            for speaker in speakers:
+                                if speaker.get('name', '').replace(' ', '_') == conn['user_id'].replace('SPEAKER_', ''):
+                                    user_photo = speaker.get('photo', '')
+                                    break
+                        else:
+                            # Check delegates
+                            from staff_service import load_staff_df
+                            df = load_staff_df()
+                            mask = df["ID"].astype(str) == conn['user_id']
+                            if mask.any():
+                                user_photo = df[mask].iloc[0].get('BadgePhoto', '')
+                    except:
+                        pass
+                    
+                    # Display uniform profile photo
+                    if user_photo:
+                        try:
+                            # Use Streamlit's image component
+                            st.markdown('<div style="display: flex; justify-content: center;">', unsafe_allow_html=True)
+                            st.image(user_photo, width=60, caption="")
+                            st.markdown('</div>', unsafe_allow_html=True)
+                        except:
+                            st.markdown("""
+                            <div style="display: flex; justify-content: center;">
+                                <div style="width: 60px; height: 60px; border-radius: 50%; background: #F3F4F6; display: flex; align-items: center; justify-content: center; border: 2px solid #198A00;">
+                                    <span style="font-size: 1.5rem;">👤</span>
+                                </div>
+                            </div>
+                            """, unsafe_allow_html=True)
+                    else:
+                        st.markdown("""
+                        <div style="display: flex; justify-content: center;">
+                            <div style="width: 60px; height: 60px; border-radius: 50%; background: #F3F4F6; display: flex; align-items: center; justify-content: center; border: 2px solid #198A00;">
+                                <span style="font-size: 1.5rem;">👤</span>
+                            </div>
+                        </div>
+                        """, unsafe_allow_html=True)
+                
+                with col_info:
+                    # Check if user is a speaker
+                    is_speaker = conn['user_id'].startswith('SPEAKER_')
+                    icon = "🎙️" if is_speaker else "💬"
+                    st.markdown(f"**{icon} {conn['user_name']}**")
                     last_time = get_relative_time(conn.get('last_interaction', ''))
                     st.caption(f"Last interaction: {last_time}")
                 
-                with col2:
+                    # Check for unread messages
+                    unread_messages = [i for i in user_interactions if 
+                                     i.get('type') == 'chat_message' and 
+                                     i.get('from_user_id') == conn['user_id'] and 
+                                     i.get('to_user_id') == current_user_id and 
+                                     i.get('status') == 'sent']
+                    if unread_messages:
+                        st.caption(f"🔴 {len(unread_messages)} new message{'s' if len(unread_messages) > 1 else ''}")
+                
+                with col_actions:
                     col_chat, col_contact = st.columns(2)
                     
                     with col_chat:
-                        if st.button("💬 Chat", key=f"conversation_{conn['user_id']}"):
+                        if st.button("💬 Chat", key=f"conversation_{conn['user_id']}", use_container_width=True):
                             st.session_state.selected_chat_user = {'Name': conn['user_name'], 'ID': conn['user_id']}
                             st.session_state.selected_chat_user_id = conn['user_id']
+                            st.success(f"💬 Chat opened with {conn['user_name']}!")
                             st.rerun()
                     
                     with col_contact:
-                        if st.button("📞 Contact", key=f"contact_{conn['user_id']}"):
+                        if st.button("📞 Contact", key=f"contact_{conn['user_id']}", use_container_width=True):
                             st.session_state.show_contact_form = True
                             st.session_state.contact_target_user = {'Name': conn['user_name'], 'ID': conn['user_id']}
+                            st.success(f"📞 Contact form opened for {conn['user_name']}! Go to 'Contact Sharing' tab.")
                             st.rerun()
     else:
         st.info("No active conversations. Connect with delegates to start chatting!")
@@ -541,13 +810,78 @@ with tab3:
     # Chat interface
     if hasattr(st.session_state, 'selected_chat_user') and st.session_state.selected_chat_user:
         st.markdown("---")
-        st.markdown(f"### 💬 Chat with {st.session_state.selected_chat_user.get('Name')}")
+        # Get chat partner info
+        chat_partner = st.session_state.selected_chat_user
+        chat_partner_id = st.session_state.selected_chat_user_id
+        
+        # Get chat partner photo
+        chat_partner_photo = None
+        try:
+            if chat_partner_id.startswith('SPEAKER_'):
+                import json
+                with open("data/speakers.json", "r", encoding="utf-8") as f:
+                    speakers = json.load(f)
+                # More flexible matching for speaker names
+                speaker_name_to_find = chat_partner_id.replace('SPEAKER_', '').replace('_', ' ')
+                for speaker in speakers:
+                    speaker_name = speaker.get('name', '').replace(' ', '_')
+                    if speaker_name == chat_partner_id.replace('SPEAKER_', ''):
+                        chat_partner_photo = speaker.get('photo', '')
+                        break
+                    # Also try exact name match
+                    if speaker.get('name', '').strip() == speaker_name_to_find.strip():
+                        chat_partner_photo = speaker.get('photo', '')
+                        break
+            else:
+                from staff_service import load_staff_df
+                df = load_staff_df()
+                mask = df["ID"].astype(str) == chat_partner_id
+                if mask.any():
+                    chat_partner_photo = df[mask].iloc[0].get('BadgePhoto', '')
+        except Exception as e:
+            # Silently handle photo loading errors
+            pass
+        
+        # Chat header with photo
+        col_header_photo, col_header_info = st.columns([1, 4])
+        
+        with col_header_photo:
+            if chat_partner_photo:
+                try:
+                    # Use Streamlit's image component
+                    st.markdown('<div style="display: flex; justify-content: center;">', unsafe_allow_html=True)
+                    st.image(chat_partner_photo, width=80, caption="")
+                    st.markdown('</div>', unsafe_allow_html=True)
+                except Exception as e:
+                    st.markdown("""
+                    <div style="display: flex; justify-content: center;">
+                        <div style="width: 80px; height: 80px; border-radius: 50%; background: #F3F4F6; display: flex; align-items: center; justify-content: center; border: 2px solid #198A00;">
+                            <span style="font-size: 2rem;">👤</span>
+                        </div>
+                    </div>
+                    """, unsafe_allow_html=True)
+                    st.caption("Photo unavailable")
+            else:
+                st.markdown("""
+                <div style="display: flex; justify-content: center;">
+                    <div style="width: 80px; height: 80px; border-radius: 50%; background: #F3F4F6; display: flex; align-items: center; justify-content: center; border: 2px solid #198A00;">
+                        <span style="font-size: 2rem;">👤</span>
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+        
+        with col_header_info:
+            is_speaker = chat_partner_id.startswith('SPEAKER_')
+            icon = "🎙️" if is_speaker else "👤"
+            st.markdown(f"### {icon} Chat with {chat_partner.get('Name')}")
+            if is_speaker:
+                st.caption("Conference Speaker")
         
         # Show chat history
         chat_messages = [i for i in user_interactions if 
                         i.get('type') == 'chat_message' and 
-                        ((i.get('from_user_id') == current_user_id and i.get('to_user_id') == st.session_state.selected_chat_user_id) or
-                         (i.get('to_user_id') == current_user_id and i.get('from_user_id') == st.session_state.selected_chat_user_id))]
+                        ((i.get('from_user_id') == current_user_id and i.get('to_user_id') == chat_partner_id) or
+                         (i.get('to_user_id') == current_user_id and i.get('from_user_id') == chat_partner_id))]
         
         # Mark messages as read when viewing chat
         if chat_messages:
@@ -562,23 +896,63 @@ with tab3:
             save_matchmaking_data(interactions)
             
             st.markdown("**Chat History:**")
+            
+            # Display messages using Streamlit containers instead of raw HTML
             for msg in sorted(chat_messages, key=lambda x: x.get('created_at', '')):
                 is_from_me = msg.get('from_user_id') == current_user_id
+                message_time = get_relative_time(msg.get('created_at', ''))
+                sender_name = "You" if is_from_me else msg.get('from_user_name', 'Unknown')
+                message_content = msg.get('message', '')
+                
+                # Create a simple message display using Streamlit components
                 if is_from_me:
-                    st.markdown(f"**You:** {msg.get('message')}")
+                    # Sent message - right aligned
+                    col1, col2, col3 = st.columns([2, 1, 1])
+                    with col3:
+                        st.markdown(f"""
+                        <div style="background: linear-gradient(135deg, #198A00 0%, #2BA300 100%); 
+                                    color: white; padding: 12px 16px; border-radius: 18px; 
+                                    border-bottom-right-radius: 6px; margin: 8px 0; 
+                                    box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                            <div style="font-weight: 700; margin-bottom: 4px; color: #ffffff;">{sender_name}</div>
+                            <div>{message_content}</div>
+                        </div>
+                        """, unsafe_allow_html=True)
                 else:
-                    st.markdown(f"**{msg.get('from_user_name')}:** {msg.get('message')}")
-                st.caption(f"Sent {get_relative_time(msg.get('created_at', ''))}")
-                st.markdown("---")
+                    # Received message - left aligned
+                    col1, col2, col3 = st.columns([1, 1, 2])
+                    with col1:
+                        st.markdown(f"""
+                        <div style="background: linear-gradient(135deg, #333333 0%, #000000 100%); 
+                                    color: #ffffff !important; padding: 12px 16px; border-radius: 18px; 
+                                    border-bottom-left-radius: 6px; margin: 8px 0; 
+                                    border: 1px solid #555555; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
+                            <div style="font-weight: 700; margin-bottom: 4px; color: #198A00 !important;">{sender_name}</div>
+                            <div style="font-weight: 700; color: #ffffff !important; text-shadow: none !important;">{message_content}</div>
+                        </div>
+                        """, unsafe_allow_html=True)
         
-        # Simple chat interface (in a real app, this would be more sophisticated)
+        # Enhanced chat interface
+                st.markdown("---")
+        st.markdown("### 💬 Send Message")
+        
         with st.form("chat_form"):
-            message = st.text_area("Type your message:", placeholder="Message...")
+            message = st.text_area(
+                "Type your message:", 
+                placeholder="Type your message here...", 
+                height=100,
+                help="Press Ctrl+Enter to send message"
+            )
             
             col_send, col_close = st.columns([1, 1])
             
             with col_send:
-                    if st.form_submit_button("📤 Send Message", width='stretch'):
+                if st.form_submit_button(
+                    "💬 Send Message", 
+                    width='stretch', 
+                    type="primary",
+                    help="Send your message to the chat"
+                ):
                         if message.strip():
                             # Save chat message to matchmaking data
                             interactions = load_matchmaking_data()
@@ -599,9 +973,15 @@ with tab3:
                             st.rerun()
             
             with col_close:
-                if st.form_submit_button("❌ Close Chat", width='stretch'):
+                if st.form_submit_button(
+                    "❌ Close Chat", 
+                    width='stretch',
+                    help="Close this chat conversation"
+                ):
                     st.session_state.selected_chat_user = None
                     st.session_state.selected_chat_user_id = None
+                    if hasattr(st.session_state, 'active_tab'):
+                        del st.session_state.active_tab
                     st.rerun()
     
     # Quick contact sharing form

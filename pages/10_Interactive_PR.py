@@ -92,13 +92,36 @@ def save_delegate_interactions(interactions):
         json.dump(interactions, f, indent=2, ensure_ascii=False)
 
 def load_delegates():
-    """Load delegates list for mentions"""
+    """Load delegates list for mentions including speakers"""
+    attendees = []
+    
+    # Load regular delegates
     try:
         from staff_service import load_staff_df
         df = load_staff_df()
-        return df[["Name", "Organization", "ID"]].to_dict('records')
+        delegates = df[["Name", "Organization", "ID"]].to_dict('records')
+        attendees.extend(delegates)
     except Exception:
-        return []
+        pass
+    
+    # Load speakers as special attendees
+    try:
+        import json
+        with open("data/speakers.json", "r", encoding="utf-8") as f:
+            speakers = json.load(f)
+        
+        for speaker in speakers:
+            if speaker.get("name"):
+                speaker_attendee = {
+                    "ID": f"SPEAKER_{speaker.get('name', '').replace(' ', '_')}",
+                    "Name": speaker.get("name", ""),
+                    "Organization": speaker.get("organization", "")
+                }
+                attendees.append(speaker_attendee)
+    except Exception:
+        pass
+    
+    return attendees
 
 def format_count(count):
     """Format large numbers with k, M suffix (e.g., 1000 -> 1k, 1000000 -> 1M)"""
@@ -471,9 +494,17 @@ else:
                         
                         st.write(comment.get('content', ''))
                         
-                        # Show mentions in comment
+                        # Show mentions in comment with icons
                         if comment.get('mentions'):
-                            mentions_text = " ".join([f"@{mention}" for mention in comment['mentions']])
+                            mention_texts = []
+                            # Load delegates to check for speaker mentions
+                            delegates = load_delegates()
+                            for mention in comment['mentions']:
+                                # Check if mentioned person is a speaker
+                                is_speaker = any(d['Name'] == mention and d['ID'].startswith('SPEAKER_') for d in delegates)
+                                icon = "🎙️" if is_speaker else "👤"
+                                mention_texts.append(f"{icon}@{mention}")
+                            mentions_text = " ".join(mention_texts)
                             st.caption(f"**Mentioned:** {mentions_text}")
             else:
                 st.info("No comments yet. Be the first to comment!")
@@ -486,16 +517,27 @@ else:
                 delegates = load_delegates()
                 delegate_names = [d['Name'] for d in delegates if d['Name'] != current_user_name]
                 
+                # Create display names with icons for speakers
+                display_options = {}
+                for d in delegates:
+                    if d['Name'] != current_user_name:
+                        if d['ID'].startswith('SPEAKER_'):
+                            display_options[f"🎙️ {d['Name']}"] = d['Name']
+                        else:
+                            display_options[f"👤 {d['Name']}"] = d['Name']
+                
                 comment_text = st.text_area("Your comment:", placeholder="Comment...", height=80)
                 
                 # Mention people
-                if delegate_names:
-                    mentioned_people = st.multiselect(
+                if display_options:
+                    mentioned_people_display = st.multiselect(
                         "Mention people:", 
-                        options=delegate_names,
+                        options=list(display_options.keys()),
                         placeholder="Select people to mention...",
                         key=f"mentions_{post_id}"
                     )
+                    # Convert display names back to actual names
+                    mentioned_people = [display_options[name] for name in mentioned_people_display]
                 else:
                     mentioned_people = []
                 

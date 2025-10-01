@@ -348,5 +348,123 @@
     "status": "pending",
     "message": "Annie Mwape wants to connect with you",
     "created_at": "2025-09-30T17:10:36.167600"
+  },
+  {
+    "id": 24,
+    "from_user_id": "6",
+    "to_user_id": "SPEAKER_Annie_Mwape",
+    "from_user_name": "Annie Mwape",
+    "to_user_name": "Annie Mwape",
+    "type": "connection_request",
+    "status": "pending",
+    "message": "Annie Mwape wants to connect with you",
+    "created_at": "2025-09-30T22:32:17.247000"
+  },
+  {
+    "id": 25,
+    "from_user_id": "SPEAKER_Mr_Harrison_Mbewe",
+    "to_user_id": "SPEAKER_Annie_Mwape",
+    "from_user_name": "Mr Harrison Mbewe",
+    "to_user_name": "Annie Mwape",
+    "type": "connection_request",
+    "status": "pending",
+    "message": "Mr Harrison Mbewe wants to connect with you",
+    "created_at": "2025-09-30T22:35:22.768633"
+  },
+  {
+    "id": 26,
+    "from_user_id": "6",
+    "to_user_id": "SPEAKER_Mr_Harrison_Mbewe",
+    "from_user_name": "Annie Mwape",
+    "to_user_name": "Mr Harrison Mbewe",
+    "type": "connection_request",
+    "status": "accepted",
+    "message": "Annie Mwape wants to connect with you",
+    "created_at": "2025-09-30T22:36:02.365176"
+  },
+  {
+    "id": 27,
+    "from_user_id": "SPEAKER_Mr_Harrison_Mbewe",
+    "to_user_id": "6",
+    "from_user_name": "Mr Harrison Mbewe",
+    "to_user_name": "Annie Mwape",
+    "type": "chat_message",
+    "status": "read",
+    "message": "Morning",
+    "created_at": "2025-09-30T22:38:32.483581"
+  },
+  {
+    "id": 28,
+    "from_user_id": "6",
+    "to_user_id": "1",
+    "from_user_name": "Annie Mwape",
+    "to_user_name": "Charles Mweshi",
+    "type": "contact_sharing",
+    "status": "sent",
+    "message": "**My Contact Information:**\n📧 Email: annie.mwape@mmmd.gov.zm\n📱 Phone: 776527215",
+    "contact_info": {
+      "email": "annie.mwape@mmmd.gov.zm",
+      "phone": "776527215",
+      "linkedin": null,
+      "website": null
+    },
+    "created_at": "2025-09-30T22:40:05.208936"
+  },
+  {
+    "id": 29,
+    "from_user_id": "6",
+    "to_user_id": "1",
+    "from_user_name": "Annie Mwape",
+    "to_user_name": "Charles Mweshi",
+    "type": "contact_sharing",
+    "status": "sent",
+    "message": "**My Contact Information:**\n📧 Email: annie.mwape@mmmd.gov.zm\n📱 Phone: 776527215",
+    "contact_info": {
+      "email": "annie.mwape@mmmd.gov.zm",
+      "phone": "776527215",
+      "linkedin": null,
+      "website": null
+    },
+    "created_at": "2025-09-30T22:40:17.917042"
+  },
+  {
+    "id": 30,
+    "from_user_id": "6",
+    "to_user_id": "SPEAKER_Mr_Harrison_Mbewe",
+    "from_user_name": "Annie Mwape",
+    "to_user_name": "Mr Harrison Mbewe",
+    "type": "contact_sharing",
+    "status": "sent",
+    "message": "**My Contact Information:**\n📧 Email: annie.mwape@mmmd.gov.zm\n📱 Phone: 776527215",
+    "contact_info": {
+      "email": "annie.mwape@mmmd.gov.zm",
+      "phone": "776527215",
+      "linkedin": null,
+      "website": null
+    },
+    "created_at": "2025-09-30T22:40:27.270067"
+  },
+  {
+    "id": 31,
+    "from_user_id": "6",
+    "to_user_id": "SPEAKER_Mr_Harrison_Mbewe",
+    "from_user_name": "Annie Mwape",
+    "to_user_name": "Mr Harrison Mbewe",
+    "type": "meeting_request",
+    "status": "pending",
+    "meeting_type": "Networking",
+    "message": "some potential business",
+    "created_at": "2025-09-30T22:41:19.230842"
+  },
+  {
+    "id": 32,
+    "from_user_id": "6",
+    "to_user_id": "SPEAKER_Mr_Harrison_Mbewe",
+    "from_user_name": "Annie Mwape",
+    "to_user_name": "Mr Harrison Mbewe",
+    "type": "chat_message",
+    "status": "read",
+    "message": "Hi Harrison",
+    "created_at": "2025-09-30T23:19:47.874114"
   }
 ]

@@ -336,7 +336,7 @@ with tab_agenda:
     
     default_agenda = [
         {
-            "day":"Sun 6 Oct",
+            "day":"Mon 6 Oct",
             "time":"09:00",
             "title":"Opening & Keynote",
             "room":"Main Hall",
@@ -348,27 +348,387 @@ with tab_agenda:
     ]
     agenda = load_json(DATA_DIR / "agenda.json", default_agenda)
     
-    # Data editor with enhanced columns
+    # Enhanced data editor with better column configurations
     edited = st.data_editor(
         agenda,
         num_rows="dynamic",
         width='stretch',
         column_config={
-            "day": st.column_config.TextColumn("Day", help="e.g., Sun 6 Oct"),
+            "day": st.column_config.TextColumn("Day", help="e.g., Mon 6 Oct"),
             "time": st.column_config.TextColumn("Time", help="e.g., 09:00 AM"),
-            "title": st.column_config.TextColumn("Title"),
-            "room": st.column_config.TextColumn("Room/Venue"),
+            "title": st.column_config.TextColumn("Title", width="large"),
+            "room": st.column_config.TextColumn("Room/Venue", help="e.g., Main Hall, Conference Room A"),
             "segment_type": st.column_config.SelectboxColumn(
                 "Segment Type",
                 options=["keynote", "presentation", "panel", "break", "networking", "workshop", "closing", "other"],
                 help="Color-coded segment type"
             ),
-            "description": st.column_config.TextColumn("Description"),
-            "speakers": st.column_config.ListColumn("Speakers (comma-separated names)"),
-            "facilitators": st.column_config.ListColumn("Facilitators/Moderators"),
+            "description": st.column_config.TextColumn("Description", width="large"),
+            "speakers": st.column_config.ListColumn("Speakers", help="Add speaker names from your speakers pool"),
+            "facilitators": st.column_config.ListColumn("Facilitators", help="Add facilitator names from your speakers pool"),
         },
         key="ed_agenda",
     )
+    
+    # Show available speakers for reference
+    if speaker_names:
+        with st.expander("👥 Available Speakers Pool", expanded=False):
+            st.markdown("**Use these names when assigning speakers and facilitators:**")
+            speaker_cols = st.columns(3)
+            for i, speaker in enumerate(speaker_names):
+                with speaker_cols[i % 3]:
+                    st.text(f"• {speaker}")
+    
+    # Individual item editing section
+    st.markdown("#### 📝 Edit Individual Agenda Items")
+    
+    if agenda:
+        # Show current agenda items
+        for idx, item in enumerate(agenda):
+            with st.expander(f"📅 {item.get('day', 'TBD')} - {item.get('time', 'TBD')} - {item.get('title', 'Untitled')}", expanded=False):
+                
+                # Speaker and Facilitator Management (Outside Form)
+                st.markdown("**👥 Current Assignments**")
+                col1, col2 = st.columns(2)
+                
+                with col1:
+                    st.markdown("**🎙️ Current Speakers**")
+                    current_speakers = item.get('speakers', [])
+                    if current_speakers:
+                        for speaker_idx, speaker in enumerate(current_speakers):
+                            col_speaker, col_remove = st.columns([4, 1])
+                            with col_speaker:
+                                st.text(f"• {speaker}")
+                            with col_remove:
+                                if st.button("❌", key=f"remove_speaker_{idx}_{speaker_idx}"):
+                                    current_speakers.pop(speaker_idx)
+                                    agenda[idx]['speakers'] = current_speakers
+                                    save_json(DATA_DIR / "agenda.json", agenda)
+                                    st.rerun()
+                    else:
+                        st.text("No speakers assigned")
+                
+                with col2:
+                    st.markdown("**🎯 Current Facilitators**")
+                    current_facilitators = item.get('facilitators', [])
+                    if current_facilitators:
+                        for facilitator_idx, facilitator in enumerate(current_facilitators):
+                            col_facilitator, col_remove_f = st.columns([4, 1])
+                            with col_facilitator:
+                                st.text(f"• {facilitator}")
+                            with col_remove_f:
+                                if st.button("❌", key=f"remove_facilitator_{idx}_{facilitator_idx}"):
+                                    current_facilitators.pop(facilitator_idx)
+                                    agenda[idx]['facilitators'] = current_facilitators
+                                    save_json(DATA_DIR / "agenda.json", agenda)
+                                    st.rerun()
+                    else:
+                        st.text("No facilitators assigned")
+                
+                # Add Speakers and Facilitators (Outside Form)
+                st.markdown("**➕ Add New Assignments**")
+                col_add1, col_add2 = st.columns(2)
+                
+                with col_add1:
+                    if speaker_names:
+                        available_speakers = [name for name in speaker_names if name not in current_speakers]
+                        if available_speakers:
+                            selected_speaker = st.selectbox(
+                                "Add Speaker from Pool",
+                                options=[""] + available_speakers,
+                                key=f"add_speaker_select_{idx}"
+                            )
+                            if selected_speaker and st.button("➕ Add Speaker", key=f"add_speaker_btn_{idx}"):
+                                current_speakers.append(selected_speaker)
+                                agenda[idx]['speakers'] = current_speakers
+                                save_json(DATA_DIR / "agenda.json", agenda)
+                                st.success(f"✅ Added {selected_speaker} as speaker!")
+                                st.rerun()
+                
+                with col_add2:
+                    if speaker_names:
+                        available_facilitators = [name for name in speaker_names if name not in current_facilitators]
+                        if available_facilitators:
+                            selected_facilitator = st.selectbox(
+                                "Add Facilitator from Pool",
+                                options=[""] + available_facilitators,
+                                key=f"add_facilitator_select_{idx}"
+                            )
+                            if selected_facilitator and st.button("➕ Add Facilitator", key=f"add_facilitator_btn_{idx}"):
+                                current_facilitators.append(selected_facilitator)
+                                agenda[idx]['facilitators'] = current_facilitators
+                                save_json(DATA_DIR / "agenda.json", agenda)
+                                st.success(f"✅ Added {selected_facilitator} as facilitator!")
+                                st.rerun()
+                
+                # Main Form for Basic Details
+                with st.form(f"edit_form_{idx}"):
+                    st.markdown("**📝 Edit Basic Details**")
+                    col1, col2 = st.columns(2)
+                    
+                    with col1:
+                        day = st.text_input("Day", value=item.get('day', ''), help="e.g., Mon 6 Oct")
+                        time = st.text_input("Time", value=item.get('time', ''), help="e.g., 09:00 AM")
+                        title = st.text_input("Title", value=item.get('title', ''))
+                        room = st.text_input("Room/Venue", value=item.get('room', ''), help="e.g., Main Hall")
+                        
+                        # Segment type dropdown
+                        segment_options = ["keynote", "presentation", "panel", "break", "networking", "workshop", "closing", "other"]
+                        current_segment = item.get('segment_type', 'presentation')
+                        segment_index = segment_options.index(current_segment) if current_segment in segment_options else 1
+                        segment_type = st.selectbox("Segment Type", options=segment_options, index=segment_index)
+                    
+                    with col2:
+                        description = st.text_area("Description", value=item.get('description', ''))
+                        
+                        # Manual speaker/facilitator input for external speakers
+                        st.markdown("**📝 Manual Input (for external speakers)**")
+                        speakers_text = "\n".join(current_speakers) if current_speakers else ""
+                        speakers_input = st.text_area("Speaker Names", value=speakers_text, help="Enter one speaker name per line")
+                        
+                        facilitators_text = "\n".join(current_facilitators) if current_facilitators else ""
+                        facilitators_input = st.text_area("Facilitator Names", value=facilitators_text, help="Enter one facilitator name per line")
+                    
+                    # Submit button
+                    submitted = st.form_submit_button("💾 Save Changes", type="primary")
+                    
+                    if submitted:
+                        # Process speakers and facilitators
+                        speakers_list = [s.strip() for s in speakers_input.split('\n') if s.strip()]
+                        facilitators_list = [f.strip() for f in facilitators_input.split('\n') if f.strip()]
+                        
+                        # Update the agenda item
+                        agenda[idx] = {
+                            "day": day.strip(),
+                            "time": time.strip(),
+                            "title": title.strip(),
+                            "room": room.strip(),
+                            "segment_type": segment_type,
+                            "description": description.strip(),
+                            "speakers": speakers_list,
+                            "facilitators": facilitators_list
+                        }
+                        
+                        # Save to file
+                        save_json(DATA_DIR / "agenda.json", agenda)
+                        st.success("✅ Agenda item updated successfully!")
+                        st.rerun()
+    
+    # Quick actions section
+    st.markdown("#### ⚡ Quick Actions")
+    col1, col2, col3 = st.columns(3)
+    
+    with col1:
+        if st.button("🔄 Refresh Agenda", help="Reload agenda from file"):
+            st.rerun()
+    
+    with col2:
+        if st.button("📋 Reset to Default", help="Reset to default agenda"):
+            save_json(DATA_DIR / "agenda.json", default_agenda)
+            st.success("✅ Agenda reset to default!")
+            st.rerun()
+    
+    with col3:
+        if st.button("📤 Export Agenda", help="Download agenda as JSON"):
+            agenda_json = json.dumps(agenda, indent=2)
+            st.download_button(
+                label="📥 Download JSON",
+                data=agenda_json,
+                file_name="agenda.json",
+                mime="application/json"
+            )
+    
+    # Word Document Upload Section
+    st.markdown("#### 📄 Upload Agenda from Word Document")
+    st.caption("Upload a Word document (.docx) to automatically parse and import agenda items")
+    
+    uploaded_file = st.file_uploader(
+        "Choose Word document",
+        type=['docx'],
+        help="Upload a Word document containing your agenda. The system will attempt to parse and segment the content automatically.",
+        key="agenda_word_upload"
+    )
+    
+    if uploaded_file:
+        if st.button("📥 Parse & Import Agenda from Word", type="primary", key="parse_agenda_btn"):
+            try:
+                # Import docx processing
+                from docx import Document
+                import re
+                from datetime import datetime
+                
+                # Read the Word document
+                doc = Document(uploaded_file)
+                
+                parsed_agenda = []
+                current_day = None
+                current_date = None
+                
+                # First pass: collect all text and identify structure
+                all_text = []
+                for paragraph in doc.paragraphs:
+                    text = paragraph.text.strip()
+                    if text:
+                        all_text.append(text)
+                
+                # Join all text and look for patterns
+                full_text = "\n".join(all_text)
+                
+                # Look for day headers first
+                day_patterns = [
+                    r'(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)\s+(\d{1,2})\s+(January|February|March|April|May|June|July|August|September|October|November|December)',
+                    r'(Mon|Tue|Wed|Thu|Fri|Sat|Sun)\s+(\d{1,2})\s+(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)',
+                    r'(\d{1,2})\s+(January|February|March|April|May|June|July|August|September|October|November|December)'
+                ]
+                
+                # Split text into sections by day
+                sections = []
+                current_section = []
+                current_day = None
+                
+                for line in all_text:
+                    # Check if this line contains a date
+                    day_match = None
+                    for pattern in day_patterns:
+                        day_match = re.search(pattern, line, re.IGNORECASE)
+                        if day_match:
+                            break
+                    
+                    if day_match:
+                        # Save previous section if it exists
+                        if current_section and current_day:
+                            sections.append((current_day, current_section))
+                        
+                        # Start new section
+                        groups = day_match.groups()
+                        if len(groups) >= 2:
+                            day_name = groups[0] if groups[0] else "Unknown"
+                            current_date = int(groups[1]) if len(groups) > 1 else 6
+                            month = groups[2] if len(groups) > 2 else "October"
+                            
+                            # Calculate correct day of week for 2025
+                            try:
+                                from datetime import datetime
+                                if month.lower() in ['oct', 'october']:
+                                    date_obj = datetime(2025, 10, current_date)
+                                    day_name = date_obj.strftime('%a')  # Mon, Tue, Wed, etc.
+                                    current_day = f"{day_name} {current_date} Oct"
+                                else:
+                                    day_abbrev = day_name[:3] if len(day_name) > 3 else day_name
+                                    current_day = f"{day_abbrev} {current_date} {month[:3]}"
+                            except:
+                                day_abbrev = day_name[:3] if len(day_name) > 3 else day_name
+                                current_day = f"{day_abbrev} {current_date} {month[:3]}"
+                        
+                        current_section = []
+                    else:
+                        current_section.append(line)
+                
+                # Add the last section
+                if current_section and current_day:
+                    sections.append((current_day, current_section))
+                
+                # Process each section
+                for day, lines in sections:
+                    for line in lines:
+                        # Look for time patterns with more flexibility
+                        time_patterns = [
+                            r'(\d{1,2}):(\d{2})\s*(AM|PM|am|pm)?',  # 09:00 AM
+                            r'(\d{1,2}):(\d{2})\s*-\s*(\d{1,2}):(\d{2})',  # 09:00-10:00
+                            r'(\d{1,2})\s*(AM|PM|am|pm)',  # 9 AM
+                        ]
+                        
+                        time_match = None
+                        for pattern in time_patterns:
+                            time_match = re.search(pattern, line)
+                            if time_match:
+                                break
+                        
+                        if time_match:
+                            time_groups = time_match.groups()
+                            
+                            # Format time based on pattern
+                            if len(time_groups) == 3 and time_groups[2]:  # 09:00 AM
+                                hour = int(time_groups[0])
+                                minute = time_groups[1]
+                                ampm = time_groups[2].upper()
+                                formatted_time = f"{hour:02d}:{minute} {ampm}"
+                            elif len(time_groups) == 4:  # 09:00-10:00
+                                formatted_time = f"{time_groups[0]}:{time_groups[1]} - {time_groups[2]}:{time_groups[3]}"
+                            elif len(time_groups) == 2:  # 9 AM
+                                formatted_time = f"{time_groups[0]} {time_groups[1].upper()}"
+                            else:
+                                formatted_time = time_match.group(0)
+                            
+                            # Extract title (everything after time)
+                            title = line[time_match.end():].strip()
+                            
+                            # Skip if title is too short or contains only special characters
+                            if len(title) < 3 or not re.search(r'[a-zA-Z]', title):
+                                continue
+                            
+                            # Clean up title
+                            title = re.sub(r'^\W+', '', title)  # Remove leading non-word chars
+                            title = re.sub(r'\W+$', '', title)  # Remove trailing non-word chars
+                            
+                            if not title:
+                                continue
+                            
+                            # Try to detect room/venue
+                            room = "TBD"
+                            room_patterns = [
+                                r'(Room\s+\w+)', r'(Hall\s+\w+)', r'(Auditorium\s+\w+)', 
+                                r'(Main\s+\w+)', r'(Conference\s+Room\s+\w+)', r'(Lobby)'
+                            ]
+                            for pattern in room_patterns:
+                                room_match = re.search(pattern, title, re.IGNORECASE)
+                                if room_match:
+                                    room = room_match.group(1)
+                                    title = title.replace(room_match.group(0), "").strip()
+                                    break
+                            
+                            # Determine segment type
+                            segment_type = "presentation"
+                            title_lower = title.lower()
+                            if any(word in title_lower for word in ['keynote', 'opening', 'welcome', 'ceremony']):
+                                segment_type = "keynote"
+                            elif any(word in title_lower for word in ['break', 'coffee', 'lunch', 'tea', 'refreshment']):
+                                segment_type = "break"
+                            elif any(word in title_lower for word in ['panel', 'discussion', 'debate', 'roundtable']):
+                                segment_type = "panel"
+                            elif any(word in title_lower for word in ['networking', 'reception', 'cocktail']):
+                                segment_type = "networking"
+                            elif any(word in title_lower for word in ['workshop', 'training', 'session', 'tutorial']):
+                                segment_type = "workshop"
+                            elif any(word in title_lower for word in ['closing', 'wrap', 'summary', 'conclusion']):
+                                segment_type = "closing"
+                            
+                            # Create agenda item
+                            agenda_item = {
+                                "day": day,
+                                "time": formatted_time,
+                                "title": title,
+                                "room": room,
+                                "segment_type": segment_type,
+                                "description": "",
+                                "speakers": [],
+                                "facilitators": []
+                            }
+                            
+                            parsed_agenda.append(agenda_item)
+                
+                if parsed_agenda:
+                    # Save the parsed agenda
+                    save_json(DATA_DIR / "agenda.json", parsed_agenda)
+                    st.success(f"✅ Successfully parsed and imported {len(parsed_agenda)} agenda items from Word document!")
+                    st.rerun()
+                else:
+                    st.warning("⚠️ No agenda items could be parsed from the document. Please check the format.")
+                    
+            except ImportError:
+                st.error("❌ The python-docx library is required to process Word documents. Please install it: `pip install python-docx`")
+            except Exception as e:
+                st.error(f"❌ Error processing Word document: {str(e)}")
     
     c1, c2 = st.columns(2)
     with c1:

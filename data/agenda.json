@@ -1,57 +1,1316 @@
 [
   {
-    "day": "Sun 6 Oct",
-    "time": "09:00 AM",
-    "title": "Opening & Keynote",
-    "room": "Main Hall",
-    "segment_type": "keynote",
-    "description": "Official opening ceremony and keynote address",
+    "day": "Mon 6 Oct",
+    "time": "07:00 - 13:00",
+    "title": "Registration & Accreditation",
+    "room": "All Delegates TBA",
+    "segment_type": "other",
+    "description": "",
     "speakers": [
-      "Mr Harrison Mbewe",
-      "Annie Mwape"
+      "All Delegates"
     ],
     "facilitators": []
   },
   {
-    "day": "Sun 6 Oct",
-    "time": "10:00 AM",
-    "title": "Mining Technologies",
-    "room": "Main Auditorium",
-    "segment_type": "presentation",
-    "description": "Latest advancements in mining technology",
-    "speakers": [],
-    "facilitators": []
-  },
-  {
-    "day": "Sun 6 Oct",
-    "time": "11:30 AM",
-    "title": "Coffee Break & Networking",
-    "room": "Lobby",
-    "segment_type": "break",
-    "description": "Refreshments and networking opportunity",
-    "speakers": [],
-    "facilitators": []
-  },
-  {
-    "day": "Mon 7 Oct",
-    "time": "11:00 AM",
-    "title": "Big Data",
-    "room": "Conference Room A",
-    "segment_type": "panel",
-    "description": "Panel discussion on big data applications",
-    "speakers": [],
-    "facilitators": []
-  },
-  {
-    "day": "Mon 7 Oct",
-    "time": "09:30 AM",
-    "title": "Big Mine Data",
-    "room": "Main Auditorium",
-    "segment_type": "panel",
+    "day": "Mon 6 Oct",
+    "time": "08:00",
+    "title": "CEO’s Round Table",
+    "room": "CEO’s Round Table CEO’s Round Table",
+    "segment_type": "networking",
     "description": "",
     "speakers": [
-      "Mr Harrison Mbewe",
-      "Annie Mwape"
+      "CEO’s"
+    ],
+    "facilitators": [
+      "Dr. Hapenga M. Kabeta",
+      "Dr. Sydney Mwamba"
+    ]
+  },
+  {
+    "day": "Mon 6 Oct",
+    "time": "09:30 - 12:30",
+    "title": "Local Content – Case of Congo: What more can mines do to promote/implement local content?",
+    "room": "TBA",
+    "segment_type": "keynote",
+    "description": "",
+    "speakers": [
+      "Mr. Mark Bristow - Chief Executive Officer",
+      "Barrick - Represented by Mr. Anthony Malenga - Country Manager",
+      "Barrick Lumwana",
+      "Mr. Anthony Malenga"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Keynote Statement on Critical Minerals: How can we advance critical minerals?",
+    "room": "Mr. Popol Mabolia Yenga - Director General of CAMI (Mining Cadastre), Democratic Republic of Congo (DRC) TBA",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Mr. Popol Mabolia Yenga - Director General of CAMI (Mining Cadastre)",
+      "Democratic Republic of Congo (DRC)"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Keynote Statement on Gemstone Value Addition: How can we promote/implement value addition in emeralds and other gemstones in-country?",
+    "room": "Mr. Jerry Chitube – Presidential Projects Advisory Team, Botswana TBA",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Mr. Jerry Chitube – Presidential Projects Advisory Team",
+      "Botswana"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "CEO’s Round Table Discussion",
+    "room": "Round Table Participants Eng. Sokwani Chilembo - Chief Executive Officer, Chamber of Mines, Zambia Mrs. Mfikeyi Makayi - Chief Executive Officer, Kobold Metals Mr. Charles Sakanya - Chief Executive Officer, Mopani Copper Mines Plc Mr. Mark Bristow - Chief Executive Officer, Barrick - Represented by Mr. Anthony Malenga - Country Manager, Barrick Lumwana Mr. Anthony Mukutuma- Country Director, First Quantum Minerals Ltd. Mr. Malcolm Mewett - Chief Operating Officer, Konkola Copper Mines Mr. Daniel Chihili - Deputy Chief Executive Officer, Lubambe Copper Mines Mrs. Mizinga Melu - Chief Executive Officer, ABSA Ms. Mukwandi Chibesakunda - Chief Executive Officer, Zanaco Mr. Misheck Mkokweza, the Chief Corporate Banking Officer Mr. Lishala Situmbeko - Chief Executive Officer, Access Bank Mrs. Kadiatou Ndiaye - Chief Executive Officer, Grizzly Mine Mr. Sean Gilbertson - Chief Executive Officer, Kagem Mine Ms. Rashmi Sharma - Chief Executive Officer, Jewel of Africa",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Round Table Participants Eng. Sokwani Chilembo - Chief Executive Officer",
+      "Chamber of Mines",
+      "Zambia Mrs. Mfikeyi Makayi - Chief Executive Officer",
+      "Kobold Metals Mr. Charles Sakanya - Chief Executive Officer",
+      "Mopani Copper Mines Plc Mr. Mark Bristow - Chief Executive Officer",
+      "Barrick - Represented by Mr. Anthony Malenga - Country Manager",
+      "Barrick Lumwana Mr. Anthony Mukutuma- Country Director",
+      "First Quantum Minerals Ltd. Mr. Malcolm Mewett - Chief Operating Officer",
+      "Konkola Copper Mines Mr. Daniel Chihili - Deputy Chief Executive Officer",
+      "Lubambe Copper Mines Mrs. Mizinga Melu - Chief Executive Officer",
+      "ABSA Ms. Mukwandi Chibesakunda - Chief Executive Officer",
+      "Zanaco Mr. Misheck Mkokweza",
+      "the Chief Corporate Banking Officer Mr. Lishala Situmbeko - Chief Executive Officer",
+      "Access Bank Mrs. Kadiatou Ndiaye - Chief Executive Officer",
+      "Grizzly Mine Mr. Sean Gilbertson - Chief Executive Officer",
+      "Kagem Mine Ms. Rashmi Sharma - Chief Executive Officer",
+      "Jewel of Africa"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Key Takeaways and Resolutions from the Roundtable",
+    "room": "Chief Rapporteur",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Chief Rapporteur"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Networking Lunch",
+    "room": "TBA",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "All Delegates"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Welcome Cocktail (By Invitation Only)",
+    "room": "nan",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Ministers",
+      "Permanent Secretaries",
+      "Chief Executive Officers",
+      "Special Guests and Sponsors"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Opening Ceremony",
+    "room": "Opening Ceremony",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Opening Ceremony"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "National Anthem",
+    "room": "nan",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Mwiya Sax"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Prayer",
+    "room": "nan",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Service Chaplain"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Welcome Remarks",
+    "room": "nan",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Hon Sheal Mulyata MP",
+      "Lusaka Province Minister"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Opening Statements",
+    "room": "nan",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Mr. Kamiza Chikula - Director of Programmes"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Sponsor Segment",
+    "room": "nan",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Mr. Anthony Malenga - Country Manager",
+      "Barrick Lumwana- Platinum Sponsor"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Sponsor Segment",
+    "room": "nan",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Chinese Mining Enterprise Association in Zambia"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Sponsor Segment",
+    "room": "nan",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Chinese Mining Enterprise Association in Zambia"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Entertainment",
+    "room": "nan",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Welcoming Remarks and Introduction of Guest of Honour",
+    "room": "nan",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Hon Paul C. Kabuswe",
+      "MP - Minister of Mines and Minerals Development",
+      "Zambia"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Keynote Address by the Guest of Honour",
+    "room": "nan",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Mr. Hakainde Hichilema",
+      "President of the Republic of Zambia"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Vote of Thanks",
+    "room": "nan",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Mr. Claudio Bacigalupi",
+      "Head of European Cooperation in Zambia and Comesa"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "National Anthem",
+    "room": "nan",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Mwiya Sax"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Tour Exhibition Stands",
+    "room": "nan",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Group Photo",
+    "room": "nan",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Networking Lunch",
+    "room": "nan",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Session on Unlocking Africa’s Mineral Wealth for Sustainable Development",
+    "room": "Session on Unlocking Africa’s Mineral Wealth for Sustainable Development",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Session on Unlocking Africa’s Mineral Wealth for Sustainable Development"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Moderator: Mr. Victor Ngoma - Chief Executive, North America Development Group",
+    "room": "Moderator: Mr. Victor Ngoma - Chief Executive, North America Development Group",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Moderator: Mr. Victor Ngoma - Chief Executive",
+      "North America Development Group"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Unlocking Africa’s Mineral Wealth for Sustainable Development",
+    "room": "TBA",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Prof. Emmanuel Chanda - Dean",
+      "School of Mines",
+      "UNZA"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Panel Discussion",
+    "room": "nan",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Panellists: Dr. Desiderius Chapewa",
+      "Director",
+      "Geological Survey Mr. Kakenenwa Muyangwa - Chief Executive Officer",
+      "ZCCM-IH Mrs. Mfikeyi Makayi - Chief Executive Officer",
+      "Kobold Metals Dr. Martin Lokanc",
+      "Economist",
+      "World Bank"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Health Break",
+    "room": "nan",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Session on the role of foundations in driving economic development: Maximising community participation while meeting the Energy and Mining Funding Needs to Power Africa's Economic Prosperity",
+    "room": "Session on the role of foundations in driving economic development: Maximising community participation while meeting the Energy and Mining Funding Needs to Power Africa's Economic Prosperity",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Session on the role of foundations in driving economic development: Maximising community participation while meeting the Energy and Mining Funding Needs to Power Africa's Economic Prosperity"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Moderator: Dr. Luka Powanga - Professor and Executive Director, Regis University and Energy Africa Conference",
+    "room": "Moderator: Dr. Luka Powanga - Professor and Executive Director, Regis University and Energy Africa Conference",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Moderator: Dr. Luka Powanga - Professor and Executive Director",
+      "Regis University and Energy Africa Conference"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Energy and Mining Funding Needs to Power Africa's Economic Prosperity",
+    "room": "TBA",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Dr. Johnstone Chikwanda – Energy Expert & Policy Advisor"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Panel Discussion",
+    "room": "TBA",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Panellists: Mr. Andrew Chipwende",
+      "Executive Director",
+      "PPDF Mr. Emmanuel Kalenga",
+      "CEO",
+      "emPower Mr. Emmanuel Nnorom – Chief Executive Officer",
+      "Heirs Holdings / Caesar Siwale",
+      "Pangae Eng. Linus Chanda",
+      "Chief Executive Officer",
+      "Rural Electrification Authority (REA)"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "BREAKAWAY SESSIONS",
+    "room": "BREAKAWAY SESSIONS",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "BREAKAWAY SESSIONS"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Breakaway 1: Attracting Responsible and Impactful Mineral Investment",
+    "room": "TBA",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Moderator: Ms. Jacqueline Inonge Mpumpuni Panellists: Mrs. Ron Osman Omar - Interim Director of AMDC & Director",
+      "Industry",
+      "Minerals",
+      "Entrepreneurship & Tourism (IMET)",
+      "African Union Commission Eng. Elite L. Mhone – Director",
+      "Large Scale Mining & Mineral Investment Promotion Mr. Claude Kabemba - Executive Director",
+      "SARWatch - South African Mr. Ceaser Siwale - Chief Executive Officer",
+      "Pangaea Securities"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Breakaway 2: Unlocking and mainstreaming Artisanal and Small-Scale Mining (ASM) in Africa’s minerals wealth",
+    "room": "TBA",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Moderator: Mr. Tisa Chama - Chief Technical Officer",
+      "ZCCM-IH Panellists: Mr. Isaac Kuuwan Mwinbelle",
+      "Ag. Director-General",
+      "Ghana Geological Survey Authority Ms. Namakau Kaingu",
+      "Founder and President",
+      "Association of Zambian Women in Mining Mr. Roger Tissot",
+      "Executive Director",
+      "Planet Gold Mr. James Wakiaga - UNDP Resident Representative in Zambia"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Breakaway 3: Local Content Development in Africa’s Mining Sector: Strategies for Success",
+    "room": "TBA",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Moderator: Mr. Lawrence Alexander - President",
+      "Lusaka Chamber of Commerce Panellists: Ms. Marna Cloete - President",
+      "Ivanhoe Mines / Publish What you pay Mr. Anthony Malenga - Country Manager",
+      "Barrick Lumwana Eng. Misozi Mwanza – Ag. Chief Mining Engineer Operations Mr. Benjamin Shawa",
+      "Country Economist",
+      "International Growth Centre (ICG)"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Breakaway 4: Africa's mineral strategy in advancing the green energy transition",
+    "room": "TBA",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Moderator: Dr. Luka Powanga - Professor and Executive Director",
+      "Regis University and Energy Africa Conference Panellists: Mr. Norman Mbazima - Chairperson",
+      "Anglo American Platinum Mr. Claudio Bacigalupi",
+      "Head of European Cooperation in Zambia and Comesa Mr. Jed Goldstein - Infrastructure Lead",
+      "First Quantum Minerals Mr. Charles Sakanya - Chief Executive Officer",
+      "Mopani Copper Mines Plc"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Deal-Making Zone Opens (G2B, B2B)",
+    "room": "Deal Rooms",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Deal-Making Zone Opens (G2B",
+      "B2B)"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Day 2 Recap",
+    "room": "TBA",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Chief Rapporteur"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Sponsor Segment",
+    "room": "TBA",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Presentation on Zambia’s Investment Climate",
+    "room": "nan",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Mr. Albert Halwampa - Director General",
+      "Zambia Development Agency"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Policy and Institutional Framework for Energy Security in the region and Zambia in particular",
+    "room": "nan",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Hon. Makozo Chikote MP - Minister of Energy",
+      "Republic of Zambia"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Africa’s energy infrastructure needs to power the mines",
+    "room": "Africa’s energy infrastructure needs to power the mines",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Africa’s energy infrastructure needs to power the mines"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Moderator: Mr. Silvester Hibajane - Director of Government Relations, Copperbelt Energy Corporation",
+    "room": "Moderator: Mr. Silvester Hibajane - Director of Government Relations, Copperbelt Energy Corporation",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Moderator: Mr. Silvester Hibajane - Director of Government Relations",
+      "Copperbelt Energy Corporation"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Africa’s energy infrastructural needs to power the resurgence in the Green Minerals",
+    "room": "nan",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Dr. Pius Kasolo – Director of Operations",
+      "GreenCo Energy Zambia"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Panel Discussion",
+    "room": "nan",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Panellists Prof. Shawn Buckley",
+      "Chairman",
+      "Focused Sun Eng. Justin Loongo - Managing Director",
+      "ZESCO Mr. Andrew Kamanga",
+      "CEO",
+      "North Western Energy Corporation Mr. Owen Silavwe",
+      "Managing Director",
+      "CEC"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Health Break",
+    "room": "nan",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Keynote Presentation: Building Smart and Resilient Infrastructure for Africa’s Mineral Value Chain (High-Level Policy Interaction)",
+    "room": "nan",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "H. E. Chileshe Kapwepwe",
+      "Secretary General",
+      "COMESA"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Ministerial Panel Discussion",
+    "room": "nan",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Moderator: Prof. Albert Malama - Permanent Secretary",
+      "Ministry of Infrastructure",
+      "Housing and Urban Development Panellists: Hon. Frank Tayali",
+      "MP - Minister of Transport and Logistics",
+      "Zambia Hon.Louis Kabamba - Minister of Mines",
+      "DRC Hon. Dr. Ricardo Viegas de Abreu - Minister of Transport",
+      "Angola / Ministry of Finance (Zambia) Hon. Veikko Nekundi - Minister of Works and Transport",
+      "Namibia Hon. Paul C. Kabuswe - Minister of Mines and Minerals Development"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Networking Lunch",
+    "room": "nan",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "BREAKAWAY SESSIONS",
+    "room": "BREAKAWAY SESSIONS",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "BREAKAWAY SESSIONS"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Breakaway 5: Scaling up Energy Infrastructure to power the resurgence of the mining sector in Africa (renewable energy)",
+    "room": "nan",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Moderator: Mr. Slaven Gajovic - Founder and Director",
+      "Maximum Group Holdings (South Africa) Panellists Mr. Wezi Gondwe - Managing Director",
+      "GreenCo Power Services Limited) Sheik Ahmed EL Haiba",
+      "Chairman Global Women Network (Dubai) Mr. Chalker Kansteiner - Chief Executive Officer",
+      "GridX Africa Mr. Victor Mapani",
+      "Energy Consultant"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Breakaway 6: Inclusive and diversity in Africa’s growing mining sector",
+    "room": "nan",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Moderator: Ms. Sindi Mzamo - President",
+      "Circle of Global Business Women Panellists: Ms. Faith Mutete - Founder/CEO",
+      "Zimbabwe Women in Mining Ms. Christine Chipala",
+      "Secretary",
+      "SADC Women in Mining Eng. Misozi Mwanza – Ag. Chief Mining Engineer Operations Mr. Anthony Mukutuma- Country Director",
+      "First Quantum Minerals Ltd."
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Health Break",
+    "room": "nan",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Session on Mineral Beneficiation & Value addition: Unlocking Value from African Minerals In-Country (Emeralds/other gemstones, base metals & critical minerals)",
+    "room": "Session on Mineral Beneficiation & Value addition: Unlocking Value from African Minerals In-Country (Emeralds/other gemstones, base metals & critical minerals)",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Session on Mineral Beneficiation & Value addition: Unlocking Value from African Minerals In-Country (Emeralds/other gemstones",
+      "base metals & critical minerals)"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Moderator: Mr. Mikhail Nikomarov - Partner and Associate Director, Boston Consulting Group",
+    "room": "Moderator: Mr. Mikhail Nikomarov - Partner and Associate Director, Boston Consulting Group",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Moderator: Mr. Mikhail Nikomarov - Partner and Associate Director",
+      "Boston Consulting Group"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Unlocking Value from African Minerals – Beneficiation and Value Addition",
+    "room": "TBA",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Prof Musango Lungu - Copperbelt University School of Mines"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Panel Discussion",
+    "room": "nan",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Panellists: Mr. Tobias Musonda – Director of Planning and Information",
+      "Ministry of Mines and Minerals Development Dr. Jewette Masinja",
+      "Operating Unit Coordinator",
+      "United Nations University",
+      "Institute for Natural Resources in Africa Mr Bwalya Kangwa - Chief Executive Officer",
+      "ZAMEFA Mr. Raj Sharma - Co-Founder",
+      "Jewel of Africa"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Session on The role of Higher Education Institutions in the Energy transition and Mining Linkages",
+    "room": "Session on The role of Higher Education Institutions in the Energy transition and Mining Linkages",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Session on The role of Higher Education Institutions in the Energy transition and Mining Linkages"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Moderator: Ms. Muntanga Sibalwa",
+    "room": "Moderator: Ms. Muntanga Sibalwa",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Moderator: Ms. Muntanga Sibalwa"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "University – Productive sector linkages in Energy transition and Mining",
+    "room": "TBA",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Prof. Imasiku Nyambe - Vice Chancellor",
+      "Copperbelt University (to be presented by Prof Musango Lungu - Copperbelt University School of Mines)"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Panel Discussion",
+    "room": "TBA",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Panellists: Prof Musango Lungu - Copperbelt University School of Mines Eng. Dr. Ebelia Manda",
+      "Scientific Researcher and Lecturer",
+      "University of Zambia Mr. Horace Clemmons",
+      "Founder and CEO",
+      "Oggun Tractors Prof. Joseph Mutale",
+      "the senior Partner and Energy Lead at CIG Zambia"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Deal-Making All Day",
+    "room": "TBA",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Gala Dinner /African Night",
+    "room": "nan",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Delegates"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Day 3 Recap",
+    "room": "Chief Rapporteur TBA",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Chief Rapporteur"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Sponsor Segment",
+    "room": "TBA TBA",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "TBA"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Revenue leakages from African mining - Strategies for maximizing value and returns",
+    "room": "Revenue leakages from African mining - Strategies for maximizing value and returns Revenue leakages from African mining - Strategies for maximizing value and returns",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Revenue leakages from African mining - Strategies for maximizing value and returns"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Moderator: Mr. Phesto Musonda – Chairperson ZCCM Investments Holdings Plc",
+    "room": "Moderator: Mr. Phesto Musonda – Chairperson ZCCM Investments Holdings Plc Moderator: Mr. Phesto Musonda – Chairperson ZCCM Investments Holdings Plc",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Moderator: Mr. Phesto Musonda – Chairperson ZCCM Investments Holdings Plc"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Revenue leakages from African mining – Strategies for revival",
+    "room": "Hon Situmbeko Musokotwane MP – Minister of Finance and National Planning TBA",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Hon Situmbeko Musokotwane MP – Minister of Finance and National Planning"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Panel Discussion",
+    "room": "Panellists: Mr. Dingani Banda - Commissioner General - Zambia Revenue Authority (ZRA) Mr. Ian Mwiinga – National Coordinator, Zambia EITI Ms. Justina Nelson - Chief Executive Officer, Mineral Income and Investment Fund Mr. Felix Nkulukusa, Secretary to Treasury, Ministry of Finance and National Planning",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Panellists: Mr. Dingani Banda - Commissioner General - Zambia Revenue Authority (ZRA) Mr. Ian Mwiinga – National Coordinator",
+      "Zambia EITI Ms. Justina Nelson - Chief Executive Officer",
+      "Mineral Income and Investment Fund Mr. Felix Nkulukusa",
+      "Secretary to Treasury",
+      "Ministry of Finance and National Planning"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Tea Break",
+    "room": "Tea Break",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Tea Break"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "BREAKAWAY SESSIONS",
+    "room": "BREAKAWAY SESSIONS BREAKAWAY SESSIONS",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "BREAKAWAY SESSIONS"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Breakaway 7: Mineral Marketing and Trading. Seeking innovative ways of maximizing value",
+    "room": "Moderator: Mr. Ian Mwiinga – National Coordinator, Zambia EITI Panellists: Mr. Andrew Maatla Motsomi - Chief Executive Officer, Debswana Mr. Nsama Chikwanka, National Coordinator, Publish What You Pay Mr. Kakenenwa Muyangwa, Chief Executive Officer, ZCCM-IH Mr. Guy Robert Lukama Nkunzi - Chief Executive Officer, Gecamines DRC",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Moderator: Mr. Ian Mwiinga – National Coordinator",
+      "Zambia EITI Panellists: Mr. Andrew Maatla Motsomi - Chief Executive Officer",
+      "Debswana Mr. Nsama Chikwanka",
+      "National Coordinator",
+      "Publish What You Pay Mr. Kakenenwa Muyangwa",
+      "Chief Executive Officer",
+      "ZCCM-IH Mr. Guy Robert Lukama Nkunzi - Chief Executive Officer",
+      "Gecamines DRC"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Breakaway 8: Strengthening Mining- Social Licensing (Community Relations)",
+    "room": "Moderator: Dr. Jewette Masinja, Operating Unit Coordinator, United Nations University, Institute for Natural Resources in Africa Panellists: Shahrukh Wani, Senior Country Manager – Zambia, International Growth Centre (IGC) Mr. Victor Mwaba - Global Mining Manager, Emerson Measurement Solutions US. Ms. Isabel Mukelebai - Chief Executive Officer, Civil Society for Poverty Reduction His Royal Highness, Chief Dr. E Mumena, Representative, Solwezi Council of Elders",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Moderator: Dr. Jewette Masinja",
+      "Operating Unit Coordinator",
+      "United Nations University",
+      "Institute for Natural Resources in Africa Panellists: Shahrukh Wani",
+      "Senior Country Manager – Zambia",
+      "International Growth Centre (IGC) Mr. Victor Mwaba - Global Mining Manager",
+      "Emerson Measurement Solutions US. Ms. Isabel Mukelebai - Chief Executive Officer",
+      "Civil Society for Poverty Reduction His Royal Highness",
+      "Chief Dr. E Mumena",
+      "Representative",
+      "Solwezi Council of Elders"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Networking Lunch",
+    "room": "nan",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Session on High-Resolution Airborne Geophysical Survey of Zambia - Exploration: The future of new mines in Africa",
+    "room": "Session on High-Resolution Airborne Geophysical Survey of Zambia - Exploration: The future of new mines in Africa Session on High-Resolution Airborne Geophysical Survey of Zambia - Exploration: The future of new mines in Africa",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Session on High-Resolution Airborne Geophysical Survey of Zambia - Exploration: The future of new mines in Africa"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Moderator: Mr. Gerald Mwila - Director, Geological Survey Department (Zambia)",
+    "room": "Moderator: Mr. Gerald Mwila - Director, Geological Survey Department (Zambia) Moderator: Mr. Gerald Mwila - Director, Geological Survey Department (Zambia)",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Moderator: Mr. Gerald Mwila - Director",
+      "Geological Survey Department (Zambia)"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Attracting Investment in Exploration – Discovering African Minerals (Zambian Experience)",
+    "room": "Mr. Simon Bosch – Chairman – Xcalibur Smart Mapping South Africa",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Mr. Simon Bosch – Chairman – Xcalibur Smart Mapping South Africa"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Panel Discussion",
+    "room": "Panellists: Mr. Anthony Malenga - Country Manager, Barrick Lumwana Mr. Simon Trott - Chief Executive Officer, Rio Tinto Prof. Francis Tembo – Nkrumah University Mr. Anthony Mukutuma- Country Director, First Quantum Minerals Ltd. Mr. Chitula Lukonde - Chief Executive Officer, Radai Ltd / ZANIFI",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Panellists: Mr. Anthony Malenga - Country Manager",
+      "Barrick Lumwana Mr. Simon Trott - Chief Executive Officer",
+      "Rio Tinto Prof. Francis Tembo – Nkrumah University Mr. Anthony Mukutuma- Country Director",
+      "First Quantum Minerals Ltd. Mr. Chitula Lukonde - Chief Executive Officer",
+      "Radai Ltd / ZANIFI"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Networking Tea",
+    "room": "nan",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Session on Safety in Mining, Mineral Processing, and Waste Management",
+    "room": "Session on Safety in Mining, Mineral Processing, and Waste Management Session on Safety in Mining, Mineral Processing, and Waste Management",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Session on Safety in Mining",
+      "Mineral Processing",
+      "and Waste Management"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Moderator: Victor Ngoma - Chief Executive Officer – North American Development Group",
+    "room": "Moderator: Victor Ngoma - Chief Executive Officer – North American Development Group Moderator: Victor Ngoma - Chief Executive Officer – North American Development Group",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Moderator: Victor Ngoma - Chief Executive Officer – North American Development Group"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Future Right Proofing of the environment- Responsible and Sustainable Mining",
+    "room": "Dr. Mweene Himwiinga - Senior Lecturer, Copperbelt University",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Dr. Mweene Himwiinga - Senior Lecturer",
+      "Copperbelt University"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Panel Discussion",
+    "room": "Panellists: Mr. Patrick Mwamba - Principal Consultant, Geotechnical Engineering, WSP Global US Mr. Kachiwala Sapalo - Environment Manager, FQM Mr. Chushi Mwewa - Founder and President, Southland Engineering -USA Mr.Malfred Moolela -Chief Inspector of Machinery Mines Safety Department, Ministry of Mines and Minerals Development",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Panellists: Mr. Patrick Mwamba - Principal Consultant",
+      "Geotechnical Engineering",
+      "WSP Global US Mr. Kachiwala Sapalo - Environment Manager",
+      "FQM Mr. Chushi Mwewa - Founder and President",
+      "Southland Engineering -USA Mr.Malfred Moolela -Chief Inspector of Machinery Mines Safety Department",
+      "Ministry of Mines and Minerals Development"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Deal-Making Continues",
+    "room": "nan",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Closing Ceremony",
+    "room": "Closing Ceremony",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Closing Ceremony"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "National Anthem & Prayer",
+    "room": "TBA",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Mr. Brighton Kateka – Ministry of Mines and Minerals Development"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Report on the Insaka with Key Takeaways",
+    "room": "nan",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Dr. Sydney Mwamba – Chief Rapporteur and Executive Director Policy Monitoring and Research Center"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Remarks on Zambia, an investment destination of choice",
+    "room": "TBA",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Hon. Sheal Mulyata",
+      "MP - Lusaka Province Minister"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Sponsor Segment",
+    "room": "nan",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Entertainments",
+    "room": "nan",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Entertainments"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Closing Statement and Invite the Guest of Honour",
+    "room": "nan",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Hon. Paul C. Kabuswe",
+      "MP - Minister of Mines and Minerals Development"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Keynote Address",
+    "room": "TBA",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "Her Hon. Mrs. W.K. Mutale Nalumango - The Vice President of the Republic of Zambia"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Vote of Thanks",
+    "room": "TBA",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "H. E. Rebecca Terzeon",
+      "British High Commissioner to Zambia"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "National Anthem",
+    "room": "nan",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Group Photo",
+    "room": "nan",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "All Present"
+    ],
+    "facilitators": []
+  },
+  {
+    "day": "UNASSIGNED",
+    "time": "nan",
+    "title": "Networking Lunch and Departure/ Shopping",
+    "room": "TBA",
+    "segment_type": "nan",
+    "description": "",
+    "speakers": [
+      "All delegates"
     ],
     "facilitators": []
   }
