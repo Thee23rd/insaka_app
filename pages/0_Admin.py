@@ -59,7 +59,7 @@ with tab_new:
             name = st.text_input("Full Name*", "")
             category = st.selectbox("Category*", [
                 "Organizing Committee", "Speaker", "VIP", "Media",
-                "Service Provider", "Sponsor/Exhibitor Staff", "Other"
+                "Service Provider", "Sponsor", "Exhibitor", "Sponsor/Exhibitor Staff", "Other"
             ])
             organization = st.text_input("Organization / Dept*", "")
             role_title = st.text_input("Role / Title", "")
@@ -92,33 +92,253 @@ with tab_new:
 # --- Manage list ---
 with tab_manage:
     df = load_staff_df()
-    st.caption(f"{len(df)} complimentary records")
-    st.dataframe(df, use_container_width=True, height=420)
-
-    st.subheader("Edit selected")
-    ids = st.multiselect("Select ID(s)", options=df["ID"].tolist())
-    if ids:
-        # simple check-in toggle
-        colA, colB = st.columns(2)
-        with colA:
-            if st.button("Mark as Checked-In"):
-                upd, nf = set_checked_in(ids, True)
-                st.success(f"Updated {upd}; Not found {nf}")
-        with colB:
-            if st.button("Mark as Not Checked-In"):
-                upd, nf = set_checked_in(ids, False)
-                st.success(f"Updated {upd}; Not found {nf}")
-
-        # optional quick photo replace for one person
-        if len(ids) == 1:
-            up = st.file_uploader("Replace badge photo", type=["jpg","jpeg","png","webp"], key="rephoto")
-            if up:
-                df = load_staff_df()
-                mask = df["ID"].astype(str) == ids[0]
-                path = save_upload(up, kind="badges", name_hint=df.loc[mask, "Name"].values[0])
-                df.loc[mask, "BadgePhoto"] = path
-                save_staff_df(df)
-                st.success(f"Photo saved → {path}")
+    
+    if len(df) == 0:
+        st.info("No delegate records found. Import some delegates first.")
+    else:
+        st.markdown("## 🗂 Delegate Management")
+        
+        # Search and Filter Section
+        st.markdown("### 🔍 Search & Filter Delegates")
+        
+        search_col1, search_col2, search_col3 = st.columns([2, 1, 1])
+        
+        with search_col1:
+            search_term = st.text_input("🔍 Search by Name or Organization", placeholder="Type to search...", key="delegate_search")
+        
+        with search_col2:
+            # Organization filter
+            organizations = sorted(df['Organization'].dropna().unique().tolist())
+            selected_org = st.selectbox("🏢 Filter by Organization", ["All Organizations"] + organizations, key="org_filter")
+        
+        with search_col3:
+            # Category filter
+            categories = sorted(df['Category'].dropna().unique().tolist())
+            selected_category = st.selectbox("👤 Filter by Category", ["All Categories"] + categories, key="cat_filter")
+        
+        # Apply filters
+        filtered_df = df.copy()
+        
+        # Apply search term filter
+        if search_term:
+            search_mask = (
+                filtered_df['Name'].str.contains(search_term, case=False, na=False) |
+                filtered_df['Organization'].str.contains(search_term, case=False, na=False)
+            )
+            filtered_df = filtered_df[search_mask]
+        
+        # Apply organization filter
+        if selected_org != "All Organizations":
+            filtered_df = filtered_df[filtered_df['Organization'] == selected_org]
+        
+        # Apply category filter
+        if selected_category != "All Categories":
+            filtered_df = filtered_df[filtered_df['Category'] == selected_category]
+        
+        st.caption(f"Showing {len(filtered_df)} of {len(df)} delegate records")
+        
+        # Display filtered results
+        if len(filtered_df) > 0:
+            # Show key columns in a more readable format
+            display_columns = ['ID', 'Name', 'Category', 'Organization', 'RoleTitle', 'Email', 'Phone', 'CheckedIn']
+            available_columns = [col for col in display_columns if col in filtered_df.columns]
+            
+            st.dataframe(
+                filtered_df[available_columns], 
+                use_container_width=True, 
+                height=400,
+                hide_index=True
+            )
+            
+            st.markdown("---")
+            
+            # Bulk Edit Section
+            st.markdown("### ✏️ Bulk Edit Delegates")
+            
+            edit_mode = st.radio(
+                "Select Edit Mode:",
+                ["Edit by Organization", "Edit Selected Records", "Quick Actions"],
+                key="edit_mode_radio"
+            )
+            
+            if edit_mode == "Edit by Organization":
+                st.markdown("#### 🏢 Edit by Organization")
+                
+                if selected_org != "All Organizations":
+                    org_delegates = filtered_df.copy()
+                    st.success(f"📋 Found {len(org_delegates)} delegates from {selected_org}")
+                    
+                    # Bulk edit form for organization
+                    with st.form("bulk_edit_organization_form"):
+                        st.markdown("**Edit all delegates from this organization:**")
+                        
+                        col1, col2 = st.columns(2)
+                        
+                        with col1:
+                            new_organization = st.text_input("Organization", value=selected_org, key="bulk_org_name")
+                            new_category = st.selectbox("Category", ["Delegate", "Speaker", "VIP", "Staff", "Media", "Sponsor", "Exhibitor", "Vendors", "Government Officials", "Secretariate", "Protocol", "Security", "Services"], key="bulk_category")
+                        
+                        with col2:
+                            st.markdown("**Bulk Actions:**")
+                            update_names = st.checkbox("Update Names", key="bulk_update_names")
+                            update_emails = st.checkbox("Update Emails", key="bulk_update_emails")
+                            update_phones = st.checkbox("Update Phones", key="bulk_update_phones")
+                        
+                        if st.form_submit_button("💾 Apply Changes to All", type="primary"):
+                            updated_count = 0
+                            for idx, delegate in org_delegates.iterrows():
+                                df_mask = df['ID'] == delegate['ID']
+                                
+                                # Update organization and category
+                                df.loc[df_mask, 'Organization'] = new_organization
+                                df.loc[df_mask, 'Category'] = new_category
+                                
+                                updated_count += 1
+                            
+                            save_staff_df(df)
+                            st.success(f"✅ Updated {updated_count} delegates from {selected_org}")
+                            st.rerun()
+                    
+                    # Individual edit section for organization delegates
+                    st.markdown("#### 👥 Individual Edit")
+                    
+                    selected_delegate_id = st.selectbox(
+                        f"Select delegate from {selected_org} to edit:",
+                        org_delegates['ID'].tolist(),
+                        format_func=lambda x: f"{org_delegates[org_delegates['ID']==x]['Name'].iloc[0]} ({x})",
+                        key="individual_edit_select"
+                    )
+                    
+                    if selected_delegate_id:
+                        delegate_data = org_delegates[org_delegates['ID'] == selected_delegate_id].iloc[0]
+                        
+                        with st.form(f"individual_edit_form_{selected_delegate_id}"):
+                            st.markdown("**Edit Individual Delegate:**")
+                            
+                            col1, col2 = st.columns(2)
+                            
+                            with col1:
+                                edit_name = st.text_input("Name", value=delegate_data['Name'], key=f"edit_name_{selected_delegate_id}")
+                                edit_email = st.text_input("Email", value=delegate_data.get('Email', ''), key=f"edit_email_{selected_delegate_id}")
+                                edit_phone = st.text_input("Phone", value=delegate_data.get('Phone', ''), key=f"edit_phone_{selected_delegate_id}")
+                            
+                            with col2:
+                                category_options = ["Delegate", "Speaker", "VIP", "Staff", "Media", "Sponsor", "Exhibitor", "Vendors", "Government Officials", "Secretariate", "Protocol", "Security", "Services"]
+                                edit_category = st.selectbox("Category", category_options, 
+                                                           index=category_options.index(delegate_data.get('Category', 'Delegate')) if delegate_data.get('Category', 'Delegate') in category_options else 0, 
+                                                           key=f"edit_category_{selected_delegate_id}")
+                                edit_organization = st.text_input("Organization", value=delegate_data['Organization'], key=f"edit_org_{selected_delegate_id}")
+                                edit_role = st.text_input("Role/Title", value=delegate_data.get('RoleTitle', ''), key=f"edit_role_{selected_delegate_id}")
+                            
+                            if st.form_submit_button("💾 Update Delegate", type="primary"):
+                                df_mask = df['ID'] == selected_delegate_id
+                                df.loc[df_mask, 'Name'] = edit_name
+                                df.loc[df_mask, 'Email'] = edit_email
+                                df.loc[df_mask, 'Phone'] = edit_phone
+                                df.loc[df_mask, 'Category'] = edit_category
+                                df.loc[df_mask, 'Organization'] = edit_organization
+                                df.loc[df_mask, 'RoleTitle'] = edit_role
+                                
+                                save_staff_df(df)
+                                st.success(f"✅ Updated delegate: {edit_name}")
+                                st.rerun()
+                else:
+                    st.info("👆 Please select a specific organization from the filter above to edit its delegates.")
+            
+            elif edit_mode == "Edit Selected Records":
+                st.markdown("#### 📝 Edit Selected Records")
+                
+                # Multi-select for editing
+                selected_ids = st.multiselect(
+                    "Select delegates to edit:",
+                    options=filtered_df['ID'].tolist(),
+                    format_func=lambda x: f"{filtered_df[filtered_df['ID']==x]['Name'].iloc[0]} - {filtered_df[filtered_df['ID']==x]['Organization'].iloc[0]}",
+                    key="multi_edit_select"
+                )
+                
+                if selected_ids:
+                    selected_delegates = filtered_df[filtered_df['ID'].isin(selected_ids)]
+                    st.success(f"📋 Selected {len(selected_delegates)} delegates for editing")
+                    
+                    with st.form("multi_edit_form"):
+                        st.markdown("**Bulk Actions for Selected Delegates:**")
+                        
+                        col1, col2 = st.columns(2)
+                        
+                        with col1:
+                            new_category_bulk = st.selectbox("Set Category", ["Keep Current", "Delegate", "Speaker", "VIP", "Staff", "Media", "Sponsor", "Exhibitor", "Vendors", "Government Officials", "Secretariate", "Protocol", "Security", "Services"], key="bulk_set_category")
+                            new_organization_bulk = st.text_input("Set Organization", placeholder="Leave empty to keep current", key="bulk_set_org")
+                        
+                        with col2:
+                            st.markdown("**Quick Actions:**")
+                            mark_checked_in = st.checkbox("Mark as Checked-In", key="bulk_checkin")
+                            mark_not_checked_in = st.checkbox("Mark as Not Checked-In", key="bulk_checkout")
+                        
+                        if st.form_submit_button("💾 Apply Changes to Selected", type="primary"):
+                            updated_count = 0
+                            for delegate_id in selected_ids:
+                                df_mask = df['ID'] == delegate_id
+                                
+                                if new_category_bulk != "Keep Current":
+                                    df.loc[df_mask, 'Category'] = new_category_bulk
+                                
+                                if new_organization_bulk.strip():
+                                    df.loc[df_mask, 'Organization'] = new_organization_bulk
+                                
+                                if mark_checked_in:
+                                    df.loc[df_mask, 'CheckedIn'] = True
+                                
+                                if mark_not_checked_in:
+                                    df.loc[df_mask, 'CheckedIn'] = False
+                                
+                                updated_count += 1
+                            
+                            save_staff_df(df)
+                            st.success(f"✅ Updated {updated_count} selected delegates")
+                            st.rerun()
+            
+            elif edit_mode == "Quick Actions":
+                st.markdown("#### ⚡ Quick Actions")
+                
+                # Quick check-in/out actions
+                colA, colB = st.columns(2)
+                
+                with colA:
+                    if st.button("✅ Mark All as Checked-In", type="primary", use_container_width=True):
+                        if len(filtered_df) > 0:
+                            ids_to_update = filtered_df['ID'].tolist()
+                            upd, nf = set_checked_in(ids_to_update, True)
+                            st.success(f"✅ Updated {upd} delegates; {nf} not found")
+                        else:
+                            st.warning("No delegates to update")
+                
+                with colB:
+                    if st.button("❌ Mark All as Not Checked-In", type="secondary", use_container_width=True):
+                        if len(filtered_df) > 0:
+                            ids_to_update = filtered_df['ID'].tolist()
+                            upd, nf = set_checked_in(ids_to_update, False)
+                            st.success(f"❌ Updated {upd} delegates; {nf} not found")
+                        else:
+                            st.warning("No delegates to update")
+                
+                # Photo replacement for single delegate
+                if len(filtered_df) == 1:
+                    st.markdown("#### 📸 Replace Photo")
+                    delegate = filtered_df.iloc[0]
+                    st.info(f"Replacing photo for: {delegate['Name']}")
+                    
+                    up = st.file_uploader("Replace badge photo", type=["jpg","jpeg","png","webp"], key="rephoto")
+                    if up:
+                        df_mask = df['ID'] == delegate['ID']
+                        path = save_upload(up, kind="badges", name_hint=delegate['Name'])
+                        df.loc[df_mask, 'BadgePhoto'] = path
+                        save_staff_df(df)
+                        st.success(f"Photo saved → {path}")
+                        st.rerun()
+                elif len(filtered_df) > 1:
+                    st.info("📸 Photo replacement available when exactly one delegate is selected")
+        else:
+            st.warning("No delegates match your search criteria. Try adjusting your filters.")
 
 # --- Statistics Dashboard ---
 with tab_stats:
@@ -280,14 +500,338 @@ with tab_import:
     st.caption("Excel expected columns: Name, Category, Organization, RoleTitle, Email, Phone, Notes")
     up = st.file_uploader("Upload Excel (.xlsx)", type=["xlsx"])
     if up:
-        added, skipped = import_staff_excel(up.read())
+        added, skipped, sheet_info = import_staff_excel(up.read())
         st.success(f"Added {added} • Skipped duplicates {skipped}")
+        
+        # Show sheet processing details if available
+        if sheet_info and (sheet_info.get("processed") or sheet_info.get("skipped")):
+            with st.expander("📋 Sheet Processing Details"):
+                if sheet_info.get("processed"):
+                    st.write("✅ **Processed sheets:**", ", ".join(sheet_info["processed"]))
+                if sheet_info.get("skipped"):
+                    st.write("⏭️ **Skipped sheets:**", ", ".join(sheet_info["skipped"]))
 
 # --- Export ---
 with tab_export:
-    data, fname = export_staff_excel()
-    st.download_button("Download Excel", data=data, file_name=fname,
-                       mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+    st.markdown("### 📊 Export Delegate Information")
+    
+    # Load delegate data for filtering
+    df = load_staff_df()
+    
+    if len(df) == 0:
+        st.info("No delegate records found. Import some delegates first.")
+    else:
+        # Export Filtering Section
+        st.markdown("#### 🔍 Export Filtering Options")
+        
+        filter_col1, filter_col2 = st.columns([2, 1])
+        
+        with filter_col1:
+            # Organization multi-select
+            organizations = sorted(df['Organization'].dropna().unique().tolist())
+            selected_organizations = st.multiselect(
+                "🏢 Select Organizations to Export",
+                options=organizations,
+                default=organizations,  # Select all by default
+                help="Choose which organizations to include in the export. Leave empty to export all."
+            )
+        
+        with filter_col2:
+            # Category filter
+            categories = sorted(df['Category'].dropna().unique().tolist())
+            selected_categories = st.multiselect(
+                "👤 Select Categories to Export",
+                options=categories,
+                default=categories,  # Select all by default
+                help="Choose which categories to include in the export. Leave empty to export all."
+            )
+        
+        # Apply filters
+        filtered_df = df.copy()
+        
+        if selected_organizations:
+            filtered_df = filtered_df[filtered_df['Organization'].isin(selected_organizations)]
+        
+        if selected_categories:
+            filtered_df = filtered_df[filtered_df['Category'].isin(selected_categories)]
+        
+        # Show filter summary
+        st.info(f"📋 Export will include **{len(filtered_df)}** delegates from **{len(selected_organizations)}** organizations and **{len(selected_categories)}** categories")
+        
+        if len(filtered_df) > 0:
+            # Show preview of filtered data
+            with st.expander("👀 Preview Filtered Data", expanded=False):
+                st.dataframe(
+                    filtered_df[['Name', 'Category', 'Organization', 'RoleTitle', 'Email', 'Phone']], 
+                    use_container_width=True,
+                    hide_index=True
+                )
+        
+        st.markdown("---")
+        
+        # Export Options
+        export_col1, export_col2 = st.columns(2)
+        
+        with export_col1:
+            st.markdown("#### 📋 Excel Export")
+            
+            # Create filtered Excel export
+            if st.button("📥 Generate Filtered Excel Export", type="primary", use_container_width=True):
+                try:
+                    import pandas as pd
+                    import io
+                    from datetime import datetime
+                    
+                    # Create Excel file with multiple sheets
+                    excel_buffer = io.BytesIO()
+                    
+                    with pd.ExcelWriter(excel_buffer, engine='openpyxl') as writer:
+                        # Main data sheet
+                        filtered_df.to_excel(writer, sheet_name='Delegates', index=False)
+                        
+                        # Summary statistics sheet
+                        summary_data = []
+                        
+                        # By Organization
+                        org_summary = filtered_df.groupby('Organization').agg({
+                            'Name': 'count',
+                            'Category': lambda x: ', '.join(x.unique()),
+                            'Email': lambda x: x.notna().sum(),
+                            'Phone': lambda x: x.notna().sum()
+                        }).rename(columns={
+                            'Name': 'Count',
+                            'Category': 'Categories',
+                            'Email': 'With Email',
+                            'Phone': 'With Phone'
+                        })
+                        org_summary.to_excel(writer, sheet_name='By Organization')
+                        
+                        # By Category
+                        cat_summary = filtered_df.groupby('Category').agg({
+                            'Name': 'count',
+                            'Organization': lambda x: ', '.join(x.unique()),
+                            'Email': lambda x: x.notna().sum(),
+                            'Phone': lambda x: x.notna().sum()
+                        }).rename(columns={
+                            'Name': 'Count',
+                            'Organization': 'Organizations',
+                            'Email': 'With Email',
+                            'Phone': 'With Phone'
+                        })
+                        cat_summary.to_excel(writer, sheet_name='By Category')
+                        
+                        # Overall summary
+                        summary_df = pd.DataFrame({
+                            'Metric': ['Total Delegates', 'Organizations', 'Categories', 'With Email', 'With Phone', 'Checked In'],
+                            'Count': [
+                                len(filtered_df),
+                                filtered_df['Organization'].nunique(),
+                                filtered_df['Category'].nunique(),
+                                filtered_df['Email'].notna().sum(),
+                                filtered_df['Phone'].notna().sum(),
+                                filtered_df['CheckedIn'].sum() if 'CheckedIn' in filtered_df.columns else 0
+                            ]
+                        })
+                        summary_df.to_excel(writer, sheet_name='Summary', index=False)
+                    
+                    # Generate filename
+                    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+                    org_names = "_".join([org.replace(" ", "_")[:10] for org in selected_organizations[:3]]) if selected_organizations else "All_Orgs"
+                    filename = f"delegates_export_{org_names}_{timestamp}.xlsx"
+                    
+                    # Prepare download
+                    excel_buffer.seek(0)
+                    st.download_button(
+                        "📥 Download Filtered Excel Report",
+                        data=excel_buffer.getvalue(),
+                        file_name=filename,
+                        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                        use_container_width=True,
+                        key="filtered_excel_export"
+                    )
+                    
+                    st.success(f"✅ Excel export generated with {len(filtered_df)} delegates!")
+                    
+                except Exception as e:
+                    st.error(f"❌ Error generating Excel export: {str(e)}")
+            
+            st.caption("Includes filtered delegate data with statistics by organization and category")
+            
+            # Standard export (all delegates)
+            st.markdown("#### 📋 Export All Delegates")
+            data, fname = export_staff_excel()
+            st.download_button(
+                "📥 Download Complete Excel Report",
+                data=data,
+                file_name=fname,
+                mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                use_container_width=True,
+                key="complete_excel_export"
+            )
+            st.caption("Includes ALL delegate data (ignores filters above)")
+        
+        with export_col2:
+            st.markdown("#### 📸 Export with Pictures")
+            if st.button("📦 Generate Filtered Delegate Package with Photos", type="primary", use_container_width=True):
+                try:
+                    import zipfile
+                    import base64
+                    from datetime import datetime
+                    
+                    # Use filtered data
+                    export_df = filtered_df if len(filtered_df) > 0 else df
+                    
+                    # Load speakers data
+                    speakers_data = []
+                    try:
+                        speakers_file = pathlib.Path("data/speakers.json")
+                        if speakers_file.exists():
+                            with open(speakers_file, "r", encoding="utf-8") as f:
+                                speakers_data = json.load(f)
+                    except Exception:
+                        speakers_data = []
+                    
+                    # Create a zip file in memory
+                    zip_buffer = io.BytesIO()
+                    
+                    with zipfile.ZipFile(zip_buffer, 'w', zipfile.ZIP_DEFLATED) as zip_file:
+                        # Add Excel file to zip (now includes speakers and categories)
+                        excel_data, excel_name = export_staff_excel()
+                        zip_file.writestr(excel_name, excel_data)
+                        
+                        # Create a detailed CSV with filtered delegate information
+                        detailed_csv = export_df.to_csv(index=False)
+                        zip_file.writestr("delegates_detailed.csv", detailed_csv)
+                        
+                        # Create separate CSV files by category
+                        categories = export_df['Category'].dropna().unique()
+                        for category in sorted(categories):
+                            category_df = export_df[export_df['Category'] == category].copy()
+                            category_csv = category_df.to_csv(index=False)
+                            safe_category_name = "".join(c for c in str(category) if c.isalnum() or c in (' ', '-', '_')).strip()
+                            zip_file.writestr(f"delegates_by_category/{safe_category_name}.csv", category_csv)
+                        
+                        # Create speakers CSV if available
+                        if speakers_data:
+                            speakers_df = pd.DataFrame(speakers_data)
+                            speakers_csv = speakers_df.to_csv(index=False)
+                            zip_file.writestr("speakers_detailed.csv", speakers_csv)
+                        
+                        # Create photos folder and add delegate photos
+                        delegate_photos_added = 0
+                        delegate_photos_missing = 0
+                        speaker_photos_added = 0
+                        speaker_photos_missing = 0
+                        
+                        # Process delegate photos
+                        for idx, row in export_df.iterrows():
+                            delegate_name = str(row.get('Name', 'Unknown')).strip()
+                            photo_path = row.get('BadgePhoto', '')
+                            
+                            # Handle NaN values and convert to string safely
+                            if pd.isna(photo_path) or photo_path == '' or str(photo_path).lower() in ['nan', 'none', 'null']:
+                                delegate_photos_missing += 1
+                            else:
+                                try:
+                                    # Try to read the photo file
+                                    photo_path_str = str(photo_path)
+                                    photo_full_path = pathlib.Path(photo_path_str)
+                                    if photo_full_path.exists():
+                                        # Read photo and add to zip
+                                        photo_data = photo_full_path.read_bytes()
+                                        
+                                        # Create a safe filename for the photo
+                                        safe_delegate_name = "".join(c for c in delegate_name if c.isalnum() or c in (' ', '-', '_')).strip()
+                                        zip_photo_name = f"delegate_photos/{safe_delegate_name}_{row.get('ID', 'unknown')}.jpg"
+                                        
+                                        zip_file.writestr(zip_photo_name, photo_data)
+                                        delegate_photos_added += 1
+                                    else:
+                                        delegate_photos_missing += 1
+                                except Exception as e:
+                                    delegate_photos_missing += 1
+                        
+                        # Process speaker photos
+                        for speaker in speakers_data:
+                            speaker_name = speaker.get('name', 'Unknown')
+                            speaker_photo = speaker.get('photo', '')
+                            
+                            if speaker_photo and speaker_photo.strip() and speaker_photo not in ['nan', 'None', 'null']:
+                                try:
+                                    # Try to read the photo file
+                                    photo_path_str = str(speaker_photo)
+                                    photo_full_path = pathlib.Path(photo_path_str)
+                                    if photo_full_path.exists():
+                                        # Read photo and add to zip
+                                        photo_data = photo_full_path.read_bytes()
+                                        
+                                        # Create a safe filename for the photo
+                                        safe_speaker_name = "".join(c for c in speaker_name if c.isalnum() or c in (' ', '-', '_')).strip()
+                                        zip_photo_name = f"speaker_photos/{safe_speaker_name}_{speaker.get('id', 'unknown')}.jpg"
+                                        
+                                        zip_file.writestr(zip_photo_name, photo_data)
+                                        speaker_photos_added += 1
+                                    else:
+                                        speaker_photos_missing += 1
+                                except Exception as e:
+                                    speaker_photos_missing += 1
+                            else:
+                                speaker_photos_missing += 1
+                        
+                        # Create a summary report
+                        total_photos_added = delegate_photos_added + speaker_photos_added
+                        total_photos_missing = delegate_photos_missing + speaker_photos_missing
+                        
+                        summary_report = f"""Conference Export Summary
+Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+
+PARTICIPANTS:
+- Total Delegates: {len(export_df)}
+- Total Speakers: {len(speakers_data)}
+- Total Participants: {len(export_df) + len(speakers_data)}
+
+PHOTOS:
+- Delegate Photos Included: {delegate_photos_added}
+- Delegate Photos Missing: {delegate_photos_missing}
+- Speaker Photos Included: {speaker_photos_added}
+- Speaker Photos Missing: {speaker_photos_missing}
+- Total Photos: {total_photos_added}
+- Total Missing: {total_photos_missing}
+
+ORGANIZATIONS:
+- Total Organizations: {export_df['Organization'].nunique() if len(export_df) > 0 else 0}
+- Organizations with Delegates: {', '.join(export_df['Organization'].unique()[:10]) if len(export_df) > 0 else 'None'}
+"""
+                        
+                        # Add detailed category breakdown
+                        if len(export_df) > 0:
+                            category_counts = export_df['Category'].value_counts()
+                            summary_report += "\nCATEGORIES:\n"
+                            for category, count in category_counts.items():
+                                summary_report += f"- {category}: {count} delegates\n"
+                        
+                        zip_file.writestr("README.txt", summary_report)
+                
+                    # Generate filename with timestamp
+                    timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+                    org_names = "_".join([org.replace(" ", "_")[:10] for org in selected_organizations[:3]]) if selected_organizations else "All_Orgs"
+                    zip_filename = f"delegates_export_{org_names}_{timestamp}.zip"
+                    
+                    st.download_button(
+                        label="📥 Download Complete Package",
+                        data=zip_buffer.getvalue(),
+                        file_name=zip_filename,
+                        mime="application/zip",
+                        use_container_width=True
+                    )
+                
+                    st.success(f"✅ Complete conference package created successfully!")
+                    st.info(f"📊 **Summary:** {len(export_df)} delegates, {len(speakers_data)} speakers, {total_photos_added} photos included, {total_photos_missing} photos missing")
+                    
+                except Exception as e:
+                    st.error(f"❌ Error creating export package: {str(e)}")
+            
+            st.caption("Includes filtered delegate data with photos, Excel reports, and CSV files by category")
 
  
 

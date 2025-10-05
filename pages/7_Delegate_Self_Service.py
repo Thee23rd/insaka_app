@@ -37,8 +37,56 @@ st.markdown("Check and update your conference details")
 
 st.markdown('<div class="zambia-accent"></div>', unsafe_allow_html=True)
 
+# Handle dual role selection
+if hasattr(st.session_state, 'dual_role_user') and st.session_state.dual_role_user:
+    from lib.qr_system import show_role_selection
+    selected_role = show_role_selection(
+        st.session_state.current_delegate_record, 
+        st.session_state.current_speaker_info
+    )
+    
+    if selected_role == "delegate":
+        # Set authentication as delegate
+        delegate_record = st.session_state.current_delegate_record
+        st.session_state.delegate_authenticated = True
+        st.session_state.delegate_id = str(delegate_record['ID'])
+        st.session_state.delegate_name = delegate_record.get('Name', '')
+        st.session_state.delegate_organization = delegate_record.get('Organization', '')
+        st.session_state.delegate_category = delegate_record.get('Category', '')
+        st.session_state.delegate_title = delegate_record.get('RoleTitle', '')
+        
+        # Clear dual role state
+        del st.session_state.dual_role_user
+        del st.session_state.current_delegate_record
+        del st.session_state.current_speaker_info
+        
+        st.success(f"✅ Welcome as Delegate, {delegate_record.get('Name', '')}!")
+        st.rerun()
+        
+    elif selected_role == "speaker":
+        # Set authentication as speaker
+        speaker_info = st.session_state.current_speaker_info
+        speaker_id = f"SPEAKER_{speaker_info.get('name', '').replace(' ', '_')}"
+        st.session_state.delegate_authenticated = True
+        st.session_state.delegate_id = speaker_id
+        st.session_state.delegate_name = speaker_info.get('name', '')
+        st.session_state.delegate_organization = speaker_info.get('organization', '')
+        st.session_state.delegate_category = 'Speaker'
+        st.session_state.delegate_title = speaker_info.get('position', '')
+        st.session_state.delegate_nationality = speaker_info.get('nationality', '')
+        st.session_state.delegate_phone = speaker_info.get('phone', '')
+        st.session_state.delegate_email = speaker_info.get('email', '')
+        
+        # Clear dual role state
+        del st.session_state.dual_role_user
+        del st.session_state.current_delegate_record
+        del st.session_state.current_speaker_info
+        
+        st.success(f"✅ Welcome as Speaker, {speaker_info.get('name', '')}!")
+        st.rerun()
+
 # Authentication system
-if not hasattr(st.session_state, 'delegate_authenticated') or not st.session_state.delegate_authenticated:
+elif not hasattr(st.session_state, 'delegate_authenticated') or not st.session_state.delegate_authenticated:
     
     # Check if user has their ID (for returning users)
     if hasattr(st.session_state, 'delegate_id_displayed') and st.session_state.delegate_id_displayed:
@@ -57,16 +105,26 @@ if not hasattr(st.session_state, 'delegate_authenticated') or not st.session_sta
                     if mask.any():
                         delegate_record = df[mask].iloc[0]
                         
-                        # Set authentication and session data
-                        st.session_state.delegate_authenticated = True
-                        st.session_state.delegate_id = str(delegate_record['ID'])
-                        st.session_state.delegate_name = delegate_record.get('Name', '')
-                        st.session_state.delegate_organization = delegate_record.get('Organization', '')
-                        st.session_state.delegate_category = delegate_record.get('Category', '')
-                        st.session_state.delegate_title = delegate_record.get('RoleTitle', '')
+                        # Check for dual role (delegate + speaker)
+                        from lib.qr_system import check_dual_role_user
+                        is_dual_role, speaker_info = check_dual_role_user(delegate_record.get('Name', ''))
                         
-                        st.success(f"✅ Welcome back, {delegate_record.get('Name', '')}!")
-                        st.rerun()
+                        if is_dual_role:
+                            st.session_state.dual_role_user = True
+                            st.session_state.current_delegate_record = delegate_record
+                            st.session_state.current_speaker_info = speaker_info
+                            st.rerun()
+                        else:
+                            # Set authentication and session data for delegate only
+                            st.session_state.delegate_authenticated = True
+                            st.session_state.delegate_id = str(delegate_record['ID'])
+                            st.session_state.delegate_name = delegate_record.get('Name', '')
+                            st.session_state.delegate_organization = delegate_record.get('Organization', '')
+                            st.session_state.delegate_category = delegate_record.get('Category', '')
+                            st.session_state.delegate_title = delegate_record.get('RoleTitle', '')
+                            
+                            st.success(f"✅ Welcome back, {delegate_record.get('Name', '')}!")
+                            st.rerun()
                     else:
                         st.error("❌ Invalid delegate ID. Please check your ID and try again.")
                 else:
@@ -103,7 +161,7 @@ if not hasattr(st.session_state, 'delegate_authenticated') or not st.session_sta
                     speakers = json.load(f)
                 
                 for speaker in speakers:
-                    if speaker.get("name") and search_term.lower() in speaker.get("name", "").lower():
+                    if speaker.get("name") and search_term.lower() in str(speaker.get("name", "")).lower():
                         speaker_results.append(speaker)
             except:
                 pass
@@ -136,20 +194,31 @@ if not hasattr(st.session_state, 'delegate_authenticated') or not st.session_sta
             
             # Authentication button for speakers
             if st.button("🚀 Continue to Dashboard", width='stretch', type="primary", key="speaker_auth"):
-                # Set authentication and session data
-                speaker_id = f"SPEAKER_{speaker_record.get('name', '').replace(' ', '_')}"
-                st.session_state.delegate_authenticated = True
-                st.session_state.delegate_id = speaker_id
-                st.session_state.delegate_name = speaker_record.get('name', '')
-                st.session_state.delegate_organization = speaker_record.get('organization', '')
-                st.session_state.delegate_category = 'Speaker'
-                st.session_state.delegate_title = speaker_record.get('position', '')
-                st.session_state.delegate_nationality = speaker_record.get('nationality', '')
-                st.session_state.delegate_phone = speaker_record.get('phone', '')
-                st.session_state.delegate_email = speaker_record.get('email', '')
+                # Check if this speaker is also a delegate
+                from lib.qr_system import check_dual_role_user
+                is_dual_role, delegate_info = check_dual_role_user(speaker_record.get('name', ''))
                 
-                st.success(f"✅ Welcome, {speaker_record.get('name', '')}!")
-                st.rerun()
+                if is_dual_role and delegate_info is not None:
+                    # This is a dual role user - show role selection
+                    st.session_state.dual_role_user = True
+                    st.session_state.current_delegate_record = delegate_info
+                    st.session_state.current_speaker_info = speaker_record
+                    st.rerun()
+                else:
+                    # Speaker only - proceed directly
+                    speaker_id = f"SPEAKER_{speaker_record.get('name', '').replace(' ', '_')}"
+                    st.session_state.delegate_authenticated = True
+                    st.session_state.delegate_id = speaker_id
+                    st.session_state.delegate_name = speaker_record.get('name', '')
+                    st.session_state.delegate_organization = speaker_record.get('organization', '')
+                    st.session_state.delegate_category = 'Speaker'
+                    st.session_state.delegate_title = speaker_record.get('position', '')
+                    st.session_state.delegate_nationality = speaker_record.get('nationality', '')
+                    st.session_state.delegate_phone = speaker_record.get('phone', '')
+                    st.session_state.delegate_email = speaker_record.get('email', '')
+                    
+                    st.success(f"✅ Welcome, {speaker_record.get('name', '')}!")
+                    st.rerun()
         
         elif len(results) == 1:
             st.success("✅ Record found!")
@@ -186,24 +255,117 @@ if not hasattr(st.session_state, 'delegate_authenticated') or not st.session_sta
             
             # Authentication button
             if st.button("🚀 Continue to Dashboard", width='stretch', type="primary"):
-                # Set authentication and session data
-                st.session_state.delegate_authenticated = True
-                st.session_state.delegate_name = delegate_record.get('Name', '')
-                st.session_state.delegate_organization = delegate_record.get('Organization', '')
-                st.session_state.delegate_category = delegate_record.get('Category', '')
-                st.session_state.delegate_title = delegate_record.get('RoleTitle', '')
+                # Check for dual role (delegate + speaker)
+                from lib.qr_system import check_dual_role_user
+                is_dual_role, speaker_info = check_dual_role_user(delegate_record.get('Name', ''))
                 
-                st.success(f"✅ Welcome, {delegate_record.get('Name', '')}!")
-                st.rerun()
+                if is_dual_role:
+                    st.session_state.dual_role_user = True
+                    st.session_state.current_delegate_record = delegate_record
+                    st.session_state.current_speaker_info = speaker_info
+                    st.rerun()
+                else:
+                    # Set authentication and session data for delegate only
+                    st.session_state.delegate_authenticated = True
+                    st.session_state.delegate_name = delegate_record.get('Name', '')
+                    st.session_state.delegate_organization = delegate_record.get('Organization', '')
+                    st.session_state.delegate_category = delegate_record.get('Category', '')
+                    st.session_state.delegate_title = delegate_record.get('RoleTitle', '')
+                    
+                    st.success(f"✅ Welcome, {delegate_record.get('Name', '')}!")
+                    st.rerun()
             
         else:
             total_found = len(results) + len(speaker_results)
-            st.warning(f"Multiple records found ({total_found}). Please be more specific with your search.")
-            
+            st.warning(f"Multiple records found ({total_found}). Please select the correct one to proceed.")
+
+            # Delegates: allow selecting the correct record to continue
             if len(results) > 0:
                 st.markdown("#### Delegates:")
-                st.dataframe(results[["ID", "Name", "Category", "Organization", "Email"]], width='stretch')
-            
+                view_cols = [c for c in ["ID", "Name", "Organization", "Category", "Email", "Phone"] if c in results.columns]
+                st.dataframe(results[view_cols], use_container_width=True)
+
+                # Compute a recommended selection: keep the row with most filled fields
+                def _filled_fields_count(row):
+                    count = 0
+                    for col in results.columns:
+                        if col in ("ID",):
+                            continue
+                        val = row.get(col, None)
+                        if pd.notna(val) and str(val).strip() not in ("", "nan", "None", "null"):
+                            count += 1
+                    return count
+
+                recommended_id = None
+                try:
+                    filled_counts = results.apply(_filled_fields_count, axis=1)
+                    recommended_id = results.loc[filled_counts.idxmax(), "ID"] if not results.empty else None
+                except Exception:
+                    recommended_id = results.iloc[0]["ID"] if not results.empty else None
+
+                selected_id = st.radio(
+                    "Select your record to continue:",
+                    options=results["ID"].tolist(),
+                    index=(results["ID"].tolist().index(recommended_id) if recommended_id in results["ID"].tolist() else 0),
+                    format_func=lambda _id: f"{results[results['ID']==_id]['Name'].iloc[0]} — {results[results['ID']==_id]['Organization'].iloc[0]} (ID: {_id})"
+                )
+
+                col_sel1, col_sel2 = st.columns([1,1])
+                with col_sel1:
+                    if st.button("🚀 Use Selected Record", type="primary"):
+                        # Authenticate with selected record
+                        chosen = results[results["ID"] == selected_id].iloc[0]
+                        
+                        # Check for dual role (delegate + speaker)
+                        from lib.qr_system import check_dual_role_user
+                        is_dual_role, speaker_info = check_dual_role_user(chosen.get('Name', ''))
+                        
+                        if is_dual_role:
+                            st.session_state.dual_role_user = True
+                            st.session_state.current_delegate_record = chosen
+                            st.session_state.current_speaker_info = speaker_info
+                            st.rerun()
+                        else:
+                            # Set authentication and session data for delegate only
+                            st.session_state.delegate_authenticated = True
+                            st.session_state.delegate_id = str(chosen["ID"])
+                            st.session_state.delegate_name = chosen.get('Name', '')
+                            st.session_state.delegate_organization = chosen.get('Organization', '')
+                            st.session_state.delegate_category = chosen.get('Category', '')
+                            st.session_state.delegate_title = chosen.get('RoleTitle', '')
+                            st.success(f"✅ Welcome, {chosen.get('Name', '')}!")
+                            st.rerun()
+
+                with col_sel2:
+                    if st.button("🧹 Keep Selected & Remove Other Duplicates"):
+                        try:
+                            df_all = load_staff_df()
+                            # Consider duplicates by exact same Name OR same Email (when present)
+                            chosen = results[results["ID"] == selected_id].iloc[0]
+                            chosen_name = str(chosen.get("Name", "")).strip()
+                            chosen_email = str(chosen.get("Email", "")).strip().lower()
+
+                            mask_same_name = df_all["Name"].fillna("").str.strip() == chosen_name
+                            mask_same_email = False
+                            if chosen_email:
+                                mask_same_email = df_all["Email"].fillna("").str.lower().str.strip() == chosen_email
+
+                            mask_dups = (mask_same_name | mask_same_email)
+                            # Exclude the selected record from deletion
+                            mask_to_delete = mask_dups & (df_all["ID"] != selected_id)
+
+                            removed_count = int(mask_to_delete.sum())
+                            if removed_count > 0:
+                                df_all = df_all[~mask_to_delete].copy()
+                                save_staff_df(df_all)
+                                st.success(f"✅ Removed {removed_count} duplicate record(s). Kept ID {selected_id}.")
+                            else:
+                                st.info("No exact duplicates to remove for this selection.")
+                            st.rerun()
+                        except Exception as e:
+                            st.error(f"❌ Failed to remove duplicates: {e}")
+
+            # Speakers (read-only list since they authenticate via their card)
             if len(speaker_results) > 0:
                 st.markdown("#### Speakers:")
                 speaker_df = pd.DataFrame([
@@ -214,7 +376,7 @@ if not hasattr(st.session_state, 'delegate_authenticated') or not st.session_sta
                         "Presenting on": sp.get("talk", "")
                     } for sp in speaker_results
                 ])
-                st.dataframe(speaker_df, width='stretch')
+                st.dataframe(speaker_df, use_container_width=True)
     
     else:
         st.info("👆 Please enter your name or email to search for your record.")
@@ -484,8 +646,8 @@ if st.session_state.delegate_category != 'Speaker':
             new_name = st.text_input("Full Name", value=delegate_record['Name'])
             new_category = st.selectbox(
                 "Category", 
-                options=["Organizing Committee", "Speaker", "VIP", "Media", "Service Provider", "Sponsor/Exhibitor Staff", "Government Official", "Other"],
-                index=["Organizing Committee", "Speaker", "VIP", "Media", "Service Provider", "Sponsor/Exhibitor Staff", "Government Official", "Other"].index(delegate_record['Category']) if delegate_record['Category'] in ["Organizing Committee", "Speaker", "VIP", "Media", "Service Provider", "Sponsor/Exhibitor Staff", "Government Official", "Other"] else 6
+                options=["Organizing Committee", "Speaker", "VIP", "Media", "Service Provider", "Sponsor", "Exhibitor", "Sponsor/Exhibitor Staff", "Government Official", "Other"],
+                index=["Organizing Committee", "Speaker", "VIP", "Media", "Service Provider", "Sponsor", "Exhibitor", "Sponsor/Exhibitor Staff", "Government Official", "Other"].index(delegate_record['Category']) if delegate_record['Category'] in ["Organizing Committee", "Speaker", "VIP", "Media", "Service Provider", "Sponsor", "Exhibitor", "Sponsor/Exhibitor Staff", "Government Official", "Other"] else 8
             )
             new_organization = st.text_input("Organization", value=delegate_record['Organization'])
             new_title = st.text_input("Title/Role", value=delegate_record['RoleTitle'])

@@ -85,7 +85,7 @@ with st.form("add_news", clear_on_submit=True):
         title = st.text_input("News Title", placeholder="Title...")
     
     with col2:
-        category = st.selectbox("Category", ["General", "Conference Updates", "Industry News", "Speaker Updates", "Exhibitor News", "Schedule Changes"])
+        category = st.selectbox("Category", ["General", "Conference Updates", "Industry News", "Speaker Updates", "Sponsor News", "Exhibitor News", "Schedule Changes"])
     
     content = st.text_area(
         "News Content", 

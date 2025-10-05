@@ -47,6 +47,69 @@ if not hasattr(st.session_state, 'delegate_authenticated') or not st.session_sta
 current_user_id = st.session_state.get('delegate_id', 'anonymous')
 current_user_name = st.session_state.get('delegate_name', 'Anonymous User')
 
+# Role switching feature for dual-role users
+def check_and_show_role_switch():
+    """Check if user has dual roles and show switch option"""
+    try:
+        from lib.qr_system import check_dual_role_user
+        is_dual_role, speaker_info = check_dual_role_user(current_user_name)
+        
+        if is_dual_role and speaker_info:
+            current_role = "Speaker" if st.session_state.get('delegate_category') == 'Speaker' else "Delegate"
+            
+            st.markdown("---")
+            col1, col2, col3 = st.columns([2, 1, 1])
+            
+            with col1:
+                st.info(f"🎭 **Current Role:** {current_role} | You have access to both Delegate and Speaker features")
+            
+            with col2:
+                if current_role == "Delegate":
+                    if st.button("🎤 Switch to Speaker", key="switch_to_speaker"):
+                        # Switch to speaker role
+                        speaker_id = f"SPEAKER_{speaker_info.get('name', '').replace(' ', '_')}"
+                        st.session_state.delegate_id = speaker_id
+                        st.session_state.delegate_name = speaker_info.get('name', '')
+                        st.session_state.delegate_organization = speaker_info.get('organization', '')
+                        st.session_state.delegate_category = 'Speaker'
+                        st.session_state.delegate_title = speaker_info.get('position', '')
+                        st.session_state.delegate_nationality = speaker_info.get('nationality', '')
+                        st.session_state.delegate_phone = speaker_info.get('phone', '')
+                        st.session_state.delegate_email = speaker_info.get('email', '')
+                        st.rerun()
+                else:
+                    if st.button("👤 Switch to Delegate", key="switch_to_delegate"):
+                        # Need to load delegate data - redirect to role selection
+                        st.session_state.dual_role_user = True
+                        # We'll need to get delegate record from the staff data
+                        import pandas as pd
+                        from staff_service import load_staff_df
+                        df = load_staff_df()
+                        delegate_record = df[df['Name'].str.lower().str.strip() == current_user_name.lower().strip()].iloc[0]
+                        st.session_state.current_delegate_record = delegate_record
+                        st.session_state.current_speaker_info = speaker_info
+                        st.rerun()
+            
+            with col3:
+                if st.button("🔄 Role Selection", key="full_role_selection"):
+                    # Redirect to full role selection
+                    st.session_state.dual_role_user = True
+                    # Get delegate record
+                    import pandas as pd
+                    from staff_service import load_staff_df
+                    df = load_staff_df()
+                    delegate_record = df[df['Name'].str.lower().str.strip() == current_user_name.lower().strip()].iloc[0]
+                    st.session_state.current_delegate_record = delegate_record
+                    st.session_state.current_speaker_info = speaker_info
+                    st.switch_page("pages/7_Delegate_Self_Service.py")
+    
+    except Exception as e:
+        # Silently fail if there's an error
+        pass
+
+# Show role switching if applicable
+check_and_show_role_switch()
+
 # Language dropdown selector with styling
 st.markdown("""
 <style>

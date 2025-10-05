@@ -378,28 +378,37 @@ else:
                 if success:
                     st.success(f"✅ {message}")
                     
-                    # Set session state for authenticated delegate
-                    st.session_state.delegate_authenticated = True
-                    st.session_state.delegate_id = delegate.get('ID')
-                    st.session_state.delegate_name = delegate.get('Full Name', '')
-                    st.session_state.delegate_organization = delegate.get('Organization', '')
-                    st.session_state.delegate_category = delegate.get('Attendee Type', '')
-                    st.session_state.delegate_title = delegate.get('Title', '')
-                    st.session_state.delegate_nationality = delegate.get('Nationality', '')
-                    st.session_state.delegate_phone = delegate.get('Phone', '')
+                    # Check for dual role (delegate + speaker)
+                    from lib.qr_system import check_dual_role_user
+                    is_dual_role, speaker_info = check_dual_role_user(delegate.get('Full Name', ''))
                     
-                    # st.balloons()  # Removed for corporate feel
-                    
-                    # Auto-redirect to dashboard
-                    st.markdown("### ✅ Login Successful!")
-                    st.markdown(f"**Welcome, {delegate.get('Full Name', '')}!**")
-                    st.markdown(f"**Organization:** {delegate.get('Organization', '')}")
-                    st.markdown(f"**Category:** {delegate.get('Attendee Type', '')}")
-                    
-                    st.markdown("🔄 Redirecting to your dashboard...")
-                    
-                    # Immediate redirect
-                    st.switch_page("pages/1_Delegate_Dashboard.py")
+                    if is_dual_role:
+                        # Set up for role selection
+                        st.session_state.dual_role_user = True
+                        st.session_state.current_delegate_record = delegate
+                        st.session_state.current_speaker_info = speaker_info
+                        st.switch_page("pages/7_Delegate_Self_Service.py")
+                    else:
+                        # Set session state for authenticated delegate
+                        st.session_state.delegate_authenticated = True
+                        st.session_state.delegate_id = delegate.get('ID')
+                        st.session_state.delegate_name = delegate.get('Full Name', '')
+                        st.session_state.delegate_organization = delegate.get('Organization', '')
+                        st.session_state.delegate_category = delegate.get('Attendee Type', '')
+                        st.session_state.delegate_title = delegate.get('Title', '')
+                        st.session_state.delegate_nationality = delegate.get('Nationality', '')
+                        st.session_state.delegate_phone = delegate.get('Phone', '')
+                        
+                        # Auto-redirect to dashboard
+                        st.markdown("### ✅ Login Successful!")
+                        st.markdown(f"**Welcome, {delegate.get('Full Name', '')}!**")
+                        st.markdown(f"**Organization:** {delegate.get('Organization', '')}")
+                        st.markdown(f"**Category:** {delegate.get('Attendee Type', '')}")
+                        
+                        st.markdown("🔄 Redirecting to your dashboard...")
+                        
+                        # Immediate redirect
+                        st.switch_page("pages/1_Delegate_Dashboard.py")
                 else:
                     st.error(f"❌ {message}")
         else:

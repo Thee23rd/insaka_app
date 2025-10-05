@@ -1,8 +1,152 @@
 [
   {
-    "name": "Zambia",
+    "name": "Ministry of Mines and Minerals Development",
     "stand": "EG2",
-    "logo": "assets/logos/coat of arms.png",
+    "logo": "assets/logos/copper coat of arms.jpg",
     "url": "MMMD.GOV.ZM"
+  },
+  {
+    "name": "PlanetGold Council Zambia",
+    "stand": "nan",
+    "logo": "assets/logos/planet.png",
+    "url": "nan"
+  },
+  {
+    "name": "Tardis Mining Solutions",
+    "stand": "nan",
+    "logo": "assets/logos/Minning solution logo on black.png",
+    "url": "nan"
+  },
+  {
+    "name": "Barrick Lumwana Mining Company",
+    "stand": "nan",
+    "logo": "assets/logos/barrick.png",
+    "url": "nan"
+  },
+  {
+    "name": "ZAMEFA",
+    "stand": "nan",
+    "logo": "assets/logos/ZAMEFA.png",
+    "url": "nan"
+  },
+  {
+    "name": "Reach Zambia Digital",
+    "stand": "nan",
+    "logo": "assets/logos/Malo Africa Official Logo-01 copy.png",
+    "url": "nan"
+  },
+  {
+    "name": "First Capital Bank",
+    "stand": "nan",
+    "logo": "assets/logos/FCB.png",
+    "url": "nan"
+  },
+  {
+    "name": "Universal World International Exhibition Co., Ltd",
+    "stand": "nan",
+    "logo": "assets/logos/L11.jpeg",
+    "url": "nan"
+  },
+  {
+    "name": "Universal World International Exhibition Co., Ltd.",
+    "stand": "nan",
+    "logo": "assets/logos/L15.jpeg",
+    "url": "nan"
+  },
+  {
+    "name": "Universal World International Exhibition Co, Ltd",
+    "stand": "nan",
+    "logo": "assets/logos/K15.jpeg",
+    "url": "nan"
+  },
+  {
+    "name": "Aflife Holdings Limited",
+    "stand": "nan",
+    "logo": "assets/logos/image (4).png",
+    "url": "nan"
+  },
+  {
+    "name": "RockTech",
+    "stand": "nan",
+    "logo": "assets/logos/RockTech.jpeg",
+    "url": "nan"
+  },
+  {
+    "name": "CMEAZ",
+    "stand": "nan",
+    "logo": "assets/logos/cmeaz.png",
+    "url": "nan"
+  },
+  {
+    "name": "KCM",
+    "stand": "nan",
+    "logo": "assets/logos/konkola.png",
+    "url": "nan"
+  },
+  {
+    "name": "Barloworld",
+    "stand": "nan",
+    "logo": "assets/logos/Barloworld.png",
+    "url": "nan"
+  },
+  {
+    "name": "Copperbelt Energy Corporation",
+    "stand": "nan",
+    "logo": "assets/logos/CEC.png",
+    "url": "nan"
+  },
+  {
+    "name": "IDC",
+    "stand": "nan",
+    "logo": "assets/logos/IDC.png",
+    "url": "nan"
+  },
+  {
+    "name": "BDO",
+    "stand": "nan",
+    "logo": "assets/logos/BDO.png",
+    "url": "nan"
+  },
+  {
+    "name": "Xcalibur",
+    "stand": "nan",
+    "logo": "assets/logos/xcalibar.png",
+    "url": "nan"
+  },
+  {
+    "name": "ZCCM-IH",
+    "stand": "nan",
+    "logo": "assets/logos/ZCCM-IH.png",
+    "url": "nan"
+  },
+  {
+    "name": "Jonmaka Herbal products Ltd",
+    "stand": "nan",
+    "logo": "",
+    "url": "nan"
+  },
+  {
+    "name": "OSHEMS CONSULTANCY ZAMBIA LIMITED",
+    "stand": "nan",
+    "logo": "assets/logos/oshems.jpeg",
+    "url": "nan"
+  },
+  {
+    "name": "Zamtel",
+    "stand": "nan",
+    "logo": "assets/logos/ZAMTEL.png",
+    "url": "nan"
+  },
+  {
+    "name": "Mopani Copper Mine",
+    "stand": "nan",
+    "logo": "assets/logos/Screenshot 2025-10-02 105937.png",
+    "url": "nan"
+  },
+  {
+    "name": "Zanaco",
+    "stand": "TBA",
+    "logo": "assets/logos/zanaco.png",
+    "url": ""
   }
 ]

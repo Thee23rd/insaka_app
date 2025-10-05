@@ -265,3 +265,4 @@ pandas       # Data management
 
 **Your QR code system is now ready for the Insaka Conference 2025! 🎉**
 
+

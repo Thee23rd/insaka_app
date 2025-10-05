@@ -313,45 +313,90 @@ def show_speaker_bio(speaker_name):
         with col2:
             st.markdown(f"### {speaker.get('name', '')}")
             
-            # Show position and organization
-            if speaker.get("position") and speaker.get("organization"):
-                st.caption(f"{speaker.get('position')} at {speaker.get('organization')}")
-            elif speaker.get("position"):
-                st.caption(speaker.get("position"))
-            elif speaker.get("organization"):
-                st.caption(speaker.get("organization"))
+            # Helper function to check if value is valid
+            def is_valid(value):
+                if not value:
+                    return False
+                if isinstance(value, str) and value.strip().lower() in ['nan', 'n/a', 'none', '']:
+                    return False
+                return True
             
-            st.markdown(f"**Presenting on:** {speaker.get('talk', 'N/A')}")
-            st.markdown("---")
-            st.markdown(speaker.get("bio", "No biography available."))
-            if speaker.get("slides"):
+            # Show position and organization only if valid
+            position = speaker.get("position")
+            organization = speaker.get("organization")
+            
+            if is_valid(position) and is_valid(organization):
+                st.caption(f"{position} at {organization}")
+            elif is_valid(position):
+                st.caption(position)
+            elif is_valid(organization):
+                st.caption(organization)
+            
+            # Show talk/presentation topic only if valid
+            talk = speaker.get('talk')
+            if is_valid(talk):
+                st.markdown(f"**Presenting on:** {talk}")
+            
+            # Show bio only if valid
+            bio = speaker.get("bio")
+            if is_valid(bio):
+                st.markdown("---")
+                st.markdown(bio)
+            
+            # Show slides download only if valid
+            slides = speaker.get("slides")
+            if is_valid(slides):
                 st.markdown("---")
                 try:
                     st.download_button(
                         "📄 Download Slides",
-                        data=open(speaker["slides"], "rb").read(),
-                        file_name=speaker["slides"].split("/")[-1],
+                        data=open(slides, "rb").read(),
+                        file_name=slides.split("/")[-1],
                         use_container_width=True
                     )
                 except Exception:
-                    st.caption(f"Slides: {speaker['slides']}")
+                    st.caption(f"Slides: {slides}")
     else:
         st.warning(f"Speaker '{speaker_name}' not found in database.")
 
 # Parse time to hour (for sorting)
 def parse_time_to_hour(time_str):
-    """Convert time string to hour (24-hour format)"""
+    """Convert time string to hour (24-hour format) in minutes from midnight"""
     try:
-        time_str = time_str.strip().upper()
+        time_str = str(time_str).strip().upper()
+        
+        # Skip invalid times
+        if time_str in ['NAN', 'N/A', '', 'TBA']:
+            return 540  # Default to 9 AM
+        
         time_str = re.sub(r'\s+', ' ', time_str)
         
+        # Handle time ranges (e.g., "07:00 - 13:00") - extract start time
+        if '-' in time_str or '–' in time_str:
+            time_str = time_str.split('-')[0].split('–')[0].strip()
+        
+        # Handle "TO" in time ranges
+        if 'TO' in time_str:
+            time_str = time_str.split('TO')[0].strip()
+        
+        # Parse different time formats
         if 'AM' in time_str or 'PM' in time_str:
-            time_obj = datetime.strptime(time_str, "%I:%M %p")
+            # 12-hour format with AM/PM
+            time_str_clean = time_str.replace('AM', ' AM').replace('PM', ' PM')
+            time_str_clean = re.sub(r'\s+', ' ', time_str_clean)
+            time_obj = datetime.strptime(time_str_clean.strip(), "%I:%M %p")
         else:
-            time_obj = datetime.strptime(time_str, "%H:%M")
+            # 24-hour format
+            # Extract just the time part (HH:MM)
+            time_match = re.search(r'(\d{1,2}):(\d{2})', time_str)
+            if time_match:
+                time_obj = datetime.strptime(time_match.group(0), "%H:%M")
+            else:
+                return 540  # Default to 9 AM
+        
         return time_obj.hour * 60 + time_obj.minute
-    except:
-        return 540  # Default to 9 AM
+    except Exception as e:
+        return 540  # Default to 9 AM if parsing fails
 
 # Get unique days and sort them
 days = sorted(set([item.get("day", "TBA") for item in agenda]))

@@ -1,7 +1,971 @@
 Nationality,ID,Name,Category,Organization,RoleTitle,Email,Phone,BadgePhoto,Notes,CheckedIn,Day1_CheckIn,Day2_CheckIn,Day3_CheckIn,Day4_CheckIn,Day5_CheckIn,CreatedAt
-Zambian,1,Charles Mweshi,Government Official,Ministry of Tourism,Dr.,,,,,False,True,True,False,,,2025-09-26 15:14:57
-Zambian,2,Francis k. Chiwele,Government Official,Ministry of Tourism,Mr,,,,,False,,,,,,2025-09-26 15:14:57
-Zambian,3,Edward M. Chanda,Government Official,Ministry of Tourism,Mr,,,,,False,,,,,,2025-09-26 15:14:57
-Zambian,4,Kagosi Mwamulowe,Government Official,Ministry of Tourism,Mr,,,,,False,,,,,,2025-09-26 15:14:57
-Zambian,5,Chaka H. Kaumba,Government Official,Ministry of Tourism,Mr,,,,,False,,,,,,2025-09-26 15:14:57
-Zambian,6,Annie Mwape,Organizing Committee,MMMD,Ms,annie.mwape@mmmd.gov.zm,776527215,assets/uploads/badges/annie-mwape_20250930_172852.jpeg,nan,False,True,,,,,2025-09-26 15:57:26
+Zambian,1.0,Charles Mweshi,Government Official,Ministry of Tourism,Dr.,,,,,False,True,True,False,,,2025-09-26 15:14:57
+Zambian,6.0,Annie Mwape,Secretariate,Ministry  of Mines and Minerals Development,Ms,annie.mwape@mmmd.gov.zm,776527215,assets/uploads/badges/annie-mwape_20250930_172852.jpeg,,False,True,,,,,2025-09-26 15:57:26
+Czechia,50.0,Milan Kalcu,Delegate,Embassy of Czech Republic,Head of Development Cooperation,milan.kalcu@mzv.gov.cz,260 762031290,,,False,,,,,,2025-10-02 18:22:55
+Zambian,51.0,Tiyankenji Precious Phiri,Delegate,Embassy of Czech Republic,Expert in Charge of Economic Diplomacy,tiyankenjiprecious.phiri@mzv.gov.cz,260 977654108,,,False,,,,,,2025-10-02 18:22:55
+Czechia,52.0,Mr. Michal Zak,Delegate,Embassy of Czech Republic,Director,zak.m@opv.cz,,,,False,,,,,,2025-10-02 18:22:55
+Czechia,53.0,Mr Feizel Reha,Delegate,Embassy of Czech Republic,Executive Director – Strategy & Growth,feizal.rare@gmail.com,,,,False,,,,,,2025-10-02 18:22:55
+Mozambican,54.0,Mónica PatrÍcio Clemente Mussa,Diplomat,Mozambique High Commission,High Commissioner,embamoc.zambia@gmail.com,260776458507,,,False,,,,,,2025-10-02 18:22:55
+Mozambican,55.0,Mario António Adamo,Diplomat,Mozambique High Commission,First Secretary,adamomario76@gmail.com,260770876031,,,False,,,,,,2025-10-02 18:22:55
+Mozambican,56.0,Jonas Nelson João Dias,Diplomat,Mozambique High Commission,First Secretary,jonasdias3@gmail.com,260779234840,,,False,,,,,,2025-10-02 18:22:55
+UGANDAN,57.0,MARTIN BALABA,Delegate,CryoCore Management Ltd,DIRECTOR,mbalaba@ccmguganda.com / mirtynejoseph88@gmail.com,256783818393,,,False,,,,,,2025-10-02 18:22:55
+UGANDAN,58.0,MARTIN KARUNGI,Delegate,CryoCore Management Ltd,DIRECTOR,mkarungi@ccmguganda.com,256779695133,,,False,,,,,,2025-10-02 18:22:55
+Zambian,217.0,Moustafa Saadi,Delegate,ORIENTAL RENEWABLES ENERGIES LIMITED,Mr.,m.saadi@scirocco.com.zm,097 7 751880,,,False,,,,,,2025-10-02 18:22:56
+Indian,218.0,Milind Deshmukh,Delegate,Solar Industries India Limited,Mr.,milind.deshmukh@solargroup.com,+260-775671245,,,False,,,,,,2025-10-02 18:22:56
+Ghanaian,219.0,Amponsah Emmanuel Atta,Delegate,Solar Nitro Ghana Limited,Mr.,-,+260-775671245,,,False,,,,,,2025-10-02 18:22:56
+Indian,220.0,Vennam Tirupathi Reddy,Delegate,Solar Explochem Zambia Limited,Mr.,vtreddy2006@solarexplochemzm.com,+260-979480807,,,False,,,,,,2025-10-02 18:22:56
+Indian,221.0,Kishore Bhanudas Bhomale,Delegate,Solar Nitrochemicals Limited,Mr.,k.bhomale@solarnitrochem.co.tz,+260-775671245,,,False,,,,,,2025-10-02 18:22:56
+Indian,222.0,Samir Kumar Satpathy,Delegate,Solar Explochem Zambia Limited,Mr.,samirkumar@solarexplochemzm.com,+260-971977883,,,False,,,,,,2025-10-02 18:22:56
+Indian,223.0,Siddharth Sunil Bhure,Delegate,Solar Industries India Limited,Mr.,siddharth.bhure@solargroup.com,+260-775671245,,,False,,,,,,2025-10-02 18:22:56
+Zambian,224.0,Pascal Nkole,Delegate,Solar Explochem Zambia Limited,Mr.,mpascal.nkole@solarexplochemzm.com,+260-977624060,,,False,,,,,,2025-10-02 18:22:56
+Indian,225.0,Alok Dwivedi,Delegate,Solar Explochem Zambia Limited,Mr.,alok.dwivedi@solarexplochemzm.com,+260-775671245,,,False,,,,,,2025-10-02 18:22:56
+Zambian,226.0,Harrison Mbewe,Organizing Committee,Ministry of Mines and Minerlas Development,Systems Developer,harrisonmbewe35@gmail.com,976185819,assets/uploads/badges/harrison-mbewe_20251003_203352.jpeg,,False,,,,,,2025-10-03 09:42:48
+ZAMBIAN,452.0,PAMELA NAKAMBA,Delegate,STATE HOUSE,DR,,,,,False,,,,,,2025-10-03 11:55:14
+ZAMBIAN,453.0,CHIPO MWANAWASA,Delegate,STATE HOUSE,MS,,,,,False,,,,,,2025-10-03 11:55:14
+ZAMBIAN,454.0,JOSEPH LUNGU,Delegate,STATE HOUSE,MR,,,,,False,,,,,,2025-10-03 11:55:14
+ZAMBIA,455.0,JITO KAYUMBA,Delegate,STATE HOUSE,MR,,,,,False,,,,,,2025-10-03 11:55:14
+ZAMBIA,456.0,CHRISTOPHER MUNDIA,Delegate,STATE HOUSE,MR,,,,,False,,,,,,2025-10-03 11:55:14
+Zambian,457.0,Andrew Chipwende,Delegate,PPDF,Mr,,,,,False,,,,,,2025-10-03 11:55:14
+Zambian,458.0,Elita Mwenda,Delegate,PPDF,Ms,,,,,False,,,,,,2025-10-03 11:55:14
+Zambian,459.0,Jacqueline Chishimba,Delegate,PPDF,Ms,,,,,False,,,,,,2025-10-03 11:55:14
+Zambian,460.0,Thembani Chizhuka,Delegate,PPDF,Mr,,,,,False,,,,,,2025-10-03 11:55:14
+Zambian,461.0,Brian Wainyae,Delegate,PPDF,Mr,,,,,False,,,,,,2025-10-03 11:55:14
+Zambian,462.0,Chimunya Chatupa,Delegate,PPDF,Mr,,,,,False,,,,,,2025-10-03 11:55:14
+Zambian,463.0,Kangwa Akapelwa,Delegate,PPDF,Ms,,,,,False,,,,,,2025-10-03 11:55:14
+Zambian,464.0,Musonda Bweupe,Delegate,PPDF,Ms,,,,,False,,,,,,2025-10-03 11:55:14
+Zambian,465.0,Kanja Ilunga,Delegate,PPDF,Ms,,,,,False,,,,,,2025-10-03 11:55:14
+Russian,466.0,Natalia Tereschenko,Delegate,Russian Embassy,Ms,,,,,False,,,,,,2025-10-03 11:55:14
+American,467.0,Seth Miller,Delegate,U.S Embassy- Zambia,Mr,,,,,False,,,,,,2025-10-03 11:55:14
+Zambian,468.0,Lupinda Chimwasu,Delegate,U.S Embassy- Zambia,Mr,,,,,False,,,,,,2025-10-03 11:55:14
+American,469.0,Kully Nelson,Delegate,U.S Embassy- Zambia,Mr,,,,,False,,,,,,2025-10-03 11:55:14
+Zambian,470.0,Tazizwa Mvula,Delegate,U.S Embassy- Zambia,Ms,,,,,False,,,,,,2025-10-03 11:55:14
+Zambian,471.0,Vivian Kalabi,Delegate,U.S Embassy- Zambia,Ms,,,,,False,,,,,,2025-10-03 11:55:14
+American,472.0,Daria Gage,Delegate,U.S Embassy- Zambia,Ms,,,,,False,,,,,,2025-10-03 11:55:14
+American,473.0,Kevin Barthel,Delegate,U.S Embassy- Zambia,Mr,,,,,False,,,,,,2025-10-03 11:55:14
+Bristish,474.0,Rebecca Terzeon,Delegate,British High Commission,Ms,,,,,False,,,,,,2025-10-03 11:55:14
+Bristish,475.0,Claire Allan,Delegate,British High Commission,Ms,,,,,False,,,,,,2025-10-03 11:55:14
+Zambian,476.0,Mathew Banda,Delegate,British High Commission,Mr,,,,,False,,,,,,2025-10-03 11:55:14
+Zambian,477.0,Vichaya Chungu,Delegate,British High Commission,Ms,,,,,False,,,,,,2025-10-03 11:55:14
+Kenyan,478.0,Amb. Grace Okara,Delegate,Kenyan High Commision,Ambassador,,,,,False,,,,,,2025-10-03 11:55:14
+Kenyan,479.0,Sofia Machuki,Delegate,Kenyan High Commision,Ms,,,,,False,,,,,,2025-10-03 11:55:14
+Malawian,480.0,Margaret Constance Kamoto,Delegate,High Commision of Malawi,Ms,,,,,False,,,,,,2025-10-03 11:55:14
+Malawian,481.0,Mayamiko Tizola,Delegate,High Commision of Malawi,Ms,,,,,False,,,,,,2025-10-03 11:55:14
+Malawian,482.0,Vendolyne Siti,Delegate,High Commision of Malawi,Ms,,,,,False,,,,,,2025-10-03 11:55:14
+Kingdom of Saudi Arabia,483.0,Ibrahim Hamid Al-Din,Delegate,Ministry of Industry and Mineral Resources,,,,,,False,,,,,,2025-10-03 11:55:14
+Kingdom of Saudi Arabia,484.0,Eng. Abdullah Al-Anzi,Delegate,Ministry of Industry and Mineral Resources,,,,,,False,,,,,,2025-10-03 11:55:14
+Kingdom of Saudi Arabia,485.0,Hilal Al-Harbi,Delegate,Ministry of Industry and Mineral Resources,,,,,,False,,,,,,2025-10-03 11:55:14
+Democratic Republic of Congo,486.0,H. E. Louis Watum Kabamba,Delegate,Ministry of Mines,,,,,,False,,,,,,2025-10-03 11:55:14
+Democratic Republic of Congo,487.0,H.E. Fifi Masuka Saini,Delegate,Ministry of Mines,,,,,,False,,,,,,2025-10-03 11:55:14
+Ghana,488.0,Isaac Kuuwan Mwinbelle,Delegate,Ghana Geological Survey Authority,,,,,,False,,,,,,2025-10-03 11:55:14
+Ghana,489.0,Maria Yusuf,Delegate,Ghana Geological Survey Authority,Ms,,,,,False,,,,,,2025-10-03 11:55:14
+German,490.0,Nina LUTTER,Delegate,EU Delegation,Mrs.,,,,,False,,,,,,2025-10-03 11:55:14
+French,491.0,Eric VITALE,Delegate,EU Delegation,Mr.,,,,,False,,,,,,2025-10-03 11:55:14
+Romanian,492.0,Bogdan STEFANESCU,Delegate,EU Delegation,Mr.,,,,,False,,,,,,2025-10-03 11:55:15
+Italian,493.0,Claudio BACIGALUPI,Delegate,EU Delegation,Mr.,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,494.0,Hon. Paul C. Kabuswe,VIP,Ministry of Mines and Minerals Development,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,495.0,Dr. Hapenga M. Kabeta,VIP,Ministry of Mines and Minerals Development,,,,assets/uploads/badges/dr-hapenga-m-kabeta_20251004_092059.jpg,,False,,,,,,2025-10-03 11:55:15
+Zambian,496.0,Anthony Chilengi,Government Officials,Ministry  of Mines and Minerals Development,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,497.0,Sam Phiri,Government Officials,Ministry  of Mines and Minerals Development,Director ICT,sam.phiri@mmmd.gov.zm,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,498.0,Njekwa Malama,Government Officials,Ministry  of Mines and Minerals Development,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,499.0,Tobias Musonda,Government Officials,Ministry  of Mines and Minerals Development,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,500.0,Misozi Kasongole,Government Officials,Ministry  of Mines and Minerals Development,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,501.0,Fred Banda,Government Officials,Ministry  of Mines and Minerals Development,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,502.0,Billy Chewe,Government Officials,Ministry  of Mines and Minerals Development,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,503.0,Samuel Maango,Government Officials,Ministry  of Mines and Minerals Development,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,504.0,Gerald Mwila,Government Officials,Ministry  of Mines and Minerals Development,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,505.0,Azell Banda,Government Officials,Ministry  of Mines and Minerals Development,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,506.0,Elite Mhone,Government Officials,Ministry  of Mines and Minerals Development,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,507.0,Dalitso Mhango,Secretariate,Ministry  of Mines and Minerals Development,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,509.0,Levy Mulilo,Secretariate,Ministry  of Mines and Minerals Development,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,510.0,Enock Chifunda,Secretariate,Ministry  of Mines and Minerals Development,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,511.0,Derrick Sichula,Secretariate,Ministry  of Mines and Minerals Development,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,512.0,Constance Musonda,Secretariate,Ministry  of Mines and Minerals Development,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,513.0,Naomi Banda,Secretariate,Ministry  of Mines and Minerals Development,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,514.0,Mirriam Ludaka,Secretariate,Ministry  of Mines and Minerals Development,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,515.0,Edward Mumba,Secretariate,Ministry  of Mines and Minerals Development,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,516.0,David Chilufya,Secretariate,Ministry  of Mines and Minerals Development,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,517.0,Adrian Zulu,Secretariate,Ministry  of Mines and Minerals Development,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,518.0,Lydia Mhango,Secretariate,Ministry  of Mines and Minerals Development,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,519.0,Mutinta Hadunka,Secretariate,Ministry  of Mines and Minerals Development,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,520.0,Mutakela Mataa,Delegate,OP,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,521.0,Namukolo Mwagala,Secretariate,Buterla Staff,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,522.0,Inonge Mwaba,Secretariate,Buterla Staff,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,523.0,Charles Mubambe,Secretariate,Buterla Staff,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,524.0,Paul Mukabila,Secretariate,Buterla Staff,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,525.0,Inonge Mpupuni,Secretariate,Buterla Staff,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,526.0,Happy Mbulo,Secretariate,Buterla Staff,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,527.0,Jason MJ Kruger,Secretariate,Buterla Staff,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,528.0,Jason Mulaisho,Secretariate,Buterla Staff,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,529.0,Kanyanta Chisanga,Secretariate,Buterla Staff,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,530.0,Makazo Mwangala,Secretariate,Buterla Staff,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,531.0,Suzyo Ngandu,Secretariate,Buterla Staff,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,532.0,Luyando Yoyo Ngwenya,Secretariate,Buterla Staff,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,533.0,Jethro Lungu,Secretariate,Buterla Staff,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,534.0,Chibesa Bwalya,Secretariate,Buterla Staff,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,535.0,Bwalya Kaela,Secretariate,Buterla Staff,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,536.0,Lisa Akebu,Secretariate,Buterla Staff,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,537.0,Leonard Chanda,Secretariate,Buterla Staff,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,538.0,Isabel Chikumbe,Secretariate,Buterla Staff,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,539.0,Phylis Nkhazi,Secretariate,Buterla Staff,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,540.0,Rachael Macha,Secretariate,Buterla Staff,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,541.0,Agness Bwalya,Secretariate,Buterla Staff,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,542.0,Emmanuel Mweemba,Secretariate,Buterla Staff,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,543.0,Thokozile Mwase,Secretariate,Buterla Staff,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,544.0,Jessie Zombe,Secretariate,Buterla Staff,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,545.0,Cisanga Mwanza,Secretariate,Buterla Staff,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,546.0,Benjamin Chayo,Secretariate,Ministry  of Mines and Minerals Development,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,547.0,Henry Sampa,Sponsor,ZCCM-IH,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,548.0,Anthony Munsongo,Delegate,ZP,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,549.0,Emmanuel Muna,Delegate,ZIPAR,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,550.0,Esther Siyanda,Delegate,MOFNP,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,551.0,Chomba Chileshe,Secretariate,Ministry  of Mines and Minerals Development,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,552.0,Naomi Semani,Secretariate,Ministry  of Mines and Minerals Development,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,553.0,Christine Chibobo Chisanga,Secretariate,Ministry  of Mines and Minerals Development,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,554.0,Teddy Musopelo,Secretariate,Ministry  of Mines and Minerals Development,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,555.0,Jessy Banda,Secretariate,Ministry  of Mines and Minerals Development,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,556.0,Yewa Kumwenda,Delegate,Zambia Chamber of Mines,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,557.0,Ospher Kawema,Secretariate,Ministry  of Mines and Minerals Development,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,558.0,Daniel Chisala,Secretariate,Ministry  of Mines and Minerals Development,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,559.0,Inambao Simangolwa,Secretariate,Ministry  of Mines and Minerals Development,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,560.0,Irene Mtaja,Delegate,MOT,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,561.0,Margaret Mwanza,Secretariate,Ministry  of Mines and Minerals Development,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,562.0,Inonge Sitenge,Secretariate,Ministry  of Mines and Minerals Development,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,563.0,Jacyntha Sheleni,Secretariate,Ministry  of Mines and Minerals Development,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,564.0,Shamwinda Tembo,Secretariate,Ministry  of Mines and Minerals Development,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,565.0,Erick Musenga,Secretariate,Ministry  of Mines and Minerals Development,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,566.0,John Matanda,Delegate,MOFNP,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,567.0,Yoram Chulu,Secretariate,Ministry  of Mines and Minerals Development,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,568.0,Mester Shamakamba,Secretariate,Ministry  of Mines and Minerals Development,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,569.0,Chaanza Chifwepa,Secretariate,Ministry  of Mines and Minerals Development,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,570.0,Lucy Meleki,Secretariate,Ministry  of Mines and Minerals Development,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,571.0,Jonathan Mukuka,Secretariate,Ministry  of Mines and Minerals Development,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,572.0,Hon. Grace Njapau- Efrati,Secretariate,Ministry  of Mines and Minerals Development,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,573.0,Desiderious Chapewa,Secretariate,Ministry  of Mines and Minerals Development,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,574.0,Sokwani Chilembo,Delegate,Zambia Chamber of Mines,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,575.0,Erick Tembo,Delegate,OP,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,576.0,Canisius Chishimba,Secretariate,Ministry  of Mines and Minerals Development,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,577.0,Munsaka Racklon,Secretariate,Ministry  of Mines and Minerals Development,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,578.0,Talent Ng'andwe,Delegate,Mines,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,579.0,Mubanga Chewe,Secretariate,Ministry  of Mines and Minerals Development,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,580.0,Annie Muyangana,Secretariate,Ministry  of Mines and Minerals Development,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,581.0,Lumba Mazila,Secretariate,Ministry  of Mines and Minerals Development,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,582.0,James Mulenga,Delegate,ZIPAR,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,583.0,Michi Chilombo,Secretariate,Ministry  of Mines and Minerals Development,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,584.0,Jason Kafwanka,Secretariate,Ministry  of Mines and Minerals Development,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,585.0,Mercy Zulu,Secretariate,Ministry  of Mines and Minerals Development,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,586.0,Muweme Mwenda,Secretariate,Ministry  of Mines and Minerals Development,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,587.0,Meddiah Munsaka,Secretariate,Ministry  of Mines and Minerals Development,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,588.0,Matildah Chshala,Secretariate,Ministry  of Mines and Minerals Development,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,589.0,Bjorn Mwanamwimbu,Secretariate,Ministry  of Mines and Minerals Development,,,,,,False,,,,,,2025-10-03 11:55:15
+Zambian,590.0,Patricia Namutowe,Secretariate,Ministry  of Mines and Minerals Development,,,,,,False,,,,,,2025-10-03 11:55:16
+Zambian,591.0,Steven Mutwale,Secretariate,Ministry  of Mines and Minerals Development,,,,,,False,,,,,,2025-10-03 11:55:16
+Zambian,592.0,Loisa Mbatha,Sponsor,ZCCM-IH,,,,,,False,,,,,,2025-10-03 11:55:16
+Zambian,593.0,Zambian,Delegate,Mmmd,Mr.,joseph.chiti@mmmd.gov.zm,,,,False,,,,,,2025-10-03 11:55:16
+Zambia,594.0,Zambia,Delegate,Mmmd,,michi.chilombo@mmmd.gov.zm,,,,False,,,,,,2025-10-03 11:55:16
+South Africa,595.0,Khathutshelo Mapasa,Delegate,Appian Capital Advisory,,,,,,False,,,,,,2025-10-03 11:55:16
+Zambia,596.0,Mwelwa Manda,Delegate,Prospect Resources Ltd T/A Sarita Mineral Resources,,,,,,False,,,,,,2025-10-03 11:55:16
+Zambia,597.0,Sharon Sakuwaha,Delegate,MOIRA Legal Practitioners,,,,,,False,,,,,,2025-10-03 11:55:16
+Zambia,598.0,Sampa Kang'ombe,Delegate,MOIRA Legal Practitioners,,,,,,False,,,,,,2025-10-03 11:55:16
+Zambia,599.0,Leroy Schultz,Delegate,Cipembele Exploration &Mining Services Ltd,,,,,,False,,,,,,2025-10-03 11:55:16
+Zambia,600.0,Namakuka Walusiku Sichone,Delegate,Stanbic Bank Zambia Limited,,,,,,False,,,,,,2025-10-03 11:55:16
+Zambia,601.0,George Chepeshi,Delegate,Stanbic Bank Zambia Ltd,,,,,,False,,,,,,2025-10-03 11:55:16
+Zambia,602.0,Shangwa Chime,Delegate,Tertiary Minerals Zambia Limited,,,,,,False,,,,,,2025-10-03 11:55:16
+ZAMBIA,603.0,Kristina Kanche,Delegate,AZMEC,,,,,,False,,,,,,2025-10-03 11:55:16
+Zambian,604.0,Francis k. Chiwele,Delegate,Ministry of Tourism,Mr,,,,,False,,,,,,2025-10-03 11:55:16
+Zambian,605.0,Edward M. Chanda,Delegate,Ministry of Tourism,Mr,,,,,False,,,,,,2025-10-03 11:55:16
+Zambian,606.0,Kagosi Mwamulowe,Delegate,Ministry of Tourism,Mr,,,,,False,,,,,,2025-10-03 11:55:16
+Zambian,607.0,Chaka H. Kaumba,Delegate,Ministry of Tourism,Mr,,,,,False,,,,,,2025-10-03 11:55:16
+Zambian,608.0,Chileshe Kangwa,VIP,"Ministry of Youth, Sport and Arts",Mr,,,,,False,,,,,,2025-10-03 11:55:16
+Zambian,609.0,Mable Beene Nedziwe,Delegate,"Ministry of Youth, Sport and Arts",Ms,,,,,False,,,,,,2025-10-03 11:55:16
+Zambian,610.0,Waana Kankiza,Delegate,"Ministry of Youth, Sport and Arts",Ms,,,,,False,,,,,,2025-10-03 11:55:16
+Zambian,611.0,Kangwa Mubanga,Delegate,"Ministry of Youth, Sport and Arts",Ms,,,,,False,,,,,,2025-10-03 11:55:16
+Zambian,612.0,Idah Mulima,Delegate,"Ministry of Youth, Sport and Arts",Ms,,,,,False,,,,,,2025-10-03 11:55:16
+Zambian,613.0,Doreen S. Mwamba,Delegate,Ministry of Community Development and Social Services,,,,,,False,,,,,,2025-10-03 11:55:16
+Zambian,614.0,Angela C. Kawandami,Delegate,Ministry of Community Development and Social Services,,,,,,False,,,,,,2025-10-03 11:55:16
+Zambian,615.0,Beatrice C. Chinyama,Delegate,Ministry of Community Development and Social Services,,,,,,False,,,,,,2025-10-03 11:55:16
+Zambian,616.0,Patrick H. Choolwe,Delegate,Ministry of Community Development and Social Services,,,,,,False,,,,,,2025-10-03 11:55:16
+Zambian,617.0,Changano Ngoi,Delegate,Ministry of Community Development and Social Services,,,,,,False,,,,,,2025-10-03 11:55:16
+Zambian,618.0,Joshua Kamanya,Delegate,Ministry of Community Development and Social Services,,,,,,False,,,,,,2025-10-03 11:55:16
+Zambian,619.0,Morris Moono,Delegate,Ministry of Community Development and Social Services,,,,,,False,,,,,,2025-10-03 11:55:16
+Zambian,620.0,John Mulongoti,Delegate,Ministry of Agriculture,Mr,,,,,False,,,,,,2025-10-03 11:55:16
+Zambian,621.0,Lemmy Kafwamfwa,Delegate,Ministry of Agriculture,Mr,,,,,False,,,,,,2025-10-03 11:55:16
+Zambian,622.0,Emma Malawo,Delegate,Ministry of Agriculture,Ms,,,,,False,,,,,,2025-10-03 11:55:16
+Zambian,623.0,Mwendalubi Msoka,Delegate,Ministry of Agriculture,Ms,,,,,False,,,,,,2025-10-03 11:55:16
+Zambian,624.0,Shepande Chizumba,Delegate,Ministry of Agriculture,Dr,,,,,False,,,,,,2025-10-03 11:55:16
+Zambian,625.0,K.K. Msiska,Delegate,Ministry of Agriculture,Dr,,,,,False,,,,,,2025-10-03 11:55:16
+Zambian,626.0,Dr. Richard Banda,Delegate,Ministry of Infrastructure Housing and Urban Development,,,,,,False,,,,,,2025-10-03 11:55:16
+Zambian,627.0,Steve Kapepala Makunku,Delegate,Ministry of Infrastructure Housing and Urban Development,,,,,,False,,,,,,2025-10-03 11:55:16
+Zambian,628.0,Mabuchi Chilembo,Delegate,Ministry of Infrastructure Housing and Urban Development,,,,,,False,,,,,,2025-10-03 11:55:16
+Zambian,629.0,Denis Bwalya Kasonde,Delegate,Ministry of Infrastructure Housing and Urban Development,,,,,,False,,,,,,2025-10-03 11:55:16
+ZAMBIAN,630.0,WILLIS CHIPANGO,Delegate,Ministry of Finance and National Planning,Mr,,,,,False,,,,,,2025-10-03 11:55:16
+ZAMBIAN,631.0,KAYULA CHIMFWEMBE,Delegate,Ministry of Finance and National Planning,MR,,,,,False,,,,,,2025-10-03 11:55:16
+ZAMBIAN,632.0,VESTINA SINKAMBA,Delegate,Ministry of Finance and National Planning,MRS,,,,,False,,,,,,2025-10-03 11:55:16
+ZAMBIA,633.0,ISAAC MUNJUNGA,Delegate,Ministry of Finance and National Planning,MR,,,,,False,,,,,,2025-10-03 11:55:16
+ZAMBIA,634.0,JOHN SILWIMBA,Delegate,Ministry of Finance and National Planning,MR,,,,,False,,,,,,2025-10-03 11:55:16
+Zambian,635.0,Gift S. Sialubalo,Delegate,Ministry of Local Government and Rural Development,,,,,,False,,,,,,2025-10-03 11:55:16
+Zambian,636.0,Gabriel Pollen,Delegate,Ministry of Local Government and Rural Development,,,,,,False,,,,,,2025-10-03 11:55:16
+Zambian,637.0,Martin Sodala,Delegate,Ministry of Local Government and Rural Development,,,,,,False,,,,,,2025-10-03 11:55:16
+Zambian,638.0,Fanizani Phiri,Delegate,Ministry of Local Government and Rural Development,,,,,,False,,,,,,2025-10-03 11:55:17
+Zambian,639.0,Patson Phiri,Delegate,Ministry of Local Government and Rural Development,,,,,,False,,,,,,2025-10-03 11:55:17
+Zambian,640.0,Jimmy Chulu,Delegate,Ministry of Local Government and Rural Development,,,,,,False,,,,,,2025-10-03 11:55:17
+Zambian,641.0,Nancy Mwamba,Delegate,Ministry of Local Government and Rural Development,,,,,,False,,,,,,2025-10-03 11:55:17
+Zambian,642.0,Michael Chomba,Delegate,Ministry of SME Development,,,,,,False,,,,,,2025-10-03 11:55:17
+Zambian,643.0,Hon. Elias Mubanga,Delegate,Ministry of SME Development,,,,,,False,,,,,,2025-10-03 11:55:17
+Zambian,644.0,Kennedy Mumba,Delegate,Ministry of SME Development,,,,,,False,,,,,,2025-10-03 11:55:17
+Zambian,645.0,Pamela Chitulangoma,Delegate,Ministry of SME Development,,,,,,False,,,,,,2025-10-03 11:55:17
+Zambian,646.0,Subeta K. Mutelo,Delegate,Ministry of SME Development,,,,,,False,,,,,,2025-10-03 11:55:17
+Zambian,647.0,Nicholas Chkwenya,Delegate,Ministry of SME Development,,,,,,False,,,,,,2025-10-03 11:55:17
+Zambian,648.0,Mr. Ngandu Hachombwa,Delegate,National Technology Business Centre,,,,,,False,,,,,,2025-10-03 11:55:17
+Zambian,649.0,Mr. Derick Kooma,Delegate,National Technology Business Centre,,,,,,False,,,,,,2025-10-03 11:55:17
+Zambian,650.0,Mrs. Pamela Muhongo,Delegate,National Technology Business Centre,,,,,,False,,,,,,2025-10-03 11:55:17
+Zambian,651.0,Eng. Moses Kaye,Delegate,National Technology Business Centre,,,,,,False,,,,,,2025-10-03 11:55:17
+France,652.0,Alexander Stonor,Delegate,Online Payments,,,,,,False,,,,,,2025-10-03 11:55:17
+Canada,653.0,Andrea Tiacoh-Sanogo,Delegate,Africa Finance Corporation (AFC),,,,,,False,,,,,,2025-10-03 11:55:17
+Nigeria,654.0,Ahmed Maccido,Delegate,Africa Finance Corporation (AFC),,,,,,False,,,,,,2025-10-03 11:55:17
+South Africa,655.0,Charles Young,Delegate,Online Payments,,,,,,False,,,,,,2025-10-03 11:55:17
+Zambia,656.0,Angela Zelenia Banda,Delegate,Ngwasuma Investment Limited,,,,,,False,,,,,,2025-10-03 11:55:17
+France,657.0,Claire Rathier,Delegate,Newerest,,,,,,False,,,,,,2025-10-03 11:55:17
+Zimbabwe,658.0,Golden Tendai Kanono,Delegate,Online Payments,,,,,,False,,,,,,2025-10-03 11:55:17
+Zambia,659.0,Ahmed Alkhatib,Delegate,Magna Mining Limited,,,,,,False,,,,,,2025-10-03 11:55:17
+United kindom of Great Britain,660.0,Ireen Stryftomboias,Delegate,Online Payments,,,,,,False,,,,,,2025-10-03 11:55:17
+Australia,661.0,Peter Fox,Delegate,NGX Limited,,,,,,False,,,,,,2025-10-03 11:55:17
+Australia,662.0,James Bell,Delegate,Online Payments,,,,,,False,,,,,,2025-10-03 11:55:17
+United States of America,663.0,Jennifer Holt,Delegate,Online Payments,,,,,,False,,,,,,2025-10-03 11:55:17
+Zambia,664.0,Albert Mubanga,Delegate,Online Payments,,,,,,False,,,,,,2025-10-03 11:55:17
+Italy,665.0,Francesco Ridolfi,Delegate,Online Payments,,,,,,False,,,,,,2025-10-03 11:55:17
+United States of America,666.0,Valentina Saltane,Delegate,Online Payments,,,,,,False,,,,,,2025-10-03 11:55:17
+United States of America,667.0,Marko Grujicic,Delegate,Online Payments,,,,,,False,,,,,,2025-10-03 11:55:17
+Zambian,668.0,Chamunorwa Mataranyika,Delegate,Online Payments,,,,,,False,,,,,,2025-10-03 11:55:17
+South Africa,669.0,Xolani Gumede,Delegate,Siyanda Resources,,,,,,False,,,,,,2025-10-03 11:55:17
+Canada,670.0,Perla Woo,Delegate,Online Payments,,,,,,False,,,,,,2025-10-03 11:55:17
+United Arab Emirates (The),671.0,Tim Melvin,Delegate,Online Payments,,,,,,False,,,,,,2025-10-03 11:55:17
+Zambian,672.0,Maliko Mudenda,Delegate,Online Payments,,,,,,False,,,,,,2025-10-03 11:55:17
+Australia,673.0,Richard Stickland,Delegate,Feavertools,,,,,,False,,,,,,2025-10-03 11:55:17
+Zambian,674.0,Jordan Soko,Delegate,Mimosa Resources,,,,,,False,,,,,,2025-10-03 11:55:17
+Zambian,675.0,Martin Botha,Delegate,Mimosa Resources,,,,,,False,,,,,,2025-10-03 11:55:17
+Zambian,676.0,Gregory Kanyanta,Delegate,Mimosa Resources,,,,,,False,,,,,,2025-10-03 11:55:17
+,677.0,Test User,Delegate,Test Org,,test@example.com,1234567890,,Test import,False,,,,,,2025-10-03 12:12:46
+,678.0,Test User,Delegate,Test Org,,test@example.com,1234567890,,Test import,False,,,,,,2025-10-03 12:12:58
+,679.0,Jason Mulaisho,Delegate,Buterla Staff ,,,966280000,,,False,,,,,,2025-10-03 12:34:22
+,680.0,Happy Mbulo,Delegate,Buterla Staff ,,,977454412,,,False,,,,,,2025-10-03 12:34:22
+,681.0,Inonge Mpupuni,Delegate,Buterla Staff ,,,955777199,,,False,,,,,,2025-10-03 12:34:22
+,682.0,Paul Mukabila,Delegate,Buterla Staff ,,,978254462,,,False,,,,,,2025-10-03 12:34:22
+,683.0,Charles Mubambe,Delegate,Buterla Staff ,,,977200454,,,False,,,,,,2025-10-03 12:34:22
+,684.0,Suzyo Ngandu,Delegate,Buterla Staff ,,,978100338,,,False,,,,,,2025-10-03 12:34:22
+,685.0,Luyando Yoyo Ngwenya,Delegate,Buterla Staff ,,,966628865,,,False,,,,,,2025-10-03 12:34:22
+,686.0,Jason Kruger,Delegate,Buterla Staff ,,,966507019,,,False,,,,,,2025-10-03 12:34:22
+,687.0,Bwalya Kaela,Delegate,Buterla Staff ,,,977108242,,,False,,,,,,2025-10-03 12:34:22
+,689.0,Lungu Jethro,Delegate,Buterla Staff ,,,970861808,,,False,,,,,,2025-10-03 12:34:22
+,690.0,Chibesa Bwalya,Delegate,Buterla Staff ,,,974030095,,,False,,,,,,2025-10-03 12:34:22
+,691.0,Chikumbe Isabel,Delegate,Buterla Staff ,,,974122330,,,False,,,,,,2025-10-03 12:34:22
+,692.0,Racheal Macha,Delegate,Buterla Staff ,,,978604428,,,False,,,,,,2025-10-03 12:34:22
+,693.0,Agness Bwalya,Delegate,Buterla Staff ,,,960149834,,,False,,,,,,2025-10-03 12:34:22
+,694.0,Thokozile Mwase,Delegate,Buterla Staff ,,,960642337,,,False,,,,,,2025-10-03 12:34:22
+,695.0,Phyllis Nkhazi,Delegate,Buterla Staff ,,,975848399,,,False,,,,,,2025-10-03 12:34:22
+,696.0,Thelma Nkowani,Delegate,Buterla Staff ,,,966271225,,,False,,,,,,2025-10-03 12:34:22
+,697.0,Namukolo Mwangala,Delegate,Wiana,,,962488585,,,False,,,,,,2025-10-03 12:34:23
+,698.0,Inonge Mwaba,Delegate,Wiana,,,975252543,,,False,,,,,,2025-10-03 12:34:23
+,699.0,Makazo Mwangala,Delegate,Wiana,,,954069954,,,False,,,,,,2025-10-03 12:34:23
+,700.0,Cisanga Mwanza,Delegate,Wiana,,,976256189,,,False,,,,,,2025-10-03 12:34:23
+,701.0,Lisa Akebu,Delegate,Wiana,,,+260779237900,,,False,,,,,,2025-10-03 12:34:23
+,702.0,Jessie Zombe,Delegate,Wiana,,,260770797914,,,False,,,,,,2025-10-03 12:34:23
+,703.0,Emmanuel Mweemba,Delegate,Wiana,,,+260762732088,,,False,,,,,,2025-10-03 12:34:23
+,704.0,Leonard Chanda,Delegate,Wiana,,,+260976159233,,,False,,,,,,2025-10-03 12:34:23
+,705.0,Bupe Katongo,Delegate,Wiana,,,+260976109933,,,False,,,,,,2025-10-03 12:34:23
+,706.0,Chisoni Banda,Delegate,Wiana,,,+260966968047,,,False,,,,,,2025-10-03 12:34:23
+,707.0,Dr. Hapenga Kabeta,VIP,Ministry  of Mines and Minerals Development,,hapenga.kabeta@grz.gov.zm,,,,False,,,,,,2025-10-03 12:34:23
+,709.0,Benjamin Chayo,Secretariate,Ministry  of Mines and Minerals Development,,benjamin.chayo@mmmd.gov.zm,,,,False,,,,,,2025-10-03 12:34:23
+,710.0,Henry Sampa,Secretariate,Ministry  of Mines and Minerals Development,,henry.sampa@zccm-ih.com,,,,False,,,,,,2025-10-03 12:34:23
+,712.0,Emmanuel Muma,Secretariate,Ministry  of Mines and Minerals Development,,emuma@zipar.org.zm,,,,False,,,,,,2025-10-03 12:34:23
+,714.0,Esther Siyanda,Secretariate,Ministry  of Mines and Minerals Development,,esther.siyanda@mofnp.gov.zm,,,,False,,,,,,2025-10-03 12:34:23
+,715.0,Chomba chileshe,Secretariate,Ministry  of Mines and Minerals Development,,chombachileshe@zambiaeiti.org,,,,False,,,,,,2025-10-03 12:34:23
+,717.0,Naomi Semani,Secretariate,Ministry  of Mines and Minerals Development,,naomi.semani@mmmd.gov.zm,,,,False,,,,,,2025-10-03 12:34:23
+,718.0,Christine Chibobo Chisanga,Secretariate,Ministry  of Mines and Minerals Development,,christinechibobo@gmail.com,,,,False,,,,,,2025-10-03 12:34:23
+,719.0,Kampasu Teddy Musopelo,Secretariate,Ministry  of Mines and Minerals Development,,teddy.musopelo@mmmd.gov.zm,,,,False,,,,,,2025-10-03 12:34:23
+,720.0,Jessy Banda,Secretariate,Ministry  of Mines and Minerals Development,,jessy231277@gmail.com,,,,False,,,,,,2025-10-03 12:34:23
+,721.0,Yewa Kumwenda,Secretariate,Ministry  of Mines and Minerals Development,,kumwenday@mines.org.zm,,,,False,,,,,,2025-10-03 12:34:23
+,722.0,Ospher Mtonga Kahwema,Secretariate,Ministry  of Mines and Minerals Development,,ospher.kahwema@mmmd.gov.zm,,,,False,,,,,,2025-10-03 12:34:23
+,723.0,Daniel Chisala,Secretariate,Ministry  of Mines and Minerals Development,,daniel.chisala@mmmd.gov.zm,,,,False,,,,,,2025-10-03 12:34:23
+,724.0,Inambao Simangolwa,Secretariate,Ministry  of Mines and Minerals Development,,inambao.simangolwa@mmmd.gov.zm,,,,False,,,,,,2025-10-03 12:34:23
+,725.0,Levy Mulilo,Secretariate,Ministry  of Mines and Minerals Development,,levymulilo@gmail.com,,,,False,,,,,,2025-10-03 12:34:23
+,726.0,Enock Chifunda,Secretariate,Ministry  of Mines and Minerals Development,,enock.chifunda@mmmd.gov.zm,,,,False,,,,,,2025-10-03 12:34:23
+,727.0,Irene Mtaja,Secretariate,Ministry  of Mines and Minerals Development,,irene.mtaja@mot.gov.zm,,,,False,,,,,,2025-10-03 12:34:23
+,728.0,Margaret Mwanza,Secretariate,Ministry  of Mines and Minerals Development,,margaret.mwanza@mmmd.gov.zm,,,,False,,,,,,2025-10-03 12:34:23
+,729.0,Inonge Sitenge,Secretariate,Ministry  of Mines and Minerals Development,,inonge.sitenge@mmmd.gov.zm,,,,False,,,,,,2025-10-03 12:34:23
+,730.0,Lucy Shawa,Secretariate,Ministry  of Mines and Minerals Development,,lucy.shawa@mmmd.gov.zm,,,,False,,,,,,2025-10-03 12:34:23
+,731.0,Misozi Mwanza,Secretariate,Ministry  of Mines and Minerals Development,,mwanza.misozi@mmmd.gov.zm,,,,False,,,,,,2025-10-03 12:34:23
+,732.0,Brian Wainyae,Secretariate,Ministry  of Mines and Minerals Development,,brian.wainyae@ppdf.org.zm,,,,False,,,,,,2025-10-03 12:34:23
+,733.0,Kanja Ilunga,Secretariate,Ministry  of Mines and Minerals Development,,kanja.ilunga@ppdf.org.zm,,,,False,,,,,,2025-10-03 12:34:23
+,734.0,Kristina Kanche,Secretariate,Ministry  of Mines and Minerals Development,,kristina@azmec.co.zm,,,,False,,,,,,2025-10-03 12:34:23
+,735.0,Jacyntha Sheleni,Secretariate,Ministry  of Mines and Minerals Development,,jacyntha.sheleni@mmmd.gov.zm,,,,False,,,,,,2025-10-03 12:34:23
+,736.0,Shamwinda Tembo,Secretariate,Ministry  of Mines and Minerals Development,,temboshamwinda@gmail.com,,,,False,,,,,,2025-10-03 12:34:23
+,737.0,Erick Musenga,Secretariate,Ministry  of Mines and Minerals Development,,erick.musenga@mmmd.gov.zm,,,,False,,,,,,2025-10-03 12:34:23
+,738.0,John Matanda,Secretariate,Ministry  of Mines and Minerals Development,,john.matanda@mofnp.gov.zm,,,,False,,,,,,2025-10-03 12:34:23
+,739.0,Eng. Yoram Chulu,Secretariate,Ministry  of Mines and Minerals Development,,yoramchulu@gmail.com,,,,False,,,,,,2025-10-03 12:34:23
+,740.0,Mesta Ngosa Nsangwe,Secretariate,Ministry  of Mines and Minerals Development,,mester.shamakamba@mmmd.gov.zm,,,,False,,,,,,2025-10-03 12:34:23
+,741.0,Eng. Dalitso Mhango,Secretariate,Ministry  of Mines and Minerals Development,,dalitso.mhango@mmmd.gov.zm,,,,False,,,,,,2025-10-03 12:34:23
+,742.0,Chaanza Chifwepa,Secretariate,Ministry  of Mines and Minerals Development,,chaanza.chifwepa@mmmd.gov.zm,,,,False,,,,,,2025-10-03 12:34:23
+,743.0,Lucy Meleki,Secretariate,Ministry  of Mines and Minerals Development,,lucymeleki32@gmail.com,,,,False,,,,,,2025-10-03 12:34:23
+,744.0,Canisius Chishimba,Delegate,Int Sec Updated Zamii,,,260979629457,,,False,,,,,,2025-10-03 12:34:23
+,745.0,Racklon Munsaka,Delegate,Int Sec Updated Zamii,,,260955935271,,,False,,,,,,2025-10-03 12:34:23
+,746.0,Talent Ng’andwe,Delegate,Int Sec Updated Zamii,,,977381309,,,False,,,,,,2025-10-03 12:34:23
+,747.0,Mubanga Chewe,Delegate,Int Sec Updated Zamii,,,260979535486,,,False,,,,,,2025-10-03 12:34:23
+,748.0,Eric Tembo,Delegate,Int Sec Updated Zamii,,,968486445,,,False,,,,,,2025-10-03 12:34:23
+,750.0,Mataa Mutakela,Delegate,Int Sec Updated Zamii,,,977748101,,,False,,,,,,2025-10-03 12:34:23
+,751.0,Margaret Mwanza,Delegate,Int Sec Updated Zamii,,,977886636,,,False,,,,,,2025-10-03 12:34:23
+,752.0,Shamwinda Tembo,Delegate,Int Sec Updated Zamii,,,977329791,,,False,,,,,,2025-10-03 12:34:23
+,753.0,Christine Chibobo Chisanga,Delegate,Int Sec Updated Zamii,,,974796313,,,False,,,,,,2025-10-03 12:34:23
+,754.0,Lumba Mazila,Delegate,Int Sec Updated Zamii,,,977303524,,,False,,,,,,2025-10-03 12:34:23
+,755.0,Edward Shabani,Delegate,Int Sec Updated Zamii,,,977884916,,,False,,,,,,2025-10-03 12:34:23
+,757.0,Chomba Chileshe,Delegate,Int Sec Updated Zamii,,,978661217,,,False,,,,,,2025-10-03 12:34:23
+,758.0,James Mulenga,Delegate,Int Sec Updated Zamii,,,977596440,,,False,,,,,,2025-10-03 12:34:23
+,759.0,Chilombo Michi,Delegate,Int Sec Updated Zamii,,,974003884,,,False,,,,,,2025-10-03 12:34:23
+,760.0,Jackson Kafwanka,Delegate,Int Sec Updated Zamii,,,260966851940,,,False,,,,,,2025-10-03 12:34:23
+,761.0,Grace Njapau,Delegate,Int Sec Updated Zamii,,,977606110,,,False,,,,,,2025-10-03 12:34:23
+,762.0,Mercy Zulu,Delegate,Int Sec Updated Zamii,,,974082528,,,False,,,,,,2025-10-03 12:34:23
+,763.0,Muweme Mwenda,Delegate,Int Sec Updated Zamii,,,975716766,,,False,,,,,,2025-10-03 12:34:23
+,764.0,Mutinta Hadunka,Delegate,Int Sec Updated Zamii,,,974470585,,,False,,,,,,2025-10-03 12:34:23
+,765.0,Kristina Kanche,Delegate,Int Sec Updated Zamii,,,973248274,,,False,,,,,,2025-10-03 12:34:23
+,766.0,Benjamin Chayo|,Delegate,Int Sec Updated Zamii,,,977214368,,,False,,,,,,2025-10-03 12:34:23
+,767.0,Inonge Sitenge,Delegate,Int Sec Updated Zamii,,,977431474,,,False,,,,,,2025-10-03 12:34:23
+,768.0,Alick Musole Mukuma,Delegate,Rocktech ,,,+260966929422,,,False,,,,,,2025-10-03 12:34:23
+,769.0,Aaron Mafunda,Delegate,Rocktech ,,,+260966929422,,,False,,,,,,2025-10-03 12:34:23
+,770.0,Richard Muwamba,Delegate,Rocktech ,,,+260978848124,,,False,,,,,,2025-10-03 12:34:23
+,771.0,SU SHENG YAO,Delegate,Rocktech ,,,+260966929422,,,False,,,,,,2025-10-03 12:34:23
+,772.0,"Hung, Fu Lung",Delegate,Rocktech ,,,+260966929422,,,False,,,,,,2025-10-03 12:34:23
+,773.0,CHU-HAN YAN,Delegate,Rocktech ,,,+260966929422,,,False,,,,,,2025-10-03 12:34:24
+,774.0,Yubai Mubetelela,Delegate,Rocktech ,,,+26097773011,,,False,,,,,,2025-10-03 12:34:24
+,775.0,Sally Silungwe,Delegate,Elantra ,,,,,,False,,,,,,2025-10-03 12:34:24
+,776.0,Preach Silungwe,Delegate,Elantra ,,,,,,False,,,,,,2025-10-03 12:34:24
+,777.0,Anshel Chibuye,Delegate,Barrick,,,977125309,,,False,,,,,,2025-10-03 12:34:24
+,778.0,Moses Mwanza,Delegate,Barrick,,,977532938,,,False,,,,,,2025-10-03 12:34:24
+,779.0,Natasha Nonde,Delegate,Barrick,,,974920234,,,False,,,,,,2025-10-03 12:34:24
+,780.0,Anthony Malenga,Delegate,Barrick,,,977730513,,,False,,,,,,2025-10-03 12:34:24
+,781.0,Choolwe Mwiinga,Delegate,Barrick,,,968759162,,,False,,,,,,2025-10-03 12:34:24
+,782.0,Jacqueline Ngombe,Delegate,Barrick,,,977730362,,,False,,,,,,2025-10-03 12:34:24
+,783.0,Alick Njobvu,Delegate,Barrick,,,977730026,,,False,,,,,,2025-10-03 12:34:24
+,784.0,Belita Kalala,Delegate,Barrick,,,761197910,,,False,,,,,,2025-10-03 12:34:24
+,785.0,Eng. Abdullah Al-Anzi,Delegate,Kingdom Saudi Arabia (Mstry),,,,,,False,,,,,,2025-10-03 12:34:24
+,786.0,Ibrahim Hamid Al-Din,Delegate,Kingdom Saudi Arabia (Mstry),,,,,,False,,,,,,2025-10-03 12:34:24
+,787.0,Hilal Al-Harbi,Delegate,Kingdom Saudi Arabia (Mstry),,,,,,False,,,,,,2025-10-03 12:34:24
+,788.0,H.E. Louis Watum Kabamba,VIP,Dr Congo (Mnstry) ,,,,,,False,,,,,,2025-10-03 12:34:24
+,789.0,H.E. Fifi Masuka Saini,VIP,Dr Congo (Mnstry) ,,,,,,False,,,,,,2025-10-03 12:34:24
+,790.0,Nina Lutter,Delegate,Eu ,,,970014576,,,False,,,,,,2025-10-03 12:34:24
+,791.0,Eric Vitale,Delegate,Eu ,,,962213643,,,False,,,,,,2025-10-03 12:34:24
+,792.0,Bogdan Stefanescu,Delegate,Eu ,,,765650254,,,False,,,,,,2025-10-03 12:34:24
+,793.0,Claudio Bacigalupi,Delegate,Eu ,,,978834710,,,False,,,,,,2025-10-03 12:34:24
+,794.0,Mr. Isaac Kuuwan Mwinbelle,Delegate,Ghana (Geo Survey Dept),,,,,,False,,,,,,2025-10-03 12:34:24
+,795.0,Mrs. Maria Yusuf,Delegate,Ghana (Geo Survey Dept),,,,,,False,,,,,,2025-10-03 12:34:24
+,796.0,Mr. Ngandu Hachombwa,Delegate,National Techbusines Ce,,,962783993,,,False,,,,,,2025-10-03 12:34:25
+,797.0,Mr. Derick Kooma,Delegate,National Techbusines Ce,,,978514997,,,False,,,,,,2025-10-03 12:34:25
+,798.0,Mrs. Pamela Muhongo,Delegate,National Techbusines Ce,,,977622191,,,False,,,,,,2025-10-03 12:34:25
+,799.0,Eng. Moses Kaye,Delegate,National Techbusines Ce,,,975058506,,,False,,,,,,2025-10-03 12:34:25
+,800.0,Wang Wei,Delegate,Zambia China Economic& Trade,,,762981710,,,False,,,,,,2025-10-03 12:34:25
+,801.0,Shi Qinbing,Delegate,Zambia China Economic& Trade,,,962100759,,,False,,,,,,2025-10-03 12:34:25
+,802.0,Lv Ying,Delegate,Cnmc  Southern Africa Regio,,,975076666,,,False,,,,,,2025-10-03 12:34:25
+,803.0,Wang Jingjun,Delegate,Nfc Africa Mining Plc,,,966863789,,,False,,,,,,2025-10-03 12:34:25
+,804.0,Xu Laixiang,Delegate,Nfc Africa Mining Plc,,,969870818,,,False,,,,,,2025-10-03 12:34:25
+,805.0,Cheng Mingming,Delegate,Chambishi Copper Smelter Li,,,963785826,,,False,,,,,,2025-10-03 12:34:25
+,806.0,Tu Xiaobao,Delegate,Chambishi Copper Smelter Li,,,968936510,,,False,,,,,,2025-10-03 12:34:25
+,807.0,Li Hui,Delegate,Cnmc Luanshya Copper Mines,,,260966863797,,,False,,,,,,2025-10-03 12:34:25
+,808.0,Luo Chunhui,Delegate,Cnmc Luanshya Copper Mines,,,260966863778,,,False,,,,,,2025-10-03 12:34:25
+,809.0,Wang Bing,Delegate,Hefei Hengda Jianghai Pump ,,,8613955166709,,,False,,,,,,2025-10-03 12:34:25
+,810.0,Zhu Qingshi,Delegate,Hefei Hengda Jianghai Pump ,,,8613955166707,,,False,,,,,,2025-10-03 12:34:25
+,811.0,Ni Guanglai,Delegate,Hefei Hengda Jianghai Pump ,,,8615855102157,,,False,,,,,,2025-10-03 12:34:25
+,812.0,Feng Xiaohan,Delegate,Hefei Hengda Jianghai Pump ,,,8613019998623,,,False,,,,,,2025-10-03 12:34:25
+,813.0,Pillar,Delegate,Camco Group,,,2607707078080972455936,,,False,,,,,,2025-10-03 12:34:25
+,814.0,Herry,Delegate,Camco Group,,,779519999,,,False,,,,,,2025-10-03 12:34:26
+,815.0,Zhang Jian,Delegate,Nkana Mining& Mineral Proces,,,766709922,,,False,,,,,,2025-10-03 12:34:26
+,816.0,Ju Tao,Delegate,Nkana Mining& Mineral Proces,,,969758002,,,False,,,,,,2025-10-03 12:34:26
+,817.0,Ma Guomin,Delegate,Havfree International Ltd,,,963853838,,,False,,,,,,2025-10-03 12:34:26
+,818.0,Li Shuping,Delegate,Havfree International Ltd,,,967687641,,,False,,,,,,2025-10-03 12:34:26
+,819.0,Wu Quanbing,Delegate,Jiangxi Provincial Burea Ge,,,971942110,,,False,,,,,,2025-10-03 12:34:26
+,820.0,Zhang Jialin,Delegate,Jiangxi Provincial Burea Ge,,,772874779,,,False,,,,,,2025-10-03 12:34:26
+,821.0,Geng Wenpeng,Delegate,Kunxin Minetech Limited,,,778128161,,,False,,,,,,2025-10-03 12:34:26
+,822.0,Chen Fengli,Delegate,Kunxin Minetech Limited,,,778302819,,,False,,,,,,2025-10-03 12:34:26
+,823.0,Su Honghua,Delegate,Naipu Mining Machinery Zambi,,,966949058,,,False,,,,,,2025-10-03 12:34:26
+,824.0,Zeng Qiuping,Delegate,Naipu Mining Machinery Zambi,,,969069109,,,False,,,,,,2025-10-03 12:34:26
+,825.0,Cao Tingjia,Delegate,Ruida Investments Ltd,,,966058899,,,False,,,,,,2025-10-03 12:34:26
+,826.0,Cong Peiqiang,Delegate,Ruida Investments Ltd,,,961877777,,,False,,,,,,2025-10-03 12:34:26
+,827.0,Zhao Huijie,Delegate,Ruida Investments Ltd,,,973288867,,,False,,,,,,2025-10-03 12:34:26
+,828.0,LILY,Delegate,San He Manufacturing Zm Ltd,,,970614336,,,False,,,,,,2025-10-03 12:34:26
+,829.0,SIMWAALE,Delegate,San He Manufacturing Zm Ltd,,,974962991,,,False,,,,,,2025-10-03 12:34:26
+,830.0,Ernnie Mwanza,Delegate,J Mulaisho ,,,,,,False,,,,,,2025-10-03 12:34:27
+,831.0,Valentine Musengu,Delegate,J Mulaisho ,,,,,,False,,,,,,2025-10-03 12:34:27
+,832.0,Suzana Milapo,Delegate,J Mulaisho ,,,,,,False,,,,,,2025-10-03 12:34:27
+,833.0,Dr Tome Hara,Delegate,J Mulaisho ,,,,,,False,,,,,,2025-10-03 12:34:27
+,834.0,Dr Sixtus Mulenga,Delegate,J Mulaisho ,,,,,,False,,,,,,2025-10-03 12:34:27
+,835.0,Mwila Kafwanka,Delegate,J Mulaisho ,,,,,,False,,,,,,2025-10-03 12:34:27
+,836.0,Angela Bwalya,Delegate,J Mulaisho ,,,,,,False,,,,,,2025-10-03 12:34:27
+,837.0,chibesakunda Mwelwa,Delegate,J Mulaisho ,,,,,,False,,,,,,2025-10-03 12:34:27
+,838.0,Lv Peng,Delegate,Lion One Mining Services Zam,,,766639999,,,False,,,,,,2025-10-03 12:34:27
+,839.0,Hu Yibin,Delegate,Lion One Mining Services Zam,,,766977053,,,False,,,,,,2025-10-03 12:34:27
+,840.0,Li Xingda,Delegate,Lion One Mining Services Zam,,,762981769,,,False,,,,,,2025-10-03 12:34:27
+,841.0,Fatuma Mwansa,Delegate,Bank Of China（Zambia）Limited,,,977803024,,,False,,,,,,2025-10-03 12:34:27
+,842.0,Claus Fundanga,Delegate,Bank Of China（Zambia）Limited,,,955631195,,,False,,,,,,2025-10-03 12:34:27
+,843.0,Zhou Shouyu,Delegate,Gly Zambia Exploration Comp ,,,975440864,,,False,,,,,,2025-10-03 12:34:27
+,844.0,Hu Shuai,Delegate,Gly Zambia Exploration Comp ,,,763068818,,,False,,,,,,2025-10-03 12:34:27
+,845.0,Guo Jieqing,Delegate,African Jiangte Energy Mini,,,978200001,,,False,,,,,,2025-10-03 12:34:27
+,846.0,Yu Fazheng,Delegate,African Jiangte Energy Mini,,,979605555,,,False,,,,,,2025-10-03 12:34:27
+,847.0,Gu Wenjiang,Delegate,Donzam Exploration & Mining Zam,,,777765555,,,False,,,,,,2025-10-03 12:34:27
+,848.0,Zhang Erpeng,Delegate,Donzam Exploration & Mining Zam,,,761473678,,,False,,,,,,2025-10-03 12:34:27
+,849.0,Wang Huarong,Delegate,Zambia North Mining Corporation,,,973135085,,,False,,,,,,2025-10-03 12:34:28
+,850.0,Xu Peng,Delegate,Zambia North Mining Corporation,,,779556666,,,False,,,,,,2025-10-03 12:34:28
+,851.0,Yuan Liming,Delegate,Rongxing Investments Ltd.,,,969739261,,,False,,,,,,2025-10-03 12:34:28
+,852.0,Xiao Wenjuan,Delegate,Rongxing Investments Ltd.,,,771016788,,,False,,,,,,2025-10-03 12:34:28
+,853.0,Qian Qiang,Delegate,Tongguan Mines Construction Zam,,,964549480,,,False,,,,,,2025-10-03 12:34:28
+,854.0,Shen Weifeng,Delegate,Handar Mining Zambia Company Li,,,8613600083679,,,False,,,,,,2025-10-03 12:34:28
+,855.0,Xu Longxing,Delegate,Handar Mining Zambia Company Li,,,8613081813428,,,False,,,,,,2025-10-03 12:34:28
+,856.0,Wang Shilin,Delegate,Handar Mining Zambia Company Li,,,572270896,,,False,,,,,,2025-10-03 12:34:28
+,857.0,Yao Zhiyong,Delegate,Handar Mining Zambia Company Li,,,962879707,,,False,,,,,,2025-10-03 12:34:28
+,858.0,Liu Fengli,Delegate,Sino Certification & Inspection,,,8618622387233,,,False,,,,,,2025-10-03 12:34:28
+,859.0,Wu Cuiyu,Delegate,Sino Certification & Inspection,,,8617608210916,,,False,,,,,,2025-10-03 12:34:28
+,860.0,Li Wenjie,Delegate,Fifteen Mcc Africa Construction,,,776985222,,,False,,,,,,2025-10-03 12:34:29
+,861.0,Li Hongfang,Delegate,Fifteen Mcc Africa Construction,,,776245895,,,False,,,,,,2025-10-03 12:34:29
+,862.0,Yin Faming,Delegate,Fifteen Mcc Africa Construction,,,765156754,,,False,,,,,,2025-10-03 12:34:29
+,863.0,Yuan Shengchao,Delegate,Fifteen Mcc Africa Construction,,,972293190,,,False,,,,,,2025-10-03 12:34:29
+,864.0,Zhang Xiaojian,Delegate,Fifteen Mcc Africa Construction,,,968089697,,,False,,,,,,2025-10-03 12:34:29
+,865.0,Zhou Qiang,Delegate,Fifteen Mcc Africa Construction,,,975213806,,,False,,,,,,2025-10-03 12:34:29
+,866.0,Song Haojun,Delegate,Fifteen Mcc Africa Construction,,,775318319,,,False,,,,,,2025-10-03 12:34:29
+,867.0,Gui Jiahuang,Delegate,Fifteen Mcc Africa Construction,,,965332877,,,False,,,,,,2025-10-03 12:34:29
+,868.0,Wang Qi,Delegate,Fifteen Mcc Africa Construction,,,975801505,,,False,,,,,,2025-10-03 12:34:29
+,869.0,Wang Pengfei,Delegate,Fifteen Mcc Africa Construction,,,969309842,,,False,,,,,,2025-10-03 12:34:29
+,870.0,Zhang Zhikang,Delegate,Fifteen Mcc Africa Construction,,,973215192,,,False,,,,,,2025-10-03 12:34:29
+,871.0,Wang Zhihai,Delegate,Fifteen Mcc Africa Construction,,,776934766,,,False,,,,,,2025-10-03 12:34:29
+,872.0,Lei Bo,Delegate,Fifteen Mcc Africa Construction,,,762405026,,,False,,,,,,2025-10-03 12:34:29
+,873.0,Gu Shanshui,Delegate,Fifteen Mcc Africa Construction,,,969186472,,,False,,,,,,2025-10-03 12:34:29
+,874.0,Ruan Yedong,Delegate,Fifteen Mcc Africa Construction,,,968089697,,,False,,,,,,2025-10-03 12:34:29
+,875.0,Wu Wenkai,Delegate,Fifteen Mcc Africa Construction,,,968089697,,,False,,,,,,2025-10-03 12:34:29
+,876.0,Sun Fei,Delegate,Fifteen Mcc Africa Construction,,,968089697,,,False,,,,,,2025-10-03 12:34:29
+,877.0,Zhang Wei,Delegate,Fifteen Mcc Africa Construction,,,968089697,,,False,,,,,,2025-10-03 12:34:29
+,878.0,Xiong Gangda,Delegate,Fifteen Mcc Africa Construction,,,968089697,,,False,,,,,,2025-10-03 12:34:29
+,879.0,Yu Xue,Delegate,China Nonferrous Metals Innovat,,,779066779,,,False,,,,,,2025-10-03 12:34:29
+,880.0,Zhou Cunkuan,Delegate,China Nonferrous Metals Innovat,,,779095823,,,False,,,,,,2025-10-03 12:34:29
+,881.0,Sydney Katongo Chileya,Delegate,Cmeaz Staff Members,,,966863639,,,False,,,,,,2025-10-03 12:34:29
+,882.0,Zhang Ronghua,Delegate,Cmeaz Staff Members,,,961533333,,,False,,,,,,2025-10-03 12:34:29
+,883.0,Zhang Yiqi,Delegate,Cmeaz Staff Members,,,977254358,,,False,,,,,,2025-10-03 12:34:29
+,884.0,Li Xiang,Delegate,Cmeaz Staff Members,,,962509521,,,False,,,,,,2025-10-03 12:34:29
+,885.0,Wang Xin,Delegate,Cmeaz Staff Members,,,765406167,,,False,,,,,,2025-10-03 12:34:29
+,886.0,Mi Linan,Delegate,Cmeaz Staff Members,,,973520502,,,False,,,,,,2025-10-03 12:34:29
+,887.0,Huang Shanfeng,Delegate,Hunan Wuxin Tunnel Intelligent ,,,778123558,,,False,,,,,,2025-10-03 12:34:29
+,888.0,Xie Yuhang,Delegate,Hunan Wuxin Tunnel Intelligent ,,,978731671,,,False,,,,,,2025-10-03 12:34:29
+,889.0,Chen,Delegate,Teckson Venture Limited,,,767759955,,,False,,,,,,2025-10-03 12:34:29
+,890.0,Zhu,Delegate,Teckson Venture Limited,,,767759955,,,False,,,,,,2025-10-03 12:34:29
+,891.0,Wang Liang,Delegate,Zhongguancun Green Mine Industr,,,8613910202217,,,False,,,,,,2025-10-03 12:34:29
+,892.0,Shan Qiulin,Delegate,Zhongguancun Green Mine Industr,,,8615010682780,,,False,,,,,,2025-10-03 12:34:29
+,893.0,Ning Rundong,Delegate, University Of Hong Kong,,,8613466583005,,,False,,,,,,2025-10-03 12:34:29
+,894.0,Zhang Juan,Delegate,Beijing Landscape Consulting Co,,,8613552078928,,,False,,,,,,2025-10-03 12:34:29
+,895.0,Kanikkannan Sharanya,Delegate,World Animal Protection,,,,,,False,,,,,,2025-10-03 12:34:30
+,896.0,Sam Choshi,Delegate,Synergy Consulting Infrastructu,,,27114033077,,,False,,,,,,2025-10-03 12:34:30
+,897.0,Dan Sonnenberg,Delegate,Synergy Consulting Infrastructu,,,27114033077,,,False,,,,,,2025-10-03 12:34:30
+,898.0,Hu Bingeng,Delegate,Nms  Investmeint  Zanbia Ltd,,,260767517890,,,False,,,,,,2025-10-03 12:34:30
+,899.0,Wang Chunyan,Delegate,Sino African Vision Cultural Me,,,772529952,,,False,,,,,,2025-10-03 12:34:30
+,900.0,Zhang Zepeng,Delegate,Sino African Vision Cultural Me,,,974524919,,,False,,,,,,2025-10-03 12:34:30
+,901.0,Betty,Delegate,Sino African Vision Cultural Me,,,979536591,,,False,,,,,,2025-10-03 12:34:30
+,902.0,Issac,Delegate,Sino African Vision Cultural Me,,,967601160,,,False,,,,,,2025-10-03 12:34:30
+,903.0,Moses,Delegate,Sino African Vision Cultural Me,,,978773512,,,False,,,,,,2025-10-03 12:34:30
+,904.0,Peter,Delegate,Sino African Vision Cultural Me,,,972262738,,,False,,,,,,2025-10-03 12:34:30
+,905.0,Zhang Jian,Delegate,Hua Zan Mining Investments Ltd,,,260966585858,,,False,,,,,,2025-10-03 12:34:30
+,906.0,Li Tianxin,Delegate,Hua Zan Mining Investments Ltd,,,260570940969,,,False,,,,,,2025-10-03 12:34:30
+,907.0,Chen Zifei,Delegate,Sinomine Kitumba Minerals Compa,,,762677777,,,False,,,,,,2025-10-03 12:34:30
+,908.0,Shen Xin,Delegate,Sinomine Kitumba Minerals Compa,,,967158888,,,False,,,,,,2025-10-03 12:34:30
+,909.0,Evans,Delegate,Sinomine Kitumba Minerals Compa,,,965135200,,,False,,,,,,2025-10-03 12:34:30
+,910.0,DR. PAMELA NAKAMBA,Delegate,State House,,,,,,False,,,,,,2025-10-03 12:34:31
+,911.0,MS. CHIPO MWANAWASA,Delegate,State House,,,,,,False,,,,,,2025-10-03 12:34:31
+,912.0,MR. JOSEPH LUNGU,Delegate,State House,,,,,,False,,,,,,2025-10-03 12:34:31
+,913.0,MR. JITO KAYUMBA,Delegate,State House,,,,,,False,,,,,,2025-10-03 12:34:31
+,914.0,MR. CHRISTOPHER MUNDIA,Delegate,State House,,,,,,False,,,,,,2025-10-03 12:34:31
+,915.0,MR. WILLIS CHIPANGO,Delegate,Ministry Of Finance,,,,,,False,,,,,,2025-10-03 12:34:31
+,916.0,MR. KAYULA CHIMFWEMBE,Delegate,Ministry Of Finance,,,,,,False,,,,,,2025-10-03 12:34:31
+,917.0,MRS. VESTINA SINKAMBA,Delegate,Ministry Of Finance,,,,,,False,,,,,,2025-10-03 12:34:31
+,918.0,MR. ISAAC MUNJUNGA,Delegate,Ministry Of Finance,,,,,,False,,,,,,2025-10-03 12:34:31
+,919.0,MR. JOHN SILWIMBA,Delegate,Ministry Of Finance,,,,,,False,,,,,,2025-10-03 12:34:31
+,920.0,H.E. Saana Halinen,Delegate,Ebassy Of Finland,,,979771375,,,False,,,,,,2025-10-03 12:34:31
+,921.0,Mr. Jan Koivu,Delegate,Ebassy Of Finland,,,977771378,,,False,,,,,,2025-10-03 12:34:31
+,922.0,Aura Mwiinga,Delegate,Ebassy Of Finland,,,976542134,,,False,,,,,,2025-10-03 12:34:31
+,923.0,Dr Richard Banda,Delegate,Ministry Of Housing And Infrast,,,9791134640955760640,,,False,,,,,,2025-10-03 12:34:31
+,924.0,STEVEN KAPEPALA MAKUNKU,Delegate,Ministry Of Housing And Infrast,,,978521213,,,False,,,,,,2025-10-03 12:34:31
+,925.0,Mabuchi Chilembo,Delegate,Ministry Of Housing And Infrast,,,966102501,,,False,,,,,,2025-10-03 12:34:31
+,926.0,Denis Bwalya Kasonde,Delegate,Ministry Of Housing And Infrast,,,955758840,,,False,,,,,,2025-10-03 12:34:31
+,927.0,Clive Khan,Delegate,Ministry Of Housing And Infrast,,,968711077,,,False,,,,,,2025-10-03 12:34:31
+,928.0,"Hon. Elias Mubanga, MP",Delegate,Ministry Of Small And Medium En,,,260979701178,,,False,,,,,,2025-10-03 12:34:31
+,929.0,Mrs. Mutelo Subeta K.,Delegate,Ministry Of Small And Medium En,,,260977787032,,,False,,,,,,2025-10-03 12:34:31
+,930.0,Nicholas Chikwenya,Delegate,Ministry Of Small And Medium En,,,+260977767556,,,False,,,,,,2025-10-03 12:34:31
+,931.0,Pamela Chitulang’oma,Delegate,Ministry Of Small And Medium En,,,260973301943,,,False,,,,,,2025-10-03 12:34:31
+,932.0,Kennedy Mumba,Delegate,Ministry Of Small And Medium En,,,260955600130,,,False,,,,,,2025-10-03 12:34:31
+,933.0,Ms Akakambama Daka,Delegate,Ministry Of Foreign Affairs,,,979937439,,,False,,,,,,2025-10-03 12:34:31
+,934.0,Mr Ngandwe Kapaya,Delegate,Ministry Of Foreign Affairs,,,964913188,,,False,,,,,,2025-10-03 12:34:31
+,935.0,Mr Lubasi Mungandi,Delegate,Ministry Of Foreign Affairs,,,969529847,,,False,,,,,,2025-10-03 12:34:31
+,936.0,Mr Bentry Siamalambwa,Delegate,Ministry Of Foreign Affairs,,,975724700,,,False,,,,,,2025-10-03 12:34:31
+,937.0,Mrs Muntanga Mukelabi,Delegate,Ministry Of Foreign Affairs,,,977577172,,,False,,,,,,2025-10-03 12:34:31
+,938.0,Mr. Nkumbu Chilele,Delegate,Planet Gold ,,,+260975463611,,,False,,,,,,2025-10-03 12:34:32
+,939.0,Ms. Gift Mubanga,Delegate,Planet Gold ,,,+260964029425,,,False,,,,,,2025-10-03 12:34:32
+,940.0,Mr. Roger René Tissot,VIP,Planet Gold ,,,+12505408290,,,False,,,,,,2025-10-03 12:34:32
+,941.0,Ms. Abigail Mailenge,Delegate,Planet Gold ,,,+260955901885,,,False,,,,,,2025-10-03 12:34:32
+,942.0,Mr. Munsanje Chikatala,Delegate,Planet Gold ,,,260964531813,,,False,,,,,,2025-10-03 12:34:32
+,943.0,Mr. Jefferson Kapasa,Delegate,Planet Gold ,,,260974588954,,,False,,,,,,2025-10-03 12:34:32
+,944.0,Dr. Chozi Lungu,Delegate,Planet Gold ,,,+260966954007,,,False,,,,,,2025-10-03 12:34:32
+,945.0,Dr. Lee Mudenda,Delegate,Planet Gold ,,,+260772356040,,,False,,,,,,2025-10-03 12:34:32
+,946.0,Mr. Martfold Mumba,Delegate,Planet Gold ,,,+260953570890,,,False,,,,,,2025-10-03 12:34:32
+,947.0,The remaining three (3) names,Delegate,Planet Gold ,,,,,,False,,,,,,2025-10-03 12:34:32
+,948.0,Mubanga Mundashi,Delegate,Zccm Ih ,,,,,,False,,,,,,2025-10-03 12:34:32
+,949.0,Lunda Chiluba,Delegate,Zccm Ih ,,,,,,False,,,,,,2025-10-03 12:34:32
+,950.0,Paul Mukuka,Delegate,Zccm Ih ,,,,,,False,,,,,,2025-10-03 12:34:32
+,951.0,Suzyo Kumwenda,Delegate,Zccm Ih ,,,,,,False,,,,,,2025-10-03 12:34:32
+,952.0,Kapalakasha Mulenga,Delegate,Zccm Ih ,,,,,,False,,,,,,2025-10-03 12:34:32
+,953.0,Kambole Mwanakatwe,Delegate,Zccm Ih ,,,,,,False,,,,,,2025-10-03 12:34:32
+,954.0,Kateule Nakazwe,Delegate,Zccm Ih ,,,,,,False,,,,,,2025-10-03 12:34:32
+,955.0,Andrew Mwanza,Delegate,Zccm Ih ,,,,,,False,,,,,,2025-10-03 12:34:32
+,956.0,Hopekins Tembo,Delegate,Zccm Ih ,,,,,,False,,,,,,2025-10-03 12:34:32
+,957.0,Chanda Chabala,Delegate,Zccm Ih ,,,,,,False,,,,,,2025-10-03 12:34:32
+,958.0,MS. SOFIA HALLQVIST,Delegate,Swedish Embassy,,,260978775359,,,False,,,,,,2025-10-03 12:34:32
+,959.0,MS. PEZO PHIRI,Delegate,Swedish Embassy,,,260977695824,,,False,,,,,,2025-10-03 12:34:32
+,960.0,MR. SAID ABDU,Delegate,Swedish Embassy,,,46735360200,,,False,,,,,,2025-10-03 12:34:32
+,961.0,MS. CLARA BERGQVIST,Delegate,Swedish Embassy,,,260777981011,,,False,,,,,,2025-10-03 12:34:32
+,962.0,MR. ZIMBA MAFAYO,Delegate,Ministry Of Energy,,,977466388,,,False,,,,,,2025-10-03 12:34:32
+,963.0,MR. MICHEAL MULASIKWANDA,Delegate,Ministry Of Energy,,,979957181,,,False,,,,,,2025-10-03 12:34:32
+,964.0,FLORENCE KAMBIKAMBI,Delegate,Ministry Of Energy,,,974348097,,,False,,,,,,2025-10-03 12:34:32
+,965.0,OZIRIO SIABALIMA CHAILA,Delegate,Ministry Of Energy,,,977647384,,,False,,,,,,2025-10-03 12:34:32
+,966.0,CLEMENT CHIWELE,Delegate,Ministry Of Energy,,,979413853,,,False,,,,,,2025-10-03 12:34:32
+,967.0,Chilufya Kunda Kabati,Delegate,Ministry Of Livestock And Fishe,,,260974325854,,,False,,,,,,2025-10-03 12:34:32
+,968.0,Grandson Matale Namafuka,Delegate,Ministry Of Livestock And Fishe,,,+260977409222,,,False,,,,,,2025-10-03 12:34:32
+,969.0,Mubital Akapelwa,Delegate,Zccm Ih ,,,,,,False,,,,,,2025-10-03 12:46:06
+,970.0,Anthony M.,VIP,First Quantum Minerals,Country Director,anthony.mukutuma@fqml.com,965624300,,,False,,,,,,2025-10-03 12:46:06
+,971.0,Dr. Godwin Mooba,VIP,First Quantum Minerals,Country Manager,godwin.beene@fqml.com,963879673,,,False,,,,,,2025-10-03 12:46:06
+,972.0,Kyansenga,Delegate,First Quantum Minerals,Corporate Affairs Manager,kyansenga.chitoshi@fqml.com,961640727,,,False,,,,,,2025-10-03 12:46:06
+,973.0,Jon Roger,Delegate,First Quantum Minerals,Exploration Regional Manager,jon.stacey@fqml.com,966206525,,,False,,,,,,2025-10-03 12:46:06
+,974.0,Arnold,Delegate,First Quantum Minerals,Compliance Specialist,arnold.malambo@fqml.com,969456306,,,False,,,,,,2025-10-03 12:46:06
+,975.0,Jed Benjamin,Delegate,First Quantum Minerals,Infrastructure Development Lead,jed.goldstein@fqml.com,769920400,,,False,,,,,,2025-10-03 12:46:06
+,976.0,Kachiwala,Delegate,First Quantum Minerals,Environmental Manger,kachiwala.sapalo@fqml.com,967208469,,,False,,,,,,2025-10-03 12:46:06
+,977.0,Haggai,Delegate,First Quantum Minerals,Senior Contracts Officer,haggai.simbaya@fqml.com,977351111,,,False,,,,,,2025-10-03 12:46:06
+,978.0,Prof. Gavin,Delegate,First Quantum Minerals,Professor,g.m.hilson@surrey.ac.uk,447958035451,,,False,,,,,,2025-10-03 12:46:06
+,979.0,Haruna,Delegate,First Quantum Minerals,Corporate Office,harunamichelojc@gmail.com,977633500,,,False,,,,,,2025-10-03 12:46:06
+,980.0,Inonge,Delegate,First Quantum Minerals,Corporate Office,mutaleinonge@gmail.com,15484689397,,,False,,,,,,2025-10-03 12:46:06
+,981.0,Clara,Delegate,First Quantum Minerals,Corporate Office,clarakalaba12@gmail.com,966852220,,,False,,,,,,2025-10-03 12:46:06
+,982.0,Guo Jieqing,Delegate,African Jiangte Energy Mini,,,978200001,,,False,,,,,,2025-10-03 12:46:10
+,983.0,Yu Fazheng,Delegate,African Jiangte Energy Mini,,,979605555,,,False,,,,,,2025-10-03 12:46:10
+,984.0,Mr. Crusivia C. Hichikumba,Delegate,"Ministry Of Commerce, Trade An ",,,,,,False,,,,,,2025-10-03 12:46:15
+,985.0,Mr. Musokotwane Sichizuwe,Delegate,"Ministry Of Commerce, Trade An ",,,,,,False,,,,,,2025-10-03 12:46:15
+,986.0,Mrs. Margaret Chikuba,Delegate,"Ministry Of Commerce, Trade An ",,,,,,False,,,,,,2025-10-03 12:46:15
+,987.0,Mr. Brian Kazembe,Delegate,"Ministry Of Commerce, Trade An ",,,,,,False,,,,,,2025-10-03 12:46:15
+,988.0,Mr. Katongo Willombe,Delegate,"Ministry Of Commerce, Trade An ",,,,,,False,,,,,,2025-10-03 12:46:15
+,989.0,MRS.  PATRICIA MANGWANDA,VIP,  Zimbabwean Embassy,,,,,,False,,,,,,2025-10-03 12:46:15
+,990.0,MR.  BENARD NGWENYA,Delegate,  Zimbabwean Embassy,,,,,,False,,,,,,2025-10-03 12:46:15
+,991.0,Richard Mfumu Lungu,Delegate,Ministry Of Green Economy And E,,,975794217,,,False,,,,,,2025-10-03 12:46:15
+,992.0,Karen Banda – Etondo,Delegate,Ministry Of Green Economy And E,,,975160942,,,False,,,,,,2025-10-03 12:46:15
+,993.0,Christopher Kanema,Delegate,Ministry Of Green Economy And E,,,977747106,,,False,,,,,,2025-10-03 12:46:15
+Liberia,994.0,Brisbane S. Mehn,Delegate,University of Zambia,Mr.,2023008462@student.unza.zm,777236523,,,False,,,,,,2025-10-05 10:49:46
+Zambian,995.0,Derrick C. Mwengula,Delegate,University of Zambia,Mr.,dcmwengula@gmail.com,977391593,,,False,,,,,,2025-10-05 10:49:46
+DR Congo,996.0,PATRICE KIZITO,Delegate,University of Zambia,Mr.,kizitopatricebaharanyi@gmail.com,765912830,,,False,,,,,,2025-10-05 10:49:46
+DR Congo,997.0,Robert Tshilumba Kapajika,Delegate,University of Zambia,Mr.,robertkapajika@gmail.com,779895540,,,False,,,,,,2025-10-05 10:49:46
+Liberia,998.0,Daniel Paye Gbaintor Jr.,Delegate,University of Zambia,Mr.,dgbaintor.dpgj@gmail.com,977351088,,,False,,,,,,2025-10-05 10:49:46
+Zambian,999.0,Wisdom Kazumba,Delegate,University of Zambia,Mr.,wisdomkazumba@gmail.com,978294933,,,False,,,,,,2025-10-05 10:49:46
+DR Congo,1000.0,Maseka Kavumbi Tegra,Delegate,University of Zambia,Mr.,,774306785,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1001.0,Christopher Shilengwe,Delegate,University of Zambia,Mr.,shilengwe93@gmail.com,973537924,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1002.0,Boyd Mutengo,Delegate,University of Zambia,Mr.,mutalemutengo@yahoo.com,977267602,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1003.0,Lukwanda William,Delegate,University of Zambia,Mr.,lukwandawilliam@yahoo.com,977221810,,,False,,,,,,2025-10-05 10:49:46
+Tanzania,1004.0,Gideon Yisambi,Delegate,University of Zambia,Mr.,gideonyisambi@gmail.com,979640323,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1005.0,CHIPANTA Cyrus,Delegate,University of Zambia,Mr.,chipantacyrus1@gmail.com,978801165,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1006.0,UZZIAH MASHIKINI,Delegate,University of Zambia,Ms.,,970510869,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1007.0,Chabu Ngosa,Delegate,University of Zambia,Ms.,,965431600,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1008.0,Ngungu Davison,Delegate,University of Zambia,Mr.,,779692168,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1009.0,Isaac Nchimunya,Delegate,University of Zambia,Mr.,isaacnchimunya7@gmail.com,960836061,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1010.0,Masuka Kamboyi,Delegate,University of Zambia,Ms.,masukakamboyi@gmail.com,960393815,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1011.0,Banda Gerald,Delegate,University of Zambia,Mr.,geraldcbanda022@gmail.com,776172356,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1012.0,Patrick Bwalya,Delegate,University of Zambia,Mr.,patrickbwalya230@gmail.com,779216997,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1013.0,Anne Namonje Sichinga,Delegate,University of Zambia,Ms.,namonjeas04@gmail.com,974305840,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1014.0,Blessings Mwape,Delegate,University of Zambia,Ms.,,966512344,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1015.0,Chawanangwa mwansa,Delegate,University of Zambia,Ms.,chawamwansa@gmail.com,772403057,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1016.0,Ruth Katyamba,Delegate,University of Zambia,Ms.,katyambaruth@gmail.com,771992375,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1017.0,Sefuke Grace,Delegate,University of Zambia,Ms.,gracechisomosefuke@gmail.com,,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1018.0,Buumba Mwila Masinja,Delegate,University of Zambia,Ms.,,766762034,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1019.0,Sikamanga Field,Delegate,University of Zambia,Mr.,fieldsikamanga37@gmail.com,975057068,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1020.0,Nkonjera Ndanji,Delegate,University of Zambia,Mr.,,777322705,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1021.0,Favour Mengo,Delegate,University of Zambia,Ms.,favourmengo18@gmail.com,978798481,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1022.0,Grace Musungwa,Delegate,University of Zambia,Ms.,,973850385,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1023.0,Natasha Musariri,Delegate,University of Zambia,Ms.,,768819505,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1024.0,Osman Hansukwa,Delegate,University of Zambia,Mr.,osmanhansukwa@icloud.com,762580457,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1025.0,Kanyanta Chisela,Delegate,University of Zambia,Ms.,,969720254,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1026.0,Prince Chitabe,Delegate,University of Zambia,Mr.,chitabeprince01@gmail.com,776596747,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1027.0,Nosia Mbutao,Delegate,University of Zambia,Ms.,,960348646,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1028.0,Theophilus kolobeki,Delegate,University of Zambia,Mr.,,,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1029.0,Godfrey Chitalu,Delegate,University of Zambia,Mr.,,979834190,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1030.0,Mumba Chisenga,Delegate,University of Zambia,Mr.,,768580001,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1031.0,Happy Nankamba,Delegate,University of Zambia,Ms.,,570154350,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1032.0,⁠Phiri Elinah,Delegate,University of Zambia,Ms.,,777940794,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1033.0,Chimbwe Bbuku,Delegate,University of Zambia,Mr.,,777939374,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1034.0,Chewe chewe,Delegate,University of Zambia,Mr.,chewejopa44@gmail.com,766868288,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1035.0,Petience Chipampe,Delegate,University of Zambia,Ms.,chipampepetience@gmail.com,973626329,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1036.0,Emmanuela Mulenga,Delegate,University of Zambia,Ms.,,776216866,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1037.0,Tumba Kapijimpanga,Delegate,University of Zambia,Ms.,,974200468,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1038.0,MULAMFU Siloka,Delegate,University of Zambia,Mr.,,776231079,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1039.0,Juliet Yona,Delegate,University of Zambia,Ms.,julietyona03@gmail.com,760257668,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1040.0,Alex Mkumba Phiri,Delegate,University of Zambia,Mr.,,975992592,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1041.0,Mwamba Ngulube,Delegate,University of Zambia,Ms.,,976715810,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1042.0,Nathan Kilaye,Delegate,University of Zambia,Mr.,nathan.kilaye@gmail.com,976407289,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1043.0,Rejoyce Bwalya,Delegate,University of Zambia,Mr.,,768900625,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1044.0,Gabriel Makayi,Delegate,University of Zambia,Mr.,makayigabriel19@gmail.com,768900625,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1045.0,Reagan Mupuchi,Delegate,University of Zambia,Mr.,,767812255,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1046.0,Wellington Lwembe,Delegate,University of Zambia,Mr.,wellingtonlwembe5070@gmail.com,767812255,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1047.0,Mumba Mbasela,Delegate,University of Zambia,Ms.,vanessambasela7@gmail.com,976981310,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1048.0,Paul shoolo,Delegate,University of Zambia,Mr.,,761542690,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1049.0,Mwaka Mweetwa,Delegate,University of Zambia,Mr.,mweetwamwaka@icloud.com,761542690,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1050.0,Limpo Siputuma,Delegate,University of Zambia,Mr.,limposiputuma@gmail.com,972545261,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1051.0,Bweembelo chiinda,Delegate,University of Zambia,Ms.,,976715810,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1052.0,Martha Mulopu,Delegate,University of Zambia,Ms.,marthamulopu@gmail.com,771991802,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1053.0,Bronner Simataa,Delegate,University of Zambia,Ms.,simataabronner@gmail.com,762733184,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1054.0,Chikwanda silungwe,Delegate,University of Zambia,Mr.,,772992719,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1055.0,Omega Nyoni,Delegate,University of Zambia,Mr.,nyoniomega2@gmail.com,772992719,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1056.0,Tikondwe Chisenga,Delegate,University of Zambia,Mr.,tikondwechisenga@gmail.com,968805231,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1057.0,Brenda Nyaane,Delegate,University of Zambia,Ms.,,779452763,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1058.0,Angela Mapana,Delegate,University of Zambia,Mr.,mapanaangela2003@gmail.com,779452763,,,False,,,,,,2025-10-05 10:49:46
+Zimbabwe,1059.0,Matesamwa Rhumbidzo,Delegate,University of Zambia,Mr.,matesamwarhumbidzo@gmail.com,,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1060.0,Bwalya Humphrey Musonda,Delegate,University of Zambia,Mr.,bhm.musonda@gmail.com,770898524,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1061.0,Tebuho Whende,Delegate,University of Zambia,Mr.,tebuhowhende203@gmail.com,771991998,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1062.0,Mwiza Chitalima,Delegate,University of Zambia,Mr.,mwizachitalima@gmail.com,972204177,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1063.0,Mwape Philip,Delegate,University of Zambia,Mr.,mwapephilip14@gmail.com,762484349,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1064.0,Nommia Kolala,Delegate,University of Zambia,Ms.,nommiakolala24@gmail.com,962447006,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1065.0,Collins Bwembya,Delegate,University of Zambia,Mr.,,966287576,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1066.0,Chinyanta Bwalya,Delegate,University of Zambia,Mr.,,971869675,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1067.0,Job Mawelela,Delegate,University of Zambia,Mr.,mawelelaj187@gmail.com,971869675,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1068.0,Chidunuka Nivia,Delegate,University of Zambia,Ms.,,970133885,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1069.0,Machayi Maggie,Delegate,University of Zambia,Ms.,machayimaggie466@gmail.com,970133885,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1070.0,Nkumbu Sakala,Delegate,University of Zambia,Ms.,nkumbusakala597@gmail.com,973712979,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1071.0,Paul Kabunda,Delegate,University of Zambia,Mr.,,978834860,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1072.0,Sean Cornhill,Delegate,University of Zambia,Mr.,seancornhill22@gmail.com,978471134,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1073.0,Kalumba Mirriam,Delegate,University of Zambia,Ms.,mirriamkalumba42@gmail.com,776590403,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1074.0,Mulenga T Malisawa,Delegate,University of Zambia,Mr.,,974824569,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1075.0,Chanda Mwamba,Delegate,University of Zambia,,,978622632,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1076.0,Chisenga Chibuye,Delegate,University of Zambia,Ms.,chisechelsea@gmail.com,978106310,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1077.0,Kabwe Felix,Delegate,University of Zambia,Mr.,kabwefelix@gmail.com,973712979,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1078.0,Khutoma Thabo Mirriam,Delegate,University of Zambia,Ms.,mirriamkhutoma0@gmail.com,973864542,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1079.0,Kawewe Chipango,Delegate,University of Zambia,Mr.,chipazkawewe@icloud.com,969536179,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1080.0,Raphael Sakala,Delegate,University of Zambia,Mr.,raphaelsakala67@gmail.com,770500198,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1081.0,Zanji Paul Sichembe,Delegate,University of Zambia,Mr.,paulsichembe33@gmail.com,977490427,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1082.0,Gloria Ngoma,VIP,Zambia Public Procurement Authority,Ms.,gloria.ngoma@zppa.org.zm,966760042,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1083.0,Luckson Siame,Delegate,Zambia Public Procurement Authority,Mr.,luckson.siame@zppa.org.zm,976231181,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1084.0,Steven Mumbi,Delegate,Zambia Public Procurement Authority,Mr.,steven.mumbi@zppa.org.zm,955763761,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1085.0,Lewis Mumba,Delegate,Zambia Public Procurement Authority,Mr.,lewis.mumba@zppa.org.zm,977459020,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1086.0,Inutu Mushambatwa,Delegate,Zambia Public Procurement Authority,Ms.,inutu.mushambatwa@zppa.org.zm,973999563,,,False,,,,,,2025-10-05 10:49:46
+Zambia,1087.0,Mrs. Changu C. Mapipo,Delegate,National Council for Construction,Business Development Manager,changu.chibwe@ncc.org.zm,977776347,,,False,,,,,,2025-10-05 10:49:46
+Zambia,1088.0,Ms. Timothy Musole,Delegate,National Council for Construction,Manager Materials Laboratory,timothy.musole@ncc.org.zm,979316036,,,False,,,,,,2025-10-05 10:49:46
+Zambia,1089.0,Mr. Chowani Malundu,Delegate,National Council for Construction,"Manager, Procurement & Supplies",chowani.malundu@ncc.org.zm,977821220,,,False,,,,,,2025-10-05 10:49:46
+Zambia,1090.0,Ms.Muwanei Lewanika,Delegate,National Council for Construction,Business Development Officer,muwanei.lewanika@ncc.org.zm,977842882,,,False,,,,,,2025-10-05 10:49:46
+Indian,1091.0,Mr. Alok Ranjan Jha,Delegate,"High Commission of India, Lusaka",High Commissioner of the Republic of India to Zambia and Special Representative of India to COMESA,hc.lusaka@mea.gov.in,977151933,,,False,,,,,,2025-10-05 10:49:46
+Indian,1092.0,Mr. Arif Saeed,Delegate,"High Commission of India, Lusaka","Counsellor ( Political, Culture & Community Affairs)",pol.lusaka@mea.gov.in,73987819,,,False,,,,,,2025-10-05 10:49:46
+Indian,1093.0,Mr. Murugesan Ramaswamy,Delegate,"High Commission of India, Lusaka","Second Secretary ( Commerce, Consular & Development Cooperation) & Head of Chancery",com.lusaka@mea.gov.in,965517267,,,False,,,,,,2025-10-05 10:49:46
+Indian,1094.0,Mr. Sunil Kumar,Delegate,"High Commission of India, Lusaka",Attache (Commerce & Culture),com.lusaka@mea.gov.in,978777052,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1095.0,Chizinga Gerald,VIP,Zambia Compulsory Standards Agency (ZCSA),Mr.,mailto:gerald.chizinga@zcsa.org.zm,977706601,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1096.0,Mulenga Michael,Delegate,Zambia Compulsory Standards Agency (ZCSA),Mr.,mailto:gerald.chizinga@zcsa.org.zm,968984629,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1097.0,Ng'ona Sam,Delegate,Zambia Compulsory Standards Agency (ZCSA),Mr.,sam.ngona@zcsa.org.zm,975149494,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1098.0,Benson Mr.Mplao,Delegate,PACRA,CEO,b.mpalo@pacra.org.zm,,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1099.0,Gabriel Mr.Mwamba,Delegate,PACRA,Mr.,g.mwamba@pacra.org.zm,,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1100.0,Brian Mr.Mwale,Delegate,PACRA,Mr.,b.mwale@pacra.org.zm,,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1101.0,Ndonano Ms.Siuluta,Delegate,PACRA,Mr.,n.siuluta@pacra.org.zm,,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1102.0,Hon. Eng. Nason Musonda,VIP,Luapula Provincial Administration,Provincial Minister,,,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1103.0,Mrs. Prudence M. Kangwa,VIP,Luapula Provincial Administration,Permanent Secretary,,,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1104.0,Mrs. Doris.K. Mwelwa,GOV OFFICIAL,Luapula Provincial Administration,Assistant Director- Planning,doris.mwelwa@grz.gov.zm,9777159110,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1105.0,Eng. Joseph Mvula,Delegate,Luapula Mining Bureau,Senior Mining Engineer,,,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1106.0,Queen Champo,Delegate,Luapula Provincial Administration,Senior Planner,queen. champo@gmail.com,9772458050,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1107.0,Jack Tembo,Delegate,Luapula Provincial Administration,Ag. Senior Planner,jayjacksontembo@gmail.com,9769707620,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1108.0,Steward Nchimunya,Delegate,Zambia consulate lubumbashi,Mr.,,,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1109.0,Cindy kauka,Delegate,Zambia consulate lubumbashi,Ms.,,,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1110.0,Joshua kayombo,Delegate,kinsevere MMG mine,Mr.,,,,,False,,,,,,2025-10-05 10:49:46
+Congolese,1111.0,Blanchard Mukapa,Delegate,kiko mine kipushi,Mr.,,,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1112.0,John kalaba,Delegate,Zambian consulate lubumbashi,Mr.,,,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1113.0,Christine Hankombo,VIP,Zambia consulate kinshasa,Mrs.,,,,,False,,,,,,2025-10-05 10:49:46
+Congolese,1114.0,Masuka Saini Fifi Lualaba,VIP,Lualaba Governor,Her  excellence Lualaba Governor,,,,,False,,,,,,2025-10-05 10:49:46
+Congolese,1115.0,kazemba Shula,VIP,katanga governor,his excellence the acting governor,,,,,False,,,,,,2025-10-05 10:49:46
+Chinese,1116.0,Tie Li,Speaker,CAMCO GROUP,Manager Director,md@camco.cn,977886128,,,False,,,,,,2025-10-05 10:49:46
+,1117.0,ZAMBIAN,,Mmmd Gsd,,,,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1118.0,Mweene Dartham Mweemba,DELEGATE,Syrius Minerals,Managing Director,dartham@sirius-mtp.co.za,761469412,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1119.0,Pikiti Victor Mubanga,DELEGATE,PVM Enterprises,Director,victormpikiti@gmail.com,77690776,,,False,,,,,,2025-10-05 10:49:46
+,1120.0,CHIIMBA,Secretariate,Ministry  of Mines and Minerals Development,,,,,,False,,,,,,2025-10-05 10:49:46
+,1121.0,OSPHER,Secretariate,Ministry  of Mines and Minerals Development,,,,,,False,,,,,,2025-10-05 10:49:46
+,1122.0,GLADYS,Secretariate,Ministry  of Mines and Minerals Development,,,,,,False,,,,,,2025-10-05 10:49:46
+,1123.0,MOREBLESSINGS,Secretariate,Ministry  of Mines and Minerals Development,,,,,,False,,,,,,2025-10-05 10:49:46
+,1124.0,NAKAMBA,Secretariate,Ministry  of Mines and Minerals Development,,,,,,False,,,,,,2025-10-05 10:49:46
+,1125.0,ZAMBIAN,,Zica,,,,,,False,,,,,,2025-10-05 10:49:46
+,1126.0,Kenyan,,Acp Eu,,,,,,False,,,,,,2025-10-05 10:49:46
+,1127.0,Zambian,,Acp Eu,,,,,,False,,,,,,2025-10-05 10:49:46
+,1128.0,Rwandan,,Acp Eu,,,,,,False,,,,,,2025-10-05 10:49:46
+,1129.0,Mwenya Kaela Bwalya,,Ministries,,,,,,False,,,,,,2025-10-05 10:49:46
+,1130.0,Mary Namusokwe,,Ministries,,,,,,False,,,,,,2025-10-05 10:49:46
+,1131.0,Miyoba Bernadette Muzumbwe,,Ministries,,,,,,False,,,,,,2025-10-05 10:49:46
+,1132.0,Katele M. Kalumba,,Ministries,,,,,,False,,,,,,2025-10-05 10:49:46
+,1133.0,Vanny Hampondela,,Ministries,,,,,,False,,,,,,2025-10-05 10:49:46
+,1134.0,Mutale Kamangu,,Ministries,,,,,,False,,,,,,2025-10-05 10:49:46
+,1135.0,MULOLWA MULOLWA,,Ministries,,,,,,False,,,,,,2025-10-05 10:49:46
+,1136.0,KAZUMA LIMANDE,,Ministries,,,,,,False,,,,,,2025-10-05 10:49:46
+,1137.0,ALBERT MWAMBWA,,Ministries,,,,,,False,,,,,,2025-10-05 10:49:46
+,1138.0,CLEOPATRA WAKUMELO,,Ministries,,,,,,False,,,,,,2025-10-05 10:49:46
+,1139.0,MOSES MUSA MWABA,,Ministries,,,,,,False,,,,,,2025-10-05 10:49:46
+,1140.0,JOHN KENNEDY CHILEMBA,,Ministries,,,,,,False,,,,,,2025-10-05 10:49:46
+,1141.0,WANA KAUMBA KALUMBINGA,,Ministries,,,,,,False,,,,,,2025-10-05 10:49:46
+,1142.0,GEORGE MILONGO,,Ministries,,,,,,False,,,,,,2025-10-05 10:49:46
+,1143.0,BJORN MUNAMWIMBU,,Ministries,,,,,,False,,,,,,2025-10-05 10:49:46
+,1144.0,AMIGO LUMINGO,,Ministries,,,,,,False,,,,,,2025-10-05 10:49:46
+,1145.0,RUTH NG'UMBA,,Ministries,,,,,,False,,,,,,2025-10-05 10:49:46
+,1146.0,CHILUBA SACHELO,,Ministries,,,,,,False,,,,,,2025-10-05 10:49:46
+,1147.0,MAYBIN MUKOMPE MALAMBO,,Ministries,,,,,,False,,,,,,2025-10-05 10:49:46
+,1148.0,SAMUEL CHAKUFOLA,,Ministries,,,,,,False,,,,,,2025-10-05 10:49:46
+,1149.0,MUTALE EMMANUEL,,Ministries,,,,,,False,,,,,,2025-10-05 10:49:46
+,1150.0,ROSEMARY PHIRI,,Ministries,,,,,,False,,,,,,2025-10-05 10:49:46
+,1151.0,SIWALE CLEMENT,,Ministries,,,,,,False,,,,,,2025-10-05 10:49:46
+,1152.0,FIELD MUTALE,,Ministries,,,,,,False,,,,,,2025-10-05 10:49:46
+,1153.0,STEPHEN KAKONDE,,Ministries,,,,,,False,,,,,,2025-10-05 10:49:46
+,1154.0,NUMBI MAKONGA,,Ministries,,,,,,False,,,,,,2025-10-05 10:49:46
+,1155.0,JOSHUA NABUYANDA,,Ministries,,,,,,False,,,,,,2025-10-05 10:49:46
+,1156.0,DEXTER SIMULUNDU,,Ministries,,,,,,False,,,,,,2025-10-05 10:49:46
+,1157.0,ISAAC MUNSAKA,,Ministries,,,,,,False,,,,,,2025-10-05 10:49:46
+,1158.0,NELLY KAYUNI,,Ministries,,,,,,False,,,,,,2025-10-05 10:49:46
+,1159.0,HAPPINESS NAMUKOKO,,Ministries,,,,,,False,,,,,,2025-10-05 10:49:46
+,1160.0,DAVIES SIULAPWA,,Ministries,,,,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1161.0,Alinani Simukonda,Delegate,National Road Fund Agency,Technical Assistant to the CEO,asimukonda@nrfa.org.zm,976818500,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1162.0,Charles Kandeke,Delegate,National Road Fund Agency,Director Road Tolling,ckandeke@nrfa.org.zm,977306714,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1163.0,Mr. Mulumba Lwatula,Delegate,IDC,Head of Investments-Mining &Energy,mulumba.lwatula@idc.co.zm,9663992800,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1164.0,Mr. Paul Kaboyi,Delegate,IDC,Senior Investments Officer-Mining &Energy,paul.kaboyi@idc.co.zm,9718242190,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1165.0,Mr. Moudline Mulilo,Delegate,IDC,Technical Specialist - Mining,moudline.mulilo@idc.co.zm,9778600860,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1166.0,Ms. Sibongile Mwika,Delegate,IDC,Investments Officer - Mining,sibongile.mwika@idc.co.zm,9791533700,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1167.0,Mr. Savior Nyangu,Delegate,IDC,Head of portfolio- Mining &Energy,savior.nyangu@idc.co.zm,9696540920,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1168.0,Mr. Mumba Mumba,Delegate,Mercuria,Managing Director - Business Development,mmumba@mercuria.com,9715618037900,,,False,,,,,,2025-10-05 10:49:46
+Greek,1169.0,Mr. Kostas Bintas,Delegate,Mercuria,Global Head of Trading,kbintas@mercuria.com,,,,False,,,,,,2025-10-05 10:49:46
+American,1170.0,Mr. Arthur Rogers,Delegate,Mercuria,Public Affairs Team,henry.rogers@qorvis.com,191945142750,,,False,,,,,,2025-10-05 10:49:46
+American,1171.0,Mr. Ian Dollar,Delegate,Mercuria,Public Affairs Team,ian.dollar@qorvis.com,191960945700,,,False,,,,,,2025-10-05 10:49:46
+ZAMBIAN,1172.0,MR. MUKELABAI KWALEYELA,DELEGATE,DRUG ENFORCEMENT COMMISSION,DIRECTOR,mukelabai.kwaleyela@deczambia.gov.zm,977425859,,,False,,,,,,2025-10-05 10:49:46
+ZAMBIAN,1173.0,MR. MACVEN CHISUTA,DELEGATE,DRUG ENFORCEMENT COMMISSION,ASSISTANT DIRECTOR,macven.chisuta@deczambia.gov.zm,977829620,,,False,,,,,,2025-10-05 10:49:46
+ZAMBIAN,1174.0,MR. ROSTEN CHULU,DELEGATE,DRUG ENFORCEMENT COMMISSION,ASSISTANT DIRECTOR,rosten.chulu@deczambia.gov.zm,976780400,,,False,,,,,,2025-10-05 10:49:46
+ZAMBIAN,1175.0,MS. HOPE CHIWALE,DELEGATE,DRUG ENFORCEMENT COMMISSION,SENIOR INVESTIGATIONS OFFICER,hope.malama@deczambia.gov.zm,977495546,,,False,,,,,,2025-10-05 10:49:46
+Charles Muwe Mungule,1176.0,PhD,Director General,CEEC,,mungulec@ceec.org.zm,,,,False,,,,,,2025-10-05 10:49:46
+Walusungu Banda,1177.0,Mr.,Technical Assistant,CEEC,,bandaw@ceec.org.zm,,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1178.0,Davis Mwanamoya,VIP,Moxico Resources,Director,davis@moxicoreources.com,974041185,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1179.0,Chileya P. K. Mawere,DELEGATE,Moxico Resources,Govt & Laison Officer,chileya@moxicoresources.com,977842415,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1180.0,Nelly Sakala Nalumino,DELEGATE,Moxico Resources,Finance Officer,nelly@moxicoresources.com,977841968,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1181.0,Fidelis Chanda,DELEGATE,Mimbula Minerals Limited,Director,fidelisc09@gmail.com,968378332,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1182.0,Godfrey Chuulu,DELEGATE,Moxico Resources,Regulatory Compliance Officer,godfrey.chuulu@moxicoresources.com,979878519,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1183.0,Cosmas Tembo,DELEGATE,Mimbula Minerals Limited,Director,cosam.tembo@gmail.com,968511158,,,False,,,,,,2025-10-05 10:49:46
+South-African,1184.0,Frikkie Kruger,DELEGATE,Mimbula Minerals Limited,Finance Manager,frikkie.kruger@moxicoresources.com,960820609,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1185.0,Credence Mabila,DELEGATE,Mimbula Minerals Limited,Tax Accountant,credence.mabila@moxicoresources.com,979286393,,,False,,,,,,2025-10-05 10:49:46
+,1186.0,ELISHA MATAMBO,,Copperbelt Provincial,,,,,,False,,,,,,2025-10-05 10:49:46
+,1187.0,LAWRENCE MWANZA,,Copperbelt Provincial,,,,,,False,,,,,,2025-10-05 10:49:46
+,1188.0,ONCEMORE NGONOMO,,Copperbelt Provincial,,,,,,False,,,,,,2025-10-05 10:49:46
+,1189.0,NALISHEBO NYAMBE MVULA,,Copperbelt Provincial,,,,,,False,,,,,,2025-10-05 10:49:46
+,1190.0,CHABU HARRISON MUNDUBWE,,Copperbelt Provincial,,,,,,False,,,,,,2025-10-05 10:49:46
+,1191.0,WALUSUNGU KAMWAMBI CHISANYI,,Copperbelt Provincial,,,,,,False,,,,,,2025-10-05 10:49:46
+,1192.0,MARILYN DARPHNY ROSE,,Copperbelt Provincial,,,,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1193.0,Ephraim Musilekwa,DELEGATE,Globo Coperative,Mr.,emusilekwa@me.com,9716969520,,,False,,,,,,2025-10-05 10:49:46
+Zambian,1194.0,Misozi Mwanza,Secretariate,Ministry  of Mines and Minerals Development,,,,,,False,,,,,,2025-10-05 11:15:33
+Zambian,1195.0,Harrison Mbewe,Secretariate,Ministry  of Mines and Minerals Development,,,,,,False,,,,,,2025-10-05 11:15:33
+Indian,1196.0,Alok Ranjan Jha,Diplomat,"High Commission of India, Lusaka",Mr.,hc.lusaka@mea.gov.in,977151933,,,False,,,,,,2025-10-05 11:15:33
+Indian,1197.0,Arif Saeed,Diplomat,"High Commission of India, Lusaka",Mr.,pol.lusaka@mea.gov.in,73987819,,,False,,,,,,2025-10-05 11:15:33
+Indian,1198.0,Murugesan Ramaswamy,Diplomat,"High Commission of India, Lusaka",Mr.,com.lusaka@mea.gov.in,965517267,,,False,,,,,,2025-10-05 11:15:33
+Indian,1199.0,Sunil Kumar,Diplomat,"High Commission of India, Lusaka",Mr.,com.lusaka@mea.gov.in,978777052,,,False,,,,,,2025-10-05 11:15:33
+Zambian,1200.0,Mr. Cornwell Muleya,Delegate,IDC,Chief Executive Officer,cornwell.muleya@idc.co.zm,,,,False,,,,,,2025-10-05 11:15:33
+Zambian,1201.0,Mr. Mainga Mukando,Delegate,IDC,Chief Investements Officer,mainga.mukando@idc.co.zm,,,,False,,,,,,2025-10-05 11:15:33
+Zambian,1202.0,Mr. Siakakaye Siameja,Delegate,IDC,Chief Portfolio Officer,siakakaye.siameja@idc.co.zm,,,,False,,,,,,2025-10-05 11:15:33
+Zambian,1203.0,Mr. Raphael Chipoma,Delegate,IDC,Chief Financal Officer,raphael.chipoma@idc.co.zm,,,,False,,,,,,2025-10-05 11:15:33
+Zambian,1204.0,Mrs. Beatrice Nkanza,Delegate,IDC,Board Director,leya.mutonga@idc.co.zm,,,,False,,,,,,2025-10-05 11:15:33
+Zambian,1205.0,Eng. Amon Mweemba,Delegate,RTSA,,,,,,False,,,,,,2025-10-05 11:15:33
+Zambian,1206.0,Eng. Mubanga Mulenga,Delegate,RTSA,,,,,,False,,,,,,2025-10-05 11:15:33
+Zambian,1207.0,Dorothy Soko,Delegate,RTSA,,,,,,False,,,,,,2025-10-05 11:15:33
+Zambian,1208.0,Ignitious Mioko,Delegate,RTSA,,,,,,False,,,,,,2025-10-05 11:15:33
+,1209.0,Hon. Charles Milupi,Minister,Ministry of Infrastructure Housing and Urban Development,,,,,,False,,,,,,2025-10-05 11:15:33
+ZAMBIAN,1210.0,ZAMIWE MAMBILIMA,EXHIBITOR,MINISTRY OF SME DEVELOPMENT,Ms,zamiwe.mambilima@msme.gov.zm,9774234650,,,False,,,,,,2025-10-05 11:15:33
+ZAMBIAN,1211.0,SABE MPHANDE,EXHIBITOR,MINISTRY OF SME DEVELOPMENT,Mr,sabe.mphande@msme.gov.zm,9695178060,,,False,,,,,,2025-10-05 11:15:33
+Zambian,1212.0,"Collins Nzovu, 
+MP",Minister,"Ministry of Water Development and 
+Sanitation",Hon. Eng.,collins.nzovu@grz.gov.zm,9784048140,,,False,,,,,,2025-10-05 11:15:33
+Zambian,1213.0,Romas Kamanga,PS,"Ministry of Water Development and 
+Sanitation",Eng.,romas.kamanga@grz.gov.zm,9667261990,,,False,,,,,,2025-10-05 11:15:33
+Zambian,1214.0,Mr. Melvin Sikazwe,Government official,"Ministry of Water Development and 
+Sanitation",Mr.,melvin.sikazwe@mwds.gov.zm,9774726070,,,False,,,,,,2025-10-05 11:15:33
+Zambian,1215.0,Richard Kangwa,Government official,"Ministry of Water Development and 
+Sanitation",Eng.,richard.kangwa@mwds.gov.zm,9774105710,,,False,,,,,,2025-10-05 11:15:33
+Zambian,1216.0,Inonge Kumwenda,Government official,"Ministry of Water Development and 
+Sanitation",Mrs.,inonge.kumwenda@grz.gov.zm,9664384570,,,False,,,,,,2025-10-05 11:15:33
+Zambian,1217.0,"Mkhuzo 
+Chongo",Government official,"Ministry of Water Development and 
+Sanitation",Eng. Dr.,mkhuzo.chongo@mwds.gov.zm,9774955600,,,False,,,,,,2025-10-05 11:15:33
+Zambian,1218.0,Chileshe Mukunta,Government official,"Ministry of Water Development and 
+Sanitation",,chileshe.mukunta@mwds.gov.zm,9793976210,,,False,,,,,,2025-10-05 11:15:33
+Zambian,1219.0,Anon Madima,Government official,"Ministry of Water Development and 
+Sanitation",Mr,anon.madima@cabinet.gov.zm,9793976210,,,False,,,,,,2025-10-05 11:15:33
+zambian,1220.0,Mbololwa Wamunyima,VIP,Human Rights Commission,,director.general@hrc.org.zm,966434020,,,False,,,,,,2025-10-05 11:15:33
+zambian,1221.0,Chilambe Mpanga,Delegate,Human Rights Commission,,chilambe.mpanga@hrc.org.zm,978488531,,,False,,,,,,2025-10-05 11:15:33
+zambian,1222.0,Naomi Chibesakunda,Delegate,Human Rights Commission,,naomi.chibesakunda@hrc.org.zm,974190579,,,False,,,,,,2025-10-05 11:15:33
+zambian,1223.0,Charity Sabi lange,Delegate,Human Rights Commission,,charity.sabi@hrc.org.zm,977703339,,,False,,,,,,2025-10-05 11:15:33
+Zambian,1224.0,Clara Chibanda,Delegate,Human Rights Commission,,clara.chibanda@hrc.org.zm,977766950,,,False,,,,,,2025-10-05 11:15:33
+ZAMBIA,1225.0,HON. LEONARD BOYD MBAO,VVIP,PROVINCIAL ADMINISTRATION,,boydmbao@gmail.com,977801181,,,False,,,,,,2025-10-05 11:15:33
+ZAMBIA,1226.0,MR. BERNARD MPUNDU,GOVERNMENT OFFICIAL,PROVINCIAL ADMINISTRATION,,bernard.mbundu@grz.gov.zm,979606845,,,False,,,,,,2025-10-05 11:15:33
+ZAMBIA,1227.0,MR. MUMA MUSONDA,GOVERNMENT OFFICIAL,DISTRICT ADMINISTRATION,,albertmusonda@64gmail.com;,965687386,,,False,,,,,,2025-10-05 11:15:33
+ZAMBIA,1228.0,MR. STEWARD C. KATELE,GOVERNMENT OFFICIAL,DISTRICT ADMINISTRATION,,katelesteward@gmail.com;,973400021,,,False,,,,,,2025-10-05 11:15:33
+ZAMBIA,1229.0,MS. ELIZABETH MPANDCHULU,GOVERNMENT OFFICIAL,DISTRICT ADMINISTRATION,,elizabethmpandachulu@gmail.com;,977489562,,,False,,,,,,2025-10-05 11:15:33
+ZAMBIA,1230.0,MR. BENJAMIN MAKUMBA,GOVERNMENT OFFICIAL,PROVINCIAL ADMINISTRATION,,makumbabenja@gmail.com;,974826902,,,False,,,,,,2025-10-05 11:15:33
+ZAMBIA,1231.0,MR. GEORGE MWANZA,GOVERNMENT OFFICIAL,PROVINCIAL PLANNING UNIT,,georgemwanza90@gmail.com,977426952,,,False,,,,,,2025-10-05 11:15:33
+Zambian,1232.0,Stephen Dube,Delegate,Handyman's Lime Ltd,,,,,,False,,,,,,2025-10-05 11:15:33
+Zambian,1233.0,Hon. Paul C. Kabuswe,Secretariate,Ministry of Mines and Minerals Development,,,,,,False,,,,,,2025-10-05 11:19:43
+Zambian,1234.0,Dr. Hapenga M. Kabeta,Secretariate,Ministry of Mines and Minerals Development,,,,,,False,,,,,,2025-10-05 11:19:43
+Zambian,1235.0,Anthony Chilengi,Secretariate,Ministry of Mines and Minerals Development,,,,,,False,,,,,,2025-10-05 11:19:43
+Zambian,1236.0,Sam Phiri,Secretariate,Ministry of Mines and Minerals Development,,,,,,False,,,,,,2025-10-05 11:19:43
+Zambian,1237.0,Njekwa Malama,Secretariate,Ministry of Mines and Minerals Development,,,,,,False,,,,,,2025-10-05 11:19:43
+Zambian,1238.0,Tobias Musonda,Secretariate,Ministry of Mines and Minerals Development,,,,,,False,,,,,,2025-10-05 11:19:43
+Zambian,1239.0,Misozi Kasongole,Secretariate,Ministry of Mines and Minerals Development,,,,,,False,,,,,,2025-10-05 11:19:43
+Zambian,1240.0,Fred Banda,Secretariate,Ministry of Mines and Minerals Development,,,,,,False,,,,,,2025-10-05 11:19:43
+Zambian,1241.0,Billy Chewe,Secretariate,Ministry of Mines and Minerals Development,,,,,,False,,,,,,2025-10-05 11:19:43
+Zambian,1242.0,Samuel Maango,Secretariate,Ministry of Mines and Minerals Development,,,,,,False,,,,,,2025-10-05 11:19:43
+Zambian,1243.0,Gerald Mwila,Secretariate,Ministry of Mines and Minerals Development,,,,,,False,,,,,,2025-10-05 11:19:43
+Zambian,1244.0,Azell Banda,Secretariate,Ministry of Mines and Minerals Development,,,,,,False,,,,,,2025-10-05 11:19:43
+Zambian,1245.0,Elite Mhone,Secretariate,Ministry of Mines and Minerals Development,,,,,,False,,,,,,2025-10-05 11:19:43
+Zambian,1246.0,Dalitso Mhango,Secretariate,Ministry of Mines and Minerals Development,,,,,,False,,,,,,2025-10-05 11:19:43
+Zambian,1247.0,Misozi Mwanza,Secretariate,Ministry of Mines and Minerals Development,,,,,,False,,,,,,2025-10-05 11:19:43
+Zambian,1248.0,Levy Mulilo,Secretariate,Ministry of Mines and Minerals Development,,,,,,False,,,,,,2025-10-05 11:19:43
+Zambian,1249.0,Annie Mwape,Secretariate,Ministry of Mines and Minerals Development,,,,,,False,,,,,,2025-10-05 11:19:43
+Zambian,1250.0,Harrison Mbewe,Secretariate,Ministry of Mines and Minerals Development,,,,,,False,,,,,,2025-10-05 11:19:43
+Zambian,1251.0,Enock Chifunda,Secretariate,Ministry of Mines and Minerals Development,,,,,,False,,,,,,2025-10-05 11:19:43
+Zambian,1252.0,Derrick Sichula,Secretariate,Ministry of Mines and Minerals Development,,,,,,False,,,,,,2025-10-05 11:19:43
+Zambian,1253.0,Constance Musonda,Secretariate,Ministry of Mines and Minerals Development,,,,,,False,,,,,,2025-10-05 11:19:43
+Zambian,1254.0,Naomi Banda,Secretariate,Ministry of Mines and Minerals Development,,,,,,False,,,,,,2025-10-05 11:19:43
+Zambian,1255.0,Mirriam Ludaka,Secretariate,Ministry of Mines and Minerals Development,,,,,,False,,,,,,2025-10-05 11:19:43
+Zambian,1256.0,Edward Mumba,Secretariate,Ministry of Mines and Minerals Development,,,,,,False,,,,,,2025-10-05 11:19:43
+Zambian,1257.0,David Chilufya,Secretariate,Ministry of Mines and Minerals Development,,,,,,False,,,,,,2025-10-05 11:19:43
+Zambian,1258.0,Adrian Zulu,Secretariate,Ministry of Mines and Minerals Development,,,,,,False,,,,,,2025-10-05 11:19:43
+Zambian,1259.0,Lydia Mhango,Secretariate,Ministry of Mines and Minerals Development,,,,,,False,,,,,,2025-10-05 11:19:43
+Zambian,1260.0,Mutinta Hadunka,Secretariate,Ministry of Mines and Minerals Development,,,,,,False,,,,,,2025-10-05 11:19:43
+Zambian,1261.0,Benjamin Chayo,Secretariate,Ministry of Mines and Minerals Development,,,,,,False,,,,,,2025-10-05 11:19:43
+Zambian,1262.0,Chomba Chileshe,Secretariate,Ministry of Mines and Minerals Development,,,,,,False,,,,,,2025-10-05 11:19:43
+Zambian,1263.0,Naomi Semani,Secretariate,Ministry of Mines and Minerals Development,,,,,,False,,,,,,2025-10-05 11:19:43
+Zambian,1264.0,Teddy Musopelo,Secretariate,Ministry of Mines and Minerals Development,,,,,,False,,,,,,2025-10-05 11:19:43
+Zambian,1265.0,Jessy Banda,Secretariate,Ministry of Mines and Minerals Development,,,,,,False,,,,,,2025-10-05 11:19:43
+Zambian,1266.0,Ospher Kawema,Secretariate,Ministry of Mines and Minerals Development,,,,,,False,,,,,,2025-10-05 11:19:43
+Zambian,1267.0,Daniel Chisala,Secretariate,Ministry of Mines and Minerals Development,,,,,,False,,,,,,2025-10-05 11:19:43
+Zambian,1268.0,Inambao Simangolwa,Secretariate,Ministry of Mines and Minerals Development,,,,,,False,,,,,,2025-10-05 11:19:43
+Zambian,1269.0,Margaret Mwanza,Secretariate,Ministry of Mines and Minerals Development,,,,,,False,,,,,,2025-10-05 11:19:43
+Zambian,1270.0,Inonge Sitenge,Secretariate,Ministry of Mines and Minerals Development,,,,,,False,,,,,,2025-10-05 11:19:43
+Zambian,1271.0,Jacyntha Sheleni,Secretariate,Ministry of Mines and Minerals Development,,,,,,False,,,,,,2025-10-05 11:19:43
+Zambian,1272.0,Shamwinda Tembo,Secretariate,Ministry of Mines and Minerals Development,,,,,,False,,,,,,2025-10-05 11:19:43
+Zambian,1273.0,Erick Musenga,Secretariate,Ministry of Mines and Minerals Development,,,,,,False,,,,,,2025-10-05 11:19:43
+Zambian,1274.0,Yoram Chulu,Secretariate,Ministry of Mines and Minerals Development,,,,,,False,,,,,,2025-10-05 11:19:43
+Zambian,1275.0,Mester Shamakamba,Secretariate,Ministry of Mines and Minerals Development,,,,,,False,,,,,,2025-10-05 11:19:43
+Zambian,1276.0,Chaanza Chifwepa,Secretariate,Ministry of Mines and Minerals Development,,,,,,False,,,,,,2025-10-05 11:19:43
+Zambian,1277.0,Lucy Meleki,Secretariate,Ministry of Mines and Minerals Development,,,,,,False,,,,,,2025-10-05 11:19:43
+Zambian,1278.0,Desiderious Chapewa,Secretariate,Ministry of Mines and Minerals Development,,,,,,False,,,,,,2025-10-05 11:19:43
+Zambian,1279.0,Canisius Chishimba,Secretariate,Ministry of Mines and Minerals Development,,,,,,False,,,,,,2025-10-05 11:19:43
+Zambian,1280.0,Munsaka Racklon,Secretariate,Ministry of Mines and Minerals Development,,,,,,False,,,,,,2025-10-05 11:19:43
+Zambian,1281.0,Mubanga Chewe,Secretariate,Ministry of Mines and Minerals Development,,,,,,False,,,,,,2025-10-05 11:19:43
+Zambian,1282.0,Annie Muyangana,Secretariate,Ministry of Mines and Minerals Development,,,,,,False,,,,,,2025-10-05 11:19:43
+Zambian,1283.0,Lumba Mazila,Secretariate,Ministry of Mines and Minerals Development,,,,,,False,,,,,,2025-10-05 11:19:43
+Zambian,1284.0,Michi Chilombo,Secretariate,Ministry of Mines and Minerals Development,,,,,,False,,,,,,2025-10-05 11:19:43
+Zambian,1285.0,Jason Kafwanka,Secretariate,Ministry of Mines and Minerals Development,,,,,,False,,,,,,2025-10-05 11:19:43
+Zambian,1286.0,Mercy Zulu,Secretariate,Ministry of Mines and Minerals Development,,,,,,False,,,,,,2025-10-05 11:19:43
+Zambian,1287.0,Muweme Mwenda,Secretariate,Ministry of Mines and Minerals Development,,,,,,False,,,,,,2025-10-05 11:19:43
+Zambian,1288.0,Meddiah Munsaka,Secretariate,Ministry of Mines and Minerals Development,,,,,,False,,,,,,2025-10-05 11:19:43
+Zambian,1289.0,Matildah Chshala,Secretariate,Ministry of Mines and Minerals Development,,,,,,False,,,,,,2025-10-05 11:19:43
+Zambian,1290.0,Bjorn Mwanamwimbu,Secretariate,Ministry of Mines and Minerals Development,,,,,,False,,,,,,2025-10-05 11:19:43
+Zambian,1291.0,Patricia Namutowe,Secretariate,Ministry of Mines and Minerals Development,,,,,,False,,,,,,2025-10-05 11:19:43
+Zambian,1292.0,Steven Mutwale,Secretariate,Ministry of Mines and Minerals Development,,,,,,False,,,,,,2025-10-05 11:19:43
+Zambian,1293.0,Christine Chibobo Chisanga,Delegate,Mmmd Secretariat,,,,,,False,,,,,,2025-10-05 11:25:46
+Zambian,1294.0,Jonathan Mukuka,Delegate,Mmmd Secretariat,,,,,,False,,,,,,2025-10-05 11:25:46
+Zambian,1295.0,Hon. Grace Njapau- Efrati,Delegate,Mmmd Secretariat,,,,,,False,,,,,,2025-10-05 11:25:46
+Zambian,1296.0,Hon. Paul C. Kabuswe,Minister,MMMD,,,,,,False,,,,,,2025-10-05 11:40:42
+Zambian,1297.0,Dr. Hapenga M. Kabeta,PS,MMMD,,,,,,False,,,,,,2025-10-05 11:40:42
+Zambian,1298.0,Anthony Chilengi,Delegate,MMMD,,,,,,False,,,,,,2025-10-05 11:40:42
+Zambian,1299.0,Sam Phiri,Delegate,MMMD,,,,,,False,,,,,,2025-10-05 11:40:42
+Zambian,1300.0,Njekwa Malama,Delegate,MMMD,,,,,,False,,,,,,2025-10-05 11:40:42
+Zambian,1301.0,Tobias Musonda,Delegate,MMMD,,,,,,False,,,,,,2025-10-05 11:40:42
+Zambian,1302.0,Misozi Kasongole,Delegate,MMMD,,,,,,False,,,,,,2025-10-05 11:40:43
+Zambian,1303.0,Fred Banda,Delegate,MMMD,,,,,,False,,,,,,2025-10-05 11:40:43
+Zambian,1304.0,Billy Chewe,Delegate,MMMD,,,,,,False,,,,,,2025-10-05 11:40:43
+Zambian,1305.0,Samuel Maango,Delegate,MMMD,,,,,,False,,,,,,2025-10-05 11:40:43
+Zambian,1306.0,Gerald Mwila,Delegate,MMMD,,,,,,False,,,,,,2025-10-05 11:40:43
+Zambian,1307.0,Azell Banda,Delegate,MMMD,,,,,,False,,,,,,2025-10-05 11:40:43
+Zambian,1308.0,Elite Mhone,Delegate,MMMD,,,,,,False,,,,,,2025-10-05 11:40:43
+Zambian,1309.0,Dalitso Mhango,Delegate,MMMD,,,,,,False,,,,,,2025-10-05 11:40:43
+Zambian,1310.0,Misozi Mwanza,Delegate,MMMD,,,,,,False,,,,,,2025-10-05 11:40:43
+Zambian,1311.0,Levy Mulilo,Delegate,MMMD,,,,,,False,,,,,,2025-10-05 11:40:43
+Zambian,1312.0,Annie Mwape,Secretariat,MMMD,,,,,,False,,,,,,2025-10-05 11:40:43
+Zambian,1313.0,Harrison Mbewe,Secretariat,MMMD,,,,,,False,,,,,,2025-10-05 11:40:43
+Zambian,1314.0,Enock Chifunda,Secretariat,MMMD,,,,,,False,,,,,,2025-10-05 11:40:43
+Zambian,1315.0,Derrick Sichula,Delegate,MMMD,,,,,,False,,,,,,2025-10-05 11:40:43
+Zambian,1316.0,Constance Musonda,Delegate,MMMD,,,,,,False,,,,,,2025-10-05 11:40:43
+Zambian,1317.0,Naomi Banda,Secretariat,MMMD,,,,,,False,,,,,,2025-10-05 11:40:43
+Zambian,1318.0,Mirriam Ludaka,Secretariat,MMMD,,,,,,False,,,,,,2025-10-05 11:40:43
+Zambian,1319.0,Edward Mumba,Secretariat,MMMD,,,,,,False,,,,,,2025-10-05 11:40:43
+Zambian,1320.0,David Chilufya,Secretariat,MMMD,,,,,,False,,,,,,2025-10-05 11:40:43
+Zambian,1321.0,Adrian Zulu,Secretariat,MMMD,,,,,,False,,,,,,2025-10-05 11:40:43
+Zambian,1322.0,Lydia Mhango,Secretariat,MMMD,,,,,,False,,,,,,2025-10-05 11:40:43
+Zambian,1323.0,Mutinta Hadunka,Secretariat,MMMD,,,,,,False,,,,,,2025-10-05 11:40:43
+Zambian,1324.0,Benjamin Chayo,Delegate,MMMD,,,,,,False,,,,,,2025-10-05 11:40:43
+Zambian,1325.0,Chomba Chileshe,Secretariat,MMMD,,,,,,False,,,,,,2025-10-05 11:40:43
+Zambian,1326.0,Naomi Semani,Secretariat,MMMD,,,,,,False,,,,,,2025-10-05 11:40:43
+Zambian,1327.0,Teddy Musopelo,Secretariat,MMMD,,,,,,False,,,,,,2025-10-05 11:40:43
+Zambian,1328.0,Jessy Banda,Secretariat,MMMD,,,,,,False,,,,,,2025-10-05 11:40:43
+Zambian,1329.0,Ospher Kawema,Secretariat,MMMD,,,,,,False,,,,,,2025-10-05 11:40:43
+Zambian,1330.0,Daniel Chisala,Secretariat,MMMD,,,,,,False,,,,,,2025-10-05 11:40:43
+Zambian,1331.0,Inambao Simangolwa,Secretariat,MMMD,,,,,,False,,,,,,2025-10-05 11:40:43
+Zambian,1332.0,Margaret Mwanza,Secretariat,MMMD,,,,,,False,,,,,,2025-10-05 11:40:43
+Zambian,1333.0,Inonge Sitenge,Secretariat,MMMD,,,,,,False,,,,,,2025-10-05 11:40:43
+Zambian,1334.0,Jacyntha Sheleni,Secretariat,MMMD,,,,,,False,,,,,,2025-10-05 11:40:43
+Zambian,1335.0,Shamwinda Tembo,PRO,MMMD,,,,,,False,,,,,,2025-10-05 11:40:43
+Zambian,1336.0,Erick Musenga,Delegate,MMMD,,,,,,False,,,,,,2025-10-05 11:40:43
+Zambian,1337.0,Yoram Chulu,Delegate,MMMD,,,,,,False,,,,,,2025-10-05 11:40:43
+Zambian,1338.0,Mester Shamakamba,Delegate,MMMD,,,,,,False,,,,,,2025-10-05 11:40:43
+Zambian,1339.0,Chaanza Chifwepa,Delegate,MMMD,,,,,,False,,,,,,2025-10-05 11:40:43
+Zambian,1340.0,Lucy Meleki,Secretariat,MMMD,,,,,,False,,,,,,2025-10-05 11:40:43
+Zambian,1341.0,Desiderious Chapewa,Delegate,MMMD,,,,,,False,,,,,,2025-10-05 11:40:43
+Zambian,1342.0,Canisius Chishimba,Delegate,MMMD,,,,,,False,,,,,,2025-10-05 11:40:43
+Zambian,1343.0,Munsaka Racklon,Secretariat,MMMD,,,,,,False,,,,,,2025-10-05 11:40:43
+Zambian,1344.0,Mubanga Chewe,Secretariat,MMMD,,,,,,False,,,,,,2025-10-05 11:40:43
+Zambian,1345.0,Annie Muyangana,Secretariat,MMMD,,,,,,False,,,,,,2025-10-05 11:40:43
+Zambian,1346.0,Lumba Mazila,Secretariat,MMMD,,,,,,False,,,,,,2025-10-05 11:40:43
+Zambian,1347.0,Michi Chilombo,Secretariat,MMMD,,,,,,False,,,,,,2025-10-05 11:40:43
+Zambian,1348.0,Jason Kafwanka,Delegate,MMMD,,,,,,False,,,,,,2025-10-05 11:40:43
+Zambian,1349.0,Mercy Zulu,Delegate,MMMD,,,,,,False,,,,,,2025-10-05 11:40:43
+Zambian,1350.0,Muweme Mwenda,Secretariat,MMMD,,,,,,False,,,,,,2025-10-05 11:40:43
+Zambian,1351.0,Meddiah Munsaka,Secretariat,MMMD,,,,,,False,,,,,,2025-10-05 11:40:43
+Zambian,1352.0,Matildah Chshala,Secretariat,MMMD,,,,,,False,,,,,,2025-10-05 11:40:43
+Zambian,1353.0,Bjorn Mwanamwimbu,Secretariat,MMMD,,,,,,False,,,,,,2025-10-05 11:40:43
+Zambian,1354.0,Patricia Namutowe,Secretariat,MMMD,,,,,,False,,,,,,2025-10-05 11:40:43
+Zambian,1355.0,Steven Mutwale,Secretariat,MMMD,,,,,,False,,,,,,2025-10-05 11:40:43
+Zambian,1356.0,Namukolo Mwagala,Event Manager,Buterla,,,,,,False,,,,,,2025-10-05 11:43:53
+Zambian,1357.0,Inonge Mwaba,Event Manager,Buterla,,,,,,False,,,,,,2025-10-05 11:43:53
+Zambian,1358.0,Charles Mubambe,Event Manager,Buterla,,,,,,False,,,,,,2025-10-05 11:43:53
+Zambian,1359.0,Paul Mukabila,Event Manager,Buterla,,,,,,False,,,,,,2025-10-05 11:43:53
+Zambian,1360.0,Inonge Mpupuni,Event Manager,Buterla,,,,,,False,,,,,,2025-10-05 11:43:53
+Zambian,1361.0,Happy Mbulo,Event Manager,Buterla,,,,,,False,,,,,,2025-10-05 11:43:53
+Zambian,1362.0,Jason MJ Kruger,Event Manager,Buterla,,,,,,False,,,,,,2025-10-05 11:43:53
+Zambian,1363.0,Jason Mulaisho,Event Manager,Buterla,,,,,,False,,,,,,2025-10-05 11:43:53
+Zambian,1364.0,Kanyanta Chisanga,Event Manager,Buterla,,,,,,False,,,,,,2025-10-05 11:43:53
+Zambian,1365.0,Makazo Mwangala,Event Manager,Buterla,,,,,,False,,,,,,2025-10-05 11:43:53
+Zambian,1366.0,Suzyo Ngandu,Event Manager,Buterla,,,,,,False,,,,,,2025-10-05 11:43:53
+Zambian,1367.0,Luyando Yoyo Ngwenya,Event Manager,Buterla,,,,,,False,,,,,,2025-10-05 11:43:53
+Zambian,1368.0,Jethro Lungu,Event Manager,Buterla,,,,,,False,,,,,,2025-10-05 11:43:53
+Zambian,1369.0,Chibesa Bwalya,Event Manager,Buterla,,,,,,False,,,,,,2025-10-05 11:43:53
+Zambian,1370.0,Bwalya Kaela,Event Manager,Buterla,,,,,,False,,,,,,2025-10-05 11:43:53
+Zambian,1371.0,Lisa Akebu,Event Manager,Buterla,,,,,,False,,,,,,2025-10-05 11:43:53
+Zambian,1372.0,Leonard Chanda,Event Manager,Buterla,,,,,,False,,,,,,2025-10-05 11:43:53
+Zambian,1373.0,Isabel Chikumbe,Event Manager,Buterla,,,,,,False,,,,,,2025-10-05 11:43:53
+Zambian,1374.0,Phylis Nkhazi,Event Manager,Buterla,,,,,,False,,,,,,2025-10-05 11:43:53
+Zambian,1375.0,Rachael Macha,Event Manager,Buterla,,,,,,False,,,,,,2025-10-05 11:43:53
+Zambian,1376.0,Agness Bwalya,Event Manager,Buterla,,,,,,False,,,,,,2025-10-05 11:43:53
+Zambian,1377.0,Emmanuel Mweemba,Event Manager,Buterla,,,,,,False,,,,,,2025-10-05 11:43:53
+Zambian,1378.0,Thokozile Mwase,Event Manager,Buterla,,,,,,False,,,,,,2025-10-05 11:43:53
+Zambian,1379.0,Jessie Zombe,Event Manager,Buterla,,,,,,False,,,,,,2025-10-05 11:43:53
+Zambian,1380.0,Cisanga Mwanza,Event Manager,Buterla,,,,,,False,,,,,,2025-10-05 11:43:53
+Zambian,1381.0,Kusobile Kamwambi,VIP,Presidential Delivery Unit,Head,kusobile.kamwambi@grz.gov.zm,,,,False,,,,,,2025-10-05 12:05:17
+Zambian,1382.0,Mulunga Jones Shimbela,Government Officials,Presidential Delivery Unit,Executive Director,mulunga.shimbela@pdu.gov.zm,,,,False,,,,,,2025-10-05 12:05:17
+Zambian,1383.0,Cuthbert Munankwenka,Government Officials,Presidential Delivery Unit,Executive Director,cuthbert.munankwenka@pdu.gov.zm,,,,False,,,,,,2025-10-05 12:05:17
+Zambian,1384.0,Mupota Muchelemba,Government Officials,Presidential Delivery Unit,Executive Director,mupota.muchelemba@pdu.gov.zm,,,,False,,,,,,2025-10-05 12:05:17
+Zambian,1385.0,Kasonde Mumba,Government Officials,Presidential Delivery Unit,Assistant Director,kasonde.mumba@pdu.gov.zm,,,,False,,,,,,2025-10-05 12:05:17
+Zambian,1386.0,Ndashe Musonda,Government Officials,Presidential Delivery Unit,Assistant Director,ndashe.musonda@pdu.gov.zm,,,,False,,,,,,2025-10-05 12:05:17
+Zambian,1387.0,Hector Hamusankwa,Government Officials,Presidential Delivery Unit,Assistant Director,hector.hamusankwa@grz.gov.zm,,,,False,,,,,,2025-10-05 12:05:17
+Zambian,1388.0,Chitambeya Mukwangole,Government Officials,Presidential Delivery Unit,Assistant Director,chitambeya.mukwangole@pdu.gov.zm,,,,False,,,,,,2025-10-05 12:05:17
+Zambian,1389.0,Tobias Michelo,Government Officials,Presidential Delivery Unit,Assistant Director,tobias.michelo@pdu.gov.zm,,,,False,,,,,,2025-10-05 12:05:17
+Zambian,1390.0,Kalonde Mutuna,Government Officials,Presidential Delivery Unit,Assistant Director,kalonde.mutuna@pdu.gov.zm,,,,False,,,,,,2025-10-05 12:05:17
+Zambian,1391.0,Euphrasia Mapulanga,Delegate,Presidential Delivery Unit,Communications Specialist,euphrasia.mapulanga@pdu.gov.zm,,,,False,,,,,,2025-10-05 12:05:17
+Zambian,1392.0,Stella Mwanahamuntu,Delegate,Presidential Delivery Unit,Intern,,,,,False,,,,,,2025-10-05 12:05:17
+Zambian,1393.0,Lughano Mwangwewo,Delegate,Presidential Delivery Unit,Public Relations Officer,lughano.mwangwewo@grz.gov.zm,,,,False,,,,,,2025-10-05 12:05:17
+,1394,CHIIMBA,,Mmmd  Mcd,,,,,,False,,,,,,2025-10-05 12:26:31
+,1395,OSPHER,,Mmmd  Mcd,,,,,,False,,,,,,2025-10-05 12:26:31
+,1396,GLADYS,,Mmmd  Mcd,,,,,,False,,,,,,2025-10-05 12:26:31
+,1397,MOREBLESSINGS,,Mmmd  Mcd,,,,,,False,,,,,,2025-10-05 12:26:31
+,1398,NAKAMBA,,Mmmd  Mcd,,,,,,False,,,,,,2025-10-05 12:26:31

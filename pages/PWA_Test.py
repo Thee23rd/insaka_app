@@ -158,3 +158,4 @@ st.markdown("Deploy to Streamlit Cloud and start testing on mobile devices.")
 if st.button("🏠 Back to Dashboard", use_container_width=True):
     st.switch_page("pages/1_Delegate_Dashboard.py")
 
+

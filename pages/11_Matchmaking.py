@@ -472,9 +472,9 @@ with tab1:
     
     if search_term:
         filtered_delegates = [d for d in filtered_delegates if 
-                            search_term.lower() in d.get('Name', '').lower() or
-                            search_term.lower() in d.get('Organization', '').lower() or
-                            search_term.lower() in d.get('RoleTitle', '').lower()]
+                            search_term.lower() in str(d.get('Name', '')).lower() or
+                            search_term.lower() in str(d.get('Organization', '')).lower() or
+                            search_term.lower() in str(d.get('RoleTitle', '')).lower()]
     
     if category_filter != "All":
         filtered_delegates = [d for d in filtered_delegates if d.get('Category') == category_filter]
@@ -1427,7 +1427,7 @@ with tab6:
             
             # Similar roles
             if (delegate.get('RoleTitle') and current_user_delegate.get('RoleTitle') and
-                any(word in delegate.get('RoleTitle', '').lower() for word in current_user_delegate.get('RoleTitle', '').lower().split())):
+                any(word in str(delegate.get('RoleTitle', '')).lower() for word in str(current_user_delegate.get('RoleTitle', '')).lower().split())):
                 score += 3
             
             if score > 0:

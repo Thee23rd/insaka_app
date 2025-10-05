@@ -84,10 +84,10 @@ search_term = st.text_input(
 if search_term:
     filtered_speakers = [
         sp for sp in speakers 
-        if (search_term.lower() in sp.get('name', '').lower() or 
-            search_term.lower() in sp.get('organization', '').lower() or 
-            search_term.lower() in sp.get('talk', '').lower() or
-            search_term.lower() in sp.get('position', '').lower())
+        if (search_term.lower() in str(sp.get('name', '')).lower() or 
+            search_term.lower() in str(sp.get('organization', '')).lower() or 
+            search_term.lower() in str(sp.get('talk', '')).lower() or
+            search_term.lower() in str(sp.get('position', '')).lower())
     ]
 else:
     filtered_speakers = speakers

@@ -67,16 +67,26 @@ if hasattr(st.session_state, 'delegate_id_displayed') and st.session_state.deleg
                         if mask.any():
                             delegate_record = df[mask].iloc[0]
                             
-                            # Set authentication and session data
-                            st.session_state.delegate_authenticated = True
-                            st.session_state.delegate_id = str(delegate_record['ID'])
-                            st.session_state.delegate_name = delegate_record.get('Name', '')
-                            st.session_state.delegate_organization = delegate_record.get('Organization', '')
-                            st.session_state.delegate_category = delegate_record.get('Category', '')
-                            st.session_state.delegate_title = delegate_record.get('RoleTitle', '')
+                            # Check for dual role (delegate + speaker)
+                            from lib.qr_system import check_dual_role_user
+                            is_dual_role, speaker_info = check_dual_role_user(delegate_record.get('Name', ''))
                             
-                            st.success(f"✅ Welcome back, {delegate_record.get('Name', '')}!")
-                            st.switch_page("pages/1_Delegate_Dashboard.py")
+                            if is_dual_role:
+                                st.session_state.dual_role_user = True
+                                st.session_state.current_delegate_record = delegate_record
+                                st.session_state.current_speaker_info = speaker_info
+                                st.switch_page("pages/7_Delegate_Self_Service.py")
+                            else:
+                                # Set authentication and session data for delegate only
+                                st.session_state.delegate_authenticated = True
+                                st.session_state.delegate_id = str(delegate_record['ID'])
+                                st.session_state.delegate_name = delegate_record.get('Name', '')
+                                st.session_state.delegate_organization = delegate_record.get('Organization', '')
+                                st.session_state.delegate_category = delegate_record.get('Category', '')
+                                st.session_state.delegate_title = delegate_record.get('RoleTitle', '')
+                                
+                                st.success(f"✅ Welcome back, {delegate_record.get('Name', '')}!")
+                                st.switch_page("pages/1_Delegate_Dashboard.py")
                         else:
                             st.error("❌ Invalid delegate ID. Please check your ID and try again.")
                     except Exception as e:

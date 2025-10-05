@@ -7,6 +7,7 @@ import json
 import os
 from datetime import datetime
 import streamlit as st
+import pandas as pd
 
 # Try to import QR code libraries, fallback to simple implementation
 try:
@@ -783,3 +784,96 @@ def create_qr_scanner_script():
     window.stopQRScanner = stopQRScanner;
     </script>
     """
+
+def check_dual_role_user(delegate_name, delegates_df=None, speakers_data=None):
+    """
+    Check if a user is both a delegate and a speaker
+    Returns: (is_dual_role, speaker_info)
+    """
+    try:
+        # Load delegates data if not provided
+        if delegates_df is None:
+            delegates_df = pd.read_csv("data/complimentary_passes.csv")
+        
+        # Load speakers data if not provided
+        if speakers_data is None:
+            with open("data/speakers.json", "r", encoding="utf-8") as f:
+                speakers_data = json.load(f)
+        
+        # Normalize delegate name for comparison
+        delegate_name_normalized = delegate_name.lower().strip()
+        
+        # Check if delegate name matches any speaker
+        speaker_info = None
+        for speaker in speakers_data:
+            if speaker.get('name') and speaker['name'] != 'nan':
+                speaker_name_normalized = speaker['name'].lower().strip()
+                if delegate_name_normalized == speaker_name_normalized:
+                    speaker_info = speaker
+                    break
+        
+        return speaker_info is not None, speaker_info
+        
+    except Exception as e:
+        st.error(f"Error checking dual role: {str(e)}")
+        return False, None
+
+def show_role_selection(delegate_record, speaker_info):
+    """
+    Show role selection UI for dual-role users
+    Returns the selected role and redirects accordingly
+    """
+    st.markdown("---")
+    st.markdown("### 🎭 Role Selection")
+    st.info("You are registered as both a **Delegate** and a **Speaker**. Please choose how you'd like to access the conference:")
+    
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.markdown("""
+        <div style="background: linear-gradient(145deg, #1A1A1A 0%, #2A2A2A 100%); 
+                    border: 2px solid #198A00; border-radius: 15px; padding: 1.5rem; 
+                    text-align: center; height: 100%;">
+            <h4 style="color: #198A00; margin-bottom: 1rem;">👤 Delegate Access</h4>
+            <p style="color: #F3F4F6; font-size: 0.9rem; margin-bottom: 1rem;">
+                Access conference information, networking, and delegate features
+            </p>
+            <ul style="color: #F3F4F6; font-size: 0.8rem; text-align: left; margin: 0;">
+                <li>📋 Conference agenda</li>
+                <li>🤝 Networking & matchmaking</li>
+                <li>📱 Delegate dashboard</li>
+                <li>🏢 Exhibitor information</li>
+            </ul>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        if st.button("🎫 Enter as Delegate", key="delegate_role_btn", width='stretch'):
+            return "delegate"
+    
+    with col2:
+        st.markdown("""
+        <div style="background: linear-gradient(145deg, #1A1A1A 0%, #2A2A2A 100%); 
+                    border: 2px solid #FF6B35; border-radius: 15px; padding: 1.5rem; 
+                    text-align: center; height: 100%;">
+            <h4 style="color: #FF6B35; margin-bottom: 1rem;">🎤 Speaker Access</h4>
+            <p style="color: #F3F4F6; font-size: 0.9rem; margin-bottom: 1rem;">
+                Access speaker-specific features and presentation tools
+            </p>
+            <ul style="color: #F3F4F6; font-size: 0.8rem; text-align: left; margin: 0;">
+                <li>🎤 Speaker profile</li>
+                <li>📊 Presentation details</li>
+                <li>📅 Speaking schedule</li>
+                <li>🎯 Speaker resources</li>
+            </ul>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        if st.button("🎤 Enter as Speaker", key="speaker_role_btn", width='stretch'):
+            return "speaker"
+    
+    st.markdown("---")
+    st.markdown(f"**Delegate Details:** {delegate_record.get('Name', '')} - {delegate_record.get('Organization', '')}")
+    if speaker_info:
+        st.markdown(f"**Speaker Details:** {speaker_info.get('name', '')} - {speaker_info.get('organization', '')}")
+    
+    return None
